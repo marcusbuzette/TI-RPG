@@ -8,6 +8,8 @@ public class Unit : MonoBehaviour {
     public float stopDistance = .1f;
     private Vector3 targetPosition;
 
+    [SerializeField] private GridTest gridTest; //Temporario
+
     private void Update() {
         if (Vector3.Distance(targetPosition, transform.position) > stopDistance) {
             Vector3 moveDirection = (targetPosition - transform.position).normalized;
@@ -16,11 +18,12 @@ public class Unit : MonoBehaviour {
         }
 
         if (Input.GetMouseButtonDown(0)) {
-            Move(MouseWorld.GetPosition());
+            Move(gridTest.MoveInGrid());
         }
     }
 
     private void Move(Vector3 targetPosition) {
         this.targetPosition = targetPosition;
+        Debug.Log("move: " + targetPosition);
     }
 }
