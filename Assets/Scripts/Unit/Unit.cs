@@ -8,7 +8,9 @@ public class Unit : MonoBehaviour {
     public float stopDistance = .1f;
     private Vector3 targetPosition;
 
-    [SerializeField] private GridTest gridTest; //Temporario
+    private void Awake() {
+        targetPosition = transform.position;
+    }
 
     private void Update() {
         if (Vector3.Distance(targetPosition, transform.position) > stopDistance) {
@@ -16,14 +18,9 @@ public class Unit : MonoBehaviour {
             transform.position += moveDirection * moveSpeed * Time.deltaTime;
             transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
         }
-
-        if (Input.GetMouseButtonDown(0)) {
-            Move(gridTest.MoveInGrid());
-        }
     }
 
-    private void Move(Vector3 targetPosition) {
+    public void Move(Vector3 targetPosition) {
         this.targetPosition = targetPosition;
-        Debug.Log("move: " + targetPosition);
     }
 }

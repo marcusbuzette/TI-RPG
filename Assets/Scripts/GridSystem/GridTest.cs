@@ -15,14 +15,6 @@ public class GridTest : MonoBehaviour
 
     private void Update() {
 
-        //Debug.Log(gridSystem.GetGridPosition(MouseWorld.GetPosition()));
-    }
-
-    public GridSystem GetGridSystem() {
-        return gridSystem;
-    }
-
-    public Vector3 MoveInGrid() {
-        return new Vector3(gridSystem.GetGridPosition(MouseWorld.GetPosition()).x, 0, 0);
+        Debug.Log(gridSystem.GetGridPosition(MouseWorld.GetPosition()));
     }
 }
