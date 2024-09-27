@@ -14,7 +14,7 @@ public class LevelGrid : MonoBehaviour
         if (Instance != null) { Destroy(gameObject); }
         else { Instance = this; }
 
-        gridSystem = new GridSystem(10, 10, 2f);
+        gridSystem = new GridSystem(16, 15, 2f);
         gridSystem.CreateDebugObjects(gridDebugObjectPrefab);
     }
 
