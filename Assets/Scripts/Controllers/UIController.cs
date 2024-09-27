@@ -38,6 +38,10 @@ public class UIController : MonoBehaviour
         AudioManager.instance.MasterVolume(_masterSlider.value);
     }
 
+    public void ChangeScene(string scene) {
+        SceneManager.LoadScene(scene);
+    } 
+
     public void PlayGame() {
         //Muda pra cena do jogo, lembrar de mudar o nome aqui quando criar a cena definitiva
         SceneManager.LoadScene("Playground");

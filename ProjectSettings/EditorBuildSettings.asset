@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Cena Level Design.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/HUB/HUB.unity
+    guid: bd9566ad59db3fe4597346e000db9002
   m_configObjects: {}
