@@ -3,14 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ActionType { MOVE, ACTION };
+
 public abstract class BaseAction : MonoBehaviour {
 
     protected Unit unit;
     protected bool isActive;
     protected Action onActionComplete;
+    protected ActionType actionType;
 
     protected virtual void Awake() {
         unit = GetComponent<Unit>();
+        actionType = ActionType.ACTION;
     }
 
     protected void Update() {
@@ -30,4 +34,8 @@ public abstract class BaseAction : MonoBehaviour {
     public abstract List<GridPosition> GetValidGridPositionList();
 
     public abstract void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete);
+
+    public ActionType GetActionType() {
+        return actionType;
+    }
 }

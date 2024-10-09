@@ -10,6 +10,7 @@ public class ActionButtonUI : MonoBehaviour {
     [SerializeField] private Button  button;
     [SerializeField] private Color  NORMAL_COLOR;
     [SerializeField] private Color  SELECTED_COLOR;
+    [SerializeField] private ActionType actionType;
 
     public void SetBaseAction(BaseAction baseAction) {
         textMeshPro.text = baseAction.GetActionName().ToUpper();
@@ -25,6 +26,12 @@ public class ActionButtonUI : MonoBehaviour {
     }
     public void UnselectAction() {
         GetComponent<Outline>().effectColor = NORMAL_COLOR;
+    }
+    public void EnableActionButton() {
+        button.interactable = true;
+    }
+    public void DisableActionButton() {
+        button.interactable = false;
     }
 
 

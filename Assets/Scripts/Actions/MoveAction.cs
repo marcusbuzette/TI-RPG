@@ -18,6 +18,7 @@ public class MoveAction : BaseAction {
     protected override void Awake() {
         base.Awake();
         targetPosition = transform.position;
+        this.actionType = ActionType.MOVE;
     }
 
     public override void Action() {

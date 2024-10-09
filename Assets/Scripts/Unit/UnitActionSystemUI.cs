@@ -9,14 +9,17 @@ public class UnitActionSystemUI : MonoBehaviour {
     [SerializeField] private Transform actionButtonsContainer;
 
     private void Start() {
-        UnitActionSystem.Instance.OnSelectedUnitChanged += UnicActionSystem_OnSelectedUnitChanged;
+        UnitActionSystem.Instance.OnSelectedUnitChanged += UnitActionSystem_OnSelectedUnitChanged;
+        UnitActionSystem.Instance.OnActionStarted += UnitActionSystem_OnActionStarted;
+        TurnSystem.Instance.onTurnChange += TurnSystem_OnTurnChange;
+        Unit.OnAnyActionPerformed += Unit_OnAnyActionPerformed;
 
         CreateUnitActionButtons();
     }
 
 
     private void CreateUnitActionButtons() {
-        foreach(Transform buttonTransform in actionButtonsContainer) {
+        foreach (Transform buttonTransform in actionButtonsContainer) {
             Destroy(buttonTransform.gameObject);
         }
 
@@ -26,10 +29,25 @@ public class UnitActionSystemUI : MonoBehaviour {
 
             Transform actioonButtonTransform = Instantiate(actionButtonPrefab, actionButtonsContainer);
             actioonButtonTransform.GetComponent<ActionButtonUI>().SetBaseAction(action);
+            if ((selectedUnit.GetHasMoved() && action.GetActionType() == ActionType.MOVE) 
+            || (selectedUnit.GetHasPerformedAction() && action.GetActionType() == ActionType.ACTION)) {
+                actioonButtonTransform.GetComponent<ActionButtonUI>().DisableActionButton();
+            }
         }
     }
 
-    private void UnicActionSystem_OnSelectedUnitChanged(object sender, EventArgs e) {
+    private void UnitActionSystem_OnSelectedUnitChanged(object sender, EventArgs e) {
+        CreateUnitActionButtons();
+    }
+
+    private void UnitActionSystem_OnActionStarted(object sender, EventArgs e) {
+        CreateUnitActionButtons();
+    }
+
+    private void TurnSystem_OnTurnChange (object sender, EventArgs e) {
+        CreateUnitActionButtons();
+    }
+    private void Unit_OnAnyActionPerformed (object sender, EventArgs e) {
         CreateUnitActionButtons();
     }
 }
