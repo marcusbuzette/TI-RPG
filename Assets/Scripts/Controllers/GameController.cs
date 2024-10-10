@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
-    public GameController controller;
+    public static GameController controller;
     public UIController uicontroller;
+    public int dinheiro;
 
     private void Awake() {
         if (controller == null) {
@@ -15,6 +16,7 @@ public class GameController : MonoBehaviour {
         else {
             DestroyImmediate(gameObject);
         }
+        dinheiro = 1000;
     }
 
 
@@ -23,4 +25,5 @@ public class GameController : MonoBehaviour {
             Application.Quit();
         }
     }
+
 }
