@@ -25,6 +25,12 @@ public class UnitActionSystem : MonoBehaviour {
 
     private void Update() {
         if (isBusy) return;
+
+        if(!TurnSystem.Instance.IsPlayerTurn())
+        {
+            return;
+        }
+
         if (EventSystem.current.IsPointerOverGameObject()) return;
         if (Input.GetMouseButtonDown(0)) {
             if (TryHandleUnitSelection()) return;
@@ -51,6 +57,9 @@ public class UnitActionSystem : MonoBehaviour {
         if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, unitLayerMask)) {
             if (hit.transform.TryGetComponent<Unit>(out Unit unit)) {
                 if (unit == selectedUnit) return false;
+                if(unit.IsEnemy()){
+                    return false;
+                }
                 SetSelectedUnit(unit);
                 return true;
             }

@@ -7,6 +7,8 @@ public class Unit : MonoBehaviour {
 
     public static event EventHandler OnAnyActionPerformed;
 
+    [SerializeField] private bool isEnemy;
+
     private GridPosition gridPosition;
     private MoveAction moveAction;
     private SpinAction spinAction;
@@ -85,8 +87,15 @@ public class Unit : MonoBehaviour {
     public bool GetHasPerformedAction() {return hasPerformedAction;}
 
     private void TurnSystem_OnTurnChange(object sender, EventArgs e) {
+        if  (IsEnemy() && !TurnSystem.Instance.IsPlayerTurn() || (!IsEnemy() && TurnSystem.Instance.IsPlayerTurn()) ){
         hasMoved = false;
         hasPerformedAction = false;
         OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    public bool IsEnemy()
+    {
+        return isEnemy;
     }
 }
