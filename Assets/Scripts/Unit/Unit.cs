@@ -6,6 +6,8 @@ using UnityEngine;
 public class Unit : MonoBehaviour {
 
     public static event EventHandler OnAnyActionPerformed;
+    public static event EventHandler OnAnyUnitSpawn;
+    public static event EventHandler OnAnyUnitDead;
 
     [SerializeField] private bool isEnemy;
 
@@ -26,6 +28,11 @@ public class Unit : MonoBehaviour {
         gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
         TurnSystem.Instance.onTurnChange += TurnSystem_OnTurnChange;
+
+        //LEMBRETE: (O healthSystem ainda não existe mas tenho que emplementar isso para funcionar a IA do inimigo)
+        //healthSystem.OnDead += HealthSystem_OnDead;
+
+        OnAnyUnitSpawn?.Invoke(this, EventArgs.Empty);
     }
 
     private void Update() {
@@ -97,5 +104,13 @@ public class Unit : MonoBehaviour {
     public bool IsEnemy()
     {
         return isEnemy;
+    }
+
+    private void HealthSystem_OnDead(object sander, EventArgs e){
+        LevelGrid.Instance.RemoveUnitAtGridPosition(gridPosition, this);
+
+        Destroy(gameObject);
+
+        OnAnyUnitDead?.Invoke(this, EventArgs.Empty);
     }
 }
