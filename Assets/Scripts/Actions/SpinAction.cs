@@ -16,9 +16,8 @@ public class SpinAction : BaseAction {
         transform.eulerAngles += new Vector3(0, spinAddAmmount, 0);
         totalSpinAmmount += spinAddAmmount;
         if (totalSpinAmmount > MAX_SPIN) {
-            isActive = false;
             totalSpinAmmount = 0;
-            onActionComplete();
+            ActionFinish();
         }
     }
 
@@ -36,7 +35,6 @@ public class SpinAction : BaseAction {
 
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
-        this.onActionComplete = onActionComplete;
-        isActive = true;
+        ActionStart(onActionComplete);
     }
 }

@@ -3,29 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class HitAction : BaseAction
-{
+public class HitAction : BaseAction {
     private float totalSpinAmmount = 0;
-    private int maxShootDistance = 1;
+    [SerializeField] private int maxShootDistance = 1;
     [SerializeField] private float MAX_SPIN = 360f;
 
-    public override string GetActionName()
-    {
+    public override string GetActionName() {
         return "Hit";
     }
 
-      public override void Action() {
+    public override void Action() {
         float spinAddAmmount = 360f * Time.deltaTime;
         transform.eulerAngles += new Vector3(0, spinAddAmmount, 0);
         totalSpinAmmount += spinAddAmmount;
         if (totalSpinAmmount > MAX_SPIN) {
-            isActive = false;
             totalSpinAmmount = 0;
-            onActionComplete();
+            ActionFinish();
         }
     }
 
- public override List<GridPosition> GetValidGridPositionList() {
+    public override List<GridPosition> GetValidGridPositionList() {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
 
         GridPosition unitGridPosition = unit.GetGridPosition();
@@ -46,8 +43,7 @@ public class HitAction : BaseAction
 
                 Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition);
 
-                if(targetUnit.IsEnemy() == unit.IsEnemy())
-                {
+                if (targetUnit.IsEnemy() == unit.IsEnemy()) {
                     continue;
                 }
 
@@ -58,9 +54,8 @@ public class HitAction : BaseAction
         return validGridPositionList;
     }
 
- public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
-        this.onActionComplete = onActionComplete;
-        isActive = true;
+    public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
+        ActionStart(onActionComplete);
     }
 
 }

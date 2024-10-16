@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridObject
-{
+public class GridObject {
     private GridSystem gridSystem;
     private GridPosition gridPosition;
     private List<Unit> unitList;
@@ -16,7 +15,7 @@ public class GridObject
 
     public override string ToString() {
         string unitString = "";
-        foreach(Unit unit in unitList) {
+        foreach (Unit unit in unitList) {
             unitString += unit + "\n";
         }
         return gridPosition.ToString() + "\n" + unitString;
@@ -38,14 +37,11 @@ public class GridObject
         return unitList.Count > 0;
     }
 
-        public Unit GetUnit()
-    {
-        if (HasAnyUnit())
-        {
+    public Unit GetUnit() {
+        if (HasAnyUnit()) {
             return unitList[0];
         }
-        else
-        {
+        else {
             return null;
         }
     }

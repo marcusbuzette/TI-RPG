@@ -27,15 +27,13 @@ public class MoveAction : BaseAction {
             transform.position += moveDirection * moveSpeed * Time.deltaTime;
             transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
         } else {
-            isActive = false;
-            onActionComplete();
+            ActionFinish();
         }
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         this.targetPosition = LevelGrid.Instance.GetWorldPosition(mouseGridPosition);
-        isActive = true;
-        this.onActionComplete = onActionComplete;
+        ActionStart(onActionComplete);
     }
 
     public override string GetActionName() {

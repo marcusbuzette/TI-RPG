@@ -98,4 +98,8 @@ public class Unit : MonoBehaviour {
     {
         return isEnemy;
     }
+
+    public void Damage() {
+        Debug.Log(transform + " - Damaged");
+    }
 }
