@@ -13,6 +13,7 @@ public class ShootAction : BaseAction {
     [SerializeField] private float shootingTimer = .3f;
     [SerializeField] private float cooloffTimer = .1f;
     [SerializeField] private float rotateSpeed = 10f;
+    [SerializeField] private int shootDamage = 100;
 
 
     private State currentState;
@@ -108,6 +109,6 @@ public class ShootAction : BaseAction {
     }
 
     private void Shoot() {
-        targetUnit.Damage();
+        targetUnit.Damage(shootDamage);
     }
 }
