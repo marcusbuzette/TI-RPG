@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fce4ce57972f8c34ab528abcec13cf80, type: 3}
   m_Name: InventoryItem_Potion
   m_EditorClassIdentifier: 
-  id: InventoryItem_Potion
+  id: 1
   displayName: Potion
   prefab: {fileID: 959054419738605824, guid: 3938934a894c14343b69e125355950d7, type: 3}
