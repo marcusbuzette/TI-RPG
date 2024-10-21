@@ -9,6 +9,7 @@ public class ShopManager : MonoBehaviour
     public static ShopManager shop;
     public int[,] shopItems = new int[3, 3];
     public Text DinheiroTXT;
+    public InventoryItemData[] itemData;
 
     private void Awake()
     {
@@ -43,12 +44,14 @@ public class ShopManager : MonoBehaviour
     public void Buy()
     {
         GameObject ButtonRef = GameObject.FindGameObjectWithTag("Event").GetComponent<EventSystem>().currentSelectedGameObject;
+        int itemId = ButtonRef.GetComponent<BuyButtons>().ItemID;
 
         if (GameController.controller.dinheiro >= shopItems[1, ButtonRef.GetComponent<BuyButtons>().ItemID])
         {
             GameController.controller.dinheiro -= shopItems[1, ButtonRef.GetComponent<BuyButtons>().ItemID];
             shopItems[2, ButtonRef.GetComponent<BuyButtons>().ItemID]++;
             ButtonRef.GetComponent<BuyButtons>().QuantityTxt.text = shopItems[2, ButtonRef.GetComponent<BuyButtons>().ItemID].ToString();
+            InventorySystem.inventorySystem.Add(itemData[itemId]);
         }
     }
 }
