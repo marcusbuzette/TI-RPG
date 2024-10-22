@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571337, b: 0.3069219, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -350,6 +350,29 @@ MonoBehaviour:
   healthPotion: {fileID: 11400000, guid: 110230de560646841bb1f0097e70042a, type: 2}
   inventorySystem: {fileID: 38346731}
   potionHealAmount: 5
+--- !u!1 &527803273 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5248424051689086498, guid: 6f76d690c1abdef42821cf4767042005, type: 3}
+  m_PrefabInstance: {fileID: 938086878}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &527803280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 527803273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4c588a935c0a4f56b855794c3e7145d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxShootDistance: 7
+  aimingTimer: 0.1
+  shootingTimer: 0.3
+  cooloffTimer: 0.1
+  rotateSpeed: 10
+  shootDamage: 30
 --- !u!1 &535300912
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,6 +418,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &584629705 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5248424051689086498, guid: 6f76d690c1abdef42821cf4767042005, type: 3}
+  m_PrefabInstance: {fileID: 2133375389}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &584629712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584629705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4c588a935c0a4f56b855794c3e7145d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxShootDistance: 1
+  aimingTimer: 0.1
+  shootingTimer: 0.3
+  cooloffTimer: 0.1
+  rotateSpeed: 10
+  shootDamage: 30
 --- !u!114 &614295277 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
@@ -677,7 +723,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5248424051689086498, guid: 6f76d690c1abdef42821cf4767042005, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 527803280}
   m_SourcePrefab: {fileID: 100100000, guid: 6f76d690c1abdef42821cf4767042005, type: 3}
 --- !u!1 &940457478
 GameObject:
@@ -1676,7 +1725,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1715821487}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.42415538, y: -0.000000015581909, z: 0.0000000072981767, w: 0.90558946}
+  m_LocalRotation: {x: 0.42415538, y: 0.000000015581923, z: -0.000000007298182, w: 0.90558946}
   m_LocalPosition: {x: 0.63, y: 12, z: -9.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2160,7 +2209,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2048497479}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.42415538, y: -0.000000015581909, z: 0.0000000072981767, w: 0.90558946}
+  m_LocalRotation: {x: 0.42415538, y: 0.000000015581923, z: -0.000000007298182, w: 0.90558946}
   m_LocalPosition: {x: 0.63, y: 12, z: -9.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2291,7 +2340,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5248424051689086498, guid: 6f76d690c1abdef42821cf4767042005, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 584629712}
   m_SourcePrefab: {fileID: 100100000, guid: 6f76d690c1abdef42821cf4767042005, type: 3}
 --- !u!1 &2133655378
 GameObject:
