@@ -76,19 +76,44 @@ public class EnemyIA : MonoBehaviour {
     }
 
     private bool TryTakeEnemyAIAction(Unit enemyUnit, Action onEnemyAIActionComplete) {
-        SpinAction spinAction = enemyUnit.GetSpinAction();
+        EnemyAIAction bestEnemyAIAction = null;
+        BaseAction bestBaseAction = null;
 
-        GridPosition actionGridPosition = enemyUnit.GetGridPosition();
-        if (!spinAction.IsValidActionGridPosition(actionGridPosition)) {
-            return false;
+        foreach (BaseAction baseAction in enemyUnit.GetActionsArray()) {
+            if(baseAction.GetActionType() == ActionType.MOVE) {
+                if (enemyUnit.GetHasMoved()) {
+                    //Enemy cannot move any more
+                    continue;
+                }
+            }
+            else {
+                //This action is not a movement action
+                if (enemyUnit.GetHasPerformedAction()) {
+                    //Enemy cannot afford this action
+                    continue;
+                }
+            }
+
+            if (bestEnemyAIAction == null) {
+                bestEnemyAIAction = baseAction.GetBestEnemyAIAction();
+                bestBaseAction = baseAction;
+            }else{
+                EnemyAIAction testEnemyAIAction = baseAction.GetBestEnemyAIAction();
+                if(testEnemyAIAction != null && testEnemyAIAction.actionValue > bestEnemyAIAction.actionValue) {
+                    bestEnemyAIAction = testEnemyAIAction;
+                    bestBaseAction = baseAction;
+                }
+            }
         }
 
-        if (!enemyUnit.TryToPerformAction(spinAction)) {
+        Debug.Log(bestBaseAction);
+
+        if( bestEnemyAIAction != null && enemyUnit.TryToPerformAction(bestBaseAction)) {
+            bestBaseAction.TriggerAction(bestEnemyAIAction.gridPosition, onEnemyAIActionComplete);
+            return true;
+        }
+        else {
             return false;
         }
-
-        Debug.Log("Spin Action");
-        spinAction.TriggerAction(actionGridPosition, onEnemyAIActionComplete);
-        return true;
     }
 }
