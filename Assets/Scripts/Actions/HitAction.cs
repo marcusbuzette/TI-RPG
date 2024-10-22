@@ -7,6 +7,10 @@ public class HitAction : BaseAction {
     private float totalSpinAmmount = 0;
     [SerializeField] private int maxShootDistance = 1;
     [SerializeField] private float MAX_SPIN = 360f;
+    [SerializeField] private int hitDamage = 50;
+
+    private Unit targetUnit;
+
 
     public override string GetActionName() {
         return "Hit";
@@ -18,6 +22,7 @@ public class HitAction : BaseAction {
         totalSpinAmmount += spinAddAmmount;
         if (totalSpinAmmount > MAX_SPIN) {
             totalSpinAmmount = 0;
+            targetUnit.Damage(hitDamage);
             ActionFinish();
         }
     }
@@ -56,6 +61,7 @@ public class HitAction : BaseAction {
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         ActionStart(onActionComplete);
+        targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {

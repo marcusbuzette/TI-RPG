@@ -8,6 +8,9 @@ public class GameController : MonoBehaviour {
     public UIController uicontroller;
     public int dinheiro;
 
+
+    [SerializeField] private bool debugMode = false;
+
     private void Awake() {
         if (controller == null) {
             controller = this;
@@ -25,5 +28,7 @@ public class GameController : MonoBehaviour {
             Application.Quit();
         }
     }
+
+    public bool GetDebugMode() { return this.debugMode;}
 
 }
