@@ -5,7 +5,7 @@ using UnityEngine;
 public class InventorySystem : MonoBehaviour
 {
     private Dictionary<InventoryItemData, InventoryItem> m_itemDictionary;
-    public List<InventoryItem> inventory;
+    [SerializeField] public List<InventoryItem> inventory;
     public static InventorySystem inventorySystem;
 
     private void Awake()

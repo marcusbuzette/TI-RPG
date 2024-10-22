@@ -16,7 +16,7 @@ public class ShopManager : MonoBehaviour
         if (shop == null)
         {
             shop = this;
-            DontDestroyOnLoad(this);
+            //DontDestroyOnLoad(this);
         }
         else
         {
