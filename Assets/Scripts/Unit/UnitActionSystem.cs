@@ -9,6 +9,7 @@ public class UnitActionSystem : MonoBehaviour {
     public static UnitActionSystem Instance { get; private set; }
 
     public event EventHandler OnSelectedUnitChanged;
+    public event EventHandler OnSelectedActionChanged;
     public event EventHandler OnActionStarted;
 
     [SerializeField] private Unit selectedUnit;
@@ -68,14 +69,24 @@ public class UnitActionSystem : MonoBehaviour {
         return false;
     }
 
+    public void ChangeSelectedUnit(Unit unit) {
+        if (unit != null && !unit.IsEnemy()) {
+            SetSelectedUnit(unit);
+        } else {
+            SetSelectedUnit(null);
+        }
+    }
+
     private void SetSelectedUnit(Unit unit) {
         selectedUnit = unit;
         selectedAction = null;
         OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
+        OnSelectedActionChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public void SetSelectedAction(BaseAction action) {
         selectedAction = action;
+        OnSelectedActionChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public Unit GetSelectedUnit() { return selectedUnit; }

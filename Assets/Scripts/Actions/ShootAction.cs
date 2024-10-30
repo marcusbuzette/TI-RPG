@@ -80,6 +80,11 @@ public class ShootAction : BaseAction
                     continue;
                 }
 
+                int testDistance = Mathf.Abs(x) + Mathf.Abs(z);
+                if (testDistance > maxShootDistance) {
+                    continue;
+                }
+
 
                 if (!LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition))
                 {
@@ -150,8 +155,10 @@ public class ShootAction : BaseAction
         return GetValidGridPositionList(gridPosition).Count;
     }
 
-    public Unit GetTargetUnit()
-    {
-        return targetUnit;
+
+    public Unit GetTargetUnit() { return targetUnit; }
+
+    public int GetMaxShootDistance() {
+        return maxShootDistance;
     }
 }

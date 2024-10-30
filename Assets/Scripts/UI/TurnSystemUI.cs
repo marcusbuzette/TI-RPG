@@ -8,14 +8,17 @@ using UnityEngine.UI;
 public class TurnSystemUI : MonoBehaviour {
     [SerializeField] private Button endTurnButton;
     [SerializeField] private TextMeshProUGUI turnNumberText;
+    [SerializeField] private Transform unitsOrderContainer;
+    [SerializeField] private Transform unitOrderUIPrefab;
 
     private void Start() {
         endTurnButton.onClick.AddListener(() => {
             TurnSystem.Instance.NextTurn();
         });
         TurnSystem.Instance.onTurnChange += TurnSystem_OnTurnChange;
-
+        TurnSystem.Instance.onOrderChange += TurnSystem_OnOrderChange;
         UpdatedTurnText();
+        CreateUnitActionButtons();
     }
 
     private void UpdatedTurnText() {
@@ -24,5 +27,22 @@ public class TurnSystemUI : MonoBehaviour {
 
     private void TurnSystem_OnTurnChange(object sender, EventArgs e) {
         UpdatedTurnText();
+        CreateUnitActionButtons();
+    }
+    private void TurnSystem_OnOrderChange(object sender, EventArgs e) {
+        CreateUnitActionButtons();
+    }
+
+    private void CreateUnitActionButtons() {
+        foreach (Transform uinitOrderTransform in unitsOrderContainer) {
+            Destroy(uinitOrderTransform.gameObject);
+        }
+
+        for (int i = 0; i < TurnSystem.Instance.GetTurnOrder().Count; i++) {
+            Transform unitOrderTransform = Instantiate(unitOrderUIPrefab, unitsOrderContainer);
+            unitOrderTransform.GetComponent<UnitOrderUI>().SetUnitOrderUI(TurnSystem.Instance.GetTurnOrder()[i], i ==0);
+        }
+
+ 
     }
 }

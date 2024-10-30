@@ -176,6 +176,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: unitStats.speed
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4479765787481540612, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -374,51 +378,6 @@ MonoBehaviour:
   cooloffTimer: 0.1
   rotateSpeed: 10
   shootDamage: 30
---- !u!1 &535300912
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 535300914}
-  - component: {fileID: 535300913}
-  m_Layer: 0
-  m_Name: Testing
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &535300913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 535300912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5069df260422a144591ded60621209f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unit: {fileID: 614295277}
---- !u!4 &535300914
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 535300912}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.483106, y: -19.148977, z: 23.908884}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &584629705 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5248424051689086498, guid: 6f76d690c1abdef42821cf4767042005, type: 3}
@@ -599,6 +558,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: unitStats.speed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4479765787481540612, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -677,6 +640,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2672855175812891822, guid: 6f76d690c1abdef42821cf4767042005, type: 3}
+      propertyPath: isEnemy
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2672855175812891822, guid: 6f76d690c1abdef42821cf4767042005, type: 3}
+      propertyPath: unitStats.speed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5248424051689086498, guid: 6f76d690c1abdef42821cf4767042005, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
@@ -1252,6 +1223,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridSystemVisualPrefab: {fileID: 7942761665759518035, guid: 8bace41076cadfc498ab91705dd95d92, type: 3}
+  gridVisualTypeMaterialList:
+  - gridVisualType: 0
+    material: {fileID: 2100000, guid: f2cc632bafd5439488a7022d400ff3e8, type: 2}
+  - gridVisualType: 1
+    material: {fileID: 2100000, guid: a05052437a282344e8d904f05ab97531, type: 2}
+  - gridVisualType: 2
+    material: {fileID: 2100000, guid: 66d642f9a0e33b042ad41d206c6d8490, type: 2}
+  - gridVisualType: 4
+    material: {fileID: 2100000, guid: 2cfb3997cd29c934783fcf6d598a1107, type: 2}
+  - gridVisualType: 3
+    material: {fileID: 2100000, guid: 54541fae4de98cf4b97fef757cb1242d, type: 2}
 --- !u!4 &1389946622
 Transform:
   m_ObjectHideFlags: 0
@@ -2037,6 +2019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28bbd34a572c542cf9ab92e1bf898579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitiesOrderList: []
 --- !u!4 &1784009178
 Transform:
   m_ObjectHideFlags: 0
@@ -2524,7 +2507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uicontroller: {fileID: 0}
   dinheiro: 0
-  debugMode: 1
+  debugMode: 0
 --- !u!4 &2085331517
 Transform:
   m_ObjectHideFlags: 0
@@ -2548,6 +2531,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2672855175812891822, guid: 6f76d690c1abdef42821cf4767042005, type: 3}
+      propertyPath: unitStats.speed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3863782419735454915, guid: 6f76d690c1abdef42821cf4767042005, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2666,7 +2653,6 @@ SceneRoots:
   - {fileID: 1066404467}
   - {fileID: 382602218}
   - {fileID: 797295961}
-  - {fileID: 535300914}
   - {fileID: 1389946622}
   - {fileID: 1715821491}
   - {fileID: 1784009178}
