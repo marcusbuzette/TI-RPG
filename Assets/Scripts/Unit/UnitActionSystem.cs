@@ -69,6 +69,14 @@ public class UnitActionSystem : MonoBehaviour {
         return false;
     }
 
+    public void ChangeSelectedUnit(Unit unit) {
+        if (unit != null && !unit.IsEnemy()) {
+            SetSelectedUnit(unit);
+        } else {
+            SetSelectedUnit(null);
+        }
+    }
+
     private void SetSelectedUnit(Unit unit) {
         selectedUnit = unit;
         selectedAction = null;
