@@ -25,12 +25,14 @@ public class UnitActionSystemUI : MonoBehaviour {
 
         Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
 
+        if (selectedUnit == null) return;
+
         foreach (BaseAction action in selectedUnit.GetActionsArray()) {
 
             Transform actioonButtonTransform = Instantiate(actionButtonPrefab, actionButtonsContainer);
             actioonButtonTransform.GetComponent<ActionButtonUI>().SetBaseAction(action);
-            if ((selectedUnit.GetHasMoved() && action.GetActionType() == ActionType.MOVE) 
-            || (selectedUnit.GetHasPerformedAction() && action.GetActionType() == ActionType.ACTION)) {
+            if (((selectedUnit.GetHasMoved() && action.GetActionType() == ActionType.MOVE) || !selectedUnit.IsUnityTurn()) 
+            || (selectedUnit.GetHasPerformedAction() && action.GetActionType() == ActionType.ACTION) || !selectedUnit.IsUnityTurn()) {
                 actioonButtonTransform.GetComponent<ActionButtonUI>().DisableActionButton();
             }
         }

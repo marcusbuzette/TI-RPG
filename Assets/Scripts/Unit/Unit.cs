@@ -2,7 +2,7 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
-
+[System.Serializable]
 public class Unit : MonoBehaviour {
 
     public static event EventHandler OnAnyActionPerformed;
@@ -13,12 +13,14 @@ public class Unit : MonoBehaviour {
 
     private GridPosition gridPosition;
     private HealthSystem healthSystem;
+    [SerializeField] private UnitStats unitStats;
     private MoveAction moveAction;
     private SpinAction spinAction;
     private ShootAction shootAction;
     private BaseAction[] actionsArray;
     private bool hasMoved = false;
     private bool hasPerformedAction = false;
+    public bool isUnitTurn = false;
 
     private void Awake() {
         moveAction = GetComponent<MoveAction>();
@@ -26,6 +28,7 @@ public class Unit : MonoBehaviour {
         shootAction = GetComponent<ShootAction>();
         actionsArray = GetComponents<BaseAction>();
         healthSystem = GetComponent<HealthSystem>();
+        // unitStats = GetComponent<UnitStats>();
     }
 
     private void Start() {
@@ -38,11 +41,11 @@ public class Unit : MonoBehaviour {
 
     private void Update() {
         GridPosition newGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
-        
+
         if (newGridPosition != gridPosition) {
             GridPosition oldGridPosition = gridPosition;
             gridPosition = newGridPosition;
-            
+
             LevelGrid.Instance.UnitMovedGridPosition(this, oldGridPosition, newGridPosition);
         }
     }
@@ -68,7 +71,8 @@ public class Unit : MonoBehaviour {
         if (CanTriggerAction(action)) {
             PerformAction(action);
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     }
@@ -89,26 +93,26 @@ public class Unit : MonoBehaviour {
                 hasMoved = true;
                 break;
             case ActionType.ACTION:
-               hasPerformedAction = true;
-               hasMoved = true;
-               break;
+                hasPerformedAction = true;
+                hasMoved = true;
+                break;
         }
         OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
     }
 
-    public bool GetHasMoved() {return hasMoved;}
-    public bool GetHasPerformedAction() {return hasPerformedAction;}
+    public bool GetHasMoved() { return hasMoved; }
+    public bool GetHasPerformedAction() { return hasPerformedAction; }
 
     private void TurnSystem_OnTurnChange(object sender, EventArgs e) {
-        if  (IsEnemy() && !TurnSystem.Instance.IsPlayerTurn() || (!IsEnemy() && TurnSystem.Instance.IsPlayerTurn()) ){
-        hasMoved = false;
-        hasPerformedAction = false;
-        OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
+        if ((IsEnemy() && isUnitTurn) || (!IsEnemy() && isUnitTurn)) {
+            hasMoved = false;
+            hasPerformedAction = false;
+            isUnitTurn = false;
+            // OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
         }
     }
 
-    public bool IsEnemy()
-    {
+    public bool IsEnemy() {
         return isEnemy;
     }
 
@@ -118,11 +122,21 @@ public class Unit : MonoBehaviour {
 
     private void HealthSystem_OnDie(object sender, EventArgs e) {
         LevelGrid.Instance.RemoveUnitAtGridPosition(gridPosition, this);
+        TurnSystem.Instance.RemoveUnitFromList(this);
         Destroy(gameObject);
         OnAnyUnitDead?.Invoke(this, EventArgs.Empty);
     }
 
     public float GetHealthNormalized() {
         return healthSystem.GetHealthPointsNormalized();
+    }
+
+    public int GetUnitSpeed() { return unitStats.GetSpeed(); }
+
+    public bool IsUnityTurn() { return isUnitTurn; }
+
+    public void StartUnitTurn() {
+        this.isUnitTurn = true;
+        OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
     }
 }
