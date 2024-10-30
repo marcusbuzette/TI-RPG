@@ -131,6 +131,9 @@ public class Unit : MonoBehaviour {
         return healthSystem.GetHealthPointsNormalized();
     }
 
+
+    public Vector3 GetWorldPosition() { return transform.position;}
+
     public int GetUnitSpeed() { return unitStats.GetSpeed(); }
 
     public bool IsUnityTurn() { return isUnitTurn; }
@@ -138,5 +141,6 @@ public class Unit : MonoBehaviour {
     public void StartUnitTurn() {
         this.isUnitTurn = true;
         OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
+
     }
 }
