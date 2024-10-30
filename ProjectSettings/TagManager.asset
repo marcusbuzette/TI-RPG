@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Campfire
   - Event
+  - Shop
   layers:
   - Default
   - TransparentFX

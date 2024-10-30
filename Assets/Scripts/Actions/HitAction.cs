@@ -60,8 +60,9 @@ public class HitAction : BaseAction {
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
-        ActionStart(onActionComplete);
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
+        
+        ActionStart(onActionComplete);
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {
@@ -69,5 +70,9 @@ public class HitAction : BaseAction {
             gridPosition = gridPosition,
             actionValue = 0,
         };
+    }
+
+    public Unit GetTargetUnit(){
+        return targetUnit;
     }
 }
