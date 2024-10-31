@@ -12,15 +12,16 @@ public class LevelGrid : MonoBehaviour
 
     [SerializeField] Transform gridDebugObjectPrefab;
 
-    private GridSystem gridSystem;
+    private GridSystem<GridObject> gridSystem;
 
     private void Awake() {
         if (Instance != null) { Destroy(gameObject); }
         else { Instance = this; }
 
-        gridSystem = new GridSystem(16, 15, 2f);
+        gridSystem = new GridSystem<GridObject>(16, 15, 2f, 
+                (GridSystem<GridObject> g, GridPosition gridPosition) => new GridObject(g, gridPosition));
         Debug.Log(GameController.controller);
-        if (GameController.controller.GetDebugMode()) gridSystem.CreateDebugObjects(gridDebugObjectPrefab);
+        if(GameController.controller.GetDebugMode()) gridSystem.CreateDebugObjects(gridDebugObjectPrefab);
     }
 
     public void AddUnitAtGridPosition(GridPosition gridPosition, Unit unit) {
