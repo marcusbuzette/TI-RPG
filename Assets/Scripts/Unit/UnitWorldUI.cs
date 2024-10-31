@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class UnitWorldUI : MonoBehaviour {
 
-    [SerializeField] private Image healthBar;
+    [SerializeField] private List<Image> healthBar;
     [SerializeField] private HealthSystem healthSystem;
     [SerializeField] private Unit unit;
 
@@ -16,7 +16,10 @@ public class UnitWorldUI : MonoBehaviour {
 
 
     public void UpdateHealthBar() {
-        healthBar.fillAmount = healthSystem.GetHealthPointsNormalized();
+        float healthNormalized = healthSystem.GetHealthPointsNormalized();
+        foreach (Image healthBar in healthBar) {
+            healthBar.fillAmount = healthNormalized;
+        }
     }
 
     private void HealthSystem_OnDamage(object sender, EventArgs e) {
