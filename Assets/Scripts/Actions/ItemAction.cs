@@ -9,7 +9,8 @@ public class ItemAction : BaseAction
     [SerializeField] public InventoryItemData healthPotion;   
     [SerializeField] private InventorySystem inventorySystem;  
     [SerializeField] public int potionHealAmount = 20;        
-    private HealthSystem healthSystem;                         
+    private HealthSystem healthSystem;
+    public UnitWorldUI unityWorldUI;                         
 
     public void Start()
     {
@@ -39,7 +40,7 @@ public class ItemAction : BaseAction
           
             healthSystem.Heal(potionHealAmount);
             Debug.Log("Used health potion");
-
+            unityWorldUI.UpdateHealthBar();
            
             ActionFinish();
         }
