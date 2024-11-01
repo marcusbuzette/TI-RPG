@@ -19,6 +19,7 @@ public class TurnSystemUI : MonoBehaviour {
         TurnSystem.Instance.onOrderChange += TurnSystem_OnOrderChange;
         UpdatedTurnText();
         CreateUnitActionButtons();
+        UpdateEndTurnButton();
     }
 
     private void UpdatedTurnText() {
@@ -28,6 +29,7 @@ public class TurnSystemUI : MonoBehaviour {
     private void TurnSystem_OnTurnChange(object sender, EventArgs e) {
         UpdatedTurnText();
         CreateUnitActionButtons();
+        UpdateEndTurnButton();
     }
     private void TurnSystem_OnOrderChange(object sender, EventArgs e) {
         CreateUnitActionButtons();
@@ -44,5 +46,9 @@ public class TurnSystemUI : MonoBehaviour {
         }
 
  
+    }
+
+    private void UpdateEndTurnButton() {
+        endTurnButton.interactable = TurnSystem.Instance.IsPlayerTurn();
     }
 }
