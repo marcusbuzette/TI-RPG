@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TurnSystem : MonoBehaviour {
 
@@ -50,6 +51,9 @@ public class TurnSystem : MonoBehaviour {
     public void RemoveUnitFromList(Unit unitDead) {
         unitiesOrderList.Remove(unitDead);
         if (turnNumber > 0) { turnNumber--; }
+        if (!CheckEnemiesLeft()) {
+            SceneManager.LoadScene("HUB");
+        }
     }
 
     public bool IsPlayerTurn() {
@@ -57,7 +61,7 @@ public class TurnSystem : MonoBehaviour {
     }
 
     public List<Unit> GetTurnOrder() {
-        List<Unit> currentTurnList =  new(unitiesOrderList);
+        List<Unit> currentTurnList = new(unitiesOrderList);
         for (int i = 0; i < turnNumber; i++) {
             Unit first = currentTurnList[0];
             currentTurnList.RemoveAt(0);
@@ -65,5 +69,12 @@ public class TurnSystem : MonoBehaviour {
         }
         return currentTurnList;
 
+    }
+
+    private bool CheckEnemiesLeft() {
+        foreach (Unit unit in unitiesOrderList) {
+            if(unit.IsEnemy()) return true;
+        }
+        return false;
     }
 }
