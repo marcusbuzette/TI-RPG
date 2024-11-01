@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571337, b: 0.3069219, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
@@ -7043,7 +7042,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3601574b5351a634fa7de61ec3479e7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: Playground
+  sceneToLoad: Cena Level Design
   dialogueTrigger: {fileID: 1679923263}
 --- !u!114 &1707326822 stripped
 MonoBehaviour:
@@ -7684,7 +7683,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4907950983568005145, guid: 43687c8789ea65847b6369c00d13cfac, type: 3}
       propertyPath: sentences.Array.data[1]
-      value: "Aproveite a build 1 Lip\xE3o!"
+      value: "Aproveite a build 2 Lip\xE3o!"
       objectReference: {fileID: 0}
     - target: {fileID: 5462567321286342285, guid: 43687c8789ea65847b6369c00d13cfac, type: 3}
       propertyPath: m_LocalPosition.x
