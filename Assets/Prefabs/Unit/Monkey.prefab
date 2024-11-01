@@ -85,7 +85,21 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4855899929353745125, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       insertIndex: -1
       addedObject: {fileID: -1861747851849192615}
+    - targetCorrespondingSourceObject: {fileID: 4855899929353745125, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6547054507977785566}
   m_SourcePrefab: {fileID: 100100000, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+--- !u!114 &4078634029301435563 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4326092778858689128, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+  m_PrefabInstance: {fileID: 329719882370531011}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e078099ec61d48bd9f9665a55a43c59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5183917217429670950 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4855899929353745125, guid: 35802ef038968144e82bb11a407e1793, type: 3}
@@ -106,6 +120,22 @@ MonoBehaviour:
   maxShootDistance: 1
   MAX_SPIN: 360
   hitDamage: 40
+--- !u!114 &6547054507977785566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5183917217429670950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2e767ee6586d8e4884b70a36b55da67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthPotion: {fileID: 11400000, guid: 110230de560646841bb1f0097e70042a, type: 2}
+  inventorySystem: {fileID: 0}
+  potionHealAmount: 20
+  unityWorldUI: {fileID: 4078634029301435563}
 --- !u!4 &9085143614739214128 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8829183408524775923, guid: 35802ef038968144e82bb11a407e1793, type: 3}
