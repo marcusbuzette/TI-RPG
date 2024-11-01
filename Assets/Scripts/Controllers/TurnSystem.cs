@@ -42,7 +42,6 @@ public class TurnSystem : MonoBehaviour {
         }
         isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
         onTurnChange.Invoke(this, EventArgs.Empty);
-        UnitActionSystem.Instance.ChangeSelectedUnit(unitiesOrderList[turnNumber]);
         unitiesOrderList[turnNumber].StartUnitTurn();
     }
 
