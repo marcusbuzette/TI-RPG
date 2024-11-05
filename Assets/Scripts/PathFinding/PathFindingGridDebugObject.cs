@@ -9,6 +9,8 @@ public class PathFindingGridDebugObject : GridDebugObject
     [SerializeField] private TextMeshPro gCostText;
     [SerializeField] private TextMeshPro hCostText;
     [SerializeField] private TextMeshPro fCostText;
+    [SerializeField] private MeshRenderer IsWalkableMeshRenderer;
+    [SerializeField] private Material[] IsWalkableMaterials;
 
     private PathNode pathNode;
 
@@ -22,5 +24,6 @@ public class PathFindingGridDebugObject : GridDebugObject
         gCostText.text = pathNode.GetGCost().ToString();
         hCostText.text = pathNode.GetHCost().ToString();
         fCostText.text = pathNode.GetFCost().ToString();
+        IsWalkableMeshRenderer.material = pathNode.IsWalkable() ? IsWalkableMaterials[0] : IsWalkableMaterials[1];
     }
 }
