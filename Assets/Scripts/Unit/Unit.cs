@@ -134,6 +134,7 @@ public class Unit : MonoBehaviour {
 
     public void StartUnitTurn() {
         this.isUnitTurn = true;
+        UnitActionSystem.Instance.ChangeSelectedUnit(this);
         OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
 
     }
