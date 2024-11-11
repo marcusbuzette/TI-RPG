@@ -281,6 +281,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isEnemy: 0
+  unitStats:
+    speed: 0
+    attack: 0
+    defence: 0
+    accuracy: 0
+  isUnitTurn: 0
 --- !u!114 &8930314314492603969
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -58,7 +58,7 @@ public class CameraManager : MonoBehaviour
 
                 Vector3 middlePoint = (hitterUnit.GetWorldPosition() + targetUnitH.GetWorldPosition()) / 2f;
 
-                float cameraDistance = 4f;
+                float cameraDistance = 10f;
                 Vector3 sideDir = Quaternion.Euler(0, 90, 0) * hitDir;
 
                 Vector3 actionCameraPositionHit = middlePoint + cameraCharacterHeight + (sideDir * cameraDistance);
