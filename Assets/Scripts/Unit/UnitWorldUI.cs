@@ -16,7 +16,9 @@ public class UnitWorldUI : MonoBehaviour {
 
 
     public void UpdateHealthBar() {
-        healthBar.fillAmount = healthSystem.GetHealthPointsNormalized();
+        float healthNormalized = healthSystem.GetHealthPointsNormalized();
+        healthBar.fillAmount = healthNormalized;
+
     }
 
     private void HealthSystem_OnDamage(object sender, EventArgs e) {
