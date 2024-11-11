@@ -10,6 +10,7 @@ public class ShootAction : BaseAction
     {
         Aiming, Shooting, Cooloff
     }
+    [SerializeField] private LayerMask obstaclesLayerMask;
     [SerializeField] private int maxShootDistance = 1;
     [SerializeField] private float aimingTimer = .1f;
     [SerializeField] private float shootingTimer = .3f;
@@ -97,6 +98,19 @@ public class ShootAction : BaseAction
                 {
                     continue;
                 }
+
+                Vector3 unitWorldPosition = LevelGrid.Instance.GetWorldPosition(unitGridPosition);
+                Vector3 shootDir = (targetUnit.GetWorldPosition() - unitWorldPosition).normalized;
+
+                float unitShoulderHeight = 1.7f;
+                if (Physics.Raycast(unitWorldPosition + Vector3.up * unitShoulderHeight,
+                    shootDir,
+                    Vector3.Distance(unitWorldPosition, targetUnit.GetWorldPosition()),
+                    obstaclesLayerMask)) {
+                    //Blocked by an Obstacle
+                    continue;
+                }
+                
 
                 validGridPositionList.Add(testGridPosition);
             }

@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour {
 
 
     [SerializeField] private bool debugMode = false;
+    [SerializeField] private bool debugPathFindingMode = false;
 
     private void Awake() {
         if (controller == null) {
@@ -30,5 +31,6 @@ public class GameController : MonoBehaviour {
     }
 
     public bool GetDebugMode() { return this.debugMode;}
+    public bool GetPathFindingDebugMode() { return this.debugPathFindingMode; }
 
 }
