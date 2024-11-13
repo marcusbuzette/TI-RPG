@@ -40,7 +40,7 @@ public class EnemyIA : MonoBehaviour {
                     }
                     else {
                         //No more enemies have actions they can take, end enemy turn
-                        Debug.Log("enemy turn end");
+                        // Debug.Log("enemy turn end");
                         TurnSystem.Instance.NextTurn();
                     }
                 }
@@ -66,7 +66,7 @@ public class EnemyIA : MonoBehaviour {
     }
 
     private bool TryTakeEnemyAIAction(Action onEnemyAIActionComplete) {
-        Debug.Log("Take enemy AI action");
+        // Debug.Log("Take enemy AI action");
         foreach (Unit enemyUnit in UnitManager.Instance.GetEnemyList()) {
             if(enemyUnit.IsUnityTurn() && TryTakeEnemyAIAction(enemyUnit, onEnemyAIActionComplete)) {
                 return true;
@@ -106,7 +106,7 @@ public class EnemyIA : MonoBehaviour {
             }
         }
 
-        Debug.Log(bestBaseAction);
+        // Debug.Log(bestBaseAction);
 
         if( bestEnemyAIAction != null && enemyUnit.TryToPerformAction(bestBaseAction)) {
             bestBaseAction.TriggerAction(bestEnemyAIAction.gridPosition, onEnemyAIActionComplete);

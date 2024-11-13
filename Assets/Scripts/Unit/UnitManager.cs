@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitManager : MonoBehaviour
-{
+public class UnitManager : MonoBehaviour {
     public static UnitManager Instance { get; private set; }
 
     private List<Unit> unitList;
@@ -35,6 +34,9 @@ public class UnitManager : MonoBehaviour
         }
         else {
             friendlyList.Add(unit);
+            if (!GameController.controller.HasUnitRecords(unit.GetUnitId())) {
+                GameController.controller.AddUnitToRecords(unit);
+            }
         }
     }
 
@@ -44,6 +46,9 @@ public class UnitManager : MonoBehaviour
         unitList.Remove(unit);
 
         if (unit.IsEnemy()) {
+            foreach (var friendlyUnit in friendlyList) {
+                friendlyUnit.AddXp(unit.GetUnitXpStats().getXpSpoil());
+            }
             enemyList.Remove(unit);
         }
         else {

@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour {
     public static GameController controller;
     public UIController uicontroller;
     public int dinheiro;
+    private Dictionary<string, UnitRecords> playerUnits = new Dictionary<string, UnitRecords>();
 
 
     [SerializeField] private bool debugMode = false;
@@ -32,5 +33,18 @@ public class GameController : MonoBehaviour {
 
     public bool GetDebugMode() { return this.debugMode;}
     public bool GetPathFindingDebugMode() { return this.debugPathFindingMode; }
+    public bool HasUnitRecords (string unitId) {
+        return playerUnits.ContainsKey(unitId);
+        }
+    public void AddUnitToRecords(Unit unit) {
+        UnitRecords unitRecordsAux = new UnitRecords(unit.GetUnitXpSystem().getXpAmount(), unit.GetUnitXpStats());
+        playerUnits.Add(unit.GetUnitId(), unitRecordsAux);
+    }
+
+public UnitRecords GetUnitRecords(string unitId) { return playerUnits[unitId]; }
+public void UpdateUnitRecords(Unit unit) {
+    UnitRecords unitRecordsAux = new UnitRecords(unit.GetUnitXpSystem().getXpAmount(), unit.GetUnitXpStats());
+    playerUnits[unit.GetUnitId()] = unitRecordsAux;
+}
 
 }

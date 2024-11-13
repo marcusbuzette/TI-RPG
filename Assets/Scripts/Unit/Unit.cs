@@ -2,7 +2,7 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class Unit : MonoBehaviour {
 
     public static event EventHandler OnAnyActionPerformed;
@@ -13,6 +13,8 @@ public class Unit : MonoBehaviour {
 
     private GridPosition gridPosition;
     private HealthSystem healthSystem;
+    [SerializeField] private XpSystem xpSystem;
+    [SerializeField] private string unitId = "";
     [SerializeField] private UnitStats unitStats;
     private BaseAction[] actionsArray;
     private bool hasMoved = false;
@@ -22,10 +24,15 @@ public class Unit : MonoBehaviour {
     private void Awake() {
         actionsArray = GetComponents<BaseAction>();
         healthSystem = GetComponent<HealthSystem>();
-        // unitStats = GetComponent<UnitStats>();
+        xpSystem = GetComponent<XpSystem>();
     }
 
     private void Start() {
+        if(GameController.controller.HasUnitRecords(unitId)) {
+            UnitRecords unitRecords = GameController.controller.GetUnitRecords(unitId);
+            this.xpSystem.AddXp(unitRecords.xp);
+            this.unitStats = unitRecords.unitStats;
+        }
         gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
         TurnSystem.Instance.onTurnChange += TurnSystem_OnTurnChange;
@@ -114,6 +121,10 @@ public class Unit : MonoBehaviour {
         healthSystem.Damage(damage);
     }
 
+    public void AddXp(int xpAmount) {
+        xpSystem.AddXp(xpAmount);
+    }
+
     private void HealthSystem_OnDie(object sender, EventArgs e) {
         LevelGrid.Instance.RemoveUnitAtGridPosition(gridPosition, this);
         TurnSystem.Instance.RemoveUnitFromList(this);
@@ -137,5 +148,15 @@ public class Unit : MonoBehaviour {
         UnitActionSystem.Instance.ChangeSelectedUnit(this);
         OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
 
+    }
+
+    public string GetUnitId() { return this.unitId; }
+    public XpSystem GetUnitXpSystem() { return this.xpSystem; }
+    public UnitStats GetUnitXpStats() { return this.unitStats; }
+
+    private void OnDestroy() {
+        if (GameController.controller.HasUnitRecords(unitId)) {
+            GameController.controller.UpdateUnitRecords(this);
+        }
     }
 }

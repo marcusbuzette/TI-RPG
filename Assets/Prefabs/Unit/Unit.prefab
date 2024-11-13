@@ -243,6 +243,7 @@ GameObject:
   - component: {fileID: 3364526126685847859}
   - component: {fileID: 6442415589203364700}
   - component: {fileID: 5740676890434492411}
+  - component: {fileID: 2170219948549848153}
   m_Layer: 7
   m_Name: Unit
   m_TagString: Untagged
@@ -281,6 +282,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isEnemy: 0
+  xpSystem: {fileID: 0}
+  unitId: 
   unitStats:
     speed: 0
     attack: 0
@@ -351,6 +354,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthPoints: 100
   maxHealthPoints: 100
+--- !u!114 &2170219948549848153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4855899929353745125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d0b3338ac2914f4ba75c869397aca3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xp: 0
 --- !u!1 &5065005123134118304
 GameObject:
   m_ObjectHideFlags: 0
