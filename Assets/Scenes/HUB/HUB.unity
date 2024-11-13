@@ -1142,6 +1142,7 @@ MonoBehaviour:
   uicontroller: {fileID: 0}
   dinheiro: 0
   debugMode: 0
+  debugPathFindingMode: 0
 --- !u!4 &660586791
 Transform:
   m_ObjectHideFlags: 0
@@ -7042,7 +7043,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3601574b5351a634fa7de61ec3479e7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: Cena Level Design
+  sceneToLoad: Playground
   dialogueTrigger: {fileID: 1679923263}
 --- !u!114 &1707326822 stripped
 MonoBehaviour:

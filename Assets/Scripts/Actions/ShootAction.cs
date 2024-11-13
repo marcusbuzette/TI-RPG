@@ -165,7 +165,7 @@ public class ShootAction : BaseAction
 
     public int GetTargetCountAtPosition(GridPosition gridPosition)
     {
-        Debug.Log("called");
+        // Debug.Log("called");
         return GetValidGridPositionList(gridPosition).Count;
     }
 
