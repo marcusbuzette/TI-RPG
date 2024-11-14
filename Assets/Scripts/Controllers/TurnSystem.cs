@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class TurnSystem : MonoBehaviour {
 
     private int turnNumber = 0;
-    private bool isPlayerTurn = true;
+    [SerializeField] private bool isPlayerTurn = true;
     [SerializeField] private List<Unit> unitiesOrderList = new List<Unit>();
 
     public static TurnSystem Instance { get; private set; }
@@ -28,6 +28,7 @@ public class TurnSystem : MonoBehaviour {
     private void Start() {
         unitiesOrderList = FindObjectsOfType<Unit>(false).ToList<Unit>();
         unitiesOrderList.Sort((x, y) => y.GetUnitSpeed().CompareTo(x.GetUnitSpeed()));
+        isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
         unitiesOrderList[turnNumber].StartUnitTurn();
         onOrderChange.Invoke(this, EventArgs.Empty);
 
@@ -72,7 +73,7 @@ public class TurnSystem : MonoBehaviour {
 
     private bool CheckEnemiesLeft() {
         foreach (Unit unit in unitiesOrderList) {
-            if(unit.IsEnemy()) return true;
+            if (unit.IsEnemy()) return true;
         }
         return false;
     }

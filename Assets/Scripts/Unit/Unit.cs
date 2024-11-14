@@ -28,7 +28,7 @@ public class Unit : MonoBehaviour {
     }
 
     private void Start() {
-        if(GameController.controller.HasUnitRecords(unitId)) {
+        if(!isEnemy && GameController.controller.HasUnitRecords(unitId)) {
             UnitRecords unitRecords = GameController.controller.GetUnitRecords(unitId);
             this.xpSystem.AddXp(unitRecords.xp);
             this.unitStats = unitRecords.unitStats;
@@ -155,7 +155,7 @@ public class Unit : MonoBehaviour {
     public UnitStats GetUnitXpStats() { return this.unitStats; }
 
     private void OnDestroy() {
-        if (GameController.controller.HasUnitRecords(unitId)) {
+        if (!isEnemy && GameController.controller.HasUnitRecords(unitId)) {
             GameController.controller.UpdateUnitRecords(this);
         }
     }
