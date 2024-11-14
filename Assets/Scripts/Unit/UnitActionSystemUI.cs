@@ -19,6 +19,7 @@ public class UnitActionSystemUI : MonoBehaviour {
 
 
     private void CreateUnitActionButtons() {
+        Debug.Log(actionButtonsContainer);
         foreach (Transform buttonTransform in actionButtonsContainer) {
             Destroy(buttonTransform.gameObject);
         }
@@ -51,5 +52,12 @@ public class UnitActionSystemUI : MonoBehaviour {
     }
     private void Unit_OnAnyActionPerformed (object sender, EventArgs e) {
         CreateUnitActionButtons();
+    }
+
+    private void OnDestroy() {
+        UnitActionSystem.Instance.OnSelectedUnitChanged -= UnitActionSystem_OnSelectedUnitChanged;
+        UnitActionSystem.Instance.OnActionStarted -= UnitActionSystem_OnActionStarted;
+        TurnSystem.Instance.onTurnChange -= TurnSystem_OnTurnChange;
+        Unit.OnAnyActionPerformed -= Unit_OnAnyActionPerformed;
     }
 }

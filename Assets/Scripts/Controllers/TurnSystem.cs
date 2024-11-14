@@ -46,13 +46,22 @@ public class TurnSystem : MonoBehaviour {
         unitiesOrderList[turnNumber].StartUnitTurn();
     }
 
+    private void ComboKill() {
+        isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
+        onTurnChange.Invoke(this, EventArgs.Empty);
+        unitiesOrderList[turnNumber].StartUnitTurn();
+    }
+
     public int GetTurnNumber() { return turnNumber; }
 
     public void RemoveUnitFromList(Unit unitDead) {
+        int unitDeadIndex = unitiesOrderList.FindIndex((u) => u.transform == unitDead.transform);
         unitiesOrderList.Remove(unitDead);
-        if (turnNumber > 0) { turnNumber--; }
+        if (turnNumber > unitDeadIndex) { turnNumber--; }
         if (!CheckEnemiesLeft()) {
             SceneManager.LoadScene("HUB");
+        } else {
+            ComboKill();
         }
     }
 
