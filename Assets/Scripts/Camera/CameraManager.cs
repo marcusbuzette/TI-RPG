@@ -83,4 +83,9 @@ public class CameraManager : MonoBehaviour
                 break;
         }
     }
+
+    private void OnDestroy() {
+        BaseAction.OnAnyActionStarted -= BaseAction_OnAnyActionStarted;
+        BaseAction.OnAnyActionCompleted -= BaseAction_OnAnyActionCompleted;
+    }
 }
