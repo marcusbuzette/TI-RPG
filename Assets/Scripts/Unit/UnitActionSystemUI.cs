@@ -33,7 +33,9 @@ public class UnitActionSystemUI : MonoBehaviour {
             Transform actioonButtonTransform = Instantiate(actionButtonPrefab, actionButtonsContainer);
             actioonButtonTransform.GetComponent<ActionButtonUI>().SetBaseAction(action);
             if (((selectedUnit.GetHasMoved() && action.GetActionType() == ActionType.MOVE) || !selectedUnit.IsUnityTurn()) 
-            || (selectedUnit.GetHasPerformedAction() && action.GetActionType() == ActionType.ACTION) || !selectedUnit.IsUnityTurn()) {
+            || (selectedUnit.GetHasPerformedAction() && action.GetActionType() == ActionType.ACTION) || !selectedUnit.IsUnityTurn()
+            || (selectedUnit.GetHasPerformedSkill() && action.GetActionType() == ActionType.SKILL)
+            || (action.GetOnCooldown() && action.GetActionType() == ActionType.SKILL) || !selectedUnit.IsUnityTurn()) {
                 actioonButtonTransform.GetComponent<ActionButtonUI>().DisableActionButton();
             }
         }

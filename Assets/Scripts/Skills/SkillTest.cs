@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class SpinAction : BaseAction {
-
-
+public class SkillTest : BaseSkills {
     private float totalSpinAmmount = 0;
     [SerializeField] private float MAX_SPIN = 360f;
 
@@ -18,11 +16,12 @@ public class SpinAction : BaseAction {
         if (totalSpinAmmount > MAX_SPIN) {
             totalSpinAmmount = 0;
             ActionFinish();
+            ActiveCoolDown();
         }
     }
 
     public override string GetActionName() {
-        return "Girar";
+        return "TesteCoolDown";
     }
 
     public override List<GridPosition> GetValidGridPositionList() {
@@ -32,7 +31,6 @@ public class SpinAction : BaseAction {
             unitGridPosition
         };
     }
-
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         ActionStart(onActionComplete);
@@ -45,7 +43,14 @@ public class SpinAction : BaseAction {
         };
     }
 
-    public override bool GetOnCooldown() { return false; }
+    public override void IsAnotherRound() {
+        if (currentCoolDown != 0) {
+            currentCoolDown--;
+        }
+        if (currentCoolDown == 0) {
+            onCoolDown = false;
+        }
+    }
 
-    public override void IsAnotherRound() { }
+    public override bool GetOnCooldown() { return onCoolDown; }
 }

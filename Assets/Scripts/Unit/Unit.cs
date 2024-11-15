@@ -16,9 +16,10 @@ public class Unit : MonoBehaviour {
     [SerializeField] private XpSystem xpSystem;
     [SerializeField] private string unitId = "";
     [SerializeField] private UnitStats unitStats;
-    private BaseAction[] actionsArray;
-    private bool hasMoved = false;
-    private bool hasPerformedAction = false;
+    [SerializeField] private BaseAction[] actionsArray;
+    [SerializeField] private bool hasMoved = false;
+    [SerializeField] private bool hasPerformedAction = false;
+    [SerializeField] private bool hasPerformedSkill = false;
     public bool isUnitTurn = false;
 
     private void Awake() {
@@ -79,11 +80,14 @@ public class Unit : MonoBehaviour {
     }
 
     public bool CanTriggerAction(BaseAction action) {
+        Debug.Log(action.ToString());
         switch (action.GetActionType()) {
             case ActionType.MOVE:
                 return !hasMoved;
             case ActionType.ACTION:
                 return !hasPerformedAction;
+            case ActionType.SKILL:
+                return !hasPerformedSkill;
         }
         return false;
     }
@@ -95,7 +99,11 @@ public class Unit : MonoBehaviour {
                 break;
             case ActionType.ACTION:
                 hasPerformedAction = true;
+                hasPerformedSkill = true;
                 hasMoved = true;
+                break;
+            case ActionType.SKILL:
+                hasPerformedSkill = true;
                 break;
         }
         OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
@@ -104,10 +112,13 @@ public class Unit : MonoBehaviour {
     public bool GetHasMoved() { return hasMoved; }
     public bool GetHasPerformedAction() { return hasPerformedAction; }
 
+    public bool GetHasPerformedSkill() { return hasPerformedSkill; }
+
     private void TurnSystem_OnTurnChange(object sender, EventArgs e) {
         if ((IsEnemy() && isUnitTurn) || (!IsEnemy() && isUnitTurn)) {
             hasMoved = false;
             hasPerformedAction = false;
+            hasPerformedSkill = false;
             isUnitTurn = false;
             // OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
         }
@@ -145,9 +156,15 @@ public class Unit : MonoBehaviour {
 
     public void StartUnitTurn() {
         this.isUnitTurn = true;
+
+        for(int i = 0; i < actionsArray.Length; i++) {
+            if (actionsArray[i].GetActionType() == ActionType.SKILL) {
+                actionsArray[i].IsAnotherRound();
+            }
+        }
+
         UnitActionSystem.Instance.ChangeSelectedUnit(this);
         OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
-
     }
 
     public string GetUnitId() { return this.unitId; }

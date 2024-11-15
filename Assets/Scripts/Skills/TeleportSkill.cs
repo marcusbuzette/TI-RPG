@@ -1,31 +1,35 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using System;
 using Unity.VisualScripting;
+using UnityEngine;
 
-public class HitAction : BaseAction {
+public class TeleportSkill : BaseSkills
+{
+    [SerializeField] private int maxTeleportDistance = 1;
+    private GridPosition targetGrid;
+
     private float totalSpinAmmount = 0;
-    [SerializeField] private int maxShootDistance = 1;
     [SerializeField] private float MAX_SPIN = 360f;
-    [SerializeField] private int hitDamage = 50;
-
-    private Unit targetUnit;
-
-
-    public override string GetActionName() {
-        return "Hit";
-    }
 
     public override void Action() {
         float spinAddAmmount = 360f * Time.deltaTime;
         transform.eulerAngles += new Vector3(0, spinAddAmmount, 0);
         totalSpinAmmount += spinAddAmmount;
+        bool teleported = false;
+
+        if(totalSpinAmmount > MAX_SPIN / 2 && !teleported) {
+            Teleport();
+        }
+
         if (totalSpinAmmount > MAX_SPIN) {
-            totalSpinAmmount = 0;
-            targetUnit.Damage(hitDamage);
+            ActiveCoolDown();
             ActionFinish();
         }
+    }
+
+    public override string GetActionName() {
+        return "Teleport";
     }
 
     public override List<GridPosition> GetValidGridPositionList() {
@@ -33,8 +37,8 @@ public class HitAction : BaseAction {
 
         GridPosition unitGridPosition = unit.GetGridPosition();
 
-        for (int x = -maxShootDistance; x <= maxShootDistance; x++) {
-            for (int z = -maxShootDistance; z <= maxShootDistance; z++) {
+        for (int x = -maxTeleportDistance; x <= maxTeleportDistance; x++) {
+            for (int z = -maxTeleportDistance; z <= maxTeleportDistance; z++) {
                 GridPosition offsetGridPosition = new GridPosition(x, z);
                 GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
@@ -42,14 +46,15 @@ public class HitAction : BaseAction {
                     continue;
                 }
 
-
-                if (!LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition)) {
+                if (unitGridPosition == testGridPosition) {
                     continue;
                 }
 
-                Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition);
+                if (LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition)) {
+                    continue;
+                }
 
-                if (targetUnit.IsEnemy() == unit.IsEnemy()) {
+                if (!PathFinding.Instance.IsWalkableGridPosition(testGridPosition)) {
                     continue;
                 }
 
@@ -61,8 +66,8 @@ public class HitAction : BaseAction {
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
-        targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
-        
+        targetGrid = mouseGridPosition;
+
         ActionStart(onActionComplete);
     }
 
@@ -73,11 +78,20 @@ public class HitAction : BaseAction {
         };
     }
 
-    public Unit GetTargetUnit(){
-        return targetUnit;
+    public override void IsAnotherRound() {
+        Debug.Log("IS ANOTHER ROUND");
+        if (currentCoolDown != 0) {
+            currentCoolDown--;
+        }
+        if (currentCoolDown == 0) {
+            onCoolDown = false;
+        }
     }
 
-    public override bool GetOnCooldown() { return false; }
+    private void Teleport() {
+        unit.transform.position = LevelGrid.Instance.GetWorldPosition(targetGrid);
+        LevelGrid.Instance.UnitMovedGridPosition(unit, unit.GetGridPosition(), targetGrid);
+    }
 
-    public override void IsAnotherRound() {}
+    public override bool GetOnCooldown() { return onCoolDown; }
 }

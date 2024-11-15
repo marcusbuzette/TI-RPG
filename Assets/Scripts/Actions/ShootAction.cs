@@ -1,11 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShootAction : BaseAction
 {
-
     private enum State
     {
         Aiming, Shooting, Cooloff
@@ -54,9 +54,6 @@ public class ShootAction : BaseAction
         {
             NextState();
         }
-
-
-
     }
 
     public override List<GridPosition> GetValidGridPositionList()
@@ -175,4 +172,8 @@ public class ShootAction : BaseAction
     public int GetMaxShootDistance() {
         return maxShootDistance;
     }
+
+    public override bool GetOnCooldown() { return false; }
+
+    public override void IsAnotherRound() { }
 }
