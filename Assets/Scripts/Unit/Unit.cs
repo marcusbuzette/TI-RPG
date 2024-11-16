@@ -22,6 +22,9 @@ public class Unit : MonoBehaviour {
     [SerializeField] private bool hasPerformedSkill = false;
     public bool isUnitTurn = false;
 
+    private int intimidateCoolDown = 0;
+    [SerializeField] private int enemyFocus = 0;
+
     private void Awake() {
         actionsArray = GetComponents<BaseAction>();
         healthSystem = GetComponent<HealthSystem>();
@@ -157,7 +160,18 @@ public class Unit : MonoBehaviour {
     public void StartUnitTurn() {
         this.isUnitTurn = true;
 
-        for(int i = 0; i < actionsArray.Length; i++) {
+        if(intimidateCoolDown != 0) {
+            hasMoved = true;
+            hasPerformedAction = true;
+            hasPerformedSkill = true;
+            intimidateCoolDown--;
+        }
+
+        if(enemyFocus != 0) {
+            enemyFocus--;
+        }
+
+        for (int i = 0; i < actionsArray.Length; i++) {
             if (actionsArray[i].GetActionType() == ActionType.SKILL) {
                 actionsArray[i].IsAnotherRound();
             }
@@ -175,5 +189,18 @@ public class Unit : MonoBehaviour {
         if (!isEnemy && GameController.controller.HasUnitRecords(unitId)) {
             GameController.controller.UpdateUnitRecords(this);
         }
+    }
+
+    public void BeIntimidate() {
+        intimidateCoolDown = 1;
+    }
+
+    public void FocusOnMe(int focusTime) {
+        enemyFocus = focusTime;
+    }
+
+    public bool GetEnemyFocus() {
+        if (enemyFocus == 0) return false;
+        else return true;
     }
 }
