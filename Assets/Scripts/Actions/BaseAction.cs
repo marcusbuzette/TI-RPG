@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ActionType { MOVE, ACTION };
+public enum ActionType { MOVE, ACTION, INVENTORY, ITEM };
 
 public abstract class BaseAction : MonoBehaviour {
 

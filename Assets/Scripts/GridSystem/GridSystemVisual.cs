@@ -93,7 +93,7 @@ public class GridSystemVisual : MonoBehaviour {
         Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
         BaseAction selectedAction = UnitActionSystem.Instance.GetSelectedAction();
 
-        if(selectedAction == null) return;
+        if(selectedAction == null || selectedAction.GetActionType() == ActionType.INVENTORY) return;
 
         GridVisualType gridVisualType = GridVisualType.White;
         switch (selectedAction) {

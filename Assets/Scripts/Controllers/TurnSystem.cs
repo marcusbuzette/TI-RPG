@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -78,6 +79,10 @@ public class TurnSystem : MonoBehaviour {
         }
         return currentTurnList;
 
+    }
+
+    public Unit GetTurnUnit() {
+        return unitiesOrderList[turnNumber];
     }
 
     private bool CheckEnemiesLeft() {
