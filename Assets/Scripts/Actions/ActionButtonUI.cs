@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class ActionButtonUI : MonoBehaviour {
 
-    [SerializeField] private TextMeshProUGUI textMeshPro;
-    [SerializeField] private Button  button;
+    [SerializeField] protected TextMeshProUGUI textMeshPro;
+    [SerializeField] protected Button  button;
     [SerializeField] private Color  NORMAL_COLOR;
     [SerializeField] private Color  SELECTED_COLOR;
     [SerializeField] private ActionType actionType;
