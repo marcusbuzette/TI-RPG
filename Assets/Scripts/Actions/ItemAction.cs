@@ -10,7 +10,6 @@ public class ItemAction : BaseAction {
     private string itemName = "Potion";
 
     public override void Action() {
-        Debug.Log("action");
         if (InventorySystem.inventorySystem != null &&
                 InventorySystem.inventorySystem.HasItemNamed(itemName) && healthSystem != null) {
             InventoryItemData healthPotion = InventorySystem.inventorySystem.GetInvontoryItemNamed(itemName);
