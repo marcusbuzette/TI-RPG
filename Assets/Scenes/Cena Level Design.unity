@@ -8081,6 +8081,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1371315926}
     m_Modifications:
+    - target: {fileID: 3040281036064970410, guid: 82047d41f197848bb9bc6b85604fbe01, type: 3}
+      propertyPath: unitId
+      value: monkey
+      objectReference: {fileID: 0}
     - target: {fileID: 5183917217429670950, guid: 82047d41f197848bb9bc6b85604fbe01, type: 3}
       propertyPath: m_Name
       value: Monkey
@@ -8133,12 +8137,13 @@ PrefabInstance:
       propertyPath: maxMoveDistance
       value: 6
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6547054507977785566, guid: 82047d41f197848bb9bc6b85604fbe01, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5183917217429670950, guid: 82047d41f197848bb9bc6b85604fbe01, type: 3}
-      insertIndex: -1
+      insertIndex: 2
       addedObject: {fileID: 628301326}
   m_SourcePrefab: {fileID: 100100000, guid: 82047d41f197848bb9bc6b85604fbe01, type: 3}
 --- !u!1 &1704691378
@@ -8589,7 +8594,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7034417333151070958, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
       propertyPath: shootDamage
-      value: 10
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7034417333151070958, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
       propertyPath: maxShootDistance
@@ -9224,12 +9229,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Archer
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 4874365344887348852, guid: e4cdb5a43fe194cbbb93ec86261f60ac, type: 3}
+      propertyPath: unitId
+      value: archer
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4236028046380058736, guid: e4cdb5a43fe194cbbb93ec86261f60ac, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3343077423336064248, guid: e4cdb5a43fe194cbbb93ec86261f60ac, type: 3}
-      insertIndex: -1
+      insertIndex: 2
       addedObject: {fileID: 1066181945}
   m_SourcePrefab: {fileID: 100100000, guid: e4cdb5a43fe194cbbb93ec86261f60ac, type: 3}
 --- !u!1 &2111068607

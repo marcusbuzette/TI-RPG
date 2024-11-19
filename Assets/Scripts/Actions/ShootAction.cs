@@ -152,7 +152,7 @@ public class ShootAction : BaseAction
     {
         targetUnit.Damage(shootDamage);
 
-        AudioManager.instance.PlaySFX("ArrowShot");
+        AudioManager.instance?.PlaySFX("ArrowShot");
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
