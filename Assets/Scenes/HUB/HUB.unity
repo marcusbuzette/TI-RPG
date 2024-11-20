@@ -2486,7 +2486,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dad25d1afa349bc4bbdecef7f360d8b1, type: 2}
+  - {fileID: -876546973899608171, guid: 2931561921691f943898b363799d48aa, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2515,7 +2515,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1679923256}
-  m_Mesh: {fileID: -606459391694067078, guid: 019252df7400e2d49a3bef563bc5d5c6, type: 3}
+  m_Mesh: {fileID: -1111846184142130028, guid: 2931561921691f943898b363799d48aa, type: 3}
 --- !u!4 &1679923262
 Transform:
   m_ObjectHideFlags: 0
@@ -2556,7 +2556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3601574b5351a634fa7de61ec3479e7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: Playground
+  sceneToLoad: Cena Level Design
   dialogueTrigger: {fileID: 1679923263}
 --- !u!114 &1707326822 stripped
 MonoBehaviour:
