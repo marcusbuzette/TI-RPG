@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee4c00718bc43d740b6adbe4dfb77e9c, type: 3}
-  m_Name: Teste
+  m_Name: Teste7
   m_EditorClassIdentifier: 
-  nome: teste
-  descricao: apenas um teste
-  custo: 0
-  preRequisitos: []
-  desbloqueado: 1
+  nome: Teste 7
+  descricao: teste 7
+  custo: 1
+  preRequisitos:
+  - {fileID: 11400000, guid: d4b332ff5740515459a8e2f079751b8c, type: 2}
+  desbloqueado: 0
