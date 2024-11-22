@@ -5,43 +5,23 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class ItemAction : BaseAction {
-    [SerializeField] public InventoryItemData healthPotion;
-    [SerializeField] private InventorySystem inventorySystem;
     [SerializeField] public int potionHealAmount = 20;
     private HealthSystem healthSystem;
-    public UnitWorldUI unityWorldUI;
-
-    public void Start() {
-        inventorySystem = FindObjectOfType<InventorySystem>();
-
-        if (inventorySystem == null) {
-            Debug.LogError("InventorySystem not found!");
-        }
-
-
-        healthSystem = GetComponent<HealthSystem>();
-
-        if (healthSystem == null) {
-            Debug.LogError("HealthSystem not found on the unit!");
-        }
-    }
+    private string itemName = "Potion";
 
     public override void Action() {
-        if (inventorySystem != null && inventorySystem.HasItem(healthPotion) && healthSystem != null) {
-
-            inventorySystem.Remove(healthPotion);
-
-
+        if (InventorySystem.inventorySystem != null &&
+                InventorySystem.inventorySystem.HasItemNamed(itemName) && healthSystem != null) {
+            InventoryItemData healthPotion = InventorySystem.inventorySystem.GetInvontoryItemNamed(itemName);
+            InventorySystem.inventorySystem.Remove(healthPotion);
             healthSystem.Heal(potionHealAmount);
             Debug.Log("Used health potion");
-            unityWorldUI.UpdateHealthBar();
-
-
         }
         else {
             Debug.LogWarning("HealthSystem or InventorySystem missing!");
         }
         ActionFinish();
+
     }
 
     public override string GetActionName() {
@@ -49,12 +29,17 @@ public class ItemAction : BaseAction {
     }
 
     public override List<GridPosition> GetValidGridPositionList() {
+        unit = TurnSystem.Instance.GetTurnUnit();
         GridPosition unitGridPosition = unit.GetGridPosition();
         return new List<GridPosition> { unitGridPosition };
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
+        this.actionType = ActionType.ITEM;
+        this.unit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
+        this.healthSystem = unit.GetComponent<HealthSystem>();
         ActionStart(onActionComplete);
+        Action();
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {

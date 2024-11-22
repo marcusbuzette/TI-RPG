@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public enum ActionType { MOVE, ACTION, SKILL};
+public enum ActionType { MOVE, ACTION, INVENTORY, ITEM, SKILL };
 
 public abstract class BaseAction : MonoBehaviour {
 

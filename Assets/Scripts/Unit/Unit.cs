@@ -32,7 +32,7 @@ public class Unit : MonoBehaviour {
     }
 
     private void Start() {
-        if(!isEnemy && GameController.controller.HasUnitRecords(unitId)) {
+        if (!isEnemy && GameController.controller.HasUnitRecords(unitId)) {
             UnitRecords unitRecords = GameController.controller.GetUnitRecords(unitId);
             this.xpSystem.AddXp(unitRecords.xp);
             this.unitStats = unitRecords.unitStats;
@@ -56,7 +56,7 @@ public class Unit : MonoBehaviour {
     }
 
     public T GetAction<T>() where T : BaseAction {
-        foreach(BaseAction baseAction in actionsArray) {
+        foreach (BaseAction baseAction in actionsArray) {
             if (baseAction is T) {
                 return (T)baseAction;
             }
@@ -91,6 +91,10 @@ public class Unit : MonoBehaviour {
                 return !hasPerformedAction;
             case ActionType.SKILL:
                 return !hasPerformedSkill;
+            case ActionType.INVENTORY:
+                return true;
+            case ActionType.ITEM:
+                return true;
         }
         return false;
     }
@@ -151,7 +155,7 @@ public class Unit : MonoBehaviour {
     }
 
 
-    public Vector3 GetWorldPosition() { return transform.position;}
+    public Vector3 GetWorldPosition() { return transform.position; }
 
     public int GetUnitSpeed() { return unitStats.GetSpeed(); }
 
