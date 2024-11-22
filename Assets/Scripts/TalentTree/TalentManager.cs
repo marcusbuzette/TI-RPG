@@ -1,17 +1,21 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TalentManager : MonoBehaviour
 {
     public List<Talento> talentos;
     public int pontosDisponiveis = 4;
+    public Text pontos;
 
     //Faz com que os talentos estejam desbloqueados ao iniciar a cena
     public void Start(){
-      foreach (Talento talento in talentos) 
+        foreach (Talento talento in talentos) 
         {
             talento.desbloqueado = false; 
         }
+        pontos.text = "Pontos: " + pontosDisponiveis;
+
     }
 
     //Verifica se existem pontos suficientes e todas as condições estão cumpridas para o desbloqueio do talento
@@ -20,6 +24,7 @@ public class TalentManager : MonoBehaviour
         if (pontosDisponiveis >= talento.custo && PodeSerDesbloqueado(talento))
         {
             pontosDisponiveis -= talento.custo;
+            pontos.text = "Pontos: " + pontosDisponiveis;
             DesbloquearTalento(talento); 
         }
         else
