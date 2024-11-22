@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static System.Collections.Specialized.BitVector32;
 
 public class MoveAction : BaseAction {
 
@@ -105,4 +106,8 @@ public class MoveAction : BaseAction {
             actionValue = targetCountAtGridPosition * 10,
         };
     }
+
+    public override bool GetOnCooldown() { return false; }
+
+    public override void IsAnotherRound() { }
 }

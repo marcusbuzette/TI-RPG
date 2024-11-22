@@ -1,28 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
-public class SpinAction : BaseAction {
-
-
-    private float totalSpinAmmount = 0;
-    [SerializeField] private float MAX_SPIN = 360f;
-
+public class EnemyFocusSkill : BaseSkills
+{
+    [SerializeField] private int skillRounds;
 
     public override void Action() {
-        float spinAddAmmount = 360f * Time.deltaTime;
-        transform.eulerAngles += new Vector3(0, spinAddAmmount, 0);
-        totalSpinAmmount += spinAddAmmount;
-        if (totalSpinAmmount > MAX_SPIN) {
-            totalSpinAmmount = 0;
-            ActionFinish();
-        }
+        unit.FocusOnMe(skillRounds);
+        ActionFinish();
+        ActiveCoolDown();
     }
 
     public override string GetActionName() {
-        return "Girar";
+        return "Focus On Me";
     }
 
     public override List<GridPosition> GetValidGridPositionList() {
@@ -32,7 +26,6 @@ public class SpinAction : BaseAction {
             unitGridPosition
         };
     }
-
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         ActionStart(onActionComplete);
@@ -45,7 +38,14 @@ public class SpinAction : BaseAction {
         };
     }
 
-    public override bool GetOnCooldown() { return false; }
+    public override void IsAnotherRound() {
+        if (currentCoolDown != 0) {
+            currentCoolDown--;
+        }
+        if (currentCoolDown == 0) {
+            onCoolDown = false;
+        }
+    }
 
-    public override void IsAnotherRound() { }
+    public override bool GetOnCooldown() { return onCoolDown; }
 }

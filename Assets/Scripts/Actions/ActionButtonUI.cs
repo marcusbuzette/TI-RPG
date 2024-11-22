@@ -33,10 +33,4 @@ public class ActionButtonUI : MonoBehaviour {
     public void DisableActionButton() {
         button.interactable = false;
     }
-
-
-
-
-
-
 }

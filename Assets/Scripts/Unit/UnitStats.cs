@@ -14,7 +14,7 @@ public class UnitStats {
 
     public int GetSpeed() { return this.speed; }
     public int GetAttack() { return this.attack; }
-    public int GeDefence() { return this.defence; }
-    public int getXpSpoil() { return this.xpSpoil; }
+    public int GetDefence() { return this.defence; }
+    public int GetXpSpoil() { return this.xpSpoil; }
 
 }
