@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public enum ActionType { MOVE, ACTION };
+public enum ActionType { MOVE, ACTION, INVENTORY, ITEM, SKILL };
 
 public abstract class BaseAction : MonoBehaviour {
 
@@ -20,10 +21,9 @@ public abstract class BaseAction : MonoBehaviour {
         actionType = ActionType.ACTION;
     }
 
-    protected void Update() {
+    protected virtual void Update() {
         if (!isActive) return;
         Action();
-
     }
 
     public abstract void Action();
@@ -80,4 +80,8 @@ public abstract class BaseAction : MonoBehaviour {
     public Unit GetUnit(){
         return unit;
     }
+
+    public abstract bool GetOnCooldown();
+
+    public abstract void IsAnotherRound();
 }

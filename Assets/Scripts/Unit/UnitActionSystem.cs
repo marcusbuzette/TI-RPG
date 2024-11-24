@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,6 +11,8 @@ public class UnitActionSystem : MonoBehaviour {
 
     public event EventHandler OnSelectedUnitChanged;
     public event EventHandler OnSelectedActionChanged;
+
+    public event EventHandler OnInventoryClicked;
     public event EventHandler OnActionStarted;
 
     [SerializeField] private Unit selectedUnit;
@@ -27,8 +30,7 @@ public class UnitActionSystem : MonoBehaviour {
     private void Update() {
         if (isBusy) return;
 
-        if(!TurnSystem.Instance.IsPlayerTurn())
-        {
+        if (!TurnSystem.Instance.IsPlayerTurn()) {
             return;
         }
 
@@ -42,9 +44,10 @@ public class UnitActionSystem : MonoBehaviour {
     private void HandleSelectedAction() {
         if (Input.GetMouseButtonDown(0)) {
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
+            
             if (selectedAction == null) return;
             if (!selectedAction.IsValidActionGridPosition(mouseGridPosition)) return;
-
+            
             if (selectedUnit.TryToPerformAction(selectedAction)) {
                 SetBusy();
                 selectedAction.TriggerAction(mouseGridPosition, ClearBusy);
@@ -58,7 +61,7 @@ public class UnitActionSystem : MonoBehaviour {
         if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, unitLayerMask)) {
             if (hit.transform.TryGetComponent<Unit>(out Unit unit)) {
                 if (unit == selectedUnit) return false;
-                if(unit.IsEnemy()){
+                if (unit.IsEnemy()) {
                     return false;
                 }
                 SetSelectedUnit(unit);
@@ -72,7 +75,8 @@ public class UnitActionSystem : MonoBehaviour {
     public void ChangeSelectedUnit(Unit unit) {
         if (unit != null && !unit.IsEnemy()) {
             SetSelectedUnit(unit);
-        } else {
+        }
+        else {
             SetSelectedUnit(null);
         }
     }
@@ -86,7 +90,11 @@ public class UnitActionSystem : MonoBehaviour {
 
     public void SetSelectedAction(BaseAction action) {
         selectedAction = action;
-        OnSelectedActionChanged?.Invoke(this, EventArgs.Empty);
+        if (action.GetActionType() != ActionType.INVENTORY) {
+            OnSelectedActionChanged?.Invoke(this, EventArgs.Empty);
+        } else {
+            OnInventoryClicked.Invoke(action, EventArgs.Empty);
+        }
     }
 
     public Unit GetSelectedUnit() { return selectedUnit; }

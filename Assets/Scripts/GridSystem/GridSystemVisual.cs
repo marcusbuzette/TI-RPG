@@ -15,6 +15,7 @@ public class GridSystemVisual : MonoBehaviour {
     public enum GridVisualType {
         White,
         Blue,
+        BlueSoft,
         Red,
         RedSoft,
         Yellow
@@ -93,7 +94,7 @@ public class GridSystemVisual : MonoBehaviour {
         Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
         BaseAction selectedAction = UnitActionSystem.Instance.GetSelectedAction();
 
-        if(selectedAction == null) return;
+        if(selectedAction == null || selectedAction.GetActionType() == ActionType.INVENTORY) return;
 
         GridVisualType gridVisualType = GridVisualType.White;
         switch (selectedAction) {
@@ -114,6 +115,17 @@ public class GridSystemVisual : MonoBehaviour {
                 break;
             case HitAction hitAction:
                 gridVisualType = GridVisualType.Red;
+                break;
+            case TeleportSkill teleportSkill:
+                gridVisualType = GridVisualType.Blue;
+                break;
+            case IntimidateSkill intimidateSkill:
+                gridVisualType = GridVisualType.Blue;
+
+                ShowGridPositionRange(selectedUnit.GetGridPosition(), intimidateSkill.GetMaxIntimidateDistance(), GridVisualType.BlueSoft);
+                break;
+            case EnemyFocusSkill enemyFocusSkill:
+                gridVisualType = GridVisualType.Blue;
                 break;
         }
         ShowGridPositionList(selectedAction.GetValidGridPositionList(), gridVisualType);

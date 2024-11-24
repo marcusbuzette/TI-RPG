@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
 
 public class HitAction : BaseAction {
     private float totalSpinAmmount = 0;
@@ -75,4 +76,8 @@ public class HitAction : BaseAction {
     public Unit GetTargetUnit(){
         return targetUnit;
     }
+
+    public override bool GetOnCooldown() { return false; }
+
+    public override void IsAnotherRound() {}
 }

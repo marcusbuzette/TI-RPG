@@ -6,20 +6,24 @@ using UnityEngine;
 public class UnitActionSystemUI : MonoBehaviour {
 
     [SerializeField] private Transform actionButtonPrefab;
+    [SerializeField] private Transform itemButtonPrefab;
     [SerializeField] private Transform actionButtonsContainer;
+    [SerializeField] private Transform inventoryButtonsContainer;
+
+    private Transform inventoyButton;
 
     private void Start() {
         UnitActionSystem.Instance.OnSelectedUnitChanged += UnitActionSystem_OnSelectedUnitChanged;
         UnitActionSystem.Instance.OnActionStarted += UnitActionSystem_OnActionStarted;
         TurnSystem.Instance.onTurnChange += TurnSystem_OnTurnChange;
         Unit.OnAnyActionPerformed += Unit_OnAnyActionPerformed;
+        UnitActionSystem.Instance.OnInventoryClicked += UnitActionSystem_OnInventoryClicked;
 
         CreateUnitActionButtons();
     }
 
 
     private void CreateUnitActionButtons() {
-        Debug.Log(actionButtonsContainer);
         foreach (Transform buttonTransform in actionButtonsContainer) {
             Destroy(buttonTransform.gameObject);
         }
@@ -33,25 +37,67 @@ public class UnitActionSystemUI : MonoBehaviour {
             Transform actioonButtonTransform = Instantiate(actionButtonPrefab, actionButtonsContainer);
             actioonButtonTransform.GetComponent<ActionButtonUI>().SetBaseAction(action);
             if (((selectedUnit.GetHasMoved() && action.GetActionType() == ActionType.MOVE) || !selectedUnit.IsUnityTurn()) 
-            || (selectedUnit.GetHasPerformedAction() && action.GetActionType() == ActionType.ACTION) || !selectedUnit.IsUnityTurn()) {
+            || (selectedUnit.GetHasPerformedAction() && action.GetActionType() == ActionType.ACTION) || !selectedUnit.IsUnityTurn()
+            || (selectedUnit.GetHasPerformedSkill() && action.GetActionType() == ActionType.SKILL)
+            || (action.GetOnCooldown() && action.GetActionType() == ActionType.SKILL) || !selectedUnit.IsUnityTurn()) {
                 actioonButtonTransform.GetComponent<ActionButtonUI>().DisableActionButton();
             }
+
+            if (action.GetActionType() == ActionType.INVENTORY) {
+                this.inventoyButton = actioonButtonTransform;
+            }
+        }
+    }
+
+    public void InventoryClick() {
+        if (inventoryButtonsContainer.gameObject.activeSelf) {
+            CloseInventory();
+        }
+        else {
+            OpenInventory();
+        }
+
+    }
+
+    private void CloseInventory() {
+        foreach (Transform itemTransform in inventoryButtonsContainer) {
+            Destroy(itemTransform.gameObject);
+        }
+        inventoryButtonsContainer.gameObject.SetActive(false);
+    }
+
+    private void OpenInventory() {
+        Vector3 posAux = inventoryButtonsContainer.transform.position;
+        posAux.x = inventoyButton.transform.position.x;
+        inventoryButtonsContainer.transform.position = posAux;
+        inventoryButtonsContainer.gameObject.SetActive(true);
+
+        foreach (KeyValuePair<InventoryItemData, InventoryItem> item in InventorySystem.inventorySystem.GetInventoryContent()) {
+            Transform itemButtonTransform = Instantiate(itemButtonPrefab, inventoryButtonsContainer);
+            itemButtonTransform.GetComponent<ItemButtonUI>().SetBaseAction(item.Value.data.prefab.GetComponent<ItemAction>(), item.Value.stackSize);
         }
     }
 
     private void UnitActionSystem_OnSelectedUnitChanged(object sender, EventArgs e) {
         CreateUnitActionButtons();
+        CloseInventory();
     }
 
     private void UnitActionSystem_OnActionStarted(object sender, EventArgs e) {
         CreateUnitActionButtons();
     }
 
-    private void TurnSystem_OnTurnChange (object sender, EventArgs e) {
+    private void TurnSystem_OnTurnChange(object sender, EventArgs e) {
         CreateUnitActionButtons();
+        CloseInventory();
     }
-    private void Unit_OnAnyActionPerformed (object sender, EventArgs e) {
+    private void Unit_OnAnyActionPerformed(object sender, EventArgs e) {
         CreateUnitActionButtons();
+        CloseInventory();
+    }
+
+    private void UnitActionSystem_OnInventoryClicked(object sender, EventArgs e) {
+        InventoryClick();
     }
 
     private void OnDestroy() {
@@ -59,5 +105,6 @@ public class UnitActionSystemUI : MonoBehaviour {
         UnitActionSystem.Instance.OnActionStarted -= UnitActionSystem_OnActionStarted;
         TurnSystem.Instance.onTurnChange -= TurnSystem_OnTurnChange;
         Unit.OnAnyActionPerformed -= Unit_OnAnyActionPerformed;
+        UnitActionSystem.Instance.OnInventoryClicked -= UnitActionSystem_OnInventoryClicked;
     }
 }

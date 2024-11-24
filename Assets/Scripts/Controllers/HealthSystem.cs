@@ -28,14 +28,11 @@ public class HealthSystem : MonoBehaviour {
         return (float)healthPoints / maxHealthPoints;
     }
 
-    public void Heal(int amount)
-    {
+    public void Heal(int amount) {
         amount = 20;
         healthPoints += amount;
-        if (healthPoints > maxHealthPoints)
-        {
-            healthPoints = maxHealthPoints;
-        }
+        if (healthPoints > maxHealthPoints) healthPoints = maxHealthPoints;
+        OnDamage?.Invoke(this, EventArgs.Empty);
     }
-   
+
 }
