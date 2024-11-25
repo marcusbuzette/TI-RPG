@@ -2414,6 +2414,7 @@ GameObject:
   - component: {fileID: 1570400615}
   - component: {fileID: 1570400614}
   - component: {fileID: 1570400617}
+  - component: {fileID: 1570400618}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2529,6 +2530,39 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1570400618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570400613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78da3f00f3328541b4526c0b0b5ec5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineThickness: 1.25
+  lineIntensity: 0.5
+  fillAmount: 0.2
+  lineColor0: {r: 1, g: 0, b: 0, a: 1}
+  lineColor1: {r: 1, g: 1, b: 1, a: 1}
+  lineColor2: {r: 0, g: 0, b: 1, a: 1}
+  additiveRendering: 0
+  backfaceCulling: 0
+  fillColor: {r: 0, g: 0, b: 1, a: 1}
+  useFillColor: 0
+  cornerOutlines: 0
+  addLinesBetweenColors: 0
+  scaleWithScreenSize: 1
+  alphaCutoff: 0.5
+  flipY: 0
+  sourceCamera: {fileID: 1570400615}
+  autoEnableOutlines: 0
+  outlineCamera: {fileID: 0}
+  outlineShaderMaterial: {fileID: 0}
+  renderTexture: {fileID: 0}
+  extraRenderTexture: {fileID: 0}
 --- !u!1 &1623678909
 GameObject:
   m_ObjectHideFlags: 0
@@ -2650,6 +2684,8 @@ GameObject:
   - component: {fileID: 1679923259}
   - component: {fileID: 1679923263}
   - component: {fileID: 1679923264}
+  - component: {fileID: 1679923265}
+  - component: {fileID: 1679923266}
   m_Layer: 0
   m_Name: Fogueira
   m_TagString: Campfire
@@ -2770,6 +2806,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneToLoad: Cena Level Design
   dialogueTrigger: {fileID: 1679923263}
+--- !u!114 &1679923265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679923256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 1
+  eraseRenderer: 0
+  startOutline: 0
+--- !u!114 &1679923266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679923256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7aba72387f884f5f95ac0907b65ab47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1707326822 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2415357954633486454, guid: 1b28e24ed24b1ff4ea136bfcc5168fce, type: 3}
