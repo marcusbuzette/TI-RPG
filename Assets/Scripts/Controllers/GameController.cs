@@ -8,7 +8,7 @@ public class GameController : MonoBehaviour {
     public UIController uicontroller;
     public int dinheiro;
     private Dictionary<string, UnitRecords> playerUnits = new Dictionary<string, UnitRecords>();
-
+    public GameObject MonkeyPrefab;
 
     [SerializeField] private bool debugMode = false;
     [SerializeField] private bool debugPathFindingMode = false;
@@ -22,6 +22,10 @@ public class GameController : MonoBehaviour {
             DestroyImmediate(gameObject);
         }
         dinheiro = 1000;
+    }
+
+    void Start(){ 
+        AddUnitToRecords(MonkeyPrefab.GetComponent<Unit>());
     }
 
 
@@ -41,10 +45,15 @@ public class GameController : MonoBehaviour {
         playerUnits.Add(unit.GetUnitId(), unitRecordsAux);
     }
 
-public UnitRecords GetUnitRecords(string unitId) { return playerUnits[unitId]; }
-public void UpdateUnitRecords(Unit unit) {
-    UnitRecords unitRecordsAux = new UnitRecords(unit.GetUnitXpSystem().getXpAmount(), unit.GetUnitXpStats());
-    playerUnits[unit.GetUnitId()] = unitRecordsAux;
-}
+    public UnitRecords GetUnitRecords(string unitId) { return playerUnits[unitId]; }
+    public void UpdateUnitRecords(Unit unit) {
+        UnitRecords unitRecordsAux = new UnitRecords(unit.GetUnitXpSystem().getXpAmount(), unit.GetUnitXpStats());
+        playerUnits[unit.GetUnitId()] = unitRecordsAux;
+    }
+
+    public void UpdateUnitRecordsByID(string unitId,BaseSkills skill){
+        Debug.Log("AddSkillGameCOntroller");
+        playerUnits[unitId].AddSkill(skill);
+    }
 
 }

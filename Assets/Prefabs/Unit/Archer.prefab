@@ -24,6 +24,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Archer
       objectReference: {fileID: 0}
+    - target: {fileID: 4855899929353745125, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 8829183408524775923, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -127,21 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2e767ee6586d8e4884b70a36b55da67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPotion: {fileID: 11400000, guid: 110230de560646841bb1f0097e70042a, type: 2}
-  inventorySystem: {fileID: 0}
   potionHealAmount: 20
-  unityWorldUI: {fileID: 5840673938181145717}
---- !u!114 &5840673938181145717 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4326092778858689128, guid: 35802ef038968144e82bb11a407e1793, type: 3}
-  m_PrefabInstance: {fileID: 7856354136293013021}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e078099ec61d48bd9f9665a55a43c59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &8458730259500635541
 PrefabInstance:
   m_ObjectHideFlags: 0

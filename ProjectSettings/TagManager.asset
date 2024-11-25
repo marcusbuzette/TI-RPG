@@ -8,6 +8,7 @@ TagManager:
   - Event
   - Shop
   - SkillTree
+  - UnitActionSystemUI
   layers:
   - Default
   - TransparentFX

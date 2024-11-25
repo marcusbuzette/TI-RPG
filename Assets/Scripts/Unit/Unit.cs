@@ -14,7 +14,7 @@ public class Unit : MonoBehaviour {
     private GridPosition gridPosition;
     private HealthSystem healthSystem;
     [SerializeField] private XpSystem xpSystem;
-    [SerializeField] private string unitId = "";
+    [SerializeField] public string unitId = "";
     [SerializeField] private UnitStats unitStats;
     [SerializeField] private BaseAction[] actionsArray;
     [SerializeField] private bool hasMoved = false;
@@ -36,6 +36,12 @@ public class Unit : MonoBehaviour {
             UnitRecords unitRecords = GameController.controller.GetUnitRecords(unitId);
             this.xpSystem.AddXp(unitRecords.xp);
             this.unitStats = unitRecords.unitStats;
+            foreach(BaseSkills skill in unitRecords.baseSkills) {
+                Debug.Log(skill.name);
+                Debug.Log(skill.GetType());
+                BaseSkills bs = gameObject.AddComponent(skill.GetType()) as BaseSkills;
+                Debug.Log(bs);
+            }
         }
         gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);

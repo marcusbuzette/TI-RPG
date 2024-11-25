@@ -5,6 +5,12 @@ using UnityEngine.Rendering;
 
 public abstract class BaseSkills : BaseAction
 {
+    public string nome;
+    public string descricao;
+    public int custo;
+    public List<BaseSkills> preRequisitos;
+    public bool desbloqueado;
+    public GameObject unitPrefab;
     [SerializeField] protected bool onCoolDown;
     [SerializeField] protected int coolDown;
     [SerializeField] protected int currentCoolDown = 0;

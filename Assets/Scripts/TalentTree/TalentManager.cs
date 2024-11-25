@@ -1,60 +1,68 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+using UnityEngine.SceneManagement;
 
 public class TalentManager : MonoBehaviour
 {
-    public List<Talento> talentos;
+    public List<BaseSkills> skills;
     public int pontosDisponiveis = 4;
     public Text pontos;
 
-    //Faz com que os talentos estejam desbloqueados ao iniciar a cena
-    public void Start(){
-        foreach (Talento talento in talentos) 
-        {
-            talento.desbloqueado = false; 
-        }
+    public void Start()
+    {
         pontos.text = "Pontos: " + pontosDisponiveis;
-
     }
 
-    //Verifica se existem pontos suficientes e todas as condições estão cumpridas para o desbloqueio do talento
-    public void TentarDesbloquearTalento(Talento talento)
+    //Verifica se existem pontos suficientes e todas as condições estão cumpridas para o desbloqueio do skills
+    public void TentarDesbloquearskills(BaseSkills skills)
     {
-        if (pontosDisponiveis >= talento.custo && PodeSerDesbloqueado(talento))
+        if (pontosDisponiveis >= skills.custo && PodeSerDesbloqueado(skills))
         {
-            pontosDisponiveis -= talento.custo;
+            pontosDisponiveis -= skills.custo;
             pontos.text = "Pontos: " + pontosDisponiveis;
-            DesbloquearTalento(talento); 
+            DesbloquearSkills(skills);
         }
         else
         {
-            Debug.Log("Talento não pode ser desbloqueado!");
+            Debug.Log("skills não pode ser desbloqueado!");
         }
     }
 
-    //Muda o status do talento de desbloqueado para true
-    public void DesbloquearTalento(Talento talento)
+    //Muda o status do skills de desbloqueado para true
+    public void DesbloquearSkills(BaseSkills skills)
     {
-        talento.desbloqueado = true;
-        Debug.Log(talento.nome + " desbloqueado!");
+        skills.desbloqueado = true;
+        Debug.Log(skills.nome + " desbloqueado!");
+        AdicionarSkill(skills);
     }
 
     //Verifica se será possível ser desbloqueado, para possível compra
-    public bool PodeSerDesbloqueado(Talento talento)
+    public bool PodeSerDesbloqueado(BaseSkills skills)
     {
-        if(talento.desbloqueado){
+        if (skills.desbloqueado)
+        {
             return false;
         }
-        else if (talento.preRequisitos == null || talento.preRequisitos.Count == 0)
+        else if (skills.preRequisitos == null || skills.preRequisitos.Count == 0)
             return true;
-        foreach (var preRequisito in talento.preRequisitos)
+        foreach (var preRequisito in skills.preRequisitos)
         {
             if (!preRequisito.desbloqueado)
                 return false;
         }
 
         return true;
+    }
+
+    public void AdicionarSkill(BaseSkills skills)
+    {
+        string SelectedUnit = "monkey";
+        if(GameController.controller.HasUnitRecords(SelectedUnit)){
+            GameController.controller.UpdateUnitRecordsByID(SelectedUnit, skills);
+        }
+        Debug.Log("Skill adc");
     }
 
 }
