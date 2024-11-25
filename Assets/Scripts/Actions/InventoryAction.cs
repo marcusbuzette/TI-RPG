@@ -29,5 +29,9 @@ public class InventoryAction : BaseAction {
         return new List<GridPosition> { unitGridPosition };
     }
 
+    public override bool GetOnCooldown() { return false; }
+
+    public override void IsAnotherRound() {}
+
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {}
 }

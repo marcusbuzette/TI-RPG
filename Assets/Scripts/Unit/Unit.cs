@@ -16,10 +16,14 @@ public class Unit : MonoBehaviour {
     [SerializeField] private XpSystem xpSystem;
     [SerializeField] private string unitId = "";
     [SerializeField] private UnitStats unitStats;
-    private BaseAction[] actionsArray;
-    private bool hasMoved = false;
-    private bool hasPerformedAction = false;
+    [SerializeField] private BaseAction[] actionsArray;
+    [SerializeField] private bool hasMoved = false;
+    [SerializeField] private bool hasPerformedAction = false;
+    [SerializeField] private bool hasPerformedSkill = false;
     public bool isUnitTurn = false;
+
+    private int intimidateCoolDown = 0;
+    [SerializeField] private int enemyFocus = 0;
 
     private void Awake() {
         actionsArray = GetComponents<BaseAction>();
@@ -79,11 +83,14 @@ public class Unit : MonoBehaviour {
     }
 
     public bool CanTriggerAction(BaseAction action) {
+        Debug.Log(action.ToString());
         switch (action.GetActionType()) {
             case ActionType.MOVE:
                 return !hasMoved;
             case ActionType.ACTION:
                 return !hasPerformedAction;
+            case ActionType.SKILL:
+                return !hasPerformedSkill;
             case ActionType.INVENTORY:
                 return true;
             case ActionType.ITEM:
@@ -99,7 +106,11 @@ public class Unit : MonoBehaviour {
                 break;
             case ActionType.ACTION:
                 hasPerformedAction = true;
+                hasPerformedSkill = true;
                 hasMoved = true;
+                break;
+            case ActionType.SKILL:
+                hasPerformedSkill = true;
                 break;
         }
         OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
@@ -108,10 +119,13 @@ public class Unit : MonoBehaviour {
     public bool GetHasMoved() { return hasMoved; }
     public bool GetHasPerformedAction() { return hasPerformedAction; }
 
+    public bool GetHasPerformedSkill() { return hasPerformedSkill; }
+
     private void TurnSystem_OnTurnChange(object sender, EventArgs e) {
         if ((IsEnemy() && isUnitTurn) || (!IsEnemy() && isUnitTurn)) {
             hasMoved = false;
             hasPerformedAction = false;
+            hasPerformedSkill = false;
             isUnitTurn = false;
             // OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
         }
@@ -149,9 +163,26 @@ public class Unit : MonoBehaviour {
 
     public void StartUnitTurn() {
         this.isUnitTurn = true;
+
+        if(intimidateCoolDown != 0) {
+            hasMoved = true;
+            hasPerformedAction = true;
+            hasPerformedSkill = true;
+            intimidateCoolDown--;
+        }
+
+        if(enemyFocus != 0) {
+            enemyFocus--;
+        }
+
+        for (int i = 0; i < actionsArray.Length; i++) {
+            if (actionsArray[i].GetActionType() == ActionType.SKILL) {
+                actionsArray[i].IsAnotherRound();
+            }
+        }
+
         UnitActionSystem.Instance.ChangeSelectedUnit(this);
         OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
-
     }
 
     public string GetUnitId() { return this.unitId; }
@@ -162,5 +193,18 @@ public class Unit : MonoBehaviour {
         if (!isEnemy && GameController.controller.HasUnitRecords(unitId)) {
             GameController.controller.UpdateUnitRecords(this);
         }
+    }
+
+    public void BeIntimidate() {
+        intimidateCoolDown = 1;
+    }
+
+    public void FocusOnMe(int focusTime) {
+        enemyFocus = focusTime;
+    }
+
+    public bool GetEnemyFocus() {
+        if (enemyFocus == 0) return false;
+        else return true;
     }
 }
