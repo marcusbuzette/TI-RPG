@@ -16,6 +16,9 @@ public class TurnSystem : MonoBehaviour {
     public event EventHandler onOrderChange;
     private CameraController cameraController;
 
+    [SerializeField] private int[] turnSpeeds;
+    private int turnSpeedIndex;
+
     private void Awake() {
         if (Instance != null) {
             Debug.Log("More than one Turn System");
@@ -97,5 +100,11 @@ public class TurnSystem : MonoBehaviour {
         return false;
     }
 
+    public void ChengeTurnSpeed() {
+        if (turnSpeedIndex == turnSpeeds.Length - 1) { turnSpeedIndex = 0; }
+        else turnSpeedIndex++;
+
+        Time.timeScale = turnSpeeds[turnSpeedIndex];
+    }
     public void SetCameraController(CameraController controller) { cameraController = controller; }
 }
