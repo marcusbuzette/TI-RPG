@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -37,11 +39,11 @@ public class Unit : MonoBehaviour {
             this.xpSystem.AddXp(unitRecords.xp);
             this.unitStats = unitRecords.unitStats;
             foreach(BaseSkills skill in unitRecords.baseSkills) {
-                Debug.Log(skill.name);
-                Debug.Log(skill.GetType());
                 BaseSkills bs = gameObject.AddComponent(skill.GetType()) as BaseSkills;
-                Debug.Log(bs);
             }
+            actionsArray = GetComponents<BaseAction>();
+            UnitActionSystem.Instance.ChangeSelectedUnit(this);
+            OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
         }
         gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
@@ -71,7 +73,7 @@ public class Unit : MonoBehaviour {
     }
 
     public BaseAction[] GetActionsArray() {
-        return actionsArray;
+        return actionsArray.ToArray();
     }
 
     public GridPosition GetGridPosition() {
@@ -89,7 +91,6 @@ public class Unit : MonoBehaviour {
     }
 
     public bool CanTriggerAction(BaseAction action) {
-        Debug.Log(action.ToString());
         switch (action.GetActionType()) {
             case ActionType.MOVE:
                 return !hasMoved;
@@ -147,6 +148,10 @@ public class Unit : MonoBehaviour {
 
     public void AddXp(int xpAmount) {
         xpSystem.AddXp(xpAmount);
+    }
+
+    public void AddActionToArray(BaseAction action) {
+
     }
 
     private void HealthSystem_OnDie(object sender, EventArgs e) {

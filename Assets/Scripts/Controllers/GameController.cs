@@ -52,7 +52,6 @@ public class GameController : MonoBehaviour {
     }
 
     public void UpdateUnitRecordsByID(string unitId,BaseSkills skill){
-        Debug.Log("AddSkillGameCOntroller");
         playerUnits[unitId].AddSkill(skill);
     }
 

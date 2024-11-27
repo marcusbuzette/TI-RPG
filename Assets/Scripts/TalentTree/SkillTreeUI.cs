@@ -10,7 +10,6 @@ public class SkillTreeUi : MonoBehaviour
     public Text descricao;
     public Text custo;
     public Button botaoDesbloquear;
-    public TalentManager talentManager;
 
     //Define e altera os nodes da arvore de talentos.   
     void Start()
@@ -24,7 +23,7 @@ public class SkillTreeUi : MonoBehaviour
     void Update()
     {
         botaoDesbloquear.interactable =
-            talentManager.PodeSerDesbloqueado(skills) &&
-            talentManager.pontosDisponiveis >= skills.custo;
+            TalentManager.Instance.PodeSerDesbloqueado(skills) &&
+            TalentManager.Instance.pontosDisponiveis >= skills.custo;
     }
 }

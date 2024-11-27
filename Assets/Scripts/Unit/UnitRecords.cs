@@ -15,7 +15,6 @@ public class UnitRecords {
     }
 
     public void AddSkill(BaseSkills skill) {
-        Debug.Log("AddSkillUnityRecords");
         baseSkills.Add(skill);
     }
 }

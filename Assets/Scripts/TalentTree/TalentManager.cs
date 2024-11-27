@@ -4,51 +4,52 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
 
-public class TalentManager : MonoBehaviour
-{
+public class TalentManager : MonoBehaviour {
     public List<BaseSkills> skills;
     public int pontosDisponiveis = 4;
     public Text pontos;
 
-    public void Start()
-    {
+    public static TalentManager Instance;
+
+    private void Awake() {
+        if (Instance == null) {
+            Instance = this;
+        } else {
+            Destroy(this);
+        }
+    }
+
+    public void Start() {
         pontos.text = "Pontos: " + pontosDisponiveis;
     }
 
     //Verifica se existem pontos suficientes e todas as condições estão cumpridas para o desbloqueio do skills
-    public void TentarDesbloquearskills(BaseSkills skills)
-    {
-        if (pontosDisponiveis >= skills.custo && PodeSerDesbloqueado(skills))
-        {
+    public void TentarDesbloquearskills(BaseSkills skills) {
+        if (pontosDisponiveis >= skills.custo && PodeSerDesbloqueado(skills)) {
             pontosDisponiveis -= skills.custo;
             pontos.text = "Pontos: " + pontosDisponiveis;
             DesbloquearSkills(skills);
         }
-        else
-        {
+        else {
             Debug.Log("skills não pode ser desbloqueado!");
         }
     }
 
     //Muda o status do skills de desbloqueado para true
-    public void DesbloquearSkills(BaseSkills skills)
-    {
+    public void DesbloquearSkills(BaseSkills skills) {
         skills.desbloqueado = true;
-        Debug.Log(skills.nome + " desbloqueado!");
+        // Debug.Log(skills.nome + " desbloqueado!");
         AdicionarSkill(skills);
     }
 
     //Verifica se será possível ser desbloqueado, para possível compra
-    public bool PodeSerDesbloqueado(BaseSkills skills)
-    {
-        if (skills.desbloqueado)
-        {
+    public bool PodeSerDesbloqueado(BaseSkills skills) {
+        if (skills.desbloqueado) {
             return false;
         }
         else if (skills.preRequisitos == null || skills.preRequisitos.Count == 0)
             return true;
-        foreach (var preRequisito in skills.preRequisitos)
-        {
+        foreach (var preRequisito in skills.preRequisitos) {
             if (!preRequisito.desbloqueado)
                 return false;
         }
@@ -56,13 +57,11 @@ public class TalentManager : MonoBehaviour
         return true;
     }
 
-    public void AdicionarSkill(BaseSkills skills)
-    {
+    public void AdicionarSkill(BaseSkills skills) {
         string SelectedUnit = "monkey";
-        if(GameController.controller.HasUnitRecords(SelectedUnit)){
+        if (GameController.controller.HasUnitRecords(SelectedUnit)) {
             GameController.controller.UpdateUnitRecordsByID(SelectedUnit, skills);
         }
-        Debug.Log("Skill adc");
     }
 
 }
