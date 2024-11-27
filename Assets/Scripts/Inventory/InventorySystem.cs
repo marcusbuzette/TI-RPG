@@ -33,6 +33,10 @@ public class InventorySystem : MonoBehaviour {
         }
     }
 
+    public bool IsEmpty() {
+        return inventory.Count < 1;
+    }
+
     public void Remove(InventoryItemData referenceData) {
         if (m_itemDictionary.TryGetValue(referenceData, out InventoryItem value)) {
             value.RemoveFromStack();
