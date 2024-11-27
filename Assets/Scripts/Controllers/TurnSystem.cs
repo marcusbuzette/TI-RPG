@@ -14,6 +14,7 @@ public class TurnSystem : MonoBehaviour {
     public static TurnSystem Instance { get; private set; }
     public event EventHandler onTurnChange;
     public event EventHandler onOrderChange;
+    private CameraController cameraController;
 
     [SerializeField] private int[] turnSpeeds;
     private int turnSpeedIndex;
@@ -46,6 +47,11 @@ public class TurnSystem : MonoBehaviour {
         }
         isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
         onTurnChange.Invoke(this, EventArgs.Empty);
+
+        //Place the camera in the unit position of the turn
+        Vector3 unitTurnTransform = unitiesOrderList[turnNumber].transform.position;
+        cameraController.GoToPosition(unitTurnTransform);
+
         unitiesOrderList[turnNumber].StartUnitTurn();
     }
 
@@ -100,4 +106,5 @@ public class TurnSystem : MonoBehaviour {
 
         Time.timeScale = turnSpeeds[turnSpeedIndex];
     }
+    public void SetCameraController(CameraController controller) { cameraController = controller; }
 }

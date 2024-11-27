@@ -20,12 +20,18 @@ public class CameraController : MonoBehaviour
     {
         cinemachineTransposer = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineTransposer>();
         targetFollowOffset = cinemachineTransposer.m_FollowOffset;
+        TurnSystem.Instance.SetCameraController(this);
     }
     void Update()
     {
-        Movement();
-        Rotation();
-        Zoom();
+        if (TurnSystem.Instance.IsPlayerTurn()) {
+            Movement();
+            Rotation();
+            Zoom();
+        }
+        else {
+            transform.position = TurnSystem.Instance.GetTurnUnit().GetWorldPosition();
+        }
     }
 
     void Movement()
@@ -82,5 +88,10 @@ public class CameraController : MonoBehaviour
         targetFollowOffset.y = Mathf.Clamp(targetFollowOffset.y, MIN_FOLLOW_Y_OFFSET, MAX_FOLLOW_Y_OFFSET);
 
         cinemachineTransposer.m_FollowOffset = Vector3.Lerp(cinemachineTransposer.m_FollowOffset, targetFollowOffset, Time.deltaTime * ZoomSpeed);
+    }
+
+    //Place the camera in anywhere requested
+    public void GoToPosition(Vector3 position) {
+        transform.position = new Vector3(position.x, 0, position.z);
     }
 }
