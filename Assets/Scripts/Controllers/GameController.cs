@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 public class GameController : MonoBehaviour {
@@ -8,7 +9,6 @@ public class GameController : MonoBehaviour {
     public UIController uicontroller;
     public int dinheiro;
     private Dictionary<string, UnitRecords> playerUnits = new Dictionary<string, UnitRecords>();
-    public GameObject MonkeyPrefab;
 
     [SerializeField] private bool debugMode = false;
     [SerializeField] private bool debugPathFindingMode = false;
@@ -25,7 +25,10 @@ public class GameController : MonoBehaviour {
     }
 
     void Start(){ 
-        AddUnitToRecords(MonkeyPrefab.GetComponent<Unit>());
+        UnitStats statsAux = new UnitStats(0,0,0,0,0);
+        playerUnits.Add("monkey", new UnitRecords(0,statsAux));
+        playerUnits.Add("archer", new UnitRecords(0,statsAux));
+        TalentManager.Instance.OnSelectedUnitChanged("monkey");
     }
 
 
@@ -53,6 +56,11 @@ public class GameController : MonoBehaviour {
 
     public void UpdateUnitRecordsByID(string unitId,BaseSkills skill){
         playerUnits[unitId].AddSkill(skill);
+        
+    }
+
+    public Dictionary<string, UnitRecords>.KeyCollection playerUnitsIds() {
+        return playerUnits.Keys;
     }
 
 }

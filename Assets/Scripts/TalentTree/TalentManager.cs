@@ -3,11 +3,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class TalentManager : MonoBehaviour {
+    [SerializeField] private Transform charactersContainer;
+    [SerializeField] private Button unitButtonPrefab;
+
     public List<BaseSkills> skills;
     public int pontosDisponiveis = 4;
     public Text pontos;
+
+    private String SelectedUnit;
 
     public static TalentManager Instance;
 
@@ -20,7 +26,14 @@ public class TalentManager : MonoBehaviour {
     }
 
     public void Start() {
+        foreach(string unitId in GameController.controller.playerUnitsIds()) {
+            Button unitButton = Instantiate(unitButtonPrefab, charactersContainer);
+            unitButton.gameObject.AddComponent<SkillTreeUnitButtonUI>();
+            unitButton.gameObject.GetComponent<SkillTreeUnitButtonUI>().SetUnitData(unitId, unitId);
+            unitButton.onClick.AddListener(() => OnSelectedUnitChanged(unitId));
+        }
         pontos.text = "Pontos: " + pontosDisponiveis;
+
     }
 
     //Verifica se existem pontos suficientes e todas as condições estão cumpridas para o desbloqueio do skills
@@ -58,10 +71,14 @@ public class TalentManager : MonoBehaviour {
     }
 
     public void AdicionarSkill(BaseSkills skills) {
-        string SelectedUnit = "monkey";
+        // string SelectedUnit = "monkey";
         if (GameController.controller.HasUnitRecords(SelectedUnit)) {
             GameController.controller.UpdateUnitRecordsByID(SelectedUnit, skills);
         }
+    }
+
+    public void OnSelectedUnitChanged(String unitId) {
+        this.SelectedUnit = unitId;
     }
 
 }
