@@ -7,9 +7,12 @@ using Unity.VisualScripting;
 
 public class TalentManager : MonoBehaviour {
     [SerializeField] private Transform charactersContainer;
+    [SerializeField] private Transform skillTreeContainer;
     [SerializeField] private Button unitButtonPrefab;
 
-    public List<BaseSkills> skills;
+    [SerializeField] private List<Unit> playerUnitList = new List<Unit>();
+
+    private List<BaseSkills> skills;
     public int pontosDisponiveis = 4;
     public Text pontos;
 
@@ -49,10 +52,8 @@ public class TalentManager : MonoBehaviour {
     }
 
     //Muda o status do skills de desbloqueado para true
-    public void DesbloquearSkills(BaseSkills skills) {
-        skills.desbloqueado = true;
-        // Debug.Log(skills.nome + " desbloqueado!");
-        AdicionarSkill(skills);
+    public void DesbloquearSkills(BaseSkills skill) {
+        AdicionarSkill(skill);
     }
 
     //Verifica se será possível ser desbloqueado, para possível compra
@@ -71,7 +72,6 @@ public class TalentManager : MonoBehaviour {
     }
 
     public void AdicionarSkill(BaseSkills skills) {
-        // string SelectedUnit = "monkey";
         if (GameController.controller.HasUnitRecords(SelectedUnit)) {
             GameController.controller.UpdateUnitRecordsByID(SelectedUnit, skills);
         }
@@ -79,6 +79,13 @@ public class TalentManager : MonoBehaviour {
 
     public void OnSelectedUnitChanged(String unitId) {
         this.SelectedUnit = unitId;
+
+    }
+
+    private void UpdatedSkillTree() {
+        UnitRecords unitAux = GameController.controller.GetUnitRecords(this.SelectedUnit);
+        skills = unitAux.GetUnitSKills();
+
     }
 
 }

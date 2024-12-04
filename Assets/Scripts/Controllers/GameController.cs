@@ -25,10 +25,10 @@ public class GameController : MonoBehaviour {
     }
 
     void Start(){ 
-        UnitStats statsAux = new UnitStats(0,0,0,0,0);
-        playerUnits.Add("monkey", new UnitRecords(0,statsAux));
-        playerUnits.Add("archer", new UnitRecords(0,statsAux));
-        TalentManager.Instance.OnSelectedUnitChanged("monkey");
+        // UnitStats statsAux = new UnitStats(0,0,0,0,0);
+        // playerUnits.Add("monkey", new UnitRecords(0,statsAux));
+        // playerUnits.Add("archer", new UnitRecords(0,statsAux));
+        // TalentManager.Instance.OnSelectedUnitChanged("monkey");
     }
 
 

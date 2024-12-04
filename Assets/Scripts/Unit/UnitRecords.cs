@@ -17,4 +17,6 @@ public class UnitRecords {
     public void AddSkill(BaseSkills skill) {
         baseSkills.Add(skill);
     }
+
+    public List<BaseSkills> GetUnitSKills() {return this.baseSkills;}
 }
