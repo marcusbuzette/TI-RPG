@@ -41,7 +41,6 @@ public class UnitActionSystemUI : MonoBehaviour {
         Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
 
         if (selectedUnit == null) return;
-
         foreach (BaseAction action in selectedUnit.GetActionsArray()) {
 
             Transform parentAux;

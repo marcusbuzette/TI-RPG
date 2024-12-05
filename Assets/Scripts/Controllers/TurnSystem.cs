@@ -69,7 +69,8 @@ public class TurnSystem : MonoBehaviour {
         if (turnNumber > unitDeadIndex) { turnNumber--; }
         if (!CheckEnemiesLeft()) {
             SceneManager.LoadScene("HUB");
-        } else {
+        }
+        else {
             ComboKill();
         }
     }

@@ -863,7 +863,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2672855175812891822, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
       propertyPath: unitStats.xpSpoil
-      value: 500
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5248424051689086498, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
       propertyPath: m_Name
@@ -974,6 +974,10 @@ PrefabInstance:
     - target: {fileID: 3040281036064970410, guid: 82047d41f197848bb9bc6b85604fbe01, type: 3}
       propertyPath: unitId
       value: monkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 3040281036064970410, guid: 82047d41f197848bb9bc6b85604fbe01, type: 3}
+      propertyPath: actionsArray.Array.data[2]
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5183917217429670950, guid: 82047d41f197848bb9bc6b85604fbe01, type: 3}
       propertyPath: m_Name
@@ -2206,7 +2210,7 @@ GameObject:
   - component: {fileID: 1584185609}
   m_Layer: 0
   m_Name: UnitActionSystemUI
-  m_TagString: Untagged
+  m_TagString: UnitActionSystemUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3102,7 +3106,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2672855175812891822, guid: 63c27cbf6f6b18144bbbc2983e385cff, type: 3}
       propertyPath: unitStats.xpSpoil
-      value: 500
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5248424051689086498, guid: 63c27cbf6f6b18144bbbc2983e385cff, type: 3}
       propertyPath: m_Name
