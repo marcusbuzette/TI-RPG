@@ -8,6 +8,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2170219948549848153, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: xp
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: unitId
+      value: archer
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: xpSystem
+      value: 
+      objectReference: {fileID: 8293743739561429572}
     - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: unitStats.speed
       value: 3
@@ -20,6 +32,22 @@ PrefabInstance:
       propertyPath: unitStats.defence
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleSkills.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleSkills.Array.data[0]
+      value: 
+      objectReference: {fileID: 5647303888008814838, guid: 2c7835928b6cd8045917bffe59d5e936, type: 3}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleSkills.Array.data[1]
+      value: 
+      objectReference: {fileID: 268774645106886273, guid: 3ea7eabd8948ec84ca32a264d0031500, type: 3}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleSkills.Array.data[2]
+      value: 
+      objectReference: {fileID: 4731174655554223439, guid: 150fd9ebac7aa314d81349c4d46e8530, type: 3}
     - target: {fileID: 4855899929353745125, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: m_Name
       value: Archer
@@ -132,6 +160,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   potionHealAmount: 20
+--- !u!114 &8293743739561429572 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2170219948549848153, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+  m_PrefabInstance: {fileID: 7856354136293013021}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3343077423336064248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d0b3338ac2914f4ba75c869397aca3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8458730259500635541
 PrefabInstance:
   m_ObjectHideFlags: 0

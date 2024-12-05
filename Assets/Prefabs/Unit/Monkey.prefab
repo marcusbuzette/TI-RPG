@@ -320,6 +320,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isEnemy: 0
+  possibleSkills:
+  - {fileID: 5647303888008814838, guid: 2c7835928b6cd8045917bffe59d5e936, type: 3}
+  - {fileID: 268774645106886273, guid: 3ea7eabd8948ec84ca32a264d0031500, type: 3}
   xpSystem: {fileID: 1913271140186555034}
   unitId: monkey
   unitStats:
@@ -332,8 +335,6 @@ MonoBehaviour:
   - {fileID: 9186709859666415746}
   - {fileID: -1861747851849192615}
   - {fileID: 6547054507977785566}
-  - {fileID: 0}
-  - {fileID: 0}
   hasMoved: 0
   hasPerformedAction: 0
   hasPerformedSkill: 0

@@ -3,46 +3,66 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
-using Unity.VisualScripting;
+
 
 public class TalentManager : MonoBehaviour {
+    public static TalentManager Instance;
     [SerializeField] private Transform charactersContainer;
     [SerializeField] private Transform skillTreeContainer;
     [SerializeField] private Button unitButtonPrefab;
+    [SerializeField] private Button skillButtonPrefab;
 
-    [SerializeField] private List<Unit> playerUnitList = new List<Unit>();
+    [SerializeField] private List<GameObject> playerUnitList = new List<GameObject>();
+
+    public EventHandler onSkillUpdate;
 
     private List<BaseSkills> skills;
-    public int pontosDisponiveis = 4;
+    private int pontosDisponiveis = 0;
     public Text pontos;
 
     private String SelectedUnit;
 
-    public static TalentManager Instance;
-
     private void Awake() {
         if (Instance == null) {
             Instance = this;
-        } else {
+        }
+        else {
             Destroy(this);
         }
     }
 
-    public void Start() {
-        foreach(string unitId in GameController.controller.playerUnitsIds()) {
+    private void OnEnable() {
+        foreach (GameObject playerObj in playerUnitList) {
+            Unit playerUnit = playerObj.GetComponent<Unit>();
+            string unitId = playerUnit.GetUnitId();
+            playerUnit.GetUnitXpSystem().ResetXP();
+            if (SelectedUnit == null) SelectedUnit = unitId;
+            if (!playerUnit.IsEnemy() && !GameController.controller.HasUnitRecords(unitId)) {
+                GameController.controller.AddUnitToRecords(playerUnit);
+            } else if (!playerUnit.IsEnemy()) {
+                UnitRecords urAux = GameController.controller.GetUnitRecords(unitId);
+                UpdateLocalUnitValues(unitId, urAux);
+            }
+
+
+            
             Button unitButton = Instantiate(unitButtonPrefab, charactersContainer);
             unitButton.gameObject.AddComponent<SkillTreeUnitButtonUI>();
             unitButton.gameObject.GetComponent<SkillTreeUnitButtonUI>().SetUnitData(unitId, unitId);
             unitButton.onClick.AddListener(() => OnSelectedUnitChanged(unitId));
-        }
-        pontos.text = "Pontos: " + pontosDisponiveis;
 
+        }
+        this.OnSelectedUnitChanged(this.SelectedUnit);
+        if (this.onSkillUpdate != null) { this.onSkillUpdate.Invoke(this, EventArgs.Empty);}
     }
 
     //Verifica se existem pontos suficientes e todas as condições estão cumpridas para o desbloqueio do skills
     public void TentarDesbloquearskills(BaseSkills skills) {
         if (pontosDisponiveis >= skills.custo && PodeSerDesbloqueado(skills)) {
-            pontosDisponiveis -= skills.custo;
+            Unit unitAux = playerUnitList.Find(unit => unit.GetComponent<Unit>().GetUnitId() == this.SelectedUnit).GetComponent<Unit>();
+            unitAux.GetUnitXpSystem().UseXp(skills.custo);
+            pontosDisponiveis = unitAux.GetUnitXpSystem().getXpAmount();
+            GameController.controller.UpdateUnitRecords(unitAux);
             pontos.text = "Pontos: " + pontosDisponiveis;
             DesbloquearSkills(skills);
         }
@@ -58,34 +78,74 @@ public class TalentManager : MonoBehaviour {
 
     //Verifica se será possível ser desbloqueado, para possível compra
     public bool PodeSerDesbloqueado(BaseSkills skills) {
-        if (skills.desbloqueado) {
+        if (IsSkillUnlocked(skills)) {
             return false;
         }
-        else if (skills.preRequisitos == null || skills.preRequisitos.Count == 0)
-            return true;
-        foreach (var preRequisito in skills.preRequisitos) {
-            if (!preRequisito.desbloqueado)
-                return false;
-        }
-
-        return true;
+        else if (!SkillHasRequirements(skills)) return true;
+            
+        return MatchRequirements(skills);
     }
 
     public void AdicionarSkill(BaseSkills skills) {
         if (GameController.controller.HasUnitRecords(SelectedUnit)) {
-            GameController.controller.UpdateUnitRecordsByID(SelectedUnit, skills);
+            GameController.controller.AddSkillToRecordById(SelectedUnit, skills);
+            UpdateLocalUnitValues(this.SelectedUnit, GameController.controller.GetUnitRecords(this.SelectedUnit));
+            this.onSkillUpdate.Invoke(this, EventArgs.Empty);
         }
     }
 
     public void OnSelectedUnitChanged(String unitId) {
         this.SelectedUnit = unitId;
+        Unit unitAux = playerUnitList.Find(unit => unit.GetComponent<Unit>().GetUnitId() == this.SelectedUnit).GetComponent<Unit>();
+        this.pontosDisponiveis = unitAux.GetUnitXpSystem().getXpAmount();
+        pontos.text = "Pontos: " + pontosDisponiveis;
+        this.UpdatedSkillTree(unitAux);
 
     }
 
-    private void UpdatedSkillTree() {
-        UnitRecords unitAux = GameController.controller.GetUnitRecords(this.SelectedUnit);
-        skills = unitAux.GetUnitSKills();
+    public int GetXPPoints() {return this.pontosDisponiveis;}
 
+    private void UpdatedSkillTree(Unit unitAux) {
+        foreach (Transform item in skillTreeContainer) {
+            Destroy(item.gameObject);
+        }
+        UnitRecords unitRecordsAux = GameController.controller.GetUnitRecords(this.SelectedUnit);
+
+        skills = unitAux.GetPossibleSkills();
+
+        foreach (BaseSkills bs in skills) {
+            Button skillButton = Instantiate(skillButtonPrefab, skillTreeContainer);
+            skillButton.GetComponent<SkillUi>().SetBaseSkill(bs);
+            skillButton.onClick.AddListener(() => { TentarDesbloquearskills(bs); });
+
+        }
+
+
+    }
+
+    private bool IsSkillUnlocked(BaseSkills skill) {
+        List<BaseSkills> unitSkills = GameController.controller.GetUnitRecords(this.SelectedUnit).GetUnitSKills();
+        return unitSkills.Contains(skill);
+    }
+
+    private bool SkillHasRequirements(BaseSkills skill) {
+        return (skill.preRequisitos != null && skill.preRequisitos.Count >= 0);
+    }
+
+    private bool MatchRequirements(BaseSkills skill) {
+        foreach (BaseSkills preRequisito in skill.preRequisitos) {
+            if (!IsSkillUnlocked(preRequisito)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void UpdateLocalUnitValues(string unitId, UnitRecords unitRecords ) {
+        GameObject playerObj = playerUnitList.Find(p => p.GetComponent<Unit>().GetUnitId() == unitId);
+        
+        playerObj.GetComponent<Unit>().GetUnitXpSystem().SetXp(unitRecords.xp);
+        playerObj.GetComponent<Unit>().UpdateUnitStats(unitRecords.GetUnitStats());
     }
 
 }

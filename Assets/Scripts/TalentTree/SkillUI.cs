@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,19 +12,30 @@ public class SkillUi : MonoBehaviour
     public Text custo;
     public Button botaoDesbloquear;
 
-    //Define e altera os nodes da arvore de talentos.   
-    void Start()
-    {
+    private void Start() {
+        TalentManager.Instance.onSkillUpdate += TalentManager_OnSkillUpdate;
+        UpdateSkillButtonState();
+    }
+
+    public void TalentManager_OnSkillUpdate(object sender, EventArgs e) {
+        UpdateSkillButtonState();
+    }
+
+    private void UpdateSkillButtonState() {
+        botaoDesbloquear.interactable =
+            TalentManager.Instance.PodeSerDesbloqueado(skills) &&
+            TalentManager.Instance.GetXPPoints() >= skills.custo;
+    }
+
+    //Define e altera os nodes da arvore de talentos.  
+    public void SetBaseSkill(BaseSkills skill) {
+        this.skills = skill;
         nome.text = skills.nome;
         descricao.text = skills.descricao;
         custo.text = skills.custo.ToString();
     }
 
-    //Mantem o botao interagivel se cumprir as condições.
-    void Update()
-    {
-        botaoDesbloquear.interactable =
-            TalentManager.Instance.PodeSerDesbloqueado(skills) &&
-            TalentManager.Instance.pontosDisponiveis >= skills.custo;
+    private void OnDestroy() {
+        TalentManager.Instance.onSkillUpdate -= TalentManager_OnSkillUpdate;
     }
 }

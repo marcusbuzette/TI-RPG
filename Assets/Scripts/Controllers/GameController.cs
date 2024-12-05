@@ -44,19 +44,21 @@ public class GameController : MonoBehaviour {
         return playerUnits.ContainsKey(unitId);
         }
     public void AddUnitToRecords(Unit unit) {
-        UnitRecords unitRecordsAux = new UnitRecords(unit.GetUnitXpSystem().getXpAmount(), unit.GetUnitXpStats());
+        UnitRecords unitRecordsAux = new UnitRecords(unit.GetUnitXpSystem().getXpAmount(), unit.GetUnitStats());
         playerUnits.Add(unit.GetUnitId(), unitRecordsAux);
     }
 
     public UnitRecords GetUnitRecords(string unitId) { return playerUnits[unitId]; }
     public void UpdateUnitRecords(Unit unit) {
-        UnitRecords unitRecordsAux = new UnitRecords(unit.GetUnitXpSystem().getXpAmount(), unit.GetUnitXpStats());
+        Debug.Log("asd");
+        List<BaseSkills> skillsAux = playerUnits[unit.GetUnitId()].GetUnitSKills().Count > 0 ? playerUnits[unit.GetUnitId()].GetUnitSKills() : null;
+        UnitRecords unitRecordsAux = new UnitRecords(unit.GetUnitXpSystem().getXpAmount(), unit.GetUnitStats(),
+                                                        skillsAux);
         playerUnits[unit.GetUnitId()] = unitRecordsAux;
     }
 
-    public void UpdateUnitRecordsByID(string unitId,BaseSkills skill){
+    public void AddSkillToRecordById(string unitId,BaseSkills skill){
         playerUnits[unitId].AddSkill(skill);
-        
     }
 
     public Dictionary<string, UnitRecords>.KeyCollection playerUnitsIds() {

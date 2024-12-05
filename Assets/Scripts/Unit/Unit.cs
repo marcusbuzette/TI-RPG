@@ -15,6 +15,7 @@ public class Unit : MonoBehaviour {
 
     private GridPosition gridPosition;
     private HealthSystem healthSystem;
+    [SerializeField] private List<BaseSkills> possibleSkills = new List<BaseSkills>();
     [SerializeField] private XpSystem xpSystem;
     [SerializeField] public string unitId = "";
     [SerializeField] private UnitStats unitStats;
@@ -38,12 +39,14 @@ public class Unit : MonoBehaviour {
             UnitRecords unitRecords = GameController.controller.GetUnitRecords(unitId);
             this.xpSystem.AddXp(unitRecords.xp);
             this.unitStats = unitRecords.unitStats;
-            foreach(BaseSkills skill in unitRecords.baseSkills) {
+            foreach (BaseSkills skill in unitRecords.baseSkills) {
                 BaseSkills bs = gameObject.AddComponent(skill.GetType()) as BaseSkills;
             }
             actionsArray = GetComponents<BaseAction>();
             UnitActionSystem.Instance.ChangeSelectedUnit(this);
-            OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
+            if (OnAnyActionPerformed != null) {
+                OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
+            }
         }
         gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
@@ -53,6 +56,7 @@ public class Unit : MonoBehaviour {
     }
 
     private void Update() {
+
         GridPosition newGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
 
         if (newGridPosition != gridPosition) {
@@ -175,14 +179,14 @@ public class Unit : MonoBehaviour {
     public void StartUnitTurn() {
         this.isUnitTurn = true;
 
-        if(intimidateCoolDown != 0) {
+        if (intimidateCoolDown != 0) {
             hasMoved = true;
             hasPerformedAction = true;
             hasPerformedSkill = true;
             intimidateCoolDown--;
         }
 
-        if(enemyFocus != 0) {
+        if (enemyFocus != 0) {
             enemyFocus--;
         }
 
@@ -198,7 +202,8 @@ public class Unit : MonoBehaviour {
 
     public string GetUnitId() { return this.unitId; }
     public XpSystem GetUnitXpSystem() { return this.xpSystem; }
-    public UnitStats GetUnitXpStats() { return this.unitStats; }
+    public UnitStats GetUnitStats() { return this.unitStats; }
+    public void UpdateUnitStats(UnitStats unitStats) { this.unitStats = unitStats; }
 
     private void OnDestroy() {
         if (!isEnemy && GameController.controller.HasUnitRecords(unitId)) {
@@ -217,5 +222,9 @@ public class Unit : MonoBehaviour {
     public bool GetEnemyFocus() {
         if (enemyFocus == 0) return false;
         else return true;
+    }
+
+    public List<BaseSkills> GetPossibleSkills() {
+        return this.possibleSkills;
     }
 }
