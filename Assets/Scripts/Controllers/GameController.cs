@@ -50,7 +50,6 @@ public class GameController : MonoBehaviour {
 
     public UnitRecords GetUnitRecords(string unitId) { return playerUnits[unitId]; }
     public void UpdateUnitRecords(Unit unit) {
-        Debug.Log("asd");
         List<BaseSkills> skillsAux = playerUnits[unit.GetUnitId()].GetUnitSKills().Count > 0 ? playerUnits[unit.GetUnitId()].GetUnitSKills() : null;
         UnitRecords unitRecordsAux = new UnitRecords(unit.GetUnitXpSystem().getXpAmount(), unit.GetUnitStats(),
                                                         skillsAux);
