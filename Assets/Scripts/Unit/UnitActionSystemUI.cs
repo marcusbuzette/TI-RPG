@@ -8,6 +8,8 @@ public class UnitActionSystemUI : MonoBehaviour {
     [SerializeField] private Transform actionButtonPrefab;
     [SerializeField] private Transform itemButtonPrefab;
     [SerializeField] private Transform actionButtonsContainer;
+    [SerializeField] private Transform attackButtonsContainer;
+    [SerializeField] private Transform skillsButtonsContainer;
     [SerializeField] private Transform inventoryButtonsContainer;
 
     private Transform inventoyButton;
@@ -28,11 +30,40 @@ public class UnitActionSystemUI : MonoBehaviour {
             Destroy(buttonTransform.gameObject);
         }
 
+        foreach (Transform buttonTransform in attackButtonsContainer) {
+            Destroy(buttonTransform.gameObject);
+        }
+
+        foreach (Transform buttonTransform in skillsButtonsContainer) {
+            Destroy(buttonTransform.gameObject);
+        }
+
         Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
 
         if (selectedUnit == null) return;
         foreach (BaseAction action in selectedUnit.GetActionsArray()) {
-            Transform actioonButtonTransform = Instantiate(actionButtonPrefab, actionButtonsContainer);
+
+            Transform parentAux;
+
+            switch(action.GetActionType()) {
+                case ActionType.ACTION:
+                    parentAux = attackButtonsContainer;
+                    break;
+                case ActionType.MOVE:
+                    parentAux = actionButtonsContainer;
+                    break;
+                case ActionType.INVENTORY:
+                    parentAux = actionButtonsContainer;
+                    break;
+                case ActionType.SKILL:
+                    parentAux = skillsButtonsContainer;
+                    break;
+                default:
+                    parentAux = actionButtonsContainer;
+                    break;
+            }
+
+            Transform actioonButtonTransform = Instantiate(actionButtonPrefab, parentAux);
             actioonButtonTransform.GetComponent<ActionButtonUI>().SetBaseAction(action);
             if (((selectedUnit.GetHasMoved() && action.GetActionType() == ActionType.MOVE) || !selectedUnit.IsUnityTurn()) 
             || (selectedUnit.GetHasPerformedAction() && action.GetActionType() == ActionType.ACTION) || !selectedUnit.IsUnityTurn()
@@ -43,6 +74,9 @@ public class UnitActionSystemUI : MonoBehaviour {
 
             if (action.GetActionType() == ActionType.INVENTORY) {
                 this.inventoyButton = actioonButtonTransform;
+                if(InventorySystem.inventorySystem.IsEmpty()) {
+                    actioonButtonTransform.GetComponent<ActionButtonUI>().DisableActionButton();
+                }
             }
         }
     }
