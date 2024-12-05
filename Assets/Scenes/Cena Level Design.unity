@@ -3840,6 +3840,10 @@ PrefabInstance:
       propertyPath: unitStats.speed
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2672855175812891822, guid: 63c27cbf6f6b18144bbbc2983e385cff, type: 3}
+      propertyPath: unitStats.xpSpoil
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5248424051689086498, guid: 63c27cbf6f6b18144bbbc2983e385cff, type: 3}
       propertyPath: m_Name
       value: Bear
@@ -3922,23 +3926,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d080ed6cd128408b82a8d741eeacab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &628301329
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 628301323}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee4cfdff77dede64a918ecb8fa1b4fb5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onCoolDown: 0
-  coolDown: 0
-  currentCoolDown: 0
-  targetsList: []
-  maxIntimidateDistance: 1
 --- !u!1 &636811467
 GameObject:
   m_ObjectHideFlags: 0
@@ -7034,23 +7021,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d080ed6cd128408b82a8d741eeacab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1066181948
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1066181942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0af41d7b3dec0b148a761e909092a2b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onCoolDown: 0
-  coolDown: 0
-  currentCoolDown: 0
-  maxTeleportDistance: 1
-  MAX_SPIN: 360
 --- !u!1 &1097003256
 GameObject:
   m_ObjectHideFlags: 0
@@ -8387,6 +8357,10 @@ PrefabInstance:
       propertyPath: unitId
       value: monkey
       objectReference: {fileID: 0}
+    - target: {fileID: 3040281036064970410, guid: 82047d41f197848bb9bc6b85604fbe01, type: 3}
+      propertyPath: actionsArray.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5183917217429670950, guid: 82047d41f197848bb9bc6b85604fbe01, type: 3}
       propertyPath: m_Name
       value: Monkey
@@ -8447,9 +8421,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5183917217429670950, guid: 82047d41f197848bb9bc6b85604fbe01, type: 3}
       insertIndex: 2
       addedObject: {fileID: 628301326}
-    - targetCorrespondingSourceObject: {fileID: 5183917217429670950, guid: 82047d41f197848bb9bc6b85604fbe01, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 628301329}
   m_SourcePrefab: {fileID: 100100000, guid: 82047d41f197848bb9bc6b85604fbe01, type: 3}
 --- !u!1 &1704691378
 GameObject:
@@ -8950,6 +8921,10 @@ PrefabInstance:
     - target: {fileID: 2672855175812891822, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
       propertyPath: unitStats.speed
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2672855175812891822, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
+      propertyPath: unitStats.xpSpoil
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5248424051689086498, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
       propertyPath: m_Name
@@ -9664,9 +9639,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3343077423336064248, guid: e4cdb5a43fe194cbbb93ec86261f60ac, type: 3}
       insertIndex: 2
       addedObject: {fileID: 1066181945}
-    - targetCorrespondingSourceObject: {fileID: 3343077423336064248, guid: e4cdb5a43fe194cbbb93ec86261f60ac, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1066181948}
   m_SourcePrefab: {fileID: 100100000, guid: e4cdb5a43fe194cbbb93ec86261f60ac, type: 3}
 --- !u!1 &2111068607
 GameObject:
