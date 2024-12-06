@@ -37,13 +37,12 @@ public class Unit : MonoBehaviour {
     private void Start() {
         if (!isEnemy && GameController.controller.HasUnitRecords(unitId)) {
             UnitRecords unitRecords = GameController.controller.GetUnitRecords(unitId);
-            this.xpSystem.AddXp(unitRecords.xp);
+            this.xpSystem.SetXp(unitRecords.xp);
             this.unitStats = unitRecords.unitStats;
             foreach (BaseSkills skill in unitRecords.baseSkills) {
                 BaseSkills bs = gameObject.AddComponent(skill.GetType()) as BaseSkills;
             }
             actionsArray = GetComponents<BaseAction>();
-            UnitActionSystem.Instance.ChangeSelectedUnit(this);
             if (OnAnyActionPerformed != null) {
                 OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
             }
@@ -196,8 +195,12 @@ public class Unit : MonoBehaviour {
             }
         }
 
+        Debug.Log(unitId + " - " + isUnitTurn);
+
         UnitActionSystem.Instance.ChangeSelectedUnit(this);
-        OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
+        if (OnAnyActionPerformed != null) {
+            OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
+        }
     }
 
     public string GetUnitId() { return this.unitId; }
