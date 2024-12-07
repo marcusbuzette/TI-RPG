@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class TurnSystemUI : MonoBehaviour {
     [SerializeField] private Button endTurnButton;
+    [SerializeField] private Button turnSpeedButton;
+    [SerializeField] private TextMeshProUGUI turnSpeedText;
     [SerializeField] private TextMeshProUGUI turnNumberText;
     [SerializeField] private Transform unitsOrderContainer;
     [SerializeField] private Transform unitOrderUIPrefab;
@@ -14,6 +16,11 @@ public class TurnSystemUI : MonoBehaviour {
     private void Start() {
         endTurnButton.onClick.AddListener(() => {
             TurnSystem.Instance.NextTurn();
+        });
+        turnSpeedButton.onClick.AddListener(() => {
+            TurnSystem.Instance.ChengeTurnSpeed();
+            UpdateTurnSpeedText();
+
         });
         TurnSystem.Instance.onTurnChange += TurnSystem_OnTurnChange;
         TurnSystem.Instance.onOrderChange += TurnSystem_OnOrderChange;
@@ -50,5 +57,9 @@ public class TurnSystemUI : MonoBehaviour {
 
     private void UpdateEndTurnButton() {
         endTurnButton.interactable = TurnSystem.Instance.IsPlayerTurn();
+    }
+
+    public void UpdateTurnSpeedText() {
+        turnSpeedText.text = Time.timeScale.ToString() + "x";
     }
 }

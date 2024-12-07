@@ -11,6 +11,8 @@ TagManager:
   - HUB_Shop
   - HUB_Map
   - HUB_Campfire
+  - SkillTree
+  - UnitActionSystemUI
   layers:
   - Default
   - TransparentFX

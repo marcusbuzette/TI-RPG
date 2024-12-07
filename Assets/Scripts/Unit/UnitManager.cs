@@ -47,7 +47,7 @@ public class UnitManager : MonoBehaviour {
 
         if (unit.IsEnemy()) {
             foreach (var friendlyUnit in friendlyList) {
-                friendlyUnit.AddXp(unit.GetUnitXpStats().GetXpSpoil());
+                friendlyUnit.AddXp(unit.GetUnitStats().GetXpSpoil());
             }
             enemyList.Remove(unit);
         }

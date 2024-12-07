@@ -14,7 +14,7 @@ public class DialogueController : MonoBehaviour
     private void Awake() {
         if (dialogueController == null) {
             dialogueController = this;
-            DontDestroyOnLoad(this);
+            //DontDestroyOnLoad(this);
         }
         else {
             DestroyImmediate(gameObject);
@@ -43,6 +43,7 @@ public class DialogueController : MonoBehaviour
             return;
         }
         string sentence = sentences.Dequeue();
+        StopAllCoroutines();
         StopCoroutine(TypeSentence(sentence));
         StartCoroutine(TypeSentence(sentence));
     }

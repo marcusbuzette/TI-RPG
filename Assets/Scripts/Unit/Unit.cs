@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -13,8 +15,9 @@ public class Unit : MonoBehaviour {
 
     private GridPosition gridPosition;
     private HealthSystem healthSystem;
+    [SerializeField] private List<BaseSkills> possibleSkills = new List<BaseSkills>();
     [SerializeField] private XpSystem xpSystem;
-    [SerializeField] private string unitId = "";
+    [SerializeField] public string unitId = "";
     [SerializeField] private UnitStats unitStats;
     [SerializeField] private BaseAction[] actionsArray;
     [SerializeField] private bool hasMoved = false;
@@ -34,8 +37,15 @@ public class Unit : MonoBehaviour {
     private void Start() {
         if (!isEnemy && GameController.controller.HasUnitRecords(unitId)) {
             UnitRecords unitRecords = GameController.controller.GetUnitRecords(unitId);
-            this.xpSystem.AddXp(unitRecords.xp);
+            this.xpSystem.SetXp(unitRecords.xp);
             this.unitStats = unitRecords.unitStats;
+            foreach (BaseSkills skill in unitRecords.baseSkills) {
+                BaseSkills bs = gameObject.AddComponent(skill.GetType()) as BaseSkills;
+            }
+            actionsArray = GetComponents<BaseAction>();
+            if (OnAnyActionPerformed != null) {
+                OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
+            }
         }
         gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
@@ -45,6 +55,7 @@ public class Unit : MonoBehaviour {
     }
 
     private void Update() {
+
         GridPosition newGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
 
         if (newGridPosition != gridPosition) {
@@ -65,7 +76,7 @@ public class Unit : MonoBehaviour {
     }
 
     public BaseAction[] GetActionsArray() {
-        return actionsArray;
+        return actionsArray.ToArray();
     }
 
     public GridPosition GetGridPosition() {
@@ -83,7 +94,6 @@ public class Unit : MonoBehaviour {
     }
 
     public bool CanTriggerAction(BaseAction action) {
-        Debug.Log(action.ToString());
         switch (action.GetActionType()) {
             case ActionType.MOVE:
                 return !hasMoved;
@@ -143,6 +153,10 @@ public class Unit : MonoBehaviour {
         xpSystem.AddXp(xpAmount);
     }
 
+    public void AddActionToArray(BaseAction action) {
+
+    }
+
     private void HealthSystem_OnDie(object sender, EventArgs e) {
         LevelGrid.Instance.RemoveUnitAtGridPosition(gridPosition, this);
         TurnSystem.Instance.RemoveUnitFromList(this);
@@ -164,14 +178,14 @@ public class Unit : MonoBehaviour {
     public void StartUnitTurn() {
         this.isUnitTurn = true;
 
-        if(intimidateCoolDown != 0) {
+        if (intimidateCoolDown != 0) {
             hasMoved = true;
             hasPerformedAction = true;
             hasPerformedSkill = true;
             intimidateCoolDown--;
         }
 
-        if(enemyFocus != 0) {
+        if (enemyFocus != 0) {
             enemyFocus--;
         }
 
@@ -181,13 +195,18 @@ public class Unit : MonoBehaviour {
             }
         }
 
+        Debug.Log(unitId + " - " + isUnitTurn);
+
         UnitActionSystem.Instance.ChangeSelectedUnit(this);
-        OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
+        if (OnAnyActionPerformed != null) {
+            OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
+        }
     }
 
     public string GetUnitId() { return this.unitId; }
     public XpSystem GetUnitXpSystem() { return this.xpSystem; }
-    public UnitStats GetUnitXpStats() { return this.unitStats; }
+    public UnitStats GetUnitStats() { return this.unitStats; }
+    public void UpdateUnitStats(UnitStats unitStats) { this.unitStats = unitStats; }
 
     private void OnDestroy() {
         if (!isEnemy && GameController.controller.HasUnitRecords(unitId)) {
@@ -206,5 +225,9 @@ public class Unit : MonoBehaviour {
     public bool GetEnemyFocus() {
         if (enemyFocus == 0) return false;
         else return true;
+    }
+
+    public List<BaseSkills> GetPossibleSkills() {
+        return this.possibleSkills;
     }
 }
