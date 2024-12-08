@@ -148,12 +148,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60f7fa4d0ba5cc64a8e20620bbc5a1ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  talento: {fileID: 11400000, guid: f130a86b43014a04da5dfb3b42c0edfe, type: 2}
+  skills: {fileID: 0}
   nome: {fileID: 5724064697369158349}
   descricao: {fileID: 6473963107038496162}
   custo: {fileID: 8068535172566006365}
   botaoDesbloquear: {fileID: 7233963059117244067}
-  talentManager: {fileID: 0}
 --- !u!1 &1027291432411202857
 GameObject:
   m_ObjectHideFlags: 0
@@ -1081,12 +1080,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60f7fa4d0ba5cc64a8e20620bbc5a1ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  talento: {fileID: 11400000, guid: d4b332ff5740515459a8e2f079751b8c, type: 2}
+  skills: {fileID: 0}
   nome: {fileID: 1584889566454251638}
   descricao: {fileID: 5224827087320097819}
   custo: {fileID: 5939373894687696329}
   botaoDesbloquear: {fileID: 9146864311212895230}
-  talentManager: {fileID: 0}
 --- !u!1 &3916502119402322852
 GameObject:
   m_ObjectHideFlags: 0
@@ -1630,12 +1628,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60f7fa4d0ba5cc64a8e20620bbc5a1ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  talento: {fileID: 11400000, guid: 89ebe12b17954184dbcaccda60ab8c15, type: 2}
+  skills: {fileID: 0}
   nome: {fileID: 6535342094415520956}
   descricao: {fileID: 145949985504184741}
   custo: {fileID: 522360917698449116}
   botaoDesbloquear: {fileID: 7223322002576970989}
-  talentManager: {fileID: 0}
 --- !u!1 &5585147820632473971
 GameObject:
   m_ObjectHideFlags: 0
@@ -1863,12 +1860,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60f7fa4d0ba5cc64a8e20620bbc5a1ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  talento: {fileID: 11400000, guid: 8a6717ebeeb81f441b35cebce97277df, type: 2}
+  skills: {fileID: 0}
   nome: {fileID: 7718095324338721112}
   descricao: {fileID: 4949493669304899779}
   custo: {fileID: 61969662565324838}
   botaoDesbloquear: {fileID: 4833317173595836544}
-  talentManager: {fileID: 0}
 --- !u!1 &5914845654141558989
 GameObject:
   m_ObjectHideFlags: 0
@@ -2444,12 +2440,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60f7fa4d0ba5cc64a8e20620bbc5a1ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  talento: {fileID: 11400000, guid: f27948960eadd8042b1522682ebefe1a, type: 2}
+  skills: {fileID: 0}
   nome: {fileID: 6789342567405989275}
   descricao: {fileID: 4222105094181220205}
   custo: {fileID: 5971572868964096109}
   botaoDesbloquear: {fileID: 7920919313175355757}
-  talentManager: {fileID: 0}
 --- !u!1 &8112364720973921676
 GameObject:
   m_ObjectHideFlags: 0
@@ -2598,12 +2593,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60f7fa4d0ba5cc64a8e20620bbc5a1ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  talento: {fileID: 11400000, guid: 6d6788174a784204db691717ba57833d, type: 2}
+  skills: {fileID: 0}
   nome: {fileID: 6502459931817229854}
   descricao: {fileID: 718963979701115770}
   custo: {fileID: 4635556725693514149}
   botaoDesbloquear: {fileID: 2092430580774331424}
-  talentManager: {fileID: 0}
 --- !u!1 &8241154622581992463
 GameObject:
   m_ObjectHideFlags: 0
@@ -2831,12 +2825,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60f7fa4d0ba5cc64a8e20620bbc5a1ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  talento: {fileID: 11400000, guid: 4b494ebade20fbb4aaf7a545c40d1e5b, type: 2}
+  skills: {fileID: 0}
   nome: {fileID: 6436034732082287011}
   descricao: {fileID: 5071967086176026493}
   custo: {fileID: 3289598348260272363}
   botaoDesbloquear: {fileID: 2172040109638788247}
-  talentManager: {fileID: 0}
 --- !u!1 &8820462475811358192
 GameObject:
   m_ObjectHideFlags: 0
@@ -2933,7 +2926,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2225738506775867957
 RectTransform:
   m_ObjectHideFlags: 0

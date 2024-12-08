@@ -9,6 +9,8 @@ public class OpenShopHUB : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera thisCamera;
     [SerializeField] private BoxCollider thisCollider;
     bool isActive;
+    private CameraHUB cameraHUB;
+    [SerializeField] private GameObject store;
 
     private void Update() {
         if (isActive) {
@@ -18,24 +20,33 @@ public class OpenShopHUB : MonoBehaviour
         }
     }
 
-    public void EnterOnThisCamera() {
+    public void EnterOnThisCamera(CameraHUB cameraHUB) {
+        cameraHUB.TurnOffAllColliders();
+
         thisCollider.enabled = false;
         thisCamera.gameObject.SetActive(true);
         mainCamera.gameObject.SetActive(false);
         isActive = true;
+        this.cameraHUB = cameraHUB;
+
+        StartCoroutine(enumerator());
+    }
+
+    IEnumerator enumerator() {
+        yield return new WaitForSeconds(1.5f);
         DoSomething();
     }
+
     public void BackToMainCameraHUB() {
+        cameraHUB.TurnOnAllColliders();
         thisCollider.enabled = true;
         thisCamera.gameObject.SetActive(false);
         mainCamera.gameObject.SetActive(true);
 
-        //Close Skill Tree
-        Debug.Log("Fechar Loja");
+        store.SetActive(false);
     }
 
     public void DoSomething() {
-        //Open Skill Tree
-        Debug.Log("Abrir Loja");
+        store.SetActive(true);
     }
 }

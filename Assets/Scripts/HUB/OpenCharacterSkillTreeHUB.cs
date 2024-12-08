@@ -8,7 +8,11 @@ public class OpenCharacterSkillTreeHUB : MonoBehaviour, IChangeCamera {
     [SerializeField] private CinemachineVirtualCamera mainCamera;
     [SerializeField] private CinemachineVirtualCamera thisCamera;
     [SerializeField] private BoxCollider thisCollider;
-    bool isActive;
+    private bool isActive;
+
+    [SerializeField] private GameObject skillTree;
+    private CameraHUB cameraHUB;
+    [SerializeField] private int index;
 
     private void Update() {
         if (isActive) {
@@ -18,24 +22,59 @@ public class OpenCharacterSkillTreeHUB : MonoBehaviour, IChangeCamera {
         }
     }
 
-    public void EnterOnThisCamera() {
-        thisCollider.enabled = false;
+    public void EnterOnThisCamera(CameraHUB cameraHUB) {
+        cameraHUB.TurnOffAllColliders();
+
+        if (thisCollider != null) {
+            thisCollider.enabled = false;
+        }
         thisCamera.gameObject.SetActive(true);
         mainCamera.gameObject.SetActive(false);
         isActive = true;
+        this.cameraHUB = cameraHUB;
+
+        StartCoroutine(enumerator());
+    }
+
+    IEnumerator enumerator() {
+        yield return new WaitForSeconds(1.5f);
         DoSomething();
     }
     public void BackToMainCameraHUB() {
-        thisCollider.enabled = true;
+        cameraHUB.TurnOnAllColliders();
+
+        if (thisCollider != null) {
+            thisCollider.enabled = true;
+        }
         thisCamera.gameObject.SetActive(false);
         mainCamera.gameObject.SetActive(true);
 
-        //Close Skill Tree
-        Debug.Log("Fechar Arvore De Habilidades");
+        skillTree.SetActive(false);
     }
 
     public void DoSomething() {
-        //Open Skill Tree
-        Debug.Log("Abrir Arvore De Habilidades");
+        skillTree.SetActive(true);
+    }
+
+    public void NextSkillTree() {
+        int nextIndex = index;
+        nextIndex = nextIndex + 1;
+        if (nextIndex > 3) {
+            nextIndex = 0;
+        }
+        Debug.Log(nextIndex);
+        BackToMainCameraHUB();
+        cameraHUB.GetSkillTreeCharacter(nextIndex).EnterOnThisCamera(cameraHUB);
+    }
+
+    public void BackSkillTree() {
+        int nextIndex = index;
+        nextIndex = nextIndex - 1;
+        if (nextIndex < 0) {
+            nextIndex = 3;
+        }
+        Debug.Log(nextIndex);
+        BackToMainCameraHUB();
+        cameraHUB.GetSkillTreeCharacter(nextIndex).EnterOnThisCamera(cameraHUB);
     }
 }

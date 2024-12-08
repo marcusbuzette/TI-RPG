@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IChangeCamera
 {
-    public void EnterOnThisCamera();
+    public void EnterOnThisCamera(CameraHUB cameraHUB);
 
     public void BackToMainCameraHUB();
 
