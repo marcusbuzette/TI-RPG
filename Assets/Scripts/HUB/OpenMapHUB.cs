@@ -8,11 +8,25 @@ public class OpenMapHUB : MonoBehaviour, IChangeCamera
 {
     [SerializeField] private CinemachineVirtualCamera mainCamera;
     [SerializeField] private CinemachineVirtualCamera thisCamera;
-    [SerializeField] private BoxCollider thisCollider;
+    private BoxCollider thisCollider;
     bool isActive;
     [SerializeField] private string sceneToLoad;
 
     private CameraHUB cameraHUB;
+
+    private void Start() {
+        if (GetComponent<BoxCollider>() != null) {
+            thisCollider = GetComponent<BoxCollider>();
+        }
+    }
+
+    private void Update() {
+        if (isActive) {
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                BackToMainCameraHUB();
+            }
+        }
+    }
 
     public void EnterOnThisCamera(CameraHUB cameraHUB) {
         cameraHUB.TurnOffAllColliders();
@@ -33,6 +47,7 @@ public class OpenMapHUB : MonoBehaviour, IChangeCamera
     }
 
     public void BackToMainCameraHUB() {
+        StopCoroutine(enumerator());
         cameraHUB.TurnOnAllColliders();
         thisCollider.enabled = true;
         thisCamera.gameObject.SetActive(false);

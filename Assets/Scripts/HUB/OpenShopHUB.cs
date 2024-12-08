@@ -7,10 +7,16 @@ public class OpenShopHUB : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera mainCamera;
     [SerializeField] private CinemachineVirtualCamera thisCamera;
-    [SerializeField] private BoxCollider thisCollider;
+    private BoxCollider thisCollider;
     bool isActive;
     private CameraHUB cameraHUB;
     [SerializeField] private GameObject store;
+
+    private void Start() {
+        if (GetComponent<BoxCollider>() != null) {
+            thisCollider = GetComponent<BoxCollider>();
+        }
+    }
 
     private void Update() {
         if (isActive) {

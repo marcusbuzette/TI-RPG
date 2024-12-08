@@ -9,6 +9,7 @@ public class CameraHUB : MonoBehaviour
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private OpenCharacterSkillTreeHUB[] charactersSkillTrees;
     [SerializeField] private BoxCollider[] colliders;
+    [SerializeField] private GameObject[] texts;
 
     private void Start() {
         mainCamera = Camera.main;
@@ -50,11 +51,17 @@ public class CameraHUB : MonoBehaviour
         foreach(BoxCollider collider in colliders) {
             collider.enabled = false;
         }
+        foreach (GameObject text in texts) {
+            text.SetActive(false);
+        }
     }
 
     public void TurnOnAllColliders() {
         foreach (BoxCollider collider in colliders) {
             collider.enabled = true;
+        }
+        foreach (GameObject text in texts) {
+            text.SetActive(true);
         }
     }
 }

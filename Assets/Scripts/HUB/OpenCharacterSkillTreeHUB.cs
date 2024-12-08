@@ -7,12 +7,19 @@ public class OpenCharacterSkillTreeHUB : MonoBehaviour, IChangeCamera {
 
     [SerializeField] private CinemachineVirtualCamera mainCamera;
     [SerializeField] private CinemachineVirtualCamera thisCamera;
-    [SerializeField] private BoxCollider thisCollider;
+    
+    private BoxCollider thisCollider;
     private bool isActive;
 
-    [SerializeField] private GameObject skillTree;
     private CameraHUB cameraHUB;
+    [SerializeField] private GameObject skillTree;
     [SerializeField] private int index;
+
+    private void Start() {
+        if(GetComponent<BoxCollider>() != null) {
+            thisCollider = GetComponent<BoxCollider>();
+        }
+    }
 
     private void Update() {
         if (isActive) {
@@ -62,7 +69,7 @@ public class OpenCharacterSkillTreeHUB : MonoBehaviour, IChangeCamera {
         if (nextIndex > 3) {
             nextIndex = 0;
         }
-        Debug.Log(nextIndex);
+
         BackToMainCameraHUB();
         cameraHUB.GetSkillTreeCharacter(nextIndex).EnterOnThisCamera(cameraHUB);
     }
@@ -73,7 +80,7 @@ public class OpenCharacterSkillTreeHUB : MonoBehaviour, IChangeCamera {
         if (nextIndex < 0) {
             nextIndex = 3;
         }
-        Debug.Log(nextIndex);
+
         BackToMainCameraHUB();
         cameraHUB.GetSkillTreeCharacter(nextIndex).EnterOnThisCamera(cameraHUB);
     }
