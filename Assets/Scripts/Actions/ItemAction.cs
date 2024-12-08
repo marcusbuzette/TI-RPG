@@ -39,6 +39,7 @@ public class ItemAction : BaseAction {
         this.unit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
         this.healthSystem = unit.GetComponent<HealthSystem>();
         ActionStart(onActionComplete);
+        AudioManager.instance?.PlaySFX("Potion");
         Action();
     }
 

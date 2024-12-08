@@ -24,6 +24,7 @@ public class HitAction : BaseAction {
         if (totalSpinAmmount > MAX_SPIN) {
             totalSpinAmmount = 0;
             targetUnit.Damage(hitDamage);
+            AudioManager.instance?.PlaySFX("Melee");
             ActionFinish();
         }
     }
