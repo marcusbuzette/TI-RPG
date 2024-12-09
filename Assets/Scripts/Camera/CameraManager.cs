@@ -47,8 +47,9 @@ public class CameraManager : MonoBehaviour
 
                 actionCamera.transform.position = actionCameraPositionShoot;
                 actionCamera.transform.LookAt(targetUnit.GetWorldPosition() + cameraCharacterHeight);
+                int shootDamage = shootAction.GetDamage();
 
-                ShowActionCamera();
+                if (targetUnit.GetHealthPoints() - shootDamage <= 0) ShowActionCamera();
                 break;
             case HitAction hitAction:
                 Unit hitterUnit = hitAction.GetUnit();
@@ -66,7 +67,9 @@ public class CameraManager : MonoBehaviour
                 actionCamera.transform.position = actionCameraPositionHit;
                 actionCamera.transform.LookAt(middlePoint + cameraCharacterHeight);
 
-                ShowActionCamera();
+                int hitDamage = hitAction.GetDamage();
+
+                if (targetUnitH.GetHealthPoints() - hitDamage <= 0) ShowActionCamera();
                 break;
         }
     }
@@ -84,7 +87,8 @@ public class CameraManager : MonoBehaviour
         }
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         BaseAction.OnAnyActionStarted -= BaseAction_OnAnyActionStarted;
         BaseAction.OnAnyActionCompleted -= BaseAction_OnAnyActionCompleted;
     }

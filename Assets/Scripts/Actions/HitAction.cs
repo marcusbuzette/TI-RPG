@@ -4,7 +4,8 @@ using UnityEngine;
 using System;
 using Unity.VisualScripting;
 
-public class HitAction : BaseAction {
+public class HitAction : BaseAction
+{
     private float totalSpinAmmount = 0;
     [SerializeField] private int maxShootDistance = 1;
     [SerializeField] private float MAX_SPIN = 360f;
@@ -13,43 +14,52 @@ public class HitAction : BaseAction {
     private Unit targetUnit;
 
 
-    public override string GetActionName() {
+    public override string GetActionName()
+    {
         return "Hit";
     }
 
-    public override void Action() {
+    public override void Action()
+    {
         float spinAddAmmount = 360f * Time.deltaTime;
         transform.eulerAngles += new Vector3(0, spinAddAmmount, 0);
         totalSpinAmmount += spinAddAmmount;
-        if (totalSpinAmmount > MAX_SPIN) {
+        if (totalSpinAmmount > MAX_SPIN)
+        {
             totalSpinAmmount = 0;
             targetUnit.Damage(hitDamage);
             ActionFinish();
         }
     }
 
-    public override List<GridPosition> GetValidGridPositionList() {
+    public override List<GridPosition> GetValidGridPositionList()
+    {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
 
         GridPosition unitGridPosition = unit.GetGridPosition();
 
-        for (int x = -maxShootDistance; x <= maxShootDistance; x++) {
-            for (int z = -maxShootDistance; z <= maxShootDistance; z++) {
+        for (int x = -maxShootDistance; x <= maxShootDistance; x++)
+        {
+            for (int z = -maxShootDistance; z <= maxShootDistance; z++)
+            {
                 GridPosition offsetGridPosition = new GridPosition(x, z);
                 GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
-                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) {
+                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition))
+                {
                     continue;
                 }
 
 
-                if (!LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition)) {
+                if (!LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition))
+                {
                     continue;
                 }
 
                 Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition);
 
-                if (targetUnit.IsEnemy() == unit.IsEnemy()) {
+                if (targetUnit.IsEnemy() == unit.IsEnemy())
+                {
                     continue;
                 }
 
@@ -60,24 +70,34 @@ public class HitAction : BaseAction {
         return validGridPositionList;
     }
 
-    public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
+    public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete)
+    {
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
-        
+
         ActionStart(onActionComplete);
     }
 
-    public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {
-        return new EnemyAIAction {
+    public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
+    {
+        return new EnemyAIAction
+        {
             gridPosition = gridPosition,
             actionValue = 0,
         };
     }
 
-    public Unit GetTargetUnit(){
+    public Unit GetTargetUnit()
+    {
         return targetUnit;
     }
 
     public override bool GetOnCooldown() { return false; }
 
-    public override void IsAnotherRound() {}
+    public override void IsAnotherRound() { }
+
+    public int GetDamage()
+    {
+        int damage = hitDamage;
+        return damage;
+    }
 }
