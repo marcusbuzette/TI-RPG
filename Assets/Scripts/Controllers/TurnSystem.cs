@@ -30,10 +30,14 @@ public class TurnSystem : MonoBehaviour {
     }
 
     private void Start() {
+        turnNumber= 0;
+        Debug.LogError("asd");
         unitiesOrderList = FindObjectsOfType<Unit>(false).ToList<Unit>();
         unitiesOrderList.Sort((x, y) => y.GetUnitSpeed().CompareTo(x.GetUnitSpeed()));
         isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
         unitiesOrderList[turnNumber].StartUnitTurn();
+        Debug.Log(unitiesOrderList[turnNumber].GetUnitId());
+        Debug.Log(onOrderChange != null);
         onOrderChange.Invoke(this, EventArgs.Empty);
 
     }
@@ -68,6 +72,7 @@ public class TurnSystem : MonoBehaviour {
         unitiesOrderList.Remove(unitDead);
         if (turnNumber > unitDeadIndex) { turnNumber--; }
         if (!CheckEnemiesLeft()) {
+            ResetTurnSpeed();
             SceneManager.LoadScene("HUB");
         }
         else {
@@ -105,6 +110,11 @@ public class TurnSystem : MonoBehaviour {
         if (turnSpeedIndex == turnSpeeds.Length - 1) { turnSpeedIndex = 0; }
         else turnSpeedIndex++;
 
+        Time.timeScale = turnSpeeds[turnSpeedIndex];
+    }
+
+    public void ResetTurnSpeed() {
+        turnSpeedIndex = 0;
         Time.timeScale = turnSpeeds[turnSpeedIndex];
     }
     public void SetCameraController(CameraController controller) { cameraController = controller; }
