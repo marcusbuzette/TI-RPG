@@ -404,6 +404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DinheiroTXT: {fileID: 9202453506095795505}
+  itemData: []
 --- !u!1 &7389620417578589942
 GameObject:
   m_ObjectHideFlags: 0

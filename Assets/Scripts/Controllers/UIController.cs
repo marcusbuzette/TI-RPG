@@ -6,7 +6,20 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
+
+    public static UIController instance;
     public Slider _masterSlider, _musicSlider, _sfxSlider;
+
+    private void Awake() {
+        if (instance == null) {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else {
+            Destroy(gameObject);
+        }
+
+    }
 
     public void ToggleMusic()
     {
@@ -39,7 +52,23 @@ public class UIController : MonoBehaviour
     }
 
     public void ChangeScene(string scene) {
+        //SceneManager.LoadScene(scene);
+        string musicToPlay = ""; // Nome da música da próxima cena
+        switch (scene) {
+            case "HUB":
+                musicToPlay = "HUB"; // Substitua com o nome da música
+                break;
+            case "MenuPrincipal":
+                musicToPlay = "Menu"; // Música do menu
+                break;
+            case "Cena Level Design":
+                musicToPlay = "Combat"; // Música padrão, se necessário
+                break;
+        }
+
+        AudioManager.instance.PlayMusic(musicToPlay);
         SceneManager.LoadScene(scene);
+
     } 
 
     public void PlayGame() {

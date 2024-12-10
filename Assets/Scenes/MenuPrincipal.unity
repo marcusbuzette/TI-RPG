@@ -531,7 +531,7 @@ AudioSource:
   m_GameObject: {fileID: 358558284}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3091161331000592385, guid: 4e37b6f44a0ae304fbab6f92be2c5513, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -1531,7 +1531,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!82 &875590367
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1541,7 +1541,7 @@ AudioSource:
   m_GameObject: {fileID: 875590366}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 4e37b6f44a0ae304fbab6f92be2c5513, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -2319,8 +2319,8 @@ AudioSource:
   m_GameObject: {fileID: 1208278566}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -6125265201216874555, guid: 4e37b6f44a0ae304fbab6f92be2c5513, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 63542dcaa5f27f54f98ec25b02d6377a, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -3743,25 +3743,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 238e5200878b3464f9a1c424c54f6690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicSounds: []
+  musicSounds:
+  - name: Menu
+    clip: {fileID: 8300000, guid: 63542dcaa5f27f54f98ec25b02d6377a, type: 3}
+  - name: HUB
+    clip: {fileID: 8300000, guid: 2c63983d341402a4ab660a00b081c80c, type: 3}
+  - name: Combat
+    clip: {fileID: 8300000, guid: 79573b85cb21dd748a75a7000db163c4, type: 3}
   sfxSounds:
   - name: Walk
     clip: {fileID: 0}
   - name: DamageTaken
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: c5aa5c10613b87c4aa250989343f10cf, type: 3}
   - name: Melee
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 89b29d20031a7d049953d6c9e7f077f8, type: 3}
   - name: Magic
     clip: {fileID: 0}
   - name: Arrows
-    clip: {fileID: 0}
-  - name: Hover
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 5fdc3861e423e054bb2ec8d7126026a2, type: 3}
+  - name: Teleport
+    clip: {fileID: 8300000, guid: 849cc61bce75a4f43bd2df645fb431ba, type: 3}
   - name: Click
     clip: {fileID: 8300000, guid: 4a640579b248e3c4bac9c017f2f30e54, type: 3}
+  - name: Potion
+    clip: {fileID: 8300000, guid: e7336ce4338b37346bbe4de6cc362e90, type: 3}
   masterSource: {fileID: 1901677262}
   musicSource: {fileID: 1208278567}
   sfxSource: {fileID: 358558285}
+  audioMixer: {fileID: 24100000, guid: 4e37b6f44a0ae304fbab6f92be2c5513, type: 2}
 --- !u!4 &1901677261
 Transform:
   m_ObjectHideFlags: 0
@@ -4233,6 +4242,38 @@ PrefabInstance:
     - target: {fileID: 3417247068932058848, guid: 6ad9d847c6401e64c8618d7f07afb00c, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3740969083530959939, guid: 6ad9d847c6401e64c8618d7f07afb00c, type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3740969083530959939, guid: 6ad9d847c6401e64c8618d7f07afb00c, type: 3}
+      propertyPath: m_MaxValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3740969083530959939, guid: 6ad9d847c6401e64c8618d7f07afb00c, type: 3}
+      propertyPath: m_MinValue
+      value: -80
+      objectReference: {fileID: 0}
+    - target: {fileID: 3740969083530959939, guid: 6ad9d847c6401e64c8618d7f07afb00c, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3740969083530959939, guid: 6ad9d847c6401e64c8618d7f07afb00c, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3740969083530959939, guid: 6ad9d847c6401e64c8618d7f07afb00c, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1901677260}
+    - target: {fileID: 3740969083530959939, guid: 6ad9d847c6401e64c8618d7f07afb00c, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MasterVolume
+      objectReference: {fileID: 0}
+    - target: {fileID: 3740969083530959939, guid: 6ad9d847c6401e64c8618d7f07afb00c, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: AudioManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4108415587330620512, guid: 6ad9d847c6401e64c8618d7f07afb00c, type: 3}
       propertyPath: m_AnchoredPosition.x

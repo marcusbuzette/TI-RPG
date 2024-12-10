@@ -69,6 +69,7 @@ public class TeleportSkill : BaseSkills
         targetGrid = mouseGridPosition;
 
         ActionStart(onActionComplete);
+
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {
@@ -91,6 +92,7 @@ public class TeleportSkill : BaseSkills
     private void Teleport() {
         unit.transform.position = LevelGrid.Instance.GetWorldPosition(targetGrid);
         LevelGrid.Instance.UnitMovedGridPosition(unit, unit.GetGridPosition(), targetGrid);
+        AudioManager.instance?.PlaySFX("Teleport");
     }
 
     public override bool GetOnCooldown() { return onCoolDown; }

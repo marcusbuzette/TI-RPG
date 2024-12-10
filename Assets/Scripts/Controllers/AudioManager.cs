@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour {
     public static AudioManager instance;
 
     public Sound[] musicSounds, sfxSounds;
     public AudioSource masterSource, musicSource, sfxSource;
+    [SerializeField] private AudioMixer audioMixer;
 
     private void Awake() {
         if (instance == null) {
@@ -67,9 +69,11 @@ public class AudioManager : MonoBehaviour {
     }
 
     public void MasterVolume(float volume) {
-        masterSource.volume = volume;
+        /*masterSource.volume = volume;
         musicSource.volume = musicSource.volume * masterSource.volume;
-        sfxSource.volume = sfxSource.volume * masterSource.volume;
+        sfxSource.volume = sfxSource.volume * masterSource.volume;*/
+
+        audioMixer.SetFloat("MasterVolume", volume);
     }
 
     public void ToggleMaster() {
