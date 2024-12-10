@@ -44,4 +44,8 @@ public class SpinAction : BaseAction {
             actionValue = 0,
         };
     }
+
+    public override bool GetOnCooldown() { return false; }
+
+    public override void IsAnotherRound() { }
 }

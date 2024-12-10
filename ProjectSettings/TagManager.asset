@@ -7,6 +7,12 @@ TagManager:
   - Campfire
   - Event
   - Shop
+  - HUB_Character
+  - HUB_Shop
+  - HUB_Map
+  - HUB_Campfire
+  - SkillTree
+  - UnitActionSystemUI
   layers:
   - Default
   - TransparentFX
@@ -17,8 +23,8 @@ TagManager:
   - MousePlane
   - UnitsLayer
   - Obstacles
-  - 
-  - 
+  - HUB_Clickable
+  - PostProcess
   - 
   - 
   - 

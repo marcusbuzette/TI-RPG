@@ -44,9 +44,10 @@ public class UnitActionSystem : MonoBehaviour {
     private void HandleSelectedAction() {
         if (Input.GetMouseButtonDown(0)) {
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
+            
             if (selectedAction == null) return;
             if (!selectedAction.IsValidActionGridPosition(mouseGridPosition)) return;
-
+            
             if (selectedUnit.TryToPerformAction(selectedAction)) {
                 SetBusy();
                 selectedAction.TriggerAction(mouseGridPosition, ClearBusy);
@@ -72,6 +73,8 @@ public class UnitActionSystem : MonoBehaviour {
     }
 
     public void ChangeSelectedUnit(Unit unit) {
+        Debug.Log("chnage unit");
+        Debug.Log(unit.GetUnitId());
         if (unit != null && !unit.IsEnemy()) {
             SetSelectedUnit(unit);
         }

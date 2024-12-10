@@ -1,11 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShootAction : BaseAction
 {
-
     private enum State
     {
         Aiming, Shooting, Cooloff
@@ -54,9 +54,6 @@ public class ShootAction : BaseAction
         {
             NextState();
         }
-
-
-
     }
 
     public override List<GridPosition> GetValidGridPositionList()
@@ -158,11 +155,19 @@ public class ShootAction : BaseAction
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
     {
         Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
-        return new EnemyAIAction
-        {
-            gridPosition = gridPosition,
-            actionValue = 100 + Mathf.RoundToInt((1 - targetUnit.GetHealthNormalized()) * 100f),
-        };
+        if (!targetUnit.GetEnemyFocus()) {
+            return new EnemyAIAction {
+                gridPosition = gridPosition,
+                actionValue = 100 + Mathf.RoundToInt((1 - targetUnit.GetHealthNormalized()) * 100f),
+            };
+        }
+        else {
+            Debug.Log(targetUnit);
+            return new EnemyAIAction {
+                gridPosition = gridPosition,
+                actionValue = 1000 + Mathf.RoundToInt((1 - targetUnit.GetHealthNormalized()) * 100f),
+            };
+        }
     }
 
     public int GetTargetCountAtPosition(GridPosition gridPosition)
@@ -177,4 +182,8 @@ public class ShootAction : BaseAction
     public int GetMaxShootDistance() {
         return maxShootDistance;
     }
+
+    public override bool GetOnCooldown() { return false; }
+
+    public override void IsAnotherRound() { }
 }

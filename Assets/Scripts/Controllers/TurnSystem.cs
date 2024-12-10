@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,6 +14,10 @@ public class TurnSystem : MonoBehaviour {
     public static TurnSystem Instance { get; private set; }
     public event EventHandler onTurnChange;
     public event EventHandler onOrderChange;
+    private CameraController cameraController;
+
+    [SerializeField] private int[] turnSpeeds;
+    private int turnSpeedIndex;
 
     private void Awake() {
         if (Instance != null) {
@@ -27,10 +30,14 @@ public class TurnSystem : MonoBehaviour {
     }
 
     private void Start() {
+        turnNumber= 0;
+        Debug.LogError("asd");
         unitiesOrderList = FindObjectsOfType<Unit>(false).ToList<Unit>();
         unitiesOrderList.Sort((x, y) => y.GetUnitSpeed().CompareTo(x.GetUnitSpeed()));
         isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
         unitiesOrderList[turnNumber].StartUnitTurn();
+        Debug.Log(unitiesOrderList[turnNumber].GetUnitId());
+        Debug.Log(onOrderChange != null);
         onOrderChange.Invoke(this, EventArgs.Empty);
 
     }
@@ -44,6 +51,11 @@ public class TurnSystem : MonoBehaviour {
         }
         isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
         onTurnChange.Invoke(this, EventArgs.Empty);
+
+        //Place the camera in the unit position of the turn
+        Vector3 unitTurnTransform = unitiesOrderList[turnNumber].transform.position;
+        cameraController.GoToPosition(unitTurnTransform);
+
         unitiesOrderList[turnNumber].StartUnitTurn();
     }
 
@@ -60,8 +72,10 @@ public class TurnSystem : MonoBehaviour {
         unitiesOrderList.Remove(unitDead);
         if (turnNumber > unitDeadIndex) { turnNumber--; }
         if (!CheckEnemiesLeft()) {
+            ResetTurnSpeed();
             SceneManager.LoadScene("HUB");
-        } else {
+        }
+        else {
             ComboKill();
         }
     }
@@ -91,4 +105,17 @@ public class TurnSystem : MonoBehaviour {
         }
         return false;
     }
+
+    public void ChengeTurnSpeed() {
+        if (turnSpeedIndex == turnSpeeds.Length - 1) { turnSpeedIndex = 0; }
+        else turnSpeedIndex++;
+
+        Time.timeScale = turnSpeeds[turnSpeedIndex];
+    }
+
+    public void ResetTurnSpeed() {
+        turnSpeedIndex = 0;
+        Time.timeScale = turnSpeeds[turnSpeedIndex];
+    }
+    public void SetCameraController(CameraController controller) { cameraController = controller; }
 }

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -13,13 +15,18 @@ public class Unit : MonoBehaviour {
 
     private GridPosition gridPosition;
     private HealthSystem healthSystem;
+    [SerializeField] private List<BaseSkills> possibleSkills = new List<BaseSkills>();
     [SerializeField] private XpSystem xpSystem;
-    [SerializeField] private string unitId = "";
+    [SerializeField] public string unitId = "";
     [SerializeField] private UnitStats unitStats;
-    private BaseAction[] actionsArray;
-    private bool hasMoved = false;
-    private bool hasPerformedAction = false;
+    [SerializeField] private BaseAction[] actionsArray;
+    [SerializeField] private bool hasMoved = false;
+    [SerializeField] private bool hasPerformedAction = false;
+    [SerializeField] private bool hasPerformedSkill = false;
     public bool isUnitTurn = false;
+
+    private int intimidateCoolDown = 0;
+    [SerializeField] private int enemyFocus = 0;
 
     private void Awake() {
         actionsArray = GetComponents<BaseAction>();
@@ -30,8 +37,15 @@ public class Unit : MonoBehaviour {
     private void Start() {
         if (!isEnemy && GameController.controller.HasUnitRecords(unitId)) {
             UnitRecords unitRecords = GameController.controller.GetUnitRecords(unitId);
-            this.xpSystem.AddXp(unitRecords.xp);
+            this.xpSystem.SetXp(unitRecords.xp);
             this.unitStats = unitRecords.unitStats;
+            foreach (BaseSkills skill in unitRecords.baseSkills) {
+                BaseSkills bs = gameObject.AddComponent(skill.GetType()) as BaseSkills;
+            }
+            actionsArray = GetComponents<BaseAction>();
+            if (OnAnyActionPerformed != null) {
+                OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
+            }
         }
         gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
@@ -41,6 +55,7 @@ public class Unit : MonoBehaviour {
     }
 
     private void Update() {
+
         GridPosition newGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
 
         if (newGridPosition != gridPosition) {
@@ -61,7 +76,7 @@ public class Unit : MonoBehaviour {
     }
 
     public BaseAction[] GetActionsArray() {
-        return actionsArray;
+        return actionsArray.ToArray();
     }
 
     public GridPosition GetGridPosition() {
@@ -84,6 +99,8 @@ public class Unit : MonoBehaviour {
                 return !hasMoved;
             case ActionType.ACTION:
                 return !hasPerformedAction;
+            case ActionType.SKILL:
+                return !hasPerformedSkill;
             case ActionType.INVENTORY:
                 return true;
             case ActionType.ITEM:
@@ -99,7 +116,11 @@ public class Unit : MonoBehaviour {
                 break;
             case ActionType.ACTION:
                 hasPerformedAction = true;
+                hasPerformedSkill = true;
                 hasMoved = true;
+                break;
+            case ActionType.SKILL:
+                hasPerformedSkill = true;
                 break;
         }
         OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
@@ -108,10 +129,13 @@ public class Unit : MonoBehaviour {
     public bool GetHasMoved() { return hasMoved; }
     public bool GetHasPerformedAction() { return hasPerformedAction; }
 
+    public bool GetHasPerformedSkill() { return hasPerformedSkill; }
+
     private void TurnSystem_OnTurnChange(object sender, EventArgs e) {
         if ((IsEnemy() && isUnitTurn) || (!IsEnemy() && isUnitTurn)) {
             hasMoved = false;
             hasPerformedAction = false;
+            hasPerformedSkill = false;
             isUnitTurn = false;
             // OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
         }
@@ -127,6 +151,10 @@ public class Unit : MonoBehaviour {
 
     public void AddXp(int xpAmount) {
         xpSystem.AddXp(xpAmount);
+    }
+
+    public void AddActionToArray(BaseAction action) {
+
     }
 
     private void HealthSystem_OnDie(object sender, EventArgs e) {
@@ -149,18 +177,57 @@ public class Unit : MonoBehaviour {
 
     public void StartUnitTurn() {
         this.isUnitTurn = true;
-        UnitActionSystem.Instance.ChangeSelectedUnit(this);
-        OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
 
+        if (intimidateCoolDown != 0) {
+            hasMoved = true;
+            hasPerformedAction = true;
+            hasPerformedSkill = true;
+            intimidateCoolDown--;
+        }
+
+        if (enemyFocus != 0) {
+            enemyFocus--;
+        }
+
+        for (int i = 0; i < actionsArray.Length; i++) {
+            if (actionsArray[i].GetActionType() == ActionType.SKILL) {
+                actionsArray[i].IsAnotherRound();
+            }
+        }
+
+        Debug.Log(unitId + " - " + isUnitTurn);
+
+        UnitActionSystem.Instance.ChangeSelectedUnit(this);
+        if (OnAnyActionPerformed != null) {
+            OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
+        }
     }
 
     public string GetUnitId() { return this.unitId; }
     public XpSystem GetUnitXpSystem() { return this.xpSystem; }
-    public UnitStats GetUnitXpStats() { return this.unitStats; }
+    public UnitStats GetUnitStats() { return this.unitStats; }
+    public void UpdateUnitStats(UnitStats unitStats) { this.unitStats = unitStats; }
 
     private void OnDestroy() {
         if (!isEnemy && GameController.controller.HasUnitRecords(unitId)) {
             GameController.controller.UpdateUnitRecords(this);
         }
+    }
+
+    public void BeIntimidate() {
+        intimidateCoolDown = 1;
+    }
+
+    public void FocusOnMe(int focusTime) {
+        enemyFocus = focusTime;
+    }
+
+    public bool GetEnemyFocus() {
+        if (enemyFocus == 0) return false;
+        else return true;
+    }
+
+    public List<BaseSkills> GetPossibleSkills() {
+        return this.possibleSkills;
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class OpenShop : MonoBehaviour
 {
     public GameObject Store;
+    public string tag;
 
     void Update()
     {
@@ -15,7 +16,7 @@ public class OpenShop : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.CompareTag("Shop")) 
+                if (hit.collider.CompareTag(tag)) 
                 {
                     OpenStore();
                 }

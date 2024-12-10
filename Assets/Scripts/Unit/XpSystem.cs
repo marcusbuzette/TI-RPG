@@ -10,13 +10,20 @@ public class XpSystem : MonoBehaviour {
 
     public int getXpAmount() { return this.xp; }
 
-    public void AddXp(int xpAmount) { this.xp += xpAmount; }
+    public void AddXp(int xpAmount) { 
+        this.xp += xpAmount; }
+
+    public void SetXp(int xp) {this.xp = xp;}
 
     public void UseXp(int xpAmount) {
         if (this.xp > 0) {
             this.xp -= xpAmount;
             if (this.xp <= 0) this.xp = 0;
         }
+    }
+
+    public void ResetXP() {
+        this.xp = 0;
     }
 
     public bool CanBuyUpgrade(int xpAmount) { return this.xp - xpAmount > 0;}
