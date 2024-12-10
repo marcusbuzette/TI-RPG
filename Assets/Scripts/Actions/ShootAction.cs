@@ -186,4 +186,9 @@ public class ShootAction : BaseAction
     public override bool GetOnCooldown() { return false; }
 
     public override void IsAnotherRound() { }
+
+    public int GetDamage(){
+        int damage = shootDamage;
+        return damage;
+    }
 }

@@ -230,4 +230,9 @@ public class Unit : MonoBehaviour {
     public List<BaseSkills> GetPossibleSkills() {
         return this.possibleSkills;
     }
+
+    public int GetHealthPoints(){
+        Debug.Log("chamou");
+        return healthSystem.GetHealthPoints();
+    }
 }
