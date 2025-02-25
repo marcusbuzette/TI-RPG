@@ -317,6 +317,7 @@ GameObject:
   - component: {fileID: 8096173683310641798}
   - component: {fileID: 2667406634700221940}
   - component: {fileID: 4908714323277675324}
+  - component: {fileID: 3614697718455037}
   m_Layer: 7
   m_Name: Bear
   m_TagString: Untagged
@@ -386,6 +387,7 @@ MonoBehaviour:
   rotateSpeed: 4
   stopDistance: 0.1
   maxMoveDistance: 4
+  animator: {fileID: 4697849007263969804}
 --- !u!65 &2667406634700221940
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -421,6 +423,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthPoints: 100
   maxHealthPoints: 100
+  animator: {fileID: 0}
+--- !u!114 &3614697718455037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5248424051689086498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b8a40b60fda1ef4f8c9d0f466e29e72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxShootDistance: 1
+  hitDamage: 50
+  animator: {fileID: 0}
 --- !u!1 &5620274420724757863
 GameObject:
   m_ObjectHideFlags: 0
@@ -629,5 +647,10 @@ PrefabInstance:
 --- !u!4 &1716487307535460470 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2ef9932667e8ceb4ebaf016d8ec018f6, type: 3}
+  m_PrefabInstance: {fileID: 1177842355980685213}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &4697849007263969804 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 2ef9932667e8ceb4ebaf016d8ec018f6, type: 3}
   m_PrefabInstance: {fileID: 1177842355980685213}
   m_PrefabAsset: {fileID: 0}

@@ -24,9 +24,7 @@ public class Unit : MonoBehaviour {
     [SerializeField] private bool hasPerformedAction = false;
     [SerializeField] private bool hasPerformedSkill = false;
     public bool isUnitTurn = false;
-    public Animator animator;
-    bool isWalking = false;
-    
+
 
     private int intimidateCoolDown = 0;
     [SerializeField] private int enemyFocus = 0;
@@ -35,7 +33,6 @@ public class Unit : MonoBehaviour {
         actionsArray = GetComponents<BaseAction>();
         healthSystem = GetComponent<HealthSystem>();
         xpSystem = GetComponent<XpSystem>();
-        animator = GetComponentInChildren<Animator>();
     }
 
     private void Start() {
@@ -116,13 +113,11 @@ public class Unit : MonoBehaviour {
     private void PerformAction(BaseAction action) {
         switch (action.GetActionType()) {
             case ActionType.MOVE:
-            animator.SetBool("isWalking", true);
                 hasMoved = true;
                 break;
             case ActionType.ACTION:
                 hasPerformedAction = true;
                 hasPerformedSkill = true;
-                animator.SetTrigger("Attack");
                 hasMoved = true;
                 break;
             case ActionType.SKILL:
@@ -153,7 +148,6 @@ public class Unit : MonoBehaviour {
 
     public void Damage(int damage) {
         healthSystem.Damage(damage);
-        animator.SetTrigger("TakeDamage");
     }
 
     public void AddXp(int xpAmount) {

@@ -11,11 +11,18 @@ public class HealthSystem : MonoBehaviour
     public event EventHandler OnDamage;
     public int healthPoints = 100;
     public int maxHealthPoints = 100;
+    public Animator animator;
+
+    private void Awake()
+    {
+    animator = GetComponentInChildren<Animator>();
+    }
 
     public void Damage(int damage)
     {
 
         healthPoints -= damage;
+        animator.SetTrigger("TakeDamage");
 
         if (healthPoints < 0) healthPoints = 0;
         OnDamage?.Invoke(this, EventArgs.Empty);

@@ -16,9 +16,14 @@ public class MoveAction : BaseAction {
     private List<Vector3> positionList;
     private int currentPositionIndex;
 
+    public Animator animator;
+    bool isWalking = false;
+    
+
     protected override void Awake() {
         base.Awake();
         this.actionType = ActionType.MOVE;
+        animator = GetComponentInChildren<Animator>();
     }
 
     public override void Action() {
@@ -28,10 +33,12 @@ public class MoveAction : BaseAction {
             Vector3 moveDirection = (targetPosition - transform.position).normalized;
             transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
             transform.position += moveDirection * moveSpeed * Time.deltaTime;
+            animator.SetBool("isWalking", true);
         } else {
             currentPositionIndex++;
             if(currentPositionIndex >= positionList.Count) {
                 ActionFinish();
+                animator.SetBool("isWalking", false);
             }
         }
     }
