@@ -31,13 +31,10 @@ public class TurnSystem : MonoBehaviour {
 
     private void Start() {
         turnNumber= 0;
-        Debug.LogError("asd");
         unitiesOrderList = FindObjectsOfType<Unit>(false).ToList<Unit>();
         unitiesOrderList.Sort((x, y) => y.GetUnitSpeed().CompareTo(x.GetUnitSpeed()));
         isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
         unitiesOrderList[turnNumber].StartUnitTurn();
-        Debug.Log(unitiesOrderList[turnNumber].GetUnitId());
-        Debug.Log(onOrderChange != null);
         onOrderChange.Invoke(this, EventArgs.Empty);
 
     }

@@ -73,8 +73,6 @@ public class UnitActionSystem : MonoBehaviour {
     }
 
     public void ChangeSelectedUnit(Unit unit) {
-        Debug.Log("chnage unit");
-        Debug.Log(unit.GetUnitId());
         if (unit != null && !unit.IsEnemy()) {
             SetSelectedUnit(unit);
         }
