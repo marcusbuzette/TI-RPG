@@ -885,6 +885,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   endTurnButton: {fileID: 365141545}
+  turnSpeedButton: {fileID: 0}
+  turnSpeedText: {fileID: 0}
   turnNumberText: {fileID: 675748041}
   unitsOrderContainer: {fileID: 1971090997}
   unitOrderUIPrefab: {fileID: 7060775410297624860, guid: 07c5d27b85a5a453eb5ff6e50dc6be26, type: 3}
@@ -3389,6 +3391,9 @@ MonoBehaviour:
   mousePlaneLayer:
     serializedVersion: 2
     m_Bits: 64
+  unitLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!4 &267513307
 Transform:
   m_ObjectHideFlags: 0
@@ -8456,6 +8461,10 @@ PrefabInstance:
       propertyPath: unitStats.speed
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4697849007263969804, guid: 63c27cbf6f6b18144bbbc2983e385cff, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 9ecef23e11b005d4aaf03de4e2c4ed63, type: 2}
     - target: {fileID: 5248424051689086498, guid: 63c27cbf6f6b18144bbbc2983e385cff, type: 3}
       propertyPath: m_Name
       value: Bear
@@ -8478,7 +8487,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8156640269489831220, guid: 63c27cbf6f6b18144bbbc2983e385cff, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 46.84
+      value: 10.28
       objectReference: {fileID: 0}
     - target: {fileID: 8156640269489831220, guid: 63c27cbf6f6b18144bbbc2983e385cff, type: 3}
       propertyPath: m_LocalRotation.w
@@ -11447,6 +11456,8 @@ MonoBehaviour:
   actionButtonPrefab: {fileID: 988112215236087814, guid: 1455f60b68b954a8cb1e21d580edb02f, type: 3}
   itemButtonPrefab: {fileID: 988112215236087814, guid: 59968f24c815540c09318441bb07956b, type: 3}
   actionButtonsContainer: {fileID: 1201434287}
+  attackButtonsContainer: {fileID: 0}
+  skillsButtonsContainer: {fileID: 0}
   inventoryButtonsContainer: {fileID: 1133350743}
 --- !u!4 &878370910 stripped
 Transform:
@@ -15883,6 +15894,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayerTurn: 1
   unitiesOrderList: []
+  turnSpeeds: 
 --- !u!4 &1350664576
 Transform:
   m_ObjectHideFlags: 0
@@ -21719,7 +21731,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8156640269489831220, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 50.84
+      value: 14.279999
       objectReference: {fileID: 0}
     - target: {fileID: 8156640269489831220, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
       propertyPath: m_LocalRotation.w
