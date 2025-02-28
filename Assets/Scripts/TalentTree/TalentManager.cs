@@ -48,7 +48,7 @@ public class TalentManager : MonoBehaviour {
             
             Button unitButton = Instantiate(unitButtonPrefab, charactersContainer);
             unitButton.gameObject.AddComponent<SkillTreeUnitButtonUI>();
-            unitButton.gameObject.GetComponent<SkillTreeUnitButtonUI>().SetUnitData(unitId, unitId);
+            unitButton.gameObject.GetComponent<SkillTreeUnitButtonUI>().SetUnitData(unitId, playerUnit.GetUnitName());
             unitButton.onClick.AddListener(() => OnSelectedUnitChanged(unitId));
 
         }

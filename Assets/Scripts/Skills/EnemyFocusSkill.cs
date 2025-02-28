@@ -16,7 +16,7 @@ public class EnemyFocusSkill : BaseSkills
     }
 
     public override string GetActionName() {
-        return "Focus On Me";
+        return "Provocar";
     }
 
     public override List<GridPosition> GetValidGridPositionList() {
