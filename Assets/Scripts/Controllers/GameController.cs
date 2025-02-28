@@ -64,4 +64,9 @@ public class GameController : MonoBehaviour {
         return playerUnits.Keys;
     }
 
+    public void GameOver() {
+        Debug.Log("Derrota");
+        uicontroller.ChangeScene("GameOver");
+    }
+
 }

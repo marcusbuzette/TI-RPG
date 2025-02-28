@@ -16,7 +16,7 @@ public class HitAction : BaseAction
 
     public override string GetActionName()
     {
-        return "Hit";
+        return "Chute";
     }
 
     public override void Action()

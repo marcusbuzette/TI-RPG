@@ -325,6 +325,7 @@ MonoBehaviour:
   - {fileID: 268774645106886273, guid: 3ea7eabd8948ec84ca32a264d0031500, type: 3}
   xpSystem: {fileID: 1913271140186555034}
   unitId: monkey
+  unitName: Macapoera
   unitStats:
     speed: 8
     attack: 4

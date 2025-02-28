@@ -568,12 +568,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isEnemy: 1
+  possibleSkills: []
+  xpSystem: {fileID: 0}
+  unitId: 
+  unitName: O Urso
   unitStats:
     speed: 3
     attack: 0
     defence: 0
     accuracy: 0
+    xpSpoil: 0
+  actionsArray: []
+  hasMoved: 0
+  hasPerformedAction: 0
+  hasPerformedSkill: 0
   isUnitTurn: 0
+  enemyFocus: 0
 --- !u!114 &8096173683310641798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -650,6 +660,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4c588a935c0a4f56b855794c3e7145d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   maxShootDistance: 1
   aimingTimer: 0.1
   shootingTimer: 0.3
