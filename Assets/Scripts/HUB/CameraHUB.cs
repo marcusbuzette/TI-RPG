@@ -32,7 +32,7 @@ public class CameraHUB : MonoBehaviour
                         hit.transform.gameObject.GetComponent<OpenShopHUB>().EnterOnThisCamera(this);
                         break;
                     case "HUB_Campfire":
-
+                        hit.transform.gameObject.GetComponent<DialogueTrigger>().TriggerDialogue();
                         break;
                 }
             }

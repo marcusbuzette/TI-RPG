@@ -18,6 +18,7 @@ public class Unit : MonoBehaviour {
     [SerializeField] private List<BaseSkills> possibleSkills = new List<BaseSkills>();
     [SerializeField] private XpSystem xpSystem;
     [SerializeField] public string unitId = "";
+    [SerializeField] public string unitName = "";
     [SerializeField] private UnitStats unitStats;
     [SerializeField] private BaseAction[] actionsArray;
     [SerializeField] private bool hasMoved = false;
@@ -236,4 +237,6 @@ public class Unit : MonoBehaviour {
         Debug.Log("chamou");
         return healthSystem.GetHealthPoints();
     }
+
+    public string GetUnitName() {return this.unitName;}
 }

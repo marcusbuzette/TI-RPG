@@ -17,6 +17,10 @@ PrefabInstance:
       value: archer
       objectReference: {fileID: 0}
     - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: unitName
+      value: Arqueira
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: xpSystem
       value: 
       objectReference: {fileID: 8293743739561429572}

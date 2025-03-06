@@ -13,7 +13,7 @@ public class MudarDeCena : MonoBehaviour
         // Encontrar o UIController na cena
         uiController = FindObjectOfType<UIController>();
         if (uiController == null) {
-            Debug.LogError("UIController não encontrado na cena!");
+            Debug.LogError("UIController nï¿½o encontrado na cena!");
         }
     }
     private void OnMouseDown()
@@ -43,7 +43,7 @@ public class MudarDeCena : MonoBehaviour
             uiController.ChangeScene(sceneToLoad);
         }
         else {
-            // Fallback, caso o UIController não seja encontrado
+            // Fallback, caso o UIController nï¿½o seja encontrado
             SceneManager.LoadScene(sceneToLoad);
         }
     }
