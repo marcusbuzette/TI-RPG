@@ -318,6 +318,7 @@ GameObject:
   - component: {fileID: 2667406634700221940}
   - component: {fileID: 4908714323277675324}
   - component: {fileID: 3614697718455037}
+  - component: {fileID: 6182486868904087128}
   m_Layer: 7
   m_Name: Bear
   m_TagString: Untagged
@@ -359,6 +360,7 @@ MonoBehaviour:
   possibleSkills: []
   xpSystem: {fileID: 0}
   unitId: 
+  unitName: 
   unitStats:
     speed: 3
     attack: 0
@@ -383,11 +385,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a98aa284f9b23428a071063490ad6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 4697849007263969804}
   moveSpeed: 4
   rotateSpeed: 4
   stopDistance: 0.1
   maxMoveDistance: 4
-  animator: {fileID: 4697849007263969804}
 --- !u!65 &2667406634700221940
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -436,9 +438,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8a40b60fda1ef4f8c9d0f466e29e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxShootDistance: 1
-  hitDamage: 50
   animator: {fileID: 0}
+  maxShootDistance: 1
+  MAX_SPIN: 360
+  hitDamage: 50
+--- !u!114 &6182486868904087128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5248424051689086498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4c588a935c0a4f56b855794c3e7145d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  maxShootDistance: 1
+  aimingTimer: 0.1
+  shootingTimer: 0.3
+  cooloffTimer: 0.1
+  rotateSpeed: 10
+  shootDamage: 25
 --- !u!1 &5620274420724757863
 GameObject:
   m_ObjectHideFlags: 0
