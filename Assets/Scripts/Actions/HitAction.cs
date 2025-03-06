@@ -27,7 +27,7 @@ public class HitAction : BaseAction
     {
     targetUnit.Damage(hitDamage);
     AudioManager.instance?.PlaySFX("Melee");
-    animator.SetTrigger("Attack");
+    animator?.SetTrigger("Attack");
     ActionFinish();
     }
 
