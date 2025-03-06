@@ -16,14 +16,12 @@ public class MoveAction : BaseAction {
     private List<Vector3> positionList;
     private int currentPositionIndex;
 
-    public Animator animator;
     bool isWalking = false;
     
 
     protected override void Awake() {
         base.Awake();
         this.actionType = ActionType.MOVE;
-        animator = GetComponentInChildren<Animator>();
     }
 
     public override void Action() {
