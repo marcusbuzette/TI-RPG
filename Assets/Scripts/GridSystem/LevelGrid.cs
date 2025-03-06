@@ -19,7 +19,7 @@ public class LevelGrid : MonoBehaviour
     [SerializeField] private float cellSize;
     [SerializeField] private int floorAmount;
 
-    private List<GridSystem<GridObject>> gridSystemList;
+    [SerializeField] private List<GridSystem<GridObject>> gridSystemList;
 
     private void Awake() {
         if (Instance != null) { Destroy(gameObject); }
