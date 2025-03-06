@@ -26,6 +26,7 @@ public class Unit : MonoBehaviour {
     [SerializeField] private bool hasPerformedSkill = false;
     public bool isUnitTurn = false;
 
+
     private int intimidateCoolDown = 0;
     [SerializeField] private int enemyFocus = 0;
 

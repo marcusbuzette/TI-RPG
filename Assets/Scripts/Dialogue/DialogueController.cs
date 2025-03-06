@@ -26,7 +26,7 @@ public class DialogueController : MonoBehaviour
     }
 
     public void StartDialogue(Dialogue dialogue){
-        animator.SetBool("IsOpen", true);
+        animator?.SetBool("IsOpen", true);
         NameTXT.text = dialogue.name;
         sentences.Clear();
 
@@ -57,6 +57,6 @@ public class DialogueController : MonoBehaviour
     }
 
     public void EndDialogue(){
-        animator.SetBool("IsOpen", false);
+        animator?.SetBool("IsOpen", false);
     }
 }
