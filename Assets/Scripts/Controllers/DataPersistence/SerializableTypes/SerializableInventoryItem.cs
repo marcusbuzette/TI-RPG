@@ -34,4 +34,10 @@ public class SerializableInventoryItem : InventoryItem, ISerializationCallbackRe
         this.scriptableObj = this.data;
         this.qtd = this.stackSize;
     }
+
+    public int GetItemAmount() {
+        Debug.Log("GetItemAmount");
+        Debug.Log(this.qtd);
+        return this.qtd;
+    }
 }

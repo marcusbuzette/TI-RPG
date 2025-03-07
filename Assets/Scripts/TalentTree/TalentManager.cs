@@ -40,7 +40,7 @@ public class TalentManager : MonoBehaviour {
             if (!playerUnit.IsEnemy() && !GameController.controller.HasUnitRecords(unitId)) {
                 GameController.controller.AddUnitToRecords(playerUnit);
             } else if (!playerUnit.IsEnemy()) {
-                UnitRecords urAux = GameController.controller.GetUnitRecords(unitId);;
+                UnitRecords urAux = GameController.controller.GetUnitRecords(unitId);
                 UpdateLocalUnitValues(unitId, urAux);
             }
 
@@ -144,6 +144,7 @@ public class TalentManager : MonoBehaviour {
         GameObject playerObj = playerUnitList.Find(p => p.GetComponent<Unit>().GetUnitId() == unitId);
         playerObj.GetComponent<Unit>().GetUnitXpSystem().SetXp(unitRecords.xp);
         playerObj.GetComponent<Unit>().UpdateUnitStats(unitRecords.GetUnitStats());
+        this.OnSelectedUnitChanged(this.SelectedUnit);
     }
 
 }
