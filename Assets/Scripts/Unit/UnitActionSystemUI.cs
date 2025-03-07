@@ -104,7 +104,7 @@ public class UnitActionSystemUI : MonoBehaviour {
         inventoryButtonsContainer.transform.position = posAux;
         inventoryButtonsContainer.gameObject.SetActive(true);
 
-        foreach (KeyValuePair<InventoryItemData, InventoryItem> item in InventorySystem.inventorySystem.GetInventoryContent()) {
+        foreach (KeyValuePair<InventoryItemData, SerializableInventoryItem> item in InventorySystem.inventorySystem.GetInventoryContent()) {
             Transform itemButtonTransform = Instantiate(itemButtonPrefab, inventoryButtonsContainer);
             itemButtonTransform.GetComponent<ItemButtonUI>().SetBaseAction(item.Value.data.prefab.GetComponent<ItemAction>(), item.Value.stackSize);
         }

@@ -36,6 +36,7 @@ public class ShopManager : MonoBehaviour
         shopItems[2, 0] = 0;
     }
 
+
     void Update()
     {
         DinheiroTXT.text = "Seu Dinheiro:" + GameController.controller.dinheiro + "$";

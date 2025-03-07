@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 
-public class GameController : MonoBehaviour {
+public class GameController : MonoBehaviour, IDataPersistence {
 
     public static GameController controller;
     public UIController uicontroller;
     public int dinheiro;
+    [SerializeField]private int currentLevel = 0;
     private Dictionary<string, UnitRecords> playerUnits = new Dictionary<string, UnitRecords>();
 
     [SerializeField] private bool debugMode = false;
@@ -67,6 +68,16 @@ public class GameController : MonoBehaviour {
     public void GameOver() {
         Debug.Log("Derrota");
         uicontroller.ChangeScene("GameOver");
+    }
+
+    public void LoadData(GameData data) {
+        this.currentLevel = data.currentLevel;
+        this.dinheiro = data.money;
+    }
+
+    public void SaveData(ref GameData data) {
+        data.currentLevel = this.currentLevel;
+        data.money = this.dinheiro;
     }
 
 }
