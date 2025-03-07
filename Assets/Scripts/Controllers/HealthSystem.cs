@@ -19,7 +19,8 @@ public class HealthSystem : MonoBehaviour {
     public void Damage(int damage) {
 
         healthPoints -= damage;
-        animator?.SetTrigger("TakeDamage");
+        
+        animator?.SetTrigger("TookDamage");
 
         if (healthPoints < 0) healthPoints = 0;
         OnDamage?.Invoke(this, EventArgs.Empty);
