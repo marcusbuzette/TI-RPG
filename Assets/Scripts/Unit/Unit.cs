@@ -37,6 +37,8 @@ public class Unit : MonoBehaviour {
     }
 
     private void Start() {
+        Debug.Log("Start Unit");
+        Debug.Log(GameController.controller.HasUnitRecords(unitId));
         if (!isEnemy && GameController.controller.HasUnitRecords(unitId)) {
             UnitRecords unitRecords = GameController.controller.GetUnitRecords(unitId);
             this.xpSystem.SetXp(unitRecords.xp);

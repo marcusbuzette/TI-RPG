@@ -31,7 +31,6 @@ public class InventorySystem : MonoBehaviour, IDataPersistence {
             inventory.Add(newItem);
             m_itemDictionary.Add(referenceData, newItem);
         }
-        Debug.Log(m_itemDictionary);
     }
 
     public bool IsEmpty() {
@@ -72,7 +71,6 @@ public class InventorySystem : MonoBehaviour, IDataPersistence {
     public void LoadData(GameData data) {
         this.inventory = data.inventory;
         this.m_itemDictionary = data.m_inventory;
-        Debug.Log(this.m_itemDictionary);
     }
 
     public void SaveData(ref GameData data) {

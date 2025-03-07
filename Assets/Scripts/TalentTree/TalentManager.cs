@@ -40,7 +40,7 @@ public class TalentManager : MonoBehaviour {
             if (!playerUnit.IsEnemy() && !GameController.controller.HasUnitRecords(unitId)) {
                 GameController.controller.AddUnitToRecords(playerUnit);
             } else if (!playerUnit.IsEnemy()) {
-                UnitRecords urAux = GameController.controller.GetUnitRecords(unitId);
+                UnitRecords urAux = GameController.controller.GetUnitRecords(unitId);;
                 UpdateLocalUnitValues(unitId, urAux);
             }
 
@@ -117,7 +117,6 @@ public class TalentManager : MonoBehaviour {
             Button skillButton = Instantiate(skillButtonPrefab, skillTreeContainer);
             skillButton.GetComponent<SkillUi>().SetBaseSkill(bs);
             skillButton.onClick.AddListener(() => { TentarDesbloquearskills(bs); });
-
         }
 
 
@@ -141,9 +140,8 @@ public class TalentManager : MonoBehaviour {
         return true;
     }
 
-    private void UpdateLocalUnitValues(string unitId, UnitRecords unitRecords ) {
+    public void UpdateLocalUnitValues(string unitId, UnitRecords unitRecords ) {
         GameObject playerObj = playerUnitList.Find(p => p.GetComponent<Unit>().GetUnitId() == unitId);
-        
         playerObj.GetComponent<Unit>().GetUnitXpSystem().SetXp(unitRecords.xp);
         playerObj.GetComponent<Unit>().UpdateUnitStats(unitRecords.GetUnitStats());
     }
