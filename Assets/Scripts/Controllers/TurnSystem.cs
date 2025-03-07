@@ -70,6 +70,7 @@ public class TurnSystem : MonoBehaviour {
         if (turnNumber > unitDeadIndex) { turnNumber--; }
         if (isPlayerTurn && !CheckEnemiesLeft()) {
             ResetTurnSpeed();
+            GameController.controller.NextLevel();
             SceneManager.LoadScene("HUB");
         }
         else if (!isPlayerTurn && !CheckPlayerCharsLeft()) {

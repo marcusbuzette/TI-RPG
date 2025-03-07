@@ -18,6 +18,7 @@ public class DataPersistenseManager : MonoBehaviour {
         if (instace != null) {
             Destroy(this);
             Debug.LogError("Mais de um DataPersistenseManager foi encontrado na cena");
+            DontDestroyOnLoad(this);
         }
         instace = this;
     }
@@ -61,6 +62,6 @@ public class DataPersistenseManager : MonoBehaviour {
     }
 
     void OnApplicationQuit() {
-        SaveGame();
+        // SaveGame();
     }
 }
