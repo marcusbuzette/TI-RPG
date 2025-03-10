@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 public class GridSystemVisual : MonoBehaviour {
     public static GridSystemVisual Instance { get; private set; }
@@ -18,7 +19,8 @@ public class GridSystemVisual : MonoBehaviour {
         BlueSoft,
         Red,
         RedSoft,
-        Yellow
+        Yellow,
+        Empty
     }
     [SerializeField] private Transform gridSystemVisualPrefab;
     [SerializeField] private List<GridVisualTypeMaterial> gridVisualTypeMaterialList;
@@ -52,10 +54,11 @@ public class GridSystemVisual : MonoBehaviour {
     }
 
     public void HideAllGridPosition() {
+        GridVisualType emptyMat = GridVisualType.Empty;
         for (int x = 0; x < LevelGrid.Instance.GetWidth(); x++) {
             for (int z = 0; z < LevelGrid.Instance.GetHeight(); z++) {
 
-                gridSystemVisualSingleArray[x, z].Hide();
+                gridSystemVisualSingleArray[x, z].Show(GetGridVisualTypeMaterial(emptyMat));
             }
         }
     }
