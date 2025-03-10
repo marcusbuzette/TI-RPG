@@ -1,13 +1,15 @@
 using System;
 
+[System.Serializable]
 public struct GridPosition : IEquatable<GridPosition> {
     public int x;
     public int z;
+    public int zone;
 
-    public GridPosition(int x, int z) {
-
+    public GridPosition(int x, int z, int zone = 0) {
         this.x = x;
         this.z = z; 
+        this.zone = zone;
     }
 
     public override bool Equals(object obj) {
@@ -25,8 +27,7 @@ public struct GridPosition : IEquatable<GridPosition> {
     }
 
     public override string ToString() {
-
-        return $"x: {x}; z:{z}";
+        return $"x: {x}; z:{z} \n zone:{zone}";
     }
 
     public static bool operator ==(GridPosition a, GridPosition b) {

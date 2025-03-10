@@ -80,7 +80,6 @@ public class TeleportSkill : BaseSkills
     }
 
     public override void IsAnotherRound() {
-        Debug.Log("IS ANOTHER ROUND");
         if (currentCoolDown != 0) {
             currentCoolDown--;
         }

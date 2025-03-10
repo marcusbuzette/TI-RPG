@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class LevelGrid : MonoBehaviour
-{
+public class LevelGrid : MonoBehaviour {
     public static LevelGrid Instance { get; private set; }
 
     public event EventHandler OnAnyUnitMovedGridPosition;
+    public event EventHandler OnGameModeChanged;
 
     [SerializeField] Transform gridDebugObjectPrefab;
 
@@ -18,18 +18,51 @@ public class LevelGrid : MonoBehaviour
 
     private GridSystem<GridObject> gridSystem;
 
+    public enum GameMode { BATTLE, EXPLORE }
+
+    [SerializeField] private GameMode gameMode = GameMode.BATTLE;
+    [SerializeField] private List<AddSquaredZone> squaredZoneList = new List<AddSquaredZone>();
+    [SerializeField] private List<GridPosition> zoneList = new List<GridPosition>();
+    private Dictionary<int, List<GridPosition>> zoneStartPositions = new Dictionary<int, List<GridPosition>>();
+    private int currentBattleZone = 0;
+
+
     private void Awake() {
         if (Instance != null) { Destroy(gameObject); }
         else { Instance = this; }
 
-        gridSystem = new GridSystem<GridObject>(width, height, cellSize, 
-                (GridSystem<GridObject> g, GridPosition gridPosition) => new GridObject(g, gridPosition));
+        foreach (AddSquaredZone item in squaredZoneList) {
+            for (int x = item.startX; x <= item.endX; x++) {
+                for (int z = item.startZ; z <= item.endZ; z++) {
+                    zoneList.Add(new GridPosition(x, z, item.zoneNumber));
+                }
+            }
+            List<GridPosition> spListAux = new List<GridPosition>();
+            foreach (ZoneSpawnPoint sp in item.spawnPoints) {
+                spListAux.Add(new GridPosition(sp.x, sp.z, item.zoneNumber));
+            }
+            zoneStartPositions.Add(item.zoneNumber, spListAux);
+        }
 
-        if(GameController.controller.GetDebugMode()) gridSystem.CreateDebugObjects(gridDebugObjectPrefab);
+        gridSystem = new GridSystem<GridObject>(width, height, cellSize,
+                (GridSystem<GridObject> g, GridPosition gridPosition) => new GridObject(g, gridPosition), zoneList);
+
+        if (GameController.controller.GetDebugMode()) gridSystem.CreateDebugObjects(gridDebugObjectPrefab);
     }
 
     private void Start() {
+        this.currentBattleZone = 0;
         PathFinding.Instance.Setup(width, height, cellSize);
+    }
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.N)) {
+            this.ExploreMode();
+        }
+
+        if (Input.GetKeyDown(KeyCode.B)) {
+            this.BattleMode();
+        }
     }
 
     public void AddUnitAtGridPosition(GridPosition gridPosition, Unit unit) {
@@ -72,6 +105,36 @@ public class LevelGrid : MonoBehaviour
     public Unit GetUnitAtGridPosition(GridPosition gridPosition) {
         GridObject gridObject = gridSystem.GetGridObject(gridPosition);
         return gridObject.GetUnit();
+    }
+
+    public void ExploreMode() {
+        this.gameMode = GameMode.EXPLORE;
+        OnGameModeChanged?.Invoke(this, EventArgs.Empty);
+        GridSystemVisual.Instance.UpdateGridVisual();
+    }
+
+    public void BattleMode(int zone = 0) {
+        this.currentBattleZone = zone;
+        TurnSystem.Instance.SetUpBattleNewZone();
+        this.gameMode = GameMode.BATTLE;
+        OnGameModeChanged?.Invoke(this, EventArgs.Empty);
+        GridSystemVisual.Instance.UpdateGridVisual();
+        TurnSystem.Instance.StartBattleNewZone();
+
+    }
+
+    public GameMode GetGameMode() { return gameMode; }
+
+    public List<GridPosition> GetZoneList() { return this.zoneList; }
+    public int GetCurrentBattleZone() { return this.currentBattleZone; }
+    public void SetCurrentBattleZone(int zone) {this.currentBattleZone = zone;}
+
+    public List<GridPosition> GetZoneSpawnList(int zone) {
+        return this.zoneStartPositions[zone];
+    }
+
+    public void RemoveZoneFromGrid(int zone) {
+        this.gridSystem.RemoveZone(zone);
     }
 
 
