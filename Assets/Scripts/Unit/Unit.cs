@@ -54,6 +54,7 @@ public class Unit : MonoBehaviour {
         gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
         TurnSystem.Instance.onTurnChange += TurnSystem_OnTurnChange;
+
         healthSystem.OnDead += HealthSystem_OnDie;
         OnAnyUnitSpawn?.Invoke(this, EventArgs.Empty);
     }
@@ -198,8 +199,6 @@ public class Unit : MonoBehaviour {
                 actionsArray[i].IsAnotherRound();
             }
         }
-
-        Debug.Log(unitId + " - " + isUnitTurn);
 
         UnitActionSystem.Instance.ChangeSelectedUnit(this);
         if (OnAnyActionPerformed != null) {
