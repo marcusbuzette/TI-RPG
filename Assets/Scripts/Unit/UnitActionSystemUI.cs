@@ -45,7 +45,7 @@ public class UnitActionSystemUI : MonoBehaviour {
 
             Transform parentAux;
 
-            switch(action.GetActionType()) {
+            switch (action.GetActionType()) {
                 case ActionType.ACTION:
                     parentAux = attackButtonsContainer;
                     break;
@@ -65,7 +65,7 @@ public class UnitActionSystemUI : MonoBehaviour {
 
             Transform actioonButtonTransform = Instantiate(actionButtonPrefab, parentAux);
             actioonButtonTransform.GetComponent<ActionButtonUI>().SetBaseAction(action);
-            if (((selectedUnit.GetHasMoved() && action.GetActionType() == ActionType.MOVE) || !selectedUnit.IsUnityTurn()) 
+            if (((selectedUnit.GetHasMoved() && action.GetActionType() == ActionType.MOVE) || !selectedUnit.IsUnityTurn())
             || (selectedUnit.GetHasPerformedAction() && action.GetActionType() == ActionType.ACTION) || !selectedUnit.IsUnityTurn()
             || (selectedUnit.GetHasPerformedSkill() && action.GetActionType() == ActionType.SKILL)
             || (action.GetOnCooldown() && action.GetActionType() == ActionType.SKILL) || !selectedUnit.IsUnityTurn()) {
@@ -74,7 +74,7 @@ public class UnitActionSystemUI : MonoBehaviour {
 
             if (action.GetActionType() == ActionType.INVENTORY) {
                 this.inventoyButton = actioonButtonTransform;
-                if(InventorySystem.inventorySystem.IsEmpty()) {
+                if (InventorySystem.inventorySystem.IsEmpty()) {
                     actioonButtonTransform.GetComponent<ActionButtonUI>().DisableActionButton();
                 }
             }
@@ -104,7 +104,7 @@ public class UnitActionSystemUI : MonoBehaviour {
         inventoryButtonsContainer.transform.position = posAux;
         inventoryButtonsContainer.gameObject.SetActive(true);
 
-        foreach (KeyValuePair<InventoryItemData, InventoryItem> item in InventorySystem.inventorySystem.GetInventoryContent()) {
+        foreach (KeyValuePair<InventoryItemData, SerializableInventoryItem> item in InventorySystem.inventorySystem.GetInventoryContent()) {
             Transform itemButtonTransform = Instantiate(itemButtonPrefab, inventoryButtonsContainer);
             itemButtonTransform.GetComponent<ItemButtonUI>().SetBaseAction(item.Value.data.prefab.GetComponent<ItemAction>(), item.Value.stackSize);
         }

@@ -15,7 +15,7 @@ public class UnitOrderUI : MonoBehaviour {
 
 
     public void SetUnitOrderUI(Unit unit, bool currentTurn) {
-        this.name.text = unit.gameObject.name;
+        this.name.text = unit.GetUnitName();
         this.unitHealthSystem = unit.GetComponent<HealthSystem>();
         this.healthBar.fillAmount = unitHealthSystem.GetHealthPointsNormalized();
         unitHealthSystem.OnDamage += HealthSystem_OnDamage;

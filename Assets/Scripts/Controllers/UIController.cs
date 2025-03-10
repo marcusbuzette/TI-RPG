@@ -11,13 +11,14 @@ public class UIController : MonoBehaviour
     public Slider _masterSlider, _musicSlider, _sfxSlider;
 
     private void Awake() {
-        if (instance == null) {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else {
-            Destroy(gameObject);
-        }
+        // if (instance == null) {
+        //     instance = this;
+        //     DontDestroyOnLoad(gameObject);
+        // }
+        // else {
+        //     Destroy(gameObject);
+        // }
+        GameController.controller.uicontroller = this;
 
     }
 
@@ -53,16 +54,16 @@ public class UIController : MonoBehaviour
 
     public void ChangeScene(string scene) {
         //SceneManager.LoadScene(scene);
-        string musicToPlay = ""; // Nome da música da próxima cena
+        string musicToPlay = ""; // Nome da mï¿½sica da prï¿½xima cena
         switch (scene) {
             case "HUB":
-                musicToPlay = "HUB"; // Substitua com o nome da música
+                musicToPlay = "HUB"; // Substitua com o nome da mï¿½sica
                 break;
             case "MenuPrincipal":
-                musicToPlay = "Menu"; // Música do menu
+                musicToPlay = "Menu"; // Mï¿½sica do menu
                 break;
             case "Cena Level Design":
-                musicToPlay = "Combat"; // Música padrão, se necessário
+                musicToPlay = "Combat"; // Mï¿½sica padrï¿½o, se necessï¿½rio
                 break;
         }
 

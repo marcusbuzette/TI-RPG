@@ -24,9 +24,11 @@ public class ShootAction : BaseAction
     private Unit targetUnit;
     private bool canShoot;
 
+
+
     public override string GetActionName()
     {
-        return "Shoot";
+        return "Atirar";
     }
 
     public override void Action()
@@ -148,7 +150,7 @@ public class ShootAction : BaseAction
     private void Shoot()
     {
         targetUnit.Damage(shootDamage);
-
+        animator?.SetTrigger("Attack");
         AudioManager.instance?.PlaySFX("Arrows");
     }
 

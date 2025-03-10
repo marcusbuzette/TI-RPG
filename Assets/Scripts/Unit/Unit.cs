@@ -18,12 +18,14 @@ public class Unit : MonoBehaviour {
     [SerializeField] private List<BaseSkills> possibleSkills = new List<BaseSkills>();
     [SerializeField] private XpSystem xpSystem;
     [SerializeField] public string unitId = "";
+    [SerializeField] public string unitName = "";
     [SerializeField] private UnitStats unitStats;
     [SerializeField] private BaseAction[] actionsArray;
     [SerializeField] private bool hasMoved = false;
     [SerializeField] private bool hasPerformedAction = false;
     [SerializeField] private bool hasPerformedSkill = false;
     public bool isUnitTurn = false;
+
 
     private int intimidateCoolDown = 0;
     [SerializeField] private int enemyFocus = 0;
@@ -35,6 +37,8 @@ public class Unit : MonoBehaviour {
     }
 
     private void Start() {
+        Debug.Log("Start Unit");
+        Debug.Log(GameController.controller.HasUnitRecords(unitId));
         if (!isEnemy && GameController.controller.HasUnitRecords(unitId)) {
             UnitRecords unitRecords = GameController.controller.GetUnitRecords(unitId);
             this.xpSystem.SetXp(unitRecords.xp);
@@ -234,4 +238,6 @@ public class Unit : MonoBehaviour {
         Debug.Log("chamou");
         return healthSystem.GetHealthPoints();
     }
+
+    public string GetUnitName() {return this.unitName;}
 }

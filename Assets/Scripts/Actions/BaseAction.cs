@@ -15,10 +15,12 @@ public abstract class BaseAction : MonoBehaviour {
     protected bool isActive;
     protected Action onActionComplete;
     protected ActionType actionType;
+    public Animator animator;
 
     protected virtual void Awake() {
         unit = GetComponent<Unit>();
         actionType = ActionType.ACTION;
+        animator = GetComponentInChildren<Animator>();
     }
 
     protected virtual void Update() {
@@ -60,12 +62,12 @@ public abstract class BaseAction : MonoBehaviour {
         List<EnemyAIAction> enemyAIActionList = new List<EnemyAIAction>();
         List<GridPosition> validActionGridPositionList = GetValidGridPositionList();
 
-        foreach(GridPosition gridPosition in validActionGridPositionList) {
+        foreach (GridPosition gridPosition in validActionGridPositionList) {
             EnemyAIAction enemyAIAction = GetEnemyAIAction(gridPosition);
             enemyAIActionList.Add(enemyAIAction);
         }
 
-        if(enemyAIActionList.Count > 0) {
+        if (enemyAIActionList.Count > 0) {
             enemyAIActionList.Sort((EnemyAIAction a, EnemyAIAction b) => b.actionValue - a.actionValue);
             return enemyAIActionList[0];
         }
@@ -77,7 +79,7 @@ public abstract class BaseAction : MonoBehaviour {
 
     public abstract EnemyAIAction GetEnemyAIAction(GridPosition gridPosition);
 
-    public Unit GetUnit(){
+    public Unit GetUnit() {
         return unit;
     }
 

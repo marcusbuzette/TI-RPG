@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class TeleportSkill : BaseSkills
 {
-    [SerializeField] private int maxTeleportDistance = 1;
+    [SerializeField] private int maxTeleportDistance = 4;
     private GridPosition targetGrid;
 
     private float totalSpinAmmount = 0;
@@ -29,7 +29,7 @@ public class TeleportSkill : BaseSkills
     }
 
     public override string GetActionName() {
-        return "Teleport";
+        return "Teleportar";
     }
 
     public override List<GridPosition> GetValidGridPositionList() {
