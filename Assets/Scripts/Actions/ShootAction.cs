@@ -24,8 +24,9 @@ public class ShootAction : BaseAction
     private Unit targetUnit;
     private bool canShoot;
 
-
-
+    private void Start() {
+        obstaclesLayerMask = LayerMask.GetMask("Obstacles"); //add layer mask to don't shoot through obstacles
+    }
     public override string GetActionName()
     {
         return "Atirar";
