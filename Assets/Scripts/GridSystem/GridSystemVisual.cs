@@ -23,7 +23,7 @@ public class GridSystemVisual : MonoBehaviour {
     [SerializeField] private Transform gridSystemVisualPrefab;
     [SerializeField] private List<GridVisualTypeMaterial> gridVisualTypeMaterialList;
 
-    private GridSystemVisualSingle[,] gridSystemVisualSingleArray;
+    private GridSystemVisualSingle[,,] gridSystemVisualSingleArray;
 
     public void Awake() {
         if (Instance != null) { Destroy(gameObject); }
@@ -33,15 +33,19 @@ public class GridSystemVisual : MonoBehaviour {
     private void Start() {
         gridSystemVisualSingleArray = new GridSystemVisualSingle[
             LevelGrid.Instance.GetWidth(),
-            LevelGrid.Instance.GetHeight()
-            ];
+            LevelGrid.Instance.GetHeight(),
+            LevelGrid.Instance.GetFLoorAmount()
+        ];
 
         for (int x = 0; x < LevelGrid.Instance.GetWidth(); x++) {
             for (int z = 0; z < LevelGrid.Instance.GetHeight(); z++) {
-                GridPosition gridPosition = new GridPosition(x, z);
-                Transform gridSystemVisualSingleArrayTransform =
-                    Instantiate(gridSystemVisualPrefab, LevelGrid.Instance.GetWorldPosition(gridPosition), Quaternion.identity);
-                gridSystemVisualSingleArray[x, z] = gridSystemVisualSingleArrayTransform.GetComponent<GridSystemVisualSingle>();
+                for(int floor = 0; floor < LevelGrid.Instance.GetFLoorAmount(); floor++) {
+                    GridPosition gridPosition = new GridPosition(x, z, floor);
+                    Transform gridSystemVisualSingleArrayTransform =
+                        Instantiate(gridSystemVisualPrefab, LevelGrid.Instance.GetWorldPosition(gridPosition), Quaternion.identity);
+                    gridSystemVisualSingleArray[x, z, floor] = gridSystemVisualSingleArrayTransform.GetComponent<GridSystemVisualSingle>();
+                    gridSystemVisualSingleArrayTransform.transform.SetParent(this.transform, false);
+                }
             }
         }
 
@@ -54,8 +58,9 @@ public class GridSystemVisual : MonoBehaviour {
     public void HideAllGridPosition() {
         for (int x = 0; x < LevelGrid.Instance.GetWidth(); x++) {
             for (int z = 0; z < LevelGrid.Instance.GetHeight(); z++) {
-
-                gridSystemVisualSingleArray[x, z].Hide();
+                for (int floor = 0; floor < LevelGrid.Instance.GetFLoorAmount(); floor++) {
+                    gridSystemVisualSingleArray[x, z, floor].Hide();
+                }
             }
         }
     }
@@ -64,7 +69,7 @@ public class GridSystemVisual : MonoBehaviour {
         List<GridPosition> gridPositionList = new List<GridPosition>();
         for (int x = -range; x <= range; x++) {
             for (int z = -range; z <= range; z++) {
-                GridPosition testGridPosition = gridPosition + new GridPosition(x, z);
+                GridPosition testGridPosition = gridPosition + new GridPosition(x, z, 0);
 
                 if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) {
                     continue;
@@ -84,7 +89,7 @@ public class GridSystemVisual : MonoBehaviour {
 
     public void ShowGridPositionList(List<GridPosition> gridPositionList, GridVisualType gridVisualType) {
         foreach (GridPosition gridPosition in gridPositionList) {
-            gridSystemVisualSingleArray[gridPosition.x, gridPosition.z].Show(GetGridVisualTypeMaterial(gridVisualType));
+            gridSystemVisualSingleArray[gridPosition.x, gridPosition.z, gridPosition.floor].Show(GetGridVisualTypeMaterial(gridVisualType));
         }
     }
 

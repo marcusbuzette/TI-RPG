@@ -74,36 +74,38 @@ public class MoveAction : BaseAction {
 
         for (int x = -maxMoveDistance; x <= maxMoveDistance; x++) {
             for (int z = -maxMoveDistance; z <= maxMoveDistance; z++) {
-                GridPosition offsetGridPosition = new GridPosition(x, z);
-                GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
+                for(int floor = -maxMoveDistance; floor <= maxMoveDistance; floor++) {
+                    GridPosition offsetGridPosition = new GridPosition(x, z, floor);
+                    GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
-                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) {
-                    continue;
+                    if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) {
+                        continue;
+                    }
+
+                    if (unitGridPosition == testGridPosition) {
+                        continue;
+                    }
+
+                    if (LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition)) {
+                        continue;
+                    }
+
+                    if (!PathFinding.Instance.IsWalkableGridPosition(testGridPosition)) {
+                        continue;
+                    }
+
+                    if (!PathFinding.Instance.HasPath(unitGridPosition, testGridPosition)) {
+                        continue;
+                    }
+
+                    int pathFindingDistanceMultiplier = 10;
+                    if (PathFinding.Instance.GetPathLenght(unitGridPosition, testGridPosition) > maxMoveDistance * pathFindingDistanceMultiplier) {
+                        //Path Lenght is to low
+                        continue;
+                    }
+
+                    validGridPositionList.Add(testGridPosition);
                 }
-
-                if (unitGridPosition == testGridPosition) {
-                    continue;
-                }
-
-                if (LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition)) {
-                    continue;
-                }
-
-                if (!PathFinding.Instance.IsWalkableGridPosition(testGridPosition)) {
-                    continue;
-                }
-
-                if (!PathFinding.Instance.HasPath(unitGridPosition, testGridPosition)) {
-                    continue;
-                }
-
-                int pathFindingDistanceMultiplier = 10;
-                if (PathFinding.Instance.GetPathLenght(unitGridPosition, testGridPosition) > maxMoveDistance * pathFindingDistanceMultiplier) {
-                    //Path Lenght is to low
-                    continue;
-                }
-
-                validGridPositionList.Add(testGridPosition);
             }
         }
 

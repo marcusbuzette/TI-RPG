@@ -9,22 +9,26 @@ public class GridSystem<TGridObject> {
     private int width;
     private int height;
     private float cellSize;
+    private int floor;
+    private float floorHeight;
     private TGridObject[,] gridObjectArray;
     private GridPosition[,] gridPositionList;
 
-    public GridSystem(int width, int height, float cellSize, Func<GridSystem<TGridObject>, GridPosition, TGridObject> createGridObject,
+    public GridSystem(int width, int height, float cellSize, int floor, float floorHeight, Func<GridSystem<TGridObject>, GridPosition, TGridObject> createGridObject,
          List<GridPosition> zoneList = null) {
 
         this.width = width;
         this.height = height;
         this.cellSize = cellSize;
+        this.floor = floor;
+        this.floorHeight = floorHeight;
 
         this.gridObjectArray = new TGridObject[width, height];
         this.gridPositionList = new GridPosition[width, height];
 
         for (int x = 0; x < width; x++) {
             for (int z = 0; z < height; z++) {
-                GridPosition gridPosition = new GridPosition(x, z);
+                GridPosition gridPosition = new GridPosition(x, z, floor);
                 GridPosition zoneItem = zoneList.Find(pos => pos.x == x && pos.z == z);
                 if (zoneItem != null) gridPosition.zone = zoneItem.zone;
                 gridObjectArray[x, z] = createGridObject(this, gridPosition);
@@ -35,7 +39,8 @@ public class GridSystem<TGridObject> {
 
     public Vector3 GetWorldPosition(GridPosition gridPosition) {
 
-        return new Vector3(gridPosition.x, 0, gridPosition.z) * cellSize;
+        return new Vector3(gridPosition.x, 0, gridPosition.z) * cellSize +
+            new Vector3(0, gridPosition.floor, 0) * floorHeight;
     }
 
     public GridPosition GetGridPosition(Vector3 worldPosition) {
@@ -48,7 +53,7 @@ public class GridSystem<TGridObject> {
 
         for (int x = 0; x < width; x++) {
             for (int z = 0; z < height; z++) {
-                GridPosition gridPosition = new GridPosition(x, z);
+                GridPosition gridPosition = new GridPosition(x, z, floor);
                 Transform debugTransform = GameObject.Instantiate(debugPrefab, GetWorldPosition(gridPosition), Quaternion.identity);
                 GridDebugObject gridDebugObject = debugTransform.GetComponent<GridDebugObject>();
 
@@ -65,7 +70,8 @@ public class GridSystem<TGridObject> {
         return gridPosition.x >= 0 &&
                 gridPosition.z >= 0 &&
                 gridPosition.x < width &&
-                gridPosition.z < height;
+                gridPosition.z < height &&
+                gridPosition.floor == floor;;
     }
 
     public void RemoveZone(int zone) {
