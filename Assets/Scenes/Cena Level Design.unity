@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571337, b: 0.3069219, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -556,6 +556,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2005807419}
     m_Modifications:
+    - target: {fileID: 2672855175812891822, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
+      propertyPath: unitId
+      value: werewolf
+      objectReference: {fileID: 0}
     - target: {fileID: 2672855175812891822, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
       propertyPath: unitStats.speed
       value: 5
@@ -3004,6 +3008,9 @@ MonoBehaviour:
   width: 30
   height: 40
   cellSize: 2
+  gameMode: 0
+  squaredZoneList: []
+  zoneList: []
 --- !u!4 &466893057 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3482887427150260871, guid: 4f6a3905a8e5438439d4f86e67c0d767, type: 3}
@@ -6064,6 +6071,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uicontroller: {fileID: 0}
   dinheiro: 0
+  currentLevel: 0
   debugMode: 0
   debugPathFindingMode: 0
 --- !u!4 &1415871614
@@ -10098,6 +10106,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2005807419}
     m_Modifications:
+    - target: {fileID: 710382878516122352, guid: 2a07390923ceb334eb640083400033aa, type: 3}
+      propertyPath: unitId
+      value: bear
+      objectReference: {fileID: 0}
     - target: {fileID: 3791870941818718484, guid: 2a07390923ceb334eb640083400033aa, type: 3}
       propertyPath: m_Name
       value: Bear
@@ -10194,6 +10206,14 @@ PrefabInstance:
     - target: {fileID: 3482887427150260871, guid: 4f6a3905a8e5438439d4f86e67c0d767, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4097611372698076066, guid: 4f6a3905a8e5438439d4f86e67c0d767, type: 3}
+      propertyPath: unitId
+      value: hero
+      objectReference: {fileID: 0}
+    - target: {fileID: 4097611372698076066, guid: 4f6a3905a8e5438439d4f86e67c0d767, type: 3}
+      propertyPath: unitName
+      value: Heroi
       objectReference: {fileID: 0}
     - target: {fileID: 7923891495559024178, guid: 4f6a3905a8e5438439d4f86e67c0d767, type: 3}
       propertyPath: m_Name

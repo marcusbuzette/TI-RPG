@@ -37,8 +37,6 @@ public class Unit : MonoBehaviour {
     }
 
     private void Start() {
-        Debug.Log("Start Unit");
-        Debug.Log(GameController.controller.HasUnitRecords(unitId));
         if (!isEnemy && GameController.controller.HasUnitRecords(unitId)) {
             UnitRecords unitRecords = GameController.controller.GetUnitRecords(unitId);
             this.xpSystem.SetXp(unitRecords.xp);
@@ -54,6 +52,7 @@ public class Unit : MonoBehaviour {
         gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
         TurnSystem.Instance.onTurnChange += TurnSystem_OnTurnChange;
+
         healthSystem.OnDead += HealthSystem_OnDie;
         OnAnyUnitSpawn?.Invoke(this, EventArgs.Empty);
     }
@@ -199,8 +198,6 @@ public class Unit : MonoBehaviour {
             }
         }
 
-        Debug.Log(unitId + " - " + isUnitTurn);
-
         UnitActionSystem.Instance.ChangeSelectedUnit(this);
         if (OnAnyActionPerformed != null) {
             OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
@@ -236,9 +233,12 @@ public class Unit : MonoBehaviour {
     }
 
     public int GetHealthPoints(){
-        Debug.Log("chamou");
         return healthSystem.GetHealthPoints();
     }
 
     public string GetUnitName() {return this.unitName;}
+
+    public void UpdateGridPositionZone(int zone) {
+        this.gridPosition.zone = zone;
+    }
 }

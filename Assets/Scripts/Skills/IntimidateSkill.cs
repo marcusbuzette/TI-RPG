@@ -12,6 +12,7 @@ public class IntimidateSkill : BaseSkills {
         foreach (Unit target in targetsList) {
             target.BeIntimidate();
         }
+        AudioManager.instance?.PlaySFX("Intimidar");
         ActionFinish();
         ActiveCoolDown();
     }
@@ -28,7 +29,7 @@ public class IntimidateSkill : BaseSkills {
         int i = 0;
         for (int x = -maxIntimidateDistance; x <= maxIntimidateDistance; x++) {
             for (int z = -maxIntimidateDistance; z <= maxIntimidateDistance; z++) {
-                GridPosition testGridPosition = unitGridPosition + new GridPosition(x, z);
+                GridPosition testGridPosition = unitGridPosition + new GridPosition(x, z, 0);
 
                 if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) {
                     continue;

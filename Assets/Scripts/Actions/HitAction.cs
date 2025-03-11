@@ -35,7 +35,7 @@ public class HitAction : BaseAction
         {
             for (int z = -maxShootDistance; z <= maxShootDistance; z++)
             {
-                GridPosition offsetGridPosition = new GridPosition(x, z);
+                GridPosition offsetGridPosition = new GridPosition(x, z, 0);
                 GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
                 if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition))
@@ -91,6 +91,8 @@ public class HitAction : BaseAction
     public int GetDamage()
     {
         int damage = hitDamage;
+        AudioManager.instance?.PlaySFX("DamageTaken");
         return damage;
+
     }
 }

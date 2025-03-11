@@ -44,6 +44,7 @@ public class ShootAction : BaseAction
             case State.Shooting:
                 if (canShoot)
                 {
+                    AudioManager.instance?.PlaySFX("Arrows");
                     Shoot();
                     canShoot = false;
                 }
@@ -73,7 +74,7 @@ public class ShootAction : BaseAction
         {
             for (int z = -maxShootDistance; z <= maxShootDistance; z++)
             {
-                GridPosition offsetGridPosition = new GridPosition(x, z);
+                GridPosition offsetGridPosition = new GridPosition(x, z, 0);
                 GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
                 if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition))
@@ -192,6 +193,8 @@ public class ShootAction : BaseAction
 
     public int GetDamage(){
         int damage = shootDamage;
+        AudioManager.instance?.PlaySFX("DamageTaken");
         return damage;
+        
     }
 }
