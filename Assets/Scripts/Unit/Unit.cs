@@ -37,8 +37,6 @@ public class Unit : MonoBehaviour {
     }
 
     private void Start() {
-        Debug.Log("Start Unit");
-        Debug.Log(GameController.controller.HasUnitRecords(unitId));
         if (!isEnemy && GameController.controller.HasUnitRecords(unitId)) {
             UnitRecords unitRecords = GameController.controller.GetUnitRecords(unitId);
             this.xpSystem.SetXp(unitRecords.xp);
@@ -235,9 +233,12 @@ public class Unit : MonoBehaviour {
     }
 
     public int GetHealthPoints(){
-        Debug.Log("chamou");
         return healthSystem.GetHealthPoints();
     }
 
     public string GetUnitName() {return this.unitName;}
+
+    public void UpdateGridPositionZone(int zone) {
+        this.gridPosition.zone = zone;
+    }
 }

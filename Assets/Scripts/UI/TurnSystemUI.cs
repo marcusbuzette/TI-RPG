@@ -24,6 +24,7 @@ public class TurnSystemUI : MonoBehaviour {
         });
         TurnSystem.Instance.onTurnChange += TurnSystem_OnTurnChange;
         TurnSystem.Instance.onOrderChange += TurnSystem_OnOrderChange;
+        LevelGrid.Instance.OnGameModeChanged += LevelGrid_OnGameModeChanged;
         UpdatedTurnText();
         CreateUnitActionButtons();
         UpdateEndTurnButton();
@@ -49,10 +50,10 @@ public class TurnSystemUI : MonoBehaviour {
 
         for (int i = 0; i < TurnSystem.Instance.GetTurnOrder().Count; i++) {
             Transform unitOrderTransform = Instantiate(unitOrderUIPrefab, unitsOrderContainer);
-            unitOrderTransform.GetComponent<UnitOrderUI>().SetUnitOrderUI(TurnSystem.Instance.GetTurnOrder()[i], i ==0);
+            unitOrderTransform.GetComponent<UnitOrderUI>().SetUnitOrderUI(TurnSystem.Instance.GetTurnOrder()[i], i == 0);
         }
 
- 
+
     }
 
     private void UpdateEndTurnButton() {
@@ -61,5 +62,17 @@ public class TurnSystemUI : MonoBehaviour {
 
     public void UpdateTurnSpeedText() {
         turnSpeedText.text = Time.timeScale.ToString() + "x";
+    }
+
+    private void LevelGrid_OnGameModeChanged(object sender, EventArgs e) {
+        for (int i = 0; i < transform.childCount; i++) {
+            transform.GetChild(i).gameObject.SetActive(LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE ? true : false);
+        }
+    }
+
+    void OnDestroy() {
+        LevelGrid.Instance.OnGameModeChanged -= LevelGrid_OnGameModeChanged;
+        TurnSystem.Instance.onTurnChange -= TurnSystem_OnTurnChange;
+        TurnSystem.Instance.onOrderChange -= TurnSystem_OnOrderChange;
     }
 }

@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour, IDataPersistence {
     [SerializeField] private bool debugMode = false;
     [SerializeField] private bool debugPathFindingMode = false;
 
+
     private void Awake() {
         if (controller == null) {
             controller = this;
@@ -74,7 +75,7 @@ public class GameController : MonoBehaviour, IDataPersistence {
 
     public void NextLevel() {
         this.currentLevel++;
-        DataPersistenseManager.instace.SaveGame();
+        DataPersistenseManager.instace?.SaveGame();
     }
 
     public void LoadData(GameData data) {

@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class PathFinding : MonoBehaviour
-{
+public class PathFinding : MonoBehaviour {
 
     public static PathFinding Instance { get; private set; }
 
@@ -29,7 +28,7 @@ public class PathFinding : MonoBehaviour
         else { Instance = this; }
     }
 
-    public void Setup(int width,  int height, float cellSize, int floorAmount) {
+    public void Setup(int width, int height, float cellSize, int floorAmount) {
         this.width = width;
         this.height = height;
         this.cellSize = cellSize;
@@ -37,7 +36,7 @@ public class PathFinding : MonoBehaviour
 
         gridSystemList = new List<GridSystem<PathNode>>();
 
-        for(int floor = 0; floor < floorAmount; floor++) {
+        for (int floor = 0; floor < floorAmount; floor++) {
             GridSystem<PathNode> gridSystem = new GridSystem<PathNode>(width, height, cellSize, floor, LevelGrid.FLOOR_HEIGHT,
                 (GridSystem<PathNode> g, GridPosition gridPosition) => new PathNode(gridPosition));
 
@@ -46,9 +45,9 @@ public class PathFinding : MonoBehaviour
             gridSystemList.Add(gridSystem);
         }
 
-        for(int x = 0; x < width; x++) {
-            for(int z = 0; z < height; z++) {
-                for(int floor = 0; floor < floorAmount; floor++) {
+        for (int x = 0; x < width; x++) {
+            for (int z = 0; z < height; z++) {
+                for (int floor = 0; floor < floorAmount; floor++) {
                     GridPosition gridPosition = new GridPosition(x, z, floor);
                     Vector3 worldPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
                     float raycastOffsetDistance = 1f;
@@ -67,8 +66,7 @@ public class PathFinding : MonoBehaviour
                         worldPosition + Vector3.down * raycastOffsetDistance,
                         Vector3.up,
                         raycastOffsetDistance * 2,
-                        obstaclesLayers))
-                        {
+                        obstaclesLayers)) {
                         GetNode(x, z, floor).SetIsWalkable(false);
                     }
                 }
@@ -76,8 +74,8 @@ public class PathFinding : MonoBehaviour
         }
 
         pathFindingLinkList = new List<PathFindingLink>();
-        foreach(Transform pathFindingLinkTransform in pathFindingLinkContainer) {
-            if(pathFindingLinkTransform.TryGetComponent(out PathFindingLinkMonoBehaviour pathFindingLinkMonoBehaviour)) {
+        foreach (Transform pathFindingLinkTransform in pathFindingLinkContainer) {
+            if (pathFindingLinkTransform.TryGetComponent(out PathFindingLinkMonoBehaviour pathFindingLinkMonoBehaviour)) {
                 pathFindingLinkList.Add(pathFindingLinkMonoBehaviour.GetPathFindingLink());
             }
         }
@@ -91,8 +89,8 @@ public class PathFinding : MonoBehaviour
         PathNode endNode = GetGridSystem(endGridPosition.floor).GetGridObject(endGridPosition);
         openList.Add(startNode);
 
-        for(int x = 0; x < width; x++) {
-            for(int z = 0; z < height; z++) {
+        for (int x = 0; x < width; x++) {
+            for (int z = 0; z < height; z++) {
                 for (int floor = 0; floor < floorAmount; floor++) {
                     GridPosition gridPosition = new GridPosition(x, z, 0);
                     PathNode pathNode = GetGridSystem(floor).GetGridObject(gridPosition);
@@ -112,7 +110,7 @@ public class PathFinding : MonoBehaviour
         while (openList.Count > 0) {
             PathNode currentNode = GetLowestFCostPathNode(openList);
 
-            if(currentNode == endNode) {
+            if (currentNode == endNode) {
                 //Reached final node
                 pathLenght = endNode.GetFCost();
                 return CalculatePath(endNode);
@@ -122,7 +120,7 @@ public class PathFinding : MonoBehaviour
             closedList.Add(currentNode);
 
             foreach (PathNode neighbourNode in GetNeighbourList(currentNode)) {
-                if(closedList.Contains(neighbourNode)) {
+                if (closedList.Contains(neighbourNode)) {
                     continue;
                 }
 
@@ -134,13 +132,13 @@ public class PathFinding : MonoBehaviour
                 int tentativeGCost =
                     currentNode.GetGCost() + CalculateDistance(currentNode.GetGridPosition(), neighbourNode.GetGridPosition());
 
-                if(tentativeGCost < neighbourNode.GetGCost()) {
+                if (tentativeGCost < neighbourNode.GetGCost()) {
                     neighbourNode.SetCameFromPathNode(currentNode);
                     neighbourNode.SetGCost(tentativeGCost);
                     neighbourNode.SetHCost(CalculateDistance(neighbourNode.GetGridPosition(), endGridPosition));
                     neighbourNode.CalculateFCost();
 
-                    if(!openList.Contains(neighbourNode)) {
+                    if (!openList.Contains(neighbourNode)) {
                         openList.Add(neighbourNode);
                     }
                 }
@@ -164,7 +162,7 @@ public class PathFinding : MonoBehaviour
 
     private PathNode GetLowestFCostPathNode(List<PathNode> pathNodeList) {
         PathNode lowestFCostPathNode = pathNodeList[0];
-        for(int i = 0; i < pathNodeList.Count; i++) {
+        for (int i = 0; i < pathNodeList.Count; i++) {
             if (pathNodeList[i].GetFCost() < lowestFCostPathNode.GetFCost()) {
                 lowestFCostPathNode = pathNodeList[i];
             }
@@ -188,38 +186,63 @@ public class PathFinding : MonoBehaviour
 
         if (gridPosition.x - 1 >= 0) {
             // Left node
-            neighbourList.Add(GetNode(gridPosition.x - 1, gridPosition.z + 0 , gridPosition.floor));
+
+            if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE ||
+                GetNode(gridPosition.x - 1, gridPosition.z + 0, gridPosition.floor).GetGridPosition().zone == gridPosition.zone) {
+                neighbourList.Add(GetNode(gridPosition.x - 1, gridPosition.z + 0, gridPosition.floor));
+            }
             if (gridPosition.z - 1 >= 0) {
                 // Left Down node
-                neighbourList.Add(GetNode(gridPosition.x - 1, gridPosition.z - 1, gridPosition.floor));
+                if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE ||
+                    GetNode(gridPosition.x - 1, gridPosition.z - 1, gridPosition.floor).GetGridPosition().zone == gridPosition.zone) {
+                    neighbourList.Add(GetNode(gridPosition.x - 1, gridPosition.z - 1, gridPosition.floor));
+                }
             }
             if (gridPosition.z + 1 < height) {
                 // Left Up node
-                neighbourList.Add(GetNode(gridPosition.x - 1, gridPosition.z + 1, gridPosition.floor));
+
+                if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE ||
+                    GetNode(gridPosition.x - 1, gridPosition.z + 1, gridPosition.floor).GetGridPosition().zone == gridPosition.zone) {
+                    neighbourList.Add(GetNode(gridPosition.x - 1, gridPosition.z + 1, gridPosition.floor));
+                }
             }
         }
 
         if (gridPosition.x + 1 < width) {
             // Right node
-            neighbourList.Add(GetNode(gridPosition.x + 1, gridPosition.z + 0, gridPosition.floor));
+            if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE ||
+                GetNode(gridPosition.x + 1, gridPosition.z + 0, gridPosition.floor).GetGridPosition().zone == gridPosition.zone) {
+                neighbourList.Add(GetNode(gridPosition.x + 1, gridPosition.z + 0, gridPosition.floor));
+            }
             if (gridPosition.z - 1 >= 0) {
                 // Right Down node
-                neighbourList.Add(GetNode(gridPosition.x + 1, gridPosition.z - 1, gridPosition.floor));
+                if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE ||
+                    GetNode(gridPosition.x + 1, gridPosition.z - 1, gridPosition.floor).GetGridPosition().zone == gridPosition.zone) {
+                    neighbourList.Add(GetNode(gridPosition.x + 1, gridPosition.z - 1, gridPosition.floor));
+                }
             }
-            if(gridPosition.z + 1 < height) {
+            if (gridPosition.z + 1 < height) {
                 // Right Up node
-                neighbourList.Add(GetNode(gridPosition.x + 1, gridPosition.z + 1, gridPosition.floor));
+                if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE ||
+                    GetNode(gridPosition.x + 1, gridPosition.z + 1, gridPosition.floor).GetGridPosition().zone == gridPosition.zone) {
+                    neighbourList.Add(GetNode(gridPosition.x + 1, gridPosition.z + 1, gridPosition.floor));
+                }
             }
         }
 
         if (gridPosition.z - 1 >= 0) {
             // Down node
-            neighbourList.Add(GetNode(gridPosition.x - 0, gridPosition.z - 1, gridPosition.floor));
+            if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE ||
+                GetNode(gridPosition.x - 0, gridPosition.z - 1, gridPosition.floor).GetGridPosition().zone == gridPosition.zone) {
+                neighbourList.Add(GetNode(gridPosition.x - 0, gridPosition.z - 1, gridPosition.floor));
+            }
         }
 
         if (gridPosition.z + 1 < height) {
             // Up node
-            neighbourList.Add(GetNode(gridPosition.x - 0, gridPosition.z + 1, gridPosition.floor));
+            if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE || GetNode(gridPosition.x - 0, gridPosition.z + 1, gridPosition.floor).GetGridPosition().zone == gridPosition.zone) {
+                neighbourList.Add(GetNode(gridPosition.x - 0, gridPosition.z + 1, gridPosition.floor));
+            }
         }
 
         List<PathNode> totalNeighbourList = new List<PathNode>();
@@ -227,11 +250,11 @@ public class PathFinding : MonoBehaviour
 
         List<GridPosition> pathFindingLinkGridPostionList = GetPathFindingLinkConnectedGridPositonList(gridPosition);
 
-        foreach(GridPosition pathFindingLinkGridPostion in pathFindingLinkGridPostionList) {
+        foreach (GridPosition pathFindingLinkGridPostion in pathFindingLinkGridPostionList) {
             totalNeighbourList.Add(
                 GetNode(
-                    pathFindingLinkGridPostion.x, 
-                    pathFindingLinkGridPostion.z, 
+                    pathFindingLinkGridPostion.x,
+                    pathFindingLinkGridPostion.z,
                     pathFindingLinkGridPostion.floor
                     )
                 );
@@ -243,11 +266,11 @@ public class PathFinding : MonoBehaviour
     private List<GridPosition> GetPathFindingLinkConnectedGridPositonList(GridPosition gridPosition) {
         List<GridPosition> gridPositionList = new List<GridPosition>();
 
-        foreach(PathFindingLink pathFindingLink in pathFindingLinkList) {
-            if(pathFindingLink.gridPositionA == gridPosition) {
+        foreach (PathFindingLink pathFindingLink in pathFindingLinkList) {
+            if (pathFindingLink.gridPositionA == gridPosition) {
                 gridPositionList.Add(pathFindingLink.gridPositionB);
             }
-            if(pathFindingLink.gridPositionB == gridPosition) {
+            if (pathFindingLink.gridPositionB == gridPosition) {
                 gridPositionList.Add(pathFindingLink.gridPositionA);
             }
         }
@@ -267,7 +290,7 @@ public class PathFinding : MonoBehaviour
         pathNodeList.Reverse();
 
         List<GridPosition> gridPositionList = new List<GridPosition>();
-        foreach(PathNode pathNode in pathNodeList) {
+        foreach (PathNode pathNode in pathNodeList) {
             gridPositionList.Add(pathNode.GetGridPosition());
         }
 

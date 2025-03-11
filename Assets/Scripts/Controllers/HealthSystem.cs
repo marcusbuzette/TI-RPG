@@ -47,7 +47,6 @@ public class HealthSystem : MonoBehaviour {
     }
 
     public int GetHealthPoints() {
-        Debug.Log(healthPoints);
         return this.healthPoints;
     }
 
