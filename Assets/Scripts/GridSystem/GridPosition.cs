@@ -4,7 +4,6 @@ using System;
 public struct GridPosition : IEquatable<GridPosition> {
     public int x;
     public int z;
-
     public int zone;
     public int floor;
 

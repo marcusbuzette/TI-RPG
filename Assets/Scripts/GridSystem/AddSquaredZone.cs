@@ -7,6 +7,7 @@ public class AddSquaredZone: ScriptableObject {
     public int zoneNumber;
     public int startX;
     public int startZ;
+    public int floor;
     public int endX;
     public int endZ;
     public List<ZoneSpawnPoint> spawnPoints;
@@ -16,4 +17,5 @@ public class AddSquaredZone: ScriptableObject {
 public struct ZoneSpawnPoint {
     public int x;
     public int z;
+    public int floor;
 }
