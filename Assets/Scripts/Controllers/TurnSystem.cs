@@ -10,6 +10,7 @@ public class TurnSystem : MonoBehaviour {
     private int turnNumber = 0;
     [SerializeField] private bool isPlayerTurn = true;
     [SerializeField] private List<Unit> unitiesOrderList = new List<Unit>();
+    private List<Unit> allEnemies = new List<Unit>();
 
     public static TurnSystem Instance { get; private set; }
     public event EventHandler onTurnChange;
@@ -31,12 +32,34 @@ public class TurnSystem : MonoBehaviour {
 
     private void Start() {
         turnNumber = 0;
-        unitiesOrderList = FindObjectsOfType<Unit>(false).ToList<Unit>();
+        unitiesOrderList = FindObjectsOfType<Unit>(false)
+            .Where(unit => unit.GetGridPosition().zone == LevelGrid.Instance.GetCurrentBattleZone()).ToList<Unit>();
+        allEnemies = FindObjectsOfType<Unit>(false).Where(unit => unit.IsEnemy()).ToList<Unit>();
         unitiesOrderList.Sort((x, y) => y.GetUnitSpeed().CompareTo(x.GetUnitSpeed()));
         isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
         unitiesOrderList[turnNumber].StartUnitTurn();
         onOrderChange.Invoke(this, EventArgs.Empty);
 
+    }
+
+    public void SetUpBattleNewZone() {
+        List<Unit> playerUnits = FindObjectsOfType<Unit>(false).Where(unit => unit.IsEnemy() == false).ToList<Unit>();
+        for (int i = 0; i < playerUnits.Count; i++) {
+            UnitActionSystem.Instance.MoveUnitToGridPosition(playerUnits[i],
+            LevelGrid.Instance.GetZoneSpawnList(LevelGrid.Instance.GetCurrentBattleZone())[i]);
+
+        }
+
+    }
+
+    public void StartBattleNewZone() {
+        turnNumber = 0;
+        unitiesOrderList = FindObjectsOfType<Unit>(false)
+            .Where(unit => (unit.GetGridPosition().zone == LevelGrid.Instance.GetCurrentBattleZone() || !unit.IsEnemy())).ToList<Unit>();
+        unitiesOrderList.Sort((x, y) => y.GetUnitSpeed().CompareTo(x.GetUnitSpeed()));
+        isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
+        unitiesOrderList[turnNumber].StartUnitTurn();
+        onOrderChange.Invoke(this, EventArgs.Empty);
     }
 
 
@@ -67,16 +90,28 @@ public class TurnSystem : MonoBehaviour {
     public void RemoveUnitFromList(Unit unitDead) {
         int unitDeadIndex = unitiesOrderList.FindIndex((u) => u.transform == unitDead.transform);
         unitiesOrderList.Remove(unitDead);
+        if (unitDead.IsEnemy()) { allEnemies.Remove(unitDead); }
         if (turnNumber > unitDeadIndex) { turnNumber--; }
-        if (isPlayerTurn && !CheckEnemiesLeft()) {
-            ResetTurnSpeed();
-            SceneManager.LoadScene("HUB");
+        if (isPlayerTurn && CheckEnemiesLeftInTheBattleZone()) {
+            ComboKill();
+        }
+        else if (isPlayerTurn && !CheckEnemiesLeftInTheBattleZone() && CheckEnemiesLeft()) {
+            LevelGrid.Instance.RemoveZoneFromGrid(LevelGrid.Instance.GetCurrentBattleZone());
+            List<Unit> playerUnits = FindObjectsOfType<Unit>(false).Where(unit => unit.IsEnemy() == false).ToList<Unit>();
+            foreach (Unit unit in playerUnits) {
+                unit.UpdateGridPositionZone(0);
+            }
+            ComboKill();
+            LevelGrid.Instance.ExploreMode();
         }
         else if (!isPlayerTurn && !CheckPlayerCharsLeft()) {
             ResetTurnSpeed();
             GameController.controller.GameOver();
-        } else {
-            ComboKill();
+        }
+        else if (isPlayerTurn && !CheckEnemiesLeft()) {
+            ResetTurnSpeed();
+            GameController.controller.NextLevel();
+            SceneManager.LoadScene("HUB");
         }
     }
 
@@ -100,8 +135,11 @@ public class TurnSystem : MonoBehaviour {
     }
 
     private bool CheckEnemiesLeft() {
+        return allEnemies.Count > 0;
+    }
+    private bool CheckEnemiesLeftInTheBattleZone() {
         foreach (Unit unit in unitiesOrderList) {
-            if (unit.IsEnemy()) return true;
+            if (unit.IsEnemy() && unit.GetGridPosition().zone == LevelGrid.Instance.GetCurrentBattleZone()) return true;
         }
         return false;
     }

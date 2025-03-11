@@ -24,6 +24,8 @@ public class ShootAction : BaseAction
     private Unit targetUnit;
     private bool canShoot;
 
+
+
     public override string GetActionName()
     {
         return "Atirar";
@@ -71,7 +73,7 @@ public class ShootAction : BaseAction
         {
             for (int z = -maxShootDistance; z <= maxShootDistance; z++)
             {
-                GridPosition offsetGridPosition = new GridPosition(x, z);
+                GridPosition offsetGridPosition = new GridPosition(x, z, 0);
                 GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
                 if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition))
@@ -149,8 +151,8 @@ public class ShootAction : BaseAction
     private void Shoot()
     {
         targetUnit.Damage(shootDamage);
-
-
+        animator?.SetTrigger("Attack");
+        AudioManager.instance?.PlaySFX("Arrows");
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)

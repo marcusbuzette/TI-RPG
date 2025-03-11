@@ -39,7 +39,7 @@ public class TeleportSkill : BaseSkills
 
         for (int x = -maxTeleportDistance; x <= maxTeleportDistance; x++) {
             for (int z = -maxTeleportDistance; z <= maxTeleportDistance; z++) {
-                GridPosition offsetGridPosition = new GridPosition(x, z);
+                GridPosition offsetGridPosition = new GridPosition(x, z, 0);
                 GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
                 if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) {
@@ -80,7 +80,6 @@ public class TeleportSkill : BaseSkills
     }
 
     public override void IsAnotherRound() {
-        Debug.Log("IS ANOTHER ROUND");
         if (currentCoolDown != 0) {
             currentCoolDown--;
         }

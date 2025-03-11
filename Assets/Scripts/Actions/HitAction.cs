@@ -6,9 +6,7 @@ using Unity.VisualScripting;
 
 public class HitAction : BaseAction
 {
-    private float totalSpinAmmount = 0;
     [SerializeField] private int maxShootDistance = 1;
-    [SerializeField] private float MAX_SPIN = 360f;
     [SerializeField] private int hitDamage = 50;
 
     private Unit targetUnit;
@@ -16,21 +14,15 @@ public class HitAction : BaseAction
 
     public override string GetActionName()
     {
-        return "Chute";
+        return "Ataque";
     }
 
     public override void Action()
     {
-        float spinAddAmmount = 360f * Time.deltaTime;
-        transform.eulerAngles += new Vector3(0, spinAddAmmount, 0);
-        totalSpinAmmount += spinAddAmmount;
-        if (totalSpinAmmount > MAX_SPIN)
-        {
-            AudioManager.instance?.PlaySFX("Melee");
-            totalSpinAmmount = 0;
-            targetUnit.Damage(hitDamage);
-            ActionFinish();
-        }
+        targetUnit.Damage(hitDamage);
+        animator?.SetTrigger("Attack");
+        AudioManager.instance?.PlaySFX("Melee");
+        ActionFinish();
     }
 
     public override List<GridPosition> GetValidGridPositionList()
@@ -43,7 +35,7 @@ public class HitAction : BaseAction
         {
             for (int z = -maxShootDistance; z <= maxShootDistance; z++)
             {
-                GridPosition offsetGridPosition = new GridPosition(x, z);
+                GridPosition offsetGridPosition = new GridPosition(x, z, 0);
                 GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
                 if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition))

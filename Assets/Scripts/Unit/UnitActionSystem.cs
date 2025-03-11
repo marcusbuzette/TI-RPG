@@ -44,14 +44,20 @@ public class UnitActionSystem : MonoBehaviour {
     private void HandleSelectedAction() {
         if (Input.GetMouseButtonDown(0)) {
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
-            
-            if (selectedAction == null) return;
-            if (!selectedAction.IsValidActionGridPosition(mouseGridPosition)) return;
-            
-            if (selectedUnit.TryToPerformAction(selectedAction)) {
-                SetBusy();
-                selectedAction.TriggerAction(mouseGridPosition, ClearBusy);
-                OnActionStarted.Invoke(this, EventArgs.Empty);
+
+            if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE) {
+                if (selectedAction == null) return;
+                if (!selectedAction.IsValidActionGridPosition(mouseGridPosition)) return;
+
+                if (selectedUnit.TryToPerformAction(selectedAction)) {
+                    SetBusy();
+                    selectedAction.TriggerAction(mouseGridPosition, ClearBusy);
+                    OnActionStarted.Invoke(this, EventArgs.Empty);
+                }
+            }
+            else {
+                this.selectedAction = null;
+                selectedUnit.GetComponent<MoveAction>().TriggerAction(mouseGridPosition, ClearBusy);
             }
         }
     }
@@ -82,17 +88,20 @@ public class UnitActionSystem : MonoBehaviour {
     }
 
     private void SetSelectedUnit(Unit unit) {
-        selectedUnit = unit;
-        selectedAction = null;
-        OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
-        OnSelectedActionChanged?.Invoke(this, EventArgs.Empty);
+        if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE) {
+            selectedUnit = unit;
+            selectedAction = null;
+            OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
+            OnSelectedActionChanged?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     public void SetSelectedAction(BaseAction action) {
         selectedAction = action;
         if (action.GetActionType() != ActionType.INVENTORY) {
             OnSelectedActionChanged?.Invoke(this, EventArgs.Empty);
-        } else {
+        }
+        else {
             OnInventoryClicked.Invoke(action, EventArgs.Empty);
         }
     }
@@ -107,5 +116,11 @@ public class UnitActionSystem : MonoBehaviour {
 
     private void ClearBusy() {
         isBusy = false;
+    }
+
+    public void MoveUnitToGridPosition(Unit unit, GridPosition pos) {
+        selectedUnit = unit;
+        selectedAction = null;
+        selectedUnit.GetComponent<MoveAction>().TriggerAction(pos, ClearBusy);
     }
 }

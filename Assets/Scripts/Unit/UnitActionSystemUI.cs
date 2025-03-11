@@ -20,6 +20,7 @@ public class UnitActionSystemUI : MonoBehaviour {
         TurnSystem.Instance.onTurnChange += TurnSystem_OnTurnChange;
         Unit.OnAnyActionPerformed += Unit_OnAnyActionPerformed;
         UnitActionSystem.Instance.OnInventoryClicked += UnitActionSystem_OnInventoryClicked;
+        LevelGrid.Instance.OnGameModeChanged += LevelGrid_OnGameModeChanged;
 
         CreateUnitActionButtons();
     }
@@ -104,7 +105,7 @@ public class UnitActionSystemUI : MonoBehaviour {
         inventoryButtonsContainer.transform.position = posAux;
         inventoryButtonsContainer.gameObject.SetActive(true);
 
-        foreach (KeyValuePair<InventoryItemData, InventoryItem> item in InventorySystem.inventorySystem.GetInventoryContent()) {
+        foreach (KeyValuePair<InventoryItemData, SerializableInventoryItem> item in InventorySystem.inventorySystem.GetInventoryContent()) {
             Transform itemButtonTransform = Instantiate(itemButtonPrefab, inventoryButtonsContainer);
             itemButtonTransform.GetComponent<ItemButtonUI>().SetBaseAction(item.Value.data.prefab.GetComponent<ItemAction>(), item.Value.stackSize);
         }
@@ -138,5 +139,12 @@ public class UnitActionSystemUI : MonoBehaviour {
         TurnSystem.Instance.onTurnChange -= TurnSystem_OnTurnChange;
         Unit.OnAnyActionPerformed -= Unit_OnAnyActionPerformed;
         UnitActionSystem.Instance.OnInventoryClicked -= UnitActionSystem_OnInventoryClicked;
+        LevelGrid.Instance.OnGameModeChanged -= LevelGrid_OnGameModeChanged;
+    }
+
+    private void LevelGrid_OnGameModeChanged(object sender, EventArgs e) {
+        for (int i = 0; i < transform.childCount; i++) {
+            transform.GetChild(i).gameObject.SetActive(LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE ? true : false);
+        }
     }
 }
