@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3849,19 +3849,25 @@ MonoBehaviour:
   - name: Walk
     clip: {fileID: 0}
   - name: DamageTaken
-    clip: {fileID: 8300000, guid: c5aa5c10613b87c4aa250989343f10cf, type: 3}
+    clip: {fileID: 8300000, guid: f21d00d6ff999f249b7501e888337788, type: 3}
   - name: Melee
-    clip: {fileID: 8300000, guid: 89b29d20031a7d049953d6c9e7f077f8, type: 3}
-  - name: Magic
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 2b83f0f72f3da3e4baa2ffd9c48df82f, type: 3}
   - name: Arrows
-    clip: {fileID: 8300000, guid: 5fdc3861e423e054bb2ec8d7126026a2, type: 3}
+    clip: {fileID: 8300000, guid: 4dffef02b4ca67940a0e41c84ac0fe66, type: 3}
   - name: Teleport
-    clip: {fileID: 8300000, guid: 849cc61bce75a4f43bd2df645fb431ba, type: 3}
+    clip: {fileID: 8300000, guid: 0c7e5620c15d67a43baacbdbf6dfd961, type: 3}
   - name: Click
     clip: {fileID: 8300000, guid: 4a640579b248e3c4bac9c017f2f30e54, type: 3}
   - name: Potion
     clip: {fileID: 8300000, guid: e7336ce4338b37346bbe4de6cc362e90, type: 3}
+  - name: FireMagic
+    clip: {fileID: 8300000, guid: 348ff5c03a508a542b6da2c21e94a64f, type: 3}
+  - name: IceMagic
+    clip: {fileID: 0}
+  - name: Intimidar
+    clip: {fileID: 8300000, guid: 4300ca122c5143249ba54232884478e2, type: 3}
+  - name: Provocar
+    clip: {fileID: 8300000, guid: 1322eff6170a8da46bf06b59bf2c56bc, type: 3}
   masterSource: {fileID: 1901677262}
   musicSource: {fileID: 1208278567}
   sfxSource: {fileID: 358558285}

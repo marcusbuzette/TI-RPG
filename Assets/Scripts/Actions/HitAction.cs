@@ -26,9 +26,9 @@ public class HitAction : BaseAction
         totalSpinAmmount += spinAddAmmount;
         if (totalSpinAmmount > MAX_SPIN)
         {
+            AudioManager.instance?.PlaySFX("Melee");
             totalSpinAmmount = 0;
             targetUnit.Damage(hitDamage);
-            AudioManager.instance?.PlaySFX("Melee");
             ActionFinish();
         }
     }
@@ -99,6 +99,8 @@ public class HitAction : BaseAction
     public int GetDamage()
     {
         int damage = hitDamage;
+        AudioManager.instance?.PlaySFX("DamageTaken");
         return damage;
+
     }
 }
