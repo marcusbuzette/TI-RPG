@@ -91,6 +91,8 @@ public class HitAction : BaseAction
     public int GetDamage()
     {
         int damage = hitDamage;
+        AudioManager.instance?.PlaySFX("DamageTaken");
         return damage;
+
     }
 }

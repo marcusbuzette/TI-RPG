@@ -12,6 +12,7 @@ public class IntimidateSkill : BaseSkills {
         foreach (Unit target in targetsList) {
             target.BeIntimidate();
         }
+        AudioManager.instance?.PlaySFX("Intimidar");
         ActionFinish();
         ActiveCoolDown();
     }

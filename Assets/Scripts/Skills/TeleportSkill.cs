@@ -17,8 +17,8 @@ public class TeleportSkill : BaseSkills
         transform.eulerAngles += new Vector3(0, spinAddAmmount, 0);
         totalSpinAmmount += spinAddAmmount;
         bool teleported = false;
-
-        if(totalSpinAmmount > MAX_SPIN / 2 && !teleported) {
+        AudioManager.instance?.PlaySFX("Teleport");
+        if (totalSpinAmmount > MAX_SPIN / 2 && !teleported) {
             Teleport();
         }
 
@@ -91,7 +91,7 @@ public class TeleportSkill : BaseSkills
     private void Teleport() {
         unit.transform.position = LevelGrid.Instance.GetWorldPosition(targetGrid);
         LevelGrid.Instance.UnitMovedGridPosition(unit, unit.GetGridPosition(), targetGrid);
-        AudioManager.instance?.PlaySFX("Teleport");
+        
     }
 
     public override bool GetOnCooldown() { return onCoolDown; }

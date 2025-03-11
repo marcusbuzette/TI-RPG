@@ -11,6 +11,7 @@ public class EnemyFocusSkill : BaseSkills
 
     public override void Action() {
         unit.FocusOnMe(skillRounds);
+        AudioManager.instance?.PlaySFX("Provocar");
         ActionFinish();
         ActiveCoolDown();
     }
