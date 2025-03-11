@@ -29,8 +29,10 @@ public class GridSystem<TGridObject> {
         for (int x = 0; x < width; x++) {
             for (int z = 0; z < height; z++) {
                 GridPosition gridPosition = new GridPosition(x, z, floor);
-                GridPosition zoneItem = zoneList.Find(pos => pos.x == x && pos.z == z);
-                if (zoneItem != null) gridPosition.zone = zoneItem.zone;
+                if (zoneList != null) {
+                    GridPosition zoneItem = zoneList.Find(pos => pos.x == x && pos.z == z);
+                    if (zoneItem != null) gridPosition.zone = zoneItem.zone;
+                }
                 gridObjectArray[x, z] = createGridObject(this, gridPosition);
                 gridPositionList[x, z] = gridPosition;
             }
@@ -71,7 +73,7 @@ public class GridSystem<TGridObject> {
                 gridPosition.z >= 0 &&
                 gridPosition.x < width &&
                 gridPosition.z < height &&
-                gridPosition.floor == floor;;
+                gridPosition.floor == floor; ;
     }
 
     public void RemoveZone(int zone) {
