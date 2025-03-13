@@ -161,5 +161,14 @@ public class TurnSystem : MonoBehaviour {
         turnSpeedIndex = 0;
         Time.timeScale = turnSpeeds[turnSpeedIndex];
     }
+
+    public Unit GetPlayerUnitToExplore() {
+        foreach (Unit unit in unitiesOrderList) {
+            if (!unit.IsEnemy()) {
+                return unit;  
+            } 
+        }
+        return null;
+    }
     public void SetCameraController(CameraController controller) { cameraController = controller; }
 }
