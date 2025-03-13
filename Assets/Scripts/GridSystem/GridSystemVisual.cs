@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GridSystemVisual : MonoBehaviour {
     public static GridSystemVisual Instance { get; private set; }
+    public LayerMask obstaclesLayerMask;
 
     [Serializable]
     public struct GridVisualTypeMaterial {
@@ -65,8 +66,9 @@ public class GridSystemVisual : MonoBehaviour {
         }
     }
 
-    private void ShowGridPositionRange(GridPosition gridPosition, int range, GridVisualType gridVisualType) {
+    private void ShowGridPositionRange(GridPosition gridPosition, int range, GridVisualType gridVisualType, Vector3 unitWorldPosition, bool isBlockedByObstacles) {
         List<GridPosition> gridPositionList = new List<GridPosition>();
+        //LayerMask obstaclesLayerMask = LayerMask.GetMask("Obstacles");
         for (int x = -range; x <= range; x++) {
             for (int z = -range; z <= range; z++) {
                 GridPosition testGridPosition = gridPosition + new GridPosition(x, z, 0);
@@ -78,6 +80,21 @@ public class GridSystemVisual : MonoBehaviour {
                 int testDistance = Mathf.Abs(x) + Mathf.Abs(z);
                 if (testDistance > range) {
                     continue;
+                }
+
+                if (isBlockedByObstacles) {
+                    Vector3 targetPos = LevelGrid.Instance.GetWorldPosition(testGridPosition);
+                    Vector3 shootDir = (targetPos - unitWorldPosition).normalized;
+
+                    float unitShoulderHeight = 1.7f;
+                    if (Physics.Raycast(unitWorldPosition + Vector3.up * unitShoulderHeight,
+                        shootDir,
+                        Vector3.Distance(unitWorldPosition, targetPos),
+                        obstaclesLayerMask)) {
+
+                        //Blocked by an Obstacle
+                        continue;
+                    }
                 }
 
                 gridPositionList.Add(testGridPosition);
@@ -114,7 +131,7 @@ public class GridSystemVisual : MonoBehaviour {
                 case ShootAction shootAction:
                     gridVisualType = GridVisualType.Red;
 
-                    ShowGridPositionRange(selectedUnit.GetGridPosition(), shootAction.GetMaxShootDistance(), GridVisualType.RedSoft);
+                    ShowGridPositionRange(selectedUnit.GetGridPosition(), shootAction.GetMaxShootDistance(), GridVisualType.RedSoft, selectedUnit.transform.position, true);
                     break;
                 case ItemAction itemAction:
                     gridVisualType = GridVisualType.Yellow;
@@ -128,10 +145,15 @@ public class GridSystemVisual : MonoBehaviour {
                 case IntimidateSkill intimidateSkill:
                     gridVisualType = GridVisualType.Blue;
 
-                    ShowGridPositionRange(selectedUnit.GetGridPosition(), intimidateSkill.GetMaxIntimidateDistance(), GridVisualType.BlueSoft);
+                    ShowGridPositionRange(selectedUnit.GetGridPosition(), intimidateSkill.GetMaxIntimidateDistance(), GridVisualType.BlueSoft, selectedUnit.transform.position, false);
                     break;
                 case EnemyFocusSkill enemyFocusSkill:
                     gridVisualType = GridVisualType.Blue;
+                    break;
+                case FireAttack fireAttack:
+                    gridVisualType = GridVisualType.White;
+
+                    ShowGridPositionRange(selectedUnit.GetGridPosition(), fireAttack.GetMaxShootDistance(), GridVisualType.White, selectedUnit.transform.position, true);
                     break;
             }
             ShowGridPositionList(selectedAction.GetValidGridPositionList(), gridVisualType);
