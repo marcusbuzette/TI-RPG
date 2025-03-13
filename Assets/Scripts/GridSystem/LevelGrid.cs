@@ -61,7 +61,11 @@ public class LevelGrid : MonoBehaviour {
 
     private void Start() {
         this.currentBattleZone = 0;
-        PathFinding.Instance.Setup(width, height, cellSize, floorAmount);
+        PathFinding.Instance.Setup(width, height, cellSize, floorAmount, zoneList);
+
+        if (this.gameMode == GameMode.EXPLORE) {
+            this.ExploreMode();
+        }
     }
 
     private GridSystem<GridObject> GetGridSystem(int floor) {
