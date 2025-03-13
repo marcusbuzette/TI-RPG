@@ -28,7 +28,7 @@ public class PathFinding : MonoBehaviour {
         else { Instance = this; }
     }
 
-    public void Setup(int width, int height, float cellSize, int floorAmount) {
+    public void Setup(int width, int height, float cellSize, int floorAmount, List<GridPosition> zoneList) {
         this.width = width;
         this.height = height;
         this.cellSize = cellSize;
@@ -38,7 +38,7 @@ public class PathFinding : MonoBehaviour {
 
         for (int floor = 0; floor < floorAmount; floor++) {
             GridSystem<PathNode> gridSystem = new GridSystem<PathNode>(width, height, cellSize, floor, LevelGrid.FLOOR_HEIGHT,
-                (GridSystem<PathNode> g, GridPosition gridPosition) => new PathNode(gridPosition));
+                (GridSystem<PathNode> g, GridPosition gridPosition) => new PathNode(gridPosition), zoneList);
 
             if (GameController.controller.GetPathFindingDebugMode()) gridSystem.CreateDebugObjects(gridDebugPrefab);
 
