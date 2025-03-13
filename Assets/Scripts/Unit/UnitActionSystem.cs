@@ -57,7 +57,12 @@ public class UnitActionSystem : MonoBehaviour {
             }
             else {
                 this.selectedAction = null;
-                selectedUnit.GetComponent<MoveAction>().TriggerAction(mouseGridPosition, ClearBusy);
+                if (this.selectedUnit == null) {
+                    this.selectedUnit = TurnSystem.Instance.GetPlayerUnitToExplore();
+                    OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
+                    OnSelectedActionChanged?.Invoke(this, EventArgs.Empty);
+                }
+                selectedUnit?.GetComponent<MoveAction>().TriggerAction(mouseGridPosition, ClearBusy);
             }
         }
     }

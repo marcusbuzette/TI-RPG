@@ -21,8 +21,13 @@ public class UnitActionSystemUI : MonoBehaviour {
         Unit.OnAnyActionPerformed += Unit_OnAnyActionPerformed;
         UnitActionSystem.Instance.OnInventoryClicked += UnitActionSystem_OnInventoryClicked;
         LevelGrid.Instance.OnGameModeChanged += LevelGrid_OnGameModeChanged;
+        
 
         CreateUnitActionButtons();
+
+        if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE) {
+            UpdateUIGameMode();
+        }
     }
 
 
@@ -143,6 +148,10 @@ public class UnitActionSystemUI : MonoBehaviour {
     }
 
     private void LevelGrid_OnGameModeChanged(object sender, EventArgs e) {
+        this.UpdateUIGameMode();
+    }
+
+    private void UpdateUIGameMode() {
         for (int i = 0; i < transform.childCount; i++) {
             transform.GetChild(i).gameObject.SetActive(LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE ? true : false);
         }
