@@ -137,13 +137,13 @@ public class GridSystemVisual : MonoBehaviour {
             ShowGridPositionList(selectedAction.GetValidGridPositionList(), gridVisualType);
         }
         else {
-            // GridVisualType gridVisualType = GridVisualType.White;
-            // for (int x = 0; x < LevelGrid.Instance.GetWidth(); x++) {
-            //     for (int z = 0; z < LevelGrid.Instance.GetHeight(); z++) {
+             /*GridVisualType gridVisualType = GridVisualType.White;
+             for (int x = 0; x < LevelGrid.Instance.GetWidth(); x++) {
+                 for (int z = 0; z < LevelGrid.Instance.GetHeight(); z++) {
 
-            //         gridSystemVisualSingleArray[x, z].Show(GetGridVisualTypeMaterial(gridVisualType));
-            //     }
-            // }
+                     gridSystemVisualSingleArray[x, z].Show(GetGridVisualTypeMaterial(gridVisualType));
+                 }
+             }*/
         }
 
     }
