@@ -8,6 +8,8 @@ public class HitAction : BaseAction
 {
     [SerializeField] private int maxShootDistance = 1;
     [SerializeField] private int hitDamage = 50;
+    [SerializeField] private float rotateSpeed = 10f;
+    public int Attack = 1;
 
     private Unit targetUnit;
 
@@ -18,12 +20,24 @@ public class HitAction : BaseAction
     }
 
     public override void Action()
-    {
-        targetUnit.Damage(hitDamage);
+{
+        if(Attack == 1){
+        targetUnit?.Damage(hitDamage);
         animator?.SetTrigger("Attack");
         AudioManager.instance?.PlaySFX("Melee");
-        ActionFinish();
+        Attack=0;
     }
+   StartCoroutine(DelayActionFinish());
+
+}
+
+private IEnumerator DelayActionFinish()
+{
+    yield return new WaitForSeconds(0.5f); // Ajuste o tempo conforme necessário
+    ActionFinish();
+    Attack=1;
+
+}
 
     public override List<GridPosition> GetValidGridPositionList()
     {
