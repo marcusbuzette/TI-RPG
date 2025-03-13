@@ -51,26 +51,35 @@ public class CameraManager : MonoBehaviour
 
                 if (targetUnit.GetHealthPoints() - shootDamage <= 0) ShowActionCamera();
                 break;
-            case HitAction hitAction:
-                Unit hitterUnit = hitAction.GetUnit();
-                Unit targetUnitH = hitAction.GetTargetUnit();
+  case HitAction hitAction:
+    Debug.Log("Entrou no Case HitAction");
+    Unit hitterUnit = hitAction.GetUnit();
+    Unit targetUnitH = hitAction.GetTargetUnit();
 
-                Vector3 hitDir = (targetUnitH.GetWorldPosition() - hitterUnit.GetWorldPosition()).normalized;
+    Debug.Log($"Health before hit: {targetUnitH.GetHealthPoints()}, Damage: {hitAction.GetDamage()}");
 
-                Vector3 middlePoint = (hitterUnit.GetWorldPosition() + targetUnitH.GetWorldPosition()) / 2f;
+    Vector3 hitDir = (targetUnitH.GetWorldPosition() - hitterUnit.GetWorldPosition()).normalized;
 
-                float cameraDistance = 10f;
-                Vector3 sideDir = Quaternion.Euler(0, 90, 0) * hitDir;
+    Vector3 middlePoint = (hitterUnit.GetWorldPosition() + targetUnitH.GetWorldPosition()) / 2f;
 
-                Vector3 actionCameraPositionHit = middlePoint + cameraCharacterHeight + (sideDir * cameraDistance);
+    float cameraDistance = 10f;
+    Vector3 sideDir = Quaternion.Euler(0, 90, 0) * hitDir;
 
-                actionCamera.transform.position = actionCameraPositionHit;
-                actionCamera.transform.LookAt(middlePoint + cameraCharacterHeight);
+    Vector3 actionCameraPositionHit = middlePoint + cameraCharacterHeight + (sideDir * cameraDistance);
 
-                int hitDamage = hitAction.GetDamage();
+    actionCamera.transform.position = actionCameraPositionHit;
+    actionCamera.transform.LookAt(middlePoint + cameraCharacterHeight);
 
-                if (targetUnitH.GetHealthPoints() - hitDamage <= 0) ShowActionCamera();
-                break;
+    int hitDamage = hitAction.GetDamage();
+
+    Debug.Log($"Health after hit: {targetUnitH.GetHealthPoints() - hitDamage}");
+
+    if (targetUnitH.GetHealthPoints() - hitDamage <= 0)
+    {
+        Debug.Log("Showing Action Camera for HitAction");
+        ShowActionCamera();
+    }
+    break;
         }
     }
 
