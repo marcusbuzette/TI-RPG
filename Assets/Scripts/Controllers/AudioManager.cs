@@ -7,7 +7,7 @@ using UnityEngine.Audio;
 public class AudioManager : MonoBehaviour {
     public static AudioManager instance;
 
-    public Sound[] musicSounds, sfxSounds;
+    public Sound[] musicSounds, sfxSounds, protagSFX, archerSFX, macacoSFX, guerreiroSFX;
     public AudioSource masterSource, musicSource, sfxSource;
     [SerializeField] private AudioMixer audioMixer;
 

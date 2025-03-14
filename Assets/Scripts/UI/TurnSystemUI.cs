@@ -28,6 +28,10 @@ public class TurnSystemUI : MonoBehaviour {
         UpdatedTurnText();
         CreateUnitActionButtons();
         UpdateEndTurnButton();
+
+        if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE) {
+            this.UpdateUiGameMode();
+        }
     }
 
     private void UpdatedTurnText() {
@@ -65,6 +69,10 @@ public class TurnSystemUI : MonoBehaviour {
     }
 
     private void LevelGrid_OnGameModeChanged(object sender, EventArgs e) {
+        this.UpdateUiGameMode();
+    }
+
+    private void UpdateUiGameMode() {
         for (int i = 0; i < transform.childCount; i++) {
             transform.GetChild(i).gameObject.SetActive(LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE ? true : false);
         }
