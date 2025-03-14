@@ -34,7 +34,10 @@ public class UnitActionSystem : MonoBehaviour {
             return;
         }
 
-        if (EventSystem.current.IsPointerOverGameObject()) return;
+        if (EventSystem.current.IsPointerOverGameObject()) {
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0)) {
             if (TryHandleUnitSelection()) return;
             HandleSelectedAction();
@@ -43,7 +46,7 @@ public class UnitActionSystem : MonoBehaviour {
 
     private void HandleSelectedAction() {
         if (Input.GetMouseButtonDown(0)) {
-            Debug.Log(MouseWorld.GetPosition());
+            
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
 
             if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE) {
@@ -103,6 +106,11 @@ public class UnitActionSystem : MonoBehaviour {
     }
 
     public void SetSelectedAction(BaseAction action) {
+        switch (selectedAction) {
+            case FireAttack fireAttack:
+                fireAttack.isAiming = false;
+                break;
+        }
         selectedAction = action;
         if (action.GetActionType() != ActionType.INVENTORY) {
             OnSelectedActionChanged?.Invoke(this, EventArgs.Empty);

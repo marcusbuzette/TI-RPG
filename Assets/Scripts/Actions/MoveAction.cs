@@ -124,4 +124,5 @@ public class MoveAction : BaseAction {
     public override bool GetOnCooldown() { return false; }
 
     public override void IsAnotherRound() { }
+
 }

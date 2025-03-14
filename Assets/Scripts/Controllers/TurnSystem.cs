@@ -71,7 +71,6 @@ public class TurnSystem : MonoBehaviour {
         }
         isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
         onTurnChange.Invoke(this, EventArgs.Empty);
-
         //Place the camera in the unit position of the turn
         Vector3 unitTurnTransform = unitiesOrderList[turnNumber].transform.position;
         cameraController.GoToPosition(unitTurnTransform);
