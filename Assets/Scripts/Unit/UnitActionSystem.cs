@@ -35,7 +35,6 @@ public class UnitActionSystem : MonoBehaviour {
         }
 
         if (EventSystem.current.IsPointerOverGameObject()) {
-            Debug.Log("WD");
             return;
         }
 

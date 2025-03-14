@@ -6,11 +6,12 @@ using UnityEngine;
 using static GridSystemVisual;
 using UnityEngine.SocialPlatforms;
 
-public class FireAttack : BaseAction {
+public class FireAttack : BaseSkills {
     private enum State {
         Aiming, Shooting, Cooloff
     }
     [SerializeField] private LayerMask obstaclesLayerMask;
+    [SerializeField] private GameObject fireAttackObject;
     [SerializeField] private int maxShootDistance = 1;
     [SerializeField] private float aimingTimer = .1f;
     [SerializeField] private float shootingTimer = .3f;
@@ -18,11 +19,12 @@ public class FireAttack : BaseAction {
     [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private int shootDamage = 100;
     [SerializeField] private int areaDamage = 3;
+    [SerializeField] private int damage = 3;
 
     private State currentState;
     private float stateTimer;
-    private Unit targetUnit;
     private bool canShoot;
+    public Vector3 selectedGrid;
     public bool isAiming = false;
 
     GridPosition mouseGridPosition;
@@ -39,19 +41,23 @@ public class FireAttack : BaseAction {
             mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
             ViewAreaDamage(mouseGridPosition);
         }
+        if (!isActive) return;
+        Action();
     }
 
     public override void Action() {
+        ActiveCoolDown();
+
         stateTimer -= Time.deltaTime;
         switch (currentState) {
             case State.Aiming:
-                Vector3 moveDirection = (targetUnit.transform.position - transform.position).normalized;
+                GridSystemVisual.Instance.HideAllGridPosition();
+                Vector3 moveDirection = (selectedGrid - transform.position).normalized;
                 transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
                 break;
             case State.Shooting:
                 if (canShoot) {
                     AudioManager.instance?.PlaySFX("Arrows");
-                    Shoot();
                     isAiming = false;
                     canShoot = false;
                 }
@@ -90,16 +96,16 @@ public class FireAttack : BaseAction {
                 }
 
                 Vector3 unitWorldPosition = LevelGrid.Instance.GetWorldPosition(unitGridPosition);
-                /*Vector3 shootDir = (LevelGrid.Instance.GetWorldPosition(testGridPosition) - unitWorldPosition).normalized;
+                Vector3 shootDir = (LevelGrid.Instance.GetWorldPosition(testGridPosition) - unitWorldPosition).normalized;
 
                 float unitShoulderHeight = 1.7f;
                 if (Physics.Raycast(unitWorldPosition + Vector3.up * unitShoulderHeight,
                     shootDir,
-                    Vector3.Distance(unitWorldPosition, targetUnit.GetWorldPosition()),
-                    obstaclesLayerMask)) {d
+                    Vector3.Distance(unitWorldPosition, LevelGrid.Instance.GetWorldPosition(testGridPosition)),
+                    obstaclesLayerMask)) {
                     //Blocked by an Obstacle
                     continue;
-                }*/
+                }
 
 
                 validGridPositionList.Add(testGridPosition);
@@ -113,7 +119,7 @@ public class FireAttack : BaseAction {
         isAiming = false;
         currentState = State.Aiming;
         stateTimer = aimingTimer;
-        targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
+        selectedGrid = LevelGrid.Instance.GetWorldPosition(mouseGridPosition);
         canShoot = true;
 
         ActionStart(onActionComplete);
@@ -132,16 +138,11 @@ public class FireAttack : BaseAction {
                 stateTimer = shootingTimer;
                 break;
             case State.Cooloff:
+                fireAttackObject = Instantiate(new GameObject(), selectedGrid, Quaternion.identity);
+                fireAttackObject.AddComponent<FireAttackObject>().SetFireAttackObject(this, damage, areaDamage, coolDown);
                 ActionFinish();
                 break;
-
         }
-    }
-
-    private void Shoot() {
-        targetUnit.Damage(shootDamage);
-        animator?.SetTrigger("Attack");
-        AudioManager.instance?.PlaySFX("Arrows");
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {
@@ -165,21 +166,19 @@ public class FireAttack : BaseAction {
         return GetValidGridPositionList(gridPosition).Count;
     }
 
-
-    public Unit GetTargetUnit() { return targetUnit; }
-
     public int GetMaxShootDistance() {
         return maxShootDistance;
     }
 
     public override bool GetOnCooldown() { return false; }
 
-    public override void IsAnotherRound() { }
-
-    public int GetDamage() {
-        int damage = shootDamage;
-        AudioManager.instance?.PlaySFX("DamageTaken");
-        return damage;
+    public override void IsAnotherRound() {
+        if (currentCoolDown != 0) {
+            currentCoolDown--;
+        }
+        if (currentCoolDown == 0) {
+            onCoolDown = false;
+        }
     }
 
     public void ViewAreaDamage(GridPosition mousePosition) {

@@ -149,6 +149,7 @@ public class Unit : MonoBehaviour {
     }
 
     public void Damage(int damage) {
+        Debug.Log("TOMEI DANO: " + damage);
         healthSystem.Damage(damage);
     }
 
