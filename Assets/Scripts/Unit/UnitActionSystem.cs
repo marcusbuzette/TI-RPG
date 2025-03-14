@@ -43,6 +43,7 @@ public class UnitActionSystem : MonoBehaviour {
 
     private void HandleSelectedAction() {
         if (Input.GetMouseButtonDown(0)) {
+            Debug.Log(MouseWorld.GetPosition());
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
 
             if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE) {

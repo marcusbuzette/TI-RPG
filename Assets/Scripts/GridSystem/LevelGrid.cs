@@ -106,7 +106,7 @@ public class LevelGrid : MonoBehaviour {
     }
 
     public int GetFloor(Vector3 worldPosition) {
-        return Mathf.RoundToInt(worldPosition.y / FLOOR_HEIGHT);
+        return floorAmount > 1 ? Mathf.RoundToInt(worldPosition.y / FLOOR_HEIGHT) : 0;
     }
     public GridPosition GetGridPosition(Vector3 worldPosition) {
         int floor = GetFloor(worldPosition);
