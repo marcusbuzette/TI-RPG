@@ -2165,6 +2165,12 @@ MonoBehaviour:
     material: {fileID: 2100000, guid: 66d642f9a0e33b042ad41d206c6d8490, type: 2}
   - gridVisualType: 5
     material: {fileID: 2100000, guid: 2cfb3997cd29c934783fcf6d598a1107, type: 2}
+  - gridVisualType: 6
+    material: {fileID: 2100000, guid: 86f07ec813658cf4abca3b030611a4c6, type: 2}
+  - gridVisualType: 7
+    material: {fileID: 2100000, guid: f9ca3eb95a3bcff4399142497ef80e7d, type: 2}
+  - gridVisualType: 8
+    material: {fileID: 2100000, guid: a51fbc40968276d49b2634232456ddf3, type: 2}
 --- !u!4 &1389946622
 Transform:
   m_ObjectHideFlags: 0
@@ -2867,8 +2873,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1715821487}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.42415538, y: -0.00000001558191, z: 0.0000000072981776, w: 0.90558946}
-  m_LocalPosition: {x: 0.63, y: 12, z: -9.24}
+  m_LocalRotation: {x: 0.2669336, y: -8.2521015e-22, z: 5.6999795e-23, w: 0.96371496}
+  m_LocalPosition: {x: 0.63, y: 6.000001, z: -9.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3124,7 +3130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 12, z: -10}
+  m_FollowOffset: {x: 0, y: 6.000001, z: -10}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0
@@ -3304,6 +3310,7 @@ GameObject:
   - component: {fileID: 1868139152}
   - component: {fileID: 1868139150}
   - component: {fileID: 1868139155}
+  - component: {fileID: 1868139156}
   m_Layer: 0
   m_Name: UnitTest
   m_TagString: Untagged
@@ -3482,6 +3489,35 @@ MonoBehaviour:
   cooloffTimer: 0.1
   rotateSpeed: 10
   shootDamage: 100
+--- !u!114 &1868139156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868139143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9014cf97bae6f414da57656fd3ec3610, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  nome: Veneno
+  descricao: 
+  custo: 0
+  preRequisitos: []
+  onCoolDown: 0
+  coolDown: 5
+  currentCoolDown: 0
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  maxShootDistance: 5
+  aimingTimer: 0.1
+  shootingTimer: 0.3
+  cooloffTimer: 0.1
+  rotateSpeed: 10
+  damage: 100
 --- !u!1 &1870922294
 GameObject:
   m_ObjectHideFlags: 0
@@ -3734,8 +3770,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2048497479}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.42415538, y: -0.00000001558191, z: 0.0000000072981776, w: 0.90558946}
-  m_LocalPosition: {x: 0.63, y: 12, z: -9.24}
+  m_LocalRotation: {x: 0.2669336, y: -8.2521015e-22, z: 5.6999795e-23, w: 0.96371496}
+  m_LocalPosition: {x: 0.63, y: 6.000001, z: -9.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
