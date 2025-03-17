@@ -8,7 +8,6 @@ public struct GridPosition : IEquatable<GridPosition> {
     public int floor;
 
     public GridPosition(int x, int z, int floor, int zone = 0) {
-
         this.x = x;
         this.z = z;
         this.floor = floor;

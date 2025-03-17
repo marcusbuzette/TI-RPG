@@ -14,11 +14,25 @@ public abstract class BaseAction : MonoBehaviour {
     protected Action onActionComplete;
     protected ActionType actionType;
     public Animator animator;
+    public float animationSpeed = 1f;
+
+    public void SetAnimationSpeed(float speed)
+    {
+        if (animator != null)
+        {
+            animator.speed = speed;
+        }
+        else
+        {
+            Debug.LogWarning("Animator não encontrado!");
+        }
+    }
 
     protected virtual void Awake() {
         unit = GetComponent<Unit>();
         actionType = ActionType.ACTION;
         animator = GetComponentInChildren<Animator>();
+        SetAnimationSpeed(animationSpeed);
     }
 
     protected virtual void Update() {

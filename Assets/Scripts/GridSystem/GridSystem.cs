@@ -89,7 +89,6 @@ public class GridSystem<TGridObject> {
             for (int z = 0; z < height; z++) {
                 if (gridPositionList[x, z].zone == zone) {
                     gridPositionList[x, z].zone = 0;
-                    // gridObjectArray[x, z] = new GridObject(this, gridPositionList[x, z]);
                 }
             }
         }

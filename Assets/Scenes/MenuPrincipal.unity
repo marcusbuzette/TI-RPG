@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571337, b: 0.3069219, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4879,6 +4879,48 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 4300ca122c5143249ba54232884478e2, type: 3}
   - name: Provocar
     clip: {fileID: 8300000, guid: 1322eff6170a8da46bf06b59bf2c56bc, type: 3}
+  protagSFX:
+  - name: ProtagWalk
+    clip: {fileID: 0}
+  - name: ProtagHit
+    clip: {fileID: 8300000, guid: 2b83f0f72f3da3e4baa2ffd9c48df82f, type: 3}
+  - name: ProtagDamage
+    clip: {fileID: 8300000, guid: fd284e6b115b0e149a0d0fb9b4cde100, type: 3}
+  - name: ProtagInspirar
+    clip: {fileID: 8300000, guid: e9102600b4c8c7b408609adc26b9517f, type: 3}
+  - name: ProtagContraAtaque
+    clip: {fileID: 8300000, guid: fe50ee14325dca743945678261509461, type: 3}
+  - name: ProtagAtaqueRapido
+    clip: {fileID: 8300000, guid: 9bc406eb4adce154dacd44d2af6a19f9, type: 3}
+  - name: ProtagAtaqueFocado
+    clip: {fileID: 8300000, guid: 89b29d20031a7d049953d6c9e7f077f8, type: 3}
+  archerSFX:
+  - name: ArcherWalk
+    clip: {fileID: 0}
+  - name: ArcherHit
+    clip: {fileID: 0}
+  - name: ArcherDamage
+    clip: {fileID: 0}
+  - name: ArcherSkill1
+    clip: {fileID: 0}
+  macacoSFX:
+  - name: MacacoWalk
+    clip: {fileID: 0}
+  - name: MacacoHit
+    clip: {fileID: 0}
+  - name: MacacoDamage
+    clip: {fileID: 0}
+  - name: MacacoSkill1
+    clip: {fileID: 0}
+  guerreiroSFX:
+  - name: GuerreiroWalk
+    clip: {fileID: 0}
+  - name: GuerreiroHit
+    clip: {fileID: 0}
+  - name: GuerreiroDamage
+    clip: {fileID: 0}
+  - name: GuerreiroSkill1
+    clip: {fileID: 0}
   masterSource: {fileID: 1901677262}
   musicSource: {fileID: 1208278567}
   sfxSource: {fileID: 358558285}
