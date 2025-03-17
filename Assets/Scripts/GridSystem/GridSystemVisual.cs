@@ -22,7 +22,7 @@ public class GridSystemVisual : MonoBehaviour {
         Yellow, 
         YellowSoft,
         Green,
-        SoftGreen
+        GreenSoft
     }
     [SerializeField] private Transform gridSystemVisualPrefab;
     [SerializeField] private List<GridVisualTypeMaterial> gridVisualTypeMaterialList;
@@ -161,7 +161,12 @@ public class GridSystemVisual : MonoBehaviour {
                 case PoisonAttack poisonAttack:
                     gridVisualType = GridVisualType.Green;
 
-                    ShowGridPositionRange(selectedUnit.GetGridPosition(), poisonAttack.GetMaxShootDistance(), GridVisualType.SoftGreen, selectedUnit.transform.position, true);
+                    ShowGridPositionRange(selectedUnit.GetGridPosition(), poisonAttack.GetMaxShootDistance(), GridVisualType.GreenSoft, selectedUnit.transform.position, true);
+                    break;
+                case FreezeAttack freezeAttack:
+                    gridVisualType = GridVisualType.Blue;
+
+                    ShowGridPositionRange(selectedUnit.GetGridPosition(), freezeAttack.GetMaxShootDistance(), GridVisualType.BlueSoft, selectedUnit.transform.position, true);
                     break;
             }
             ShowGridPositionList(selectedAction.GetValidGridPositionList(), gridVisualType);

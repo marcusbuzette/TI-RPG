@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoisonAttack : BaseSkills 
-{
+public class FreezeAttack : BaseSkills {
     private enum State {
         Aiming, Shooting, Cooloff
     }
@@ -14,7 +13,6 @@ public class PoisonAttack : BaseSkills
     [SerializeField] private float shootingTimer = .3f;
     [SerializeField] private float cooloffTimer = .1f;
     [SerializeField] private float rotateSpeed = 10f;
-    [SerializeField] private int damage = 100;
 
 
     private State currentState;
@@ -26,7 +24,7 @@ public class PoisonAttack : BaseSkills
         obstaclesLayerMask = LayerMask.GetMask("Obstacles"); //add layer mask to don't shoot through obstacles
     }
     public override string GetActionName() {
-        return "Veneno";
+        return "Congelar";
     }
 
     public override void Action() {
@@ -134,11 +132,11 @@ public class PoisonAttack : BaseSkills
     }
 
     private void Shoot() {
-        if(targetUnit.gameObject.GetComponent<PoisonEffect>() != null) {
-            targetUnit.gameObject.GetComponent<PoisonEffect>().CurePoison();
-            targetUnit.gameObject.AddComponent<PoisonEffect>().SetPoisonEffect(targetUnit, damage, coolDown);
+        if (targetUnit.gameObject.GetComponent<FreezeEffect>() != null) {
+            targetUnit.gameObject.GetComponent<FreezeEffect>().CureFreeze();
+            targetUnit.gameObject.AddComponent<FreezeEffect>().SetFreezeEffect(targetUnit, coolDown);
         }
-        else targetUnit.gameObject.AddComponent<PoisonEffect>().SetPoisonEffect(targetUnit, damage, coolDown);
+        else targetUnit.gameObject.AddComponent<FreezeEffect>().SetFreezeEffect(targetUnit, coolDown);
         animator?.SetTrigger("Attack");
         AudioManager.instance?.PlaySFX("Arrows");
     }
