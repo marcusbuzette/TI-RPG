@@ -236,7 +236,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1003836979848573920, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 1003836979848573920, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2159,12 +2159,18 @@ MonoBehaviour:
     material: {fileID: 2100000, guid: a05052437a282344e8d904f05ab97531, type: 2}
   - gridVisualType: 2
     material: {fileID: 2100000, guid: 9747fde42eb72f44f9cf425ab8b9c3e7, type: 2}
-  - gridVisualType: 4
-    material: {fileID: 2100000, guid: 54541fae4de98cf4b97fef757cb1242d, type: 2}
   - gridVisualType: 3
     material: {fileID: 2100000, guid: 66d642f9a0e33b042ad41d206c6d8490, type: 2}
+  - gridVisualType: 4
+    material: {fileID: 2100000, guid: 54541fae4de98cf4b97fef757cb1242d, type: 2}
   - gridVisualType: 5
     material: {fileID: 2100000, guid: 2cfb3997cd29c934783fcf6d598a1107, type: 2}
+  - gridVisualType: 6
+    material: {fileID: 2100000, guid: 86f07ec813658cf4abca3b030611a4c6, type: 2}
+  - gridVisualType: 7
+    material: {fileID: 2100000, guid: f9ca3eb95a3bcff4399142497ef80e7d, type: 2}
+  - gridVisualType: 8
+    material: {fileID: 2100000, guid: a51fbc40968276d49b2634232456ddf3, type: 2}
 --- !u!4 &1389946622
 Transform:
   m_ObjectHideFlags: 0
@@ -2946,6 +2952,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WereWolf
       objectReference: {fileID: 0}
+    - target: {fileID: 7034417333151070958, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
+      propertyPath: maxShootDistance
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8156640269489831220, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 12
@@ -2986,9 +2996,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7034417333151070958, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
-    - {fileID: 8096173683310641798, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -3297,13 +3305,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1868139144}
-  - component: {fileID: 1868139154}
   - component: {fileID: 1868139145}
   - component: {fileID: 1868139146}
   - component: {fileID: 1868139153}
   - component: {fileID: 1868139152}
   - component: {fileID: 1868139150}
   - component: {fileID: 1868139155}
+  - component: {fileID: 1868139156}
   m_Layer: 0
   m_Name: UnitTest
   m_TagString: Untagged
@@ -3386,6 +3394,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  animationSpeed: 1
   moveSpeed: 4
   rotateSpeed: 4
   stopDistance: 0.1
@@ -3426,40 +3435,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   xp: 0
---- !u!114 &1868139154
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1868139143}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 628ed14bc140cbe48923828c53a1bbcf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  nome: Fogo
-  descricao: 
-  custo: 0
-  preRequisitos: []
-  onCoolDown: 0
-  coolDown: 2
-  currentCoolDown: 0
-  obstaclesLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  fireAttackObject: {fileID: 0}
-  maxShootDistance: 5
-  aimingTimer: 1
-  shootingTimer: 1
-  cooloffTimer: 1
-  rotateSpeed: 10
-  shootDamage: 100
-  areaDamage: 3
-  damage: 3
-  selectedGrid: {x: 0, y: 0, z: 0}
-  isAiming: 0
 --- !u!114 &1868139155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3473,6 +3448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  animationSpeed: 1
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -3482,6 +3458,35 @@ MonoBehaviour:
   cooloffTimer: 0.1
   rotateSpeed: 10
   shootDamage: 100
+--- !u!114 &1868139156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868139143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cbdf6c65100fd54da66fd8515835c33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  animationSpeed: 1
+  nome: Congelar
+  descricao: 
+  custo: 0
+  preRequisitos: []
+  onCoolDown: 0
+  coolDown: 5
+  currentCoolDown: 0
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  maxShootDistance: 10
+  aimingTimer: 0.1
+  shootingTimer: 0.3
+  cooloffTimer: 0.1
+  rotateSpeed: 10
 --- !u!1 &1870922294
 GameObject:
   m_ObjectHideFlags: 0
