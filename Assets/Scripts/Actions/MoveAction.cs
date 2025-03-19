@@ -131,4 +131,19 @@ public class MoveAction : BaseAction {
 
     public override void IsAnotherRound() { }
 
+    public float GetMovementSpeed() {
+        return moveSpeed;
+    }
+
+    public int GetMaxDistanceMovement() {
+        return maxMoveDistance;
+    }
+
+    public void SetMovementSpeed(float moveSpeed) {
+        this.moveSpeed = moveSpeed;
+    }
+
+    public void SetMaxDistanceMovement(int maxDistanceMovement) {
+        this.maxMoveDistance = maxDistanceMovement;
+    }
 }
