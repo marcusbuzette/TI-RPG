@@ -249,9 +249,9 @@ GameObject:
   - component: {fileID: 7094195133053263472}
   - component: {fileID: 7541245972658012895}
   - component: {fileID: 4290718803422079323}
-  - component: {fileID: 7666719005114444153}
+  - component: {fileID: 4798458567434891362}
   m_Layer: 5
-  m_Name: SkillButtonUI
+  m_Name: UpgradeButtonUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -361,7 +361,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &7666719005114444153
+--- !u!114 &4798458567434891362
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -370,11 +370,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 9165349196551325251}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60f7fa4d0ba5cc64a8e20620bbc5a1ad, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ea8c3cb8382d4c14894529f1dfa0158, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skills: {fileID: 268774645106886273, guid: 3ea7eabd8948ec84ca32a264d0031500, type: 3}
+  upgrade:
+    level: 0
+    upgrade: []
+  upgradeIndex: 0
   nome: {fileID: 165591074397969131}
-  descricao: {fileID: 1256059835556778344}
-  custo: {fileID: 3587839142063040626}
+  descricao: {fileID: 0}
+  custo: {fileID: 0}
   botaoDesbloquear: {fileID: 4290718803422079323}

@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2170219948549848153, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: xp
-      value: 0
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: unitId
@@ -25,6 +25,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8293743739561429572}
     - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: unitStats.range
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: unitStats.speed
       value: 3
       objectReference: {fileID: 0}
@@ -37,8 +41,44 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: unitStats.maxMove
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: baseUnitStats.range
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: baseUnitStats.speed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: baseUnitStats.attack
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: baseUnitStats.defence
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: baseUnitStats.maxMove
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: baseUnitStats.accuracy
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: possibleSkills.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: unitStats.maxHealthPoints
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.size
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: possibleSkills.Array.data[0]
@@ -52,6 +92,78 @@ PrefabInstance:
       propertyPath: possibleSkills.Array.data[2]
       value: 
       objectReference: {fileID: 4731174655554223439, guid: 150fd9ebac7aa314d81349c4d46e8530, type: 3}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: baseUnitStats.maxHealthPoints
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.data[0].level
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.data[1].level
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.data[2].level
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.data[3].level
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.data[0].upgrade.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.data[1].upgrade.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.data[2].upgrade.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.data[3].upgrade.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.data[0].upgrade.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 93d852333b0a1480ca1df9a31ed1180a, type: 2}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.data[0].upgrade.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 812d9ab31a0824e47a263b2d3eae97ad, type: 2}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.data[0].upgrade.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 812d9ab31a0824e47a263b2d3eae97ad, type: 2}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.data[1].upgrade.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: ce799d69748104503b655ccdebd0bd51, type: 2}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.data[1].upgrade.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: d834c0a093d5840ba9f5c0a06bea1324, type: 2}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.data[2].upgrade.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: f3e37d9a6755a4f609506d11408e0736, type: 2}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.data[2].upgrade.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2a3e438494eee4983b60383b8252ceca, type: 2}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.data[3].upgrade.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: ce799d69748104503b655ccdebd0bd51, type: 2}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.data[3].upgrade.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 93d852333b0a1480ca1df9a31ed1180a, type: 2}
     - target: {fileID: 4855899929353745125, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: m_Name
       value: Archer
@@ -142,6 +254,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4c588a935c0a4f56b855794c3e7145d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  animationSpeed: 1
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -163,6 +277,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2e767ee6586d8e4884b70a36b55da67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  animationSpeed: 1
   potionHealAmount: 20
 --- !u!114 &8293743739561429572 stripped
 MonoBehaviour:

@@ -46,7 +46,9 @@ public class GameController : MonoBehaviour, IDataPersistence {
         return playerUnits.ContainsKey(unitId);
     }
     public void AddUnitToRecords(Unit unit) {
-        UnitRecords unitRecordsAux = new UnitRecords(unit.GetUnitXpSystem().getXpAmount(), unit.GetUnitStats());
+        Debug.Log("add unit - " + unit);
+        UnitRecords unitRecordsAux = new UnitRecords(unit.GetUnitXpSystem().getXpAmount(), unit.GetBaseUnitStats());
+        Debug.Log(unitRecordsAux.GetUnitStats());
         playerUnits.Add(unit.GetUnitId(), unitRecordsAux);
     }
 
@@ -62,6 +64,10 @@ public class GameController : MonoBehaviour, IDataPersistence {
 
     public void AddSkillToRecordById(string unitId, BaseSkills skill) {
         playerUnits[unitId].AddSkill(skill);
+    }
+
+    public void AddUpgradeToRecordsById(string unitId, PossibleUpgrade upgrade, int index) {
+         playerUnits[unitId].AddLevelUpgrade(upgrade.level, index, upgrade.upgrade[index]);
     }
 
     public Dictionary<string, UnitRecords>.KeyCollection playerUnitsIds() {
