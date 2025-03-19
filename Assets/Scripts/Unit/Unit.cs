@@ -4,6 +4,13 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[System.Serializable]
+public struct PossibleUpgrade {
+    public int level;
+    public UpgradeObject[] upgrade;
+
+}
+
 [Serializable]
 public class Unit : MonoBehaviour {
 
@@ -16,10 +23,12 @@ public class Unit : MonoBehaviour {
     private GridPosition gridPosition;
     private HealthSystem healthSystem;
     [SerializeField] private List<BaseSkills> possibleSkills = new List<BaseSkills>();
+    [SerializeField] private List<PossibleUpgrade> possibleUpgrades = new List<PossibleUpgrade>();
     [SerializeField] private XpSystem xpSystem;
     [SerializeField] public string unitId = "";
     [SerializeField] public string unitName = "";
-    [SerializeField] private UnitStats unitStats;
+    [SerializeField] private UnitStats baseUnitStats;
+    private UnitStats unitStats;
     [SerializeField] private BaseAction[] actionsArray;
     [SerializeField] private bool hasMoved = false;
     [SerializeField] private bool hasPerformedAction = false;
@@ -48,7 +57,10 @@ public class Unit : MonoBehaviour {
             if (OnAnyActionPerformed != null) {
                 OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
             }
+        } else {
+            this.unitStats = baseUnitStats;
         }
+        this.healthSystem.SetMaxHP(this.unitStats.GetMaxHP());
         gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
         TurnSystem.Instance.onTurnChange += TurnSystem_OnTurnChange;
@@ -149,7 +161,6 @@ public class Unit : MonoBehaviour {
     }
 
     public void Damage(int damage) {
-        Debug.Log("TOMEI DANO: " + damage);
         healthSystem.Damage(damage);
     }
 
@@ -208,6 +219,7 @@ public class Unit : MonoBehaviour {
     public string GetUnitId() { return this.unitId; }
     public XpSystem GetUnitXpSystem() { return this.xpSystem; }
     public UnitStats GetUnitStats() { return this.unitStats; }
+    public UnitStats GetBaseUnitStats() { return this.baseUnitStats; }
     public void UpdateUnitStats(UnitStats unitStats) { this.unitStats = unitStats; }
 
     private void OnDestroy() {
@@ -233,11 +245,13 @@ public class Unit : MonoBehaviour {
         return this.possibleSkills;
     }
 
-    public int GetHealthPoints(){
+    public List<PossibleUpgrade> GetPossibelUpgrades() { return this.possibleUpgrades; }
+
+    public int GetHealthPoints() {
         return healthSystem.GetHealthPoints();
     }
 
-    public string GetUnitName() {return this.unitName;}
+    public string GetUnitName() { return this.unitName; }
 
     public void UpdateGridPositionZone(int zone) {
         this.gridPosition.zone = zone;

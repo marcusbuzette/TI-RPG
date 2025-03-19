@@ -26,6 +26,7 @@ public class ShootAction : BaseAction
 
     private void Start() {
         obstaclesLayerMask = LayerMask.GetMask("Obstacles"); //add layer mask to don't shoot through obstacles
+        this.maxShootDistance = GetComponent<Unit>().GetUnitStats().GetRange();
     }
     public override string GetActionName()
     {

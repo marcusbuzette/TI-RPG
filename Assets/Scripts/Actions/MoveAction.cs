@@ -25,6 +25,10 @@ public class MoveAction : BaseAction {
         this.actionType = ActionType.MOVE;
     }
 
+    private void Start() {
+        this.maxMoveDistance = GetComponent<Unit>().GetUnitStats().GetMaxMove();
+    }
+
     public override void Action() {
         Vector3 targetPosition = positionList[currentPositionIndex];
 
@@ -120,6 +124,8 @@ public class MoveAction : BaseAction {
             actionValue = targetCountAtGridPosition * 10,
         };
     }
+
+    public void SetMaxMoveDistance(int maxDistance) {this.maxMoveDistance = maxDistance;}
 
     public override bool GetOnCooldown() { return false; }
 

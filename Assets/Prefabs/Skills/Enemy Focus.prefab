@@ -44,12 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2b6579a4d907704984d04508297debd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  animationSpeed: 1
   nome: Provocar
   descricao: Provoca os inimigos a te atacarem
-  custo: 1
+  custo: 10
   preRequisitos: []
-  desbloqueado: 0
-  unitPrefab: {fileID: 5183917217429670950, guid: 82047d41f197848bb9bc6b85604fbe01, type: 3}
   onCoolDown: 0
   coolDown: 0
   currentCoolDown: 0

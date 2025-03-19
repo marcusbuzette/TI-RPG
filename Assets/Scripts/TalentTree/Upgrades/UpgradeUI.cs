@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SkillUi : MonoBehaviour {
-    public BaseSkills skills;
+public class UpgradeUI : MonoBehaviour {
+    public PossibleUpgrade upgrade;
+    public int upgradeIndex;
     public Text nome;
     public Text descricao;
     public Text custo;
@@ -13,20 +14,17 @@ public class SkillUi : MonoBehaviour {
 
     private void Start() {
         TalentManager.Instance.onSkillUpdate += TalentManager_OnSkillUpdate;
-        UpdateSkillButtonState();
+        UpdateUpgradeButtonState();
     }
 
     public void TalentManager_OnSkillUpdate(object sender, EventArgs e) {
-        UpdateSkillButtonState();
+        UpdateUpgradeButtonState();
     }
 
-    private void UpdateSkillButtonState() {
-        botaoDesbloquear.interactable =
-            TalentManager.Instance.PodeSerDesbloqueado(skills) &&
-            TalentManager.Instance.GetXPPoints() >= skills.custo && 
-            !TalentManager.Instance.CheckSelectedSkillOnLevel(skills.custo);
+    private void UpdateUpgradeButtonState() {
+        botaoDesbloquear.interactable = TalentManager.Instance.CanUpgrade(upgrade);
 
-        if (!botaoDesbloquear.interactable && TalentManager.Instance.AlreadySelected(skills)) {
+        if (!botaoDesbloquear.interactable && TalentManager.Instance.AlreadyUpgraded(upgrade, upgradeIndex)) {
             var colorAux = GetComponent<Button>().colors;
             colorAux.disabledColor = Color.yellow;
             GetComponent<Button>().colors = colorAux;
@@ -34,11 +32,10 @@ public class SkillUi : MonoBehaviour {
     }
 
     //Define e altera os nodes da arvore de talentos.  
-    public void SetBaseSkill(BaseSkills skill) {
-        this.skills = skill;
-        nome.text = skills.nome;
-        // descricao.text = skills.descricao;
-        // custo.text = skills.custo.ToString();
+    public void SetBaseUpgrade(PossibleUpgrade upgrade, int index) {
+        this.upgrade = upgrade;
+        this.upgradeIndex = index;
+        nome.text = upgrade.upgrade[index].name;
     }
 
     private void OnDestroy() {
