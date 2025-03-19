@@ -81,8 +81,6 @@ public class TalentManager : MonoBehaviour {
     public void TryToUpgrade(PossibleUpgrade upgrade, int index) {
        if (CanUpgrade(upgrade)) {
             Unit unitAux = playerUnitList.Find(unit => unit.GetComponent<Unit>().GetUnitId() == this.SelectedUnit).GetComponent<Unit>();
-
-            GameController.controller.UpdateUnitRecords(unitAux);
             this.UpdateLevelBar();
             DesbloquearUpgrade(upgrade, index);
         }
@@ -166,7 +164,7 @@ public class TalentManager : MonoBehaviour {
             skillButton.onClick.AddListener(() => { TentarDesbloquearskills(bs); });
         }
 
-        upgrades.Sort((a, b) => b.level.CompareTo(a.level));
+        upgrades.Sort((a, b) => a.level.CompareTo(b.level));
         foreach (PossibleUpgrade possibleUpgrade in upgrades) {
             for (int i = 0; i < possibleUpgrade.upgrade.Length; i++) {
                 Button upgradeButton = Instantiate(upgradeButtonPrefab, upgradesTreeContainer);
@@ -204,13 +202,6 @@ public class TalentManager : MonoBehaviour {
         GameObject playerObj = playerUnitList.Find(p => p.GetComponent<Unit>().GetUnitId() == unitId);
         playerObj.GetComponent<Unit>().GetUnitXpSystem().SetXp(unitRecords.xp);
         playerObj.GetComponent<Unit>().UpdateUnitStats(unitRecords.GetUnitStats());
-        this.OnSelectedUnitChanged(this.SelectedUnit);
-    }
-
-    public void GenerateLocalUnitValues(string unitId, UnitRecords unitRecords) {
-        GameObject playerObj = playerUnitList.Find(p => p.GetComponent<Unit>().GetUnitId() == unitId);
-        playerObj.GetComponent<Unit>().GetUnitXpSystem().SetXp(unitRecords.xp);
-        playerObj.GetComponent<Unit>().UpdateUnitStats(unitRecords.GetUnitBaseStats());
         this.OnSelectedUnitChanged(this.SelectedUnit);
     }
 

@@ -46,9 +46,7 @@ public class GameController : MonoBehaviour, IDataPersistence {
         return playerUnits.ContainsKey(unitId);
     }
     public void AddUnitToRecords(Unit unit) {
-        Debug.Log("add unit - " + unit);
         UnitRecords unitRecordsAux = new UnitRecords(unit.GetUnitXpSystem().getXpAmount(), unit.GetBaseUnitStats());
-        Debug.Log(unitRecordsAux.GetUnitStats());
         playerUnits.Add(unit.GetUnitId(), unitRecordsAux);
     }
 

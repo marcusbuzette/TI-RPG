@@ -55,13 +55,4 @@ public class UnitRecords {
     public SerializableDictionary<int, int> GetLevelUpgrades() { return this.levelUpgrades; }
 
     public UnitStats GetUnitStats() { return unitStats; }
-    public UnitStats GetUnitBaseStats() { 
-        BaseUnitStats aux = unitStats.GetBaseUnitStats(); 
-
-        return  new UnitStats(
-            aux.speed, aux.attack, aux.defence, aux.accuracy,
-            aux.xpSpoil, aux.maxHealthPoints, aux.maxMove, aux.range, aux
-        );
-
-    }
 }
