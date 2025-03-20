@@ -62,10 +62,6 @@ public class LevelGrid : MonoBehaviour {
     private void Start() {
         this.currentBattleZone = 0;
         PathFinding.Instance.Setup(width, height, cellSize, floorAmount, zoneList);
-
-        if (this.gameMode == GameMode.EXPLORE) {
-            this.ExploreMode();
-        }
     }
 
     private GridSystem<GridObject> GetGridSystem(int floor) {
@@ -106,7 +102,7 @@ public class LevelGrid : MonoBehaviour {
     }
 
     public int GetFloor(Vector3 worldPosition) {
-        return floorAmount > 1 ? Mathf.RoundToInt(worldPosition.y / FLOOR_HEIGHT) : 0;
+        return Mathf.RoundToInt(worldPosition.y / FLOOR_HEIGHT);
     }
     public GridPosition GetGridPosition(Vector3 worldPosition) {
         int floor = GetFloor(worldPosition);
