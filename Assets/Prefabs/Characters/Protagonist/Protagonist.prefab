@@ -488,15 +488,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemy: 0
   possibleSkills: []
+  possibleUpgrades:
+  - level: 5
+    upgrade:
+    - {fileID: 11400000, guid: d834c0a093d5840ba9f5c0a06bea1324, type: 2}
+    - {fileID: 11400000, guid: 2a3e438494eee4983b60383b8252ceca, type: 2}
+  - level: 10
+    upgrade:
+    - {fileID: 11400000, guid: 812d9ab31a0824e47a263b2d3eae97ad, type: 2}
+    - {fileID: 11400000, guid: ce799d69748104503b655ccdebd0bd51, type: 2}
+  - level: 15
+    upgrade:
+    - {fileID: 11400000, guid: 93d852333b0a1480ca1df9a31ed1180a, type: 2}
+    - {fileID: 11400000, guid: f3e37d9a6755a4f609506d11408e0736, type: 2}
+  - level: 20
+    upgrade:
+    - {fileID: 11400000, guid: 812d9ab31a0824e47a263b2d3eae97ad, type: 2}
+    - {fileID: 11400000, guid: f3e37d9a6755a4f609506d11408e0736, type: 2}
   xpSystem: {fileID: 4904485793414091471}
-  unitId: 
-  unitName: "Voc\xEA"
-  unitStats:
-    speed: 0
-    attack: 0
-    defence: 0
-    accuracy: 0
+  unitId: hero
+  unitName: Heroi
+  baseUnitStats:
+    speed: 2
+    attack: 5
+    defence: 5
+    accuracy: 10
+    maxHealthPoints: 120
+    maxMove: 4
     xpSpoil: 0
+    range: 1
   actionsArray: []
   hasMoved: 0
   hasPerformedAction: 0
@@ -529,6 +549,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  animationSpeed: 1
   moveSpeed: 4
   rotateSpeed: 4
   stopDistance: 0.1
@@ -561,8 +582,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  animationSpeed: 1
   maxShootDistance: 1
   hitDamage: 50
+  rotateSpeed: 10
+  Attack: 1
 --- !u!114 &898693236174174977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -576,6 +600,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  animationSpeed: 1
 --- !u!114 &3561097245997610526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -589,6 +614,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  animationSpeed: 1
   potionHealAmount: 20
 --- !u!95 &3177319531651322102
 Animator:

@@ -323,15 +323,19 @@ MonoBehaviour:
   possibleSkills:
   - {fileID: 5647303888008814838, guid: 2c7835928b6cd8045917bffe59d5e936, type: 3}
   - {fileID: 268774645106886273, guid: 3ea7eabd8948ec84ca32a264d0031500, type: 3}
+  possibleUpgrades: []
   xpSystem: {fileID: 1913271140186555034}
   unitId: monkey
   unitName: Macapoera
-  unitStats:
-    speed: 8
-    attack: 4
-    defence: 6
-    accuracy: 0
+  baseUnitStats:
+    speed: 6
+    attack: 3
+    defence: 2
+    accuracy: 40
+    maxHealthPoints: 75
+    maxMove: 4
     xpSpoil: 0
+    range: 3
   actionsArray:
   - {fileID: 9186709859666415746}
   - {fileID: -1861747851849192615}
@@ -353,6 +357,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a98aa284f9b23428a071063490ad6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  animationSpeed: 1
   moveSpeed: 8
   rotateSpeed: 4
   stopDistance: 0.1
@@ -392,6 +398,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthPoints: 100
   maxHealthPoints: 100
+  animator: {fileID: 0}
 --- !u!114 &1913271140186555034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,7 +411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0b3338ac2914f4ba75c869397aca3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xp: 0
+  xp: 12
 --- !u!114 &-1861747851849192615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -417,9 +424,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8a40b60fda1ef4f8c9d0f466e29e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  animationSpeed: 1
   maxShootDistance: 1
-  MAX_SPIN: 360
   hitDamage: 40
+  rotateSpeed: 10
+  Attack: 1
 --- !u!114 &6547054507977785566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -432,6 +442,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2e767ee6586d8e4884b70a36b55da67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  animationSpeed: 1
   potionHealAmount: 20
 --- !u!1 &5551651001676021999
 GameObject:

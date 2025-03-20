@@ -9,6 +9,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: unitId
+      value: guard
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: unitName
+      value: Guarda
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: xpSystem
+      value: 
+      objectReference: {fileID: 7609521906278373366}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: unitStats.speed
       value: 2
       objectReference: {fileID: 0}
@@ -19,6 +31,54 @@ PrefabInstance:
     - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: unitStats.defence
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: baseUnitStats.range
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: baseUnitStats.speed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: baseUnitStats.attack
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: baseUnitStats.defence
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: baseUnitStats.maxMove
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: baseUnitStats.accuracy
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.data[0].level
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.data[0].upgrade.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.data[1].upgrade.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.data[2].upgrade.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleUpgrades.Array.data[3].upgrade.Array.size
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4855899929353745125, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: m_Name
@@ -106,6 +166,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8a40b60fda1ef4f8c9d0f466e29e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  animationSpeed: 1
   maxShootDistance: 1
-  MAX_SPIN: 360
   hitDamage: 100
+  rotateSpeed: 10
+  Attack: 1
+--- !u!114 &7609521906278373366 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2170219948549848153, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+  m_PrefabInstance: {fileID: 8612105488789744559}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3812234490696718666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d0b3338ac2914f4ba75c869397aca3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
