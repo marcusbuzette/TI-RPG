@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2595509727029057615
+--- !u!1 &797911341500782089
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3358098015004008653}
-  - component: {fileID: 268774645106886273}
+  - component: {fileID: 2206018362369889922}
+  - component: {fileID: 6029550433590033149}
   m_Layer: 0
-  m_Name: Intimidate
+  m_Name: Stun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3358098015004008653
+--- !u!4 &2206018362369889922
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2595509727029057615}
+  m_GameObject: {fileID: 797911341500782089}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,28 +32,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &268774645106886273
+--- !u!114 &6029550433590033149
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2595509727029057615}
+  m_GameObject: {fileID: 797911341500782089}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee4cfdff77dede64a918ecb8fa1b4fb5, type: 3}
+  m_Script: {fileID: 11500000, guid: a6c9b5730dc854e3585f0f61cfa9ead6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   animationSpeed: 1
-  nome: Intimidar
-  descricao: Intimida os inimigos
+  nome: Atordoar
+  descricao: "Quando atingido por esse golpe, o alvo perde todas a a\xE7\xF5es no
+    proximo turno"
   custo: 20
   preRequisitos:
-  - {fileID: -5082339525479280377, guid: 2ef816fd4c3644127bdcf3005f3a4f25, type: 3}
-  - {fileID: -1049602389130312739, guid: c9e233f267fdd4a0abe93a6bd02b3a5a, type: 3}
+  - {fileID: -4179945356743944876, guid: e5baae5809e144d23b75698cf492a4f7, type: 3}
+  - {fileID: 6584539317323027048, guid: b732d4b268287492c996e3cfdf4c881b, type: 3}
   onCoolDown: 0
   coolDown: 0
   currentCoolDown: 0
-  targetsList: []
-  maxIntimidateDistance: 1
+  MAX_SPIN: 360

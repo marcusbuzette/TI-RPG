@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3358098015004008653}
-  - component: {fileID: 268774645106886273}
+  - component: {fileID: 2046306609090520112}
   m_Layer: 0
-  m_Name: Intimidate
+  m_Name: Inspire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &268774645106886273
+--- !u!114 &2046306609090520112
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,13 +41,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2595509727029057615}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee4cfdff77dede64a918ecb8fa1b4fb5, type: 3}
+  m_Script: {fileID: 11500000, guid: 74574b38a45b34d149883ae569f858ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   animationSpeed: 1
-  nome: Intimidar
-  descricao: Intimida os inimigos
+  nome: Inspirar
+  descricao: Aumenta ataque dos aliados ao redor
   custo: 20
   preRequisitos:
   - {fileID: -5082339525479280377, guid: 2ef816fd4c3644127bdcf3005f3a4f25, type: 3}
@@ -55,5 +55,4 @@ MonoBehaviour:
   onCoolDown: 0
   coolDown: 0
   currentCoolDown: 0
-  targetsList: []
-  maxIntimidateDistance: 1
+  MAX_SPIN: 360
