@@ -70,7 +70,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: possibleSkills.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: unitStats.maxHealthPoints
@@ -83,15 +83,19 @@ PrefabInstance:
     - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: possibleSkills.Array.data[0]
       value: 
-      objectReference: {fileID: 5647303888008814838, guid: 2c7835928b6cd8045917bffe59d5e936, type: 3}
+      objectReference: {fileID: -1958982141253679294, guid: 226ef7562a74f45dc92234806d8b64b2, type: 3}
     - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: possibleSkills.Array.data[1]
       value: 
-      objectReference: {fileID: 268774645106886273, guid: 3ea7eabd8948ec84ca32a264d0031500, type: 3}
+      objectReference: {fileID: -3443926730875403986, guid: 975259ed73f6b40d5b4f6d3628155e02, type: 3}
     - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: possibleSkills.Array.data[2]
       value: 
-      objectReference: {fileID: 4731174655554223439, guid: 150fd9ebac7aa314d81349c4d46e8530, type: 3}
+      objectReference: {fileID: 7003126972002679649, guid: cf31458f552394964a8a4be2631cb4b1, type: 3}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: possibleSkills.Array.data[3]
+      value: 
+      objectReference: {fileID: 1609624166160888595, guid: e0c9a3f020f0b43e195106b3b3816a7b, type: 3}
     - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: baseUnitStats.maxHealthPoints
       value: 100
@@ -155,7 +159,7 @@ PrefabInstance:
     - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: possibleUpgrades.Array.data[2].upgrade.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 2a3e438494eee4983b60383b8252ceca, type: 2}
+      objectReference: {fileID: 11400000, guid: b26e7cd2680f646bbacfc791b10fb323, type: 2}
     - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: possibleUpgrades.Array.data[3].upgrade.Array.data[0]
       value: 
@@ -230,7 +234,10 @@ PrefabInstance:
       addedObject: {fileID: 4801231991619654280}
     - targetCorrespondingSourceObject: {fileID: 4855899929353745125, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4236028046380058736}
+      addedObject: {fileID: 2725831191132171572}
+    - targetCorrespondingSourceObject: {fileID: 4855899929353745125, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -1535784102791429935}
   m_SourcePrefab: {fileID: 100100000, guid: 35802ef038968144e82bb11a407e1793, type: 3}
 --- !u!4 &1693617280984688622 stripped
 Transform:
@@ -265,7 +272,7 @@ MonoBehaviour:
   cooloffTimer: 0.1
   rotateSpeed: 10
   shootDamage: 60
---- !u!114 &4236028046380058736
+--- !u!114 &2725831191132171572
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -274,12 +281,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 3343077423336064248}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2e767ee6586d8e4884b70a36b55da67, type: 3}
+  m_Script: {fileID: 11500000, guid: 272359c525b7a47b382f31920349d06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   animationSpeed: 1
-  potionHealAmount: 20
+  maxShootDistance: 1
+  hitDamage: 50
+  rotateSpeed: 10
+  Attack: 1
+--- !u!114 &-1535784102791429935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3343077423336064248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d080ed6cd128408b82a8d741eeacab9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  animationSpeed: 1
 --- !u!114 &8293743739561429572 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2170219948549848153, guid: 35802ef038968144e82bb11a407e1793, type: 3}

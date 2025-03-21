@@ -281,7 +281,8 @@ GameObject:
   - component: {fileID: 5420536572379425080}
   - component: {fileID: 1913271140186555034}
   - component: {fileID: -1861747851849192615}
-  - component: {fileID: 6547054507977785566}
+  - component: {fileID: 9134479801138775507}
+  - component: {fileID: 1702000940489070525}
   m_Layer: 7
   m_Name: Monkey
   m_TagString: Player
@@ -321,21 +322,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemy: 0
   possibleSkills:
-  - {fileID: 5647303888008814838, guid: 2c7835928b6cd8045917bffe59d5e936, type: 3}
-  - {fileID: 268774645106886273, guid: 3ea7eabd8948ec84ca32a264d0031500, type: 3}
+  - {fileID: -4179945356743944876, guid: e5baae5809e144d23b75698cf492a4f7, type: 3}
+  - {fileID: 6584539317323027048, guid: b732d4b268287492c996e3cfdf4c881b, type: 3}
+  - {fileID: 6029550433590033149, guid: 9ddb940143034436cb2080c1047fec24, type: 3}
+  - {fileID: 4731174655554223439, guid: 150fd9ebac7aa314d81349c4d46e8530, type: 3}
+  possibleUpgrades:
+  - level: 5
+    upgrade:
+    - {fileID: 11400000, guid: 812d9ab31a0824e47a263b2d3eae97ad, type: 2}
+    - {fileID: 11400000, guid: b26e7cd2680f646bbacfc791b10fb323, type: 2}
+  - level: 0
+    upgrade:
+    - {fileID: 11400000, guid: d834c0a093d5840ba9f5c0a06bea1324, type: 2}
+    - {fileID: 11400000, guid: d834c0a093d5840ba9f5c0a06bea1324, type: 2}
+  - level: 0
+    upgrade:
+    - {fileID: 11400000, guid: f3e37d9a6755a4f609506d11408e0736, type: 2}
+    - {fileID: 11400000, guid: 93d852333b0a1480ca1df9a31ed1180a, type: 2}
+  - level: 0
+    upgrade:
+    - {fileID: 11400000, guid: 2a3e438494eee4983b60383b8252ceca, type: 2}
+    - {fileID: 11400000, guid: d834c0a093d5840ba9f5c0a06bea1324, type: 2}
   xpSystem: {fileID: 1913271140186555034}
   unitId: monkey
   unitName: Macapoera
-  unitStats:
-    speed: 8
-    attack: 4
-    defence: 6
-    accuracy: 0
+  baseUnitStats:
+    speed: 6
+    attack: 3
+    defence: 2
+    accuracy: 40
+    maxHealthPoints: 75
+    maxMove: 4
     xpSpoil: 0
+    range: 3
   actionsArray:
   - {fileID: 9186709859666415746}
   - {fileID: -1861747851849192615}
-  - {fileID: 6547054507977785566}
+  - {fileID: 0}
   hasMoved: 0
   hasPerformedAction: 0
   hasPerformedSkill: 0
@@ -353,6 +376,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a98aa284f9b23428a071063490ad6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  animationSpeed: 1
   moveSpeed: 8
   rotateSpeed: 4
   stopDistance: 0.1
@@ -392,6 +417,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthPoints: 100
   maxHealthPoints: 100
+  animator: {fileID: 0}
 --- !u!114 &1913271140186555034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,7 +430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0b3338ac2914f4ba75c869397aca3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xp: 0
+  xp: 12
 --- !u!114 &-1861747851849192615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -417,10 +443,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8a40b60fda1ef4f8c9d0f466e29e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  animationSpeed: 1
   maxShootDistance: 1
-  MAX_SPIN: 360
   hitDamage: 40
---- !u!114 &6547054507977785566
+  rotateSpeed: 10
+  Attack: 1
+--- !u!114 &9134479801138775507
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -429,10 +458,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 5183917217429670950}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2e767ee6586d8e4884b70a36b55da67, type: 3}
+  m_Script: {fileID: 11500000, guid: 2b257115c592644b78ac47c320d9a80d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  potionHealAmount: 20
+  animator: {fileID: 0}
+  animationSpeed: 1
+  maxShootDistance: 1
+  hitDamage: 50
+  rotateSpeed: 10
+  Attack: 1
+--- !u!114 &1702000940489070525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5183917217429670950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d080ed6cd128408b82a8d741eeacab9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  animationSpeed: 1
 --- !u!1 &5551651001676021999
 GameObject:
   m_ObjectHideFlags: 0
