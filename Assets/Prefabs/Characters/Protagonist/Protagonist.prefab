@@ -447,8 +447,8 @@ GameObject:
   - component: {fileID: 8345496573422874549}
   - component: {fileID: 1220537054330633468}
   - component: {fileID: 898693236174174977}
-  - component: {fileID: 3561097245997610526}
   - component: {fileID: 3177319531651322102}
+  - component: {fileID: 6153364471762481362}
   m_Layer: 0
   m_Name: Protagonist
   m_TagString: Untagged
@@ -487,16 +487,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isEnemy: 0
-  possibleSkills: []
+  possibleSkills:
+  - {fileID: -5082339525479280377, guid: 2ef816fd4c3644127bdcf3005f3a4f25, type: 3}
+  - {fileID: -1049602389130312739, guid: c9e233f267fdd4a0abe93a6bd02b3a5a, type: 3}
+  - {fileID: 2046306609090520112, guid: a131eb5504af64b24ae6a125132f17c5, type: 3}
+  - {fileID: 268774645106886273, guid: 3ea7eabd8948ec84ca32a264d0031500, type: 3}
+  possibleUpgrades:
+  - level: 5
+    upgrade:
+    - {fileID: 11400000, guid: d834c0a093d5840ba9f5c0a06bea1324, type: 2}
+    - {fileID: 11400000, guid: 2a3e438494eee4983b60383b8252ceca, type: 2}
+  - level: 10
+    upgrade:
+    - {fileID: 11400000, guid: 812d9ab31a0824e47a263b2d3eae97ad, type: 2}
+    - {fileID: 11400000, guid: b26e7cd2680f646bbacfc791b10fb323, type: 2}
+  - level: 15
+    upgrade:
+    - {fileID: 11400000, guid: 93d852333b0a1480ca1df9a31ed1180a, type: 2}
+    - {fileID: 11400000, guid: f3e37d9a6755a4f609506d11408e0736, type: 2}
+  - level: 20
+    upgrade:
+    - {fileID: 11400000, guid: 812d9ab31a0824e47a263b2d3eae97ad, type: 2}
+    - {fileID: 11400000, guid: f3e37d9a6755a4f609506d11408e0736, type: 2}
   xpSystem: {fileID: 4904485793414091471}
-  unitId: 
-  unitName: "Voc\xEA"
-  unitStats:
-    speed: 0
-    attack: 0
-    defence: 0
-    accuracy: 0
+  unitId: hero
+  unitName: Heroi
+  baseUnitStats:
+    speed: 2
+    attack: 5
+    defence: 5
+    accuracy: 10
+    maxHealthPoints: 120
+    maxMove: 4
     xpSpoil: 0
+    range: 1
   actionsArray: []
   hasMoved: 0
   hasPerformedAction: 0
@@ -529,6 +553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  animationSpeed: 1
   moveSpeed: 4
   rotateSpeed: 4
   stopDistance: 0.1
@@ -561,8 +586,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  animationSpeed: 1
   maxShootDistance: 1
   hitDamage: 50
+  rotateSpeed: 10
+  Attack: 1
 --- !u!114 &898693236174174977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -576,20 +604,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
---- !u!114 &3561097245997610526
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7923891495559024178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2e767ee6586d8e4884b70a36b55da67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  potionHealAmount: 20
+  animationSpeed: 1
 --- !u!95 &3177319531651322102
 Animator:
   serializedVersion: 5
@@ -611,6 +626,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6153364471762481362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7923891495559024178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfbc725d5c76b47b28e3ccd3e66dc849, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  animationSpeed: 1
+  MAX_SPIN: 360
 --- !u!1001 &8948093288391262455
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -27,4 +27,8 @@ public abstract class BaseSkills : BaseAction
         currentCoolDown = coolDown;
         onCoolDown = true;
     }
+
+    public int GetCoolDown() {
+        return coolDown;
+    }
 }

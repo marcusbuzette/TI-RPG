@@ -162,6 +162,4 @@ public class LevelGrid : MonoBehaviour {
             gridSystem.RemoveZone(zone);
         }
     }
-
-
 }

@@ -50,4 +50,9 @@ public class HealthSystem : MonoBehaviour {
         return this.healthPoints;
     }
 
+    public void SetMaxHP(int hp) {
+        this.maxHealthPoints = hp;
+        this.healthPoints = this.maxHealthPoints;
+    }
+
 }

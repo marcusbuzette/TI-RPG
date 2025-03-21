@@ -25,6 +25,10 @@ public class MoveAction : BaseAction {
         this.actionType = ActionType.MOVE;
     }
 
+    private void Start() {
+        this.maxMoveDistance = GetComponent<Unit>().GetUnitStats().GetMaxMove();
+    }
+
     public override void Action() {
         Vector3 targetPosition = positionList[currentPositionIndex];
 
@@ -121,7 +125,25 @@ public class MoveAction : BaseAction {
         };
     }
 
+    public void SetMaxMoveDistance(int maxDistance) {this.maxMoveDistance = maxDistance;}
+
     public override bool GetOnCooldown() { return false; }
 
     public override void IsAnotherRound() { }
+
+    public float GetMovementSpeed() {
+        return moveSpeed;
+    }
+
+    public int GetMaxDistanceMovement() {
+        return maxMoveDistance;
+    }
+
+    public void SetMovementSpeed(float moveSpeed) {
+        this.moveSpeed = moveSpeed;
+    }
+
+    public void SetMaxDistanceMovement(int maxDistanceMovement) {
+        this.maxMoveDistance = maxDistanceMovement;
+    }
 }

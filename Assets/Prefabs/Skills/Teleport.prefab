@@ -44,14 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0af41d7b3dec0b148a761e909092a2b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nome: Teleporte
+  animator: {fileID: 0}
+  animationSpeed: 1
+  nome: Saida de emergencia
   descricao: Teleporta para um lugar escolhido
-  custo: 2
+  custo: 20
   preRequisitos:
-  - {fileID: 5647303888008814838, guid: 2c7835928b6cd8045917bffe59d5e936, type: 3}
-  - {fileID: 268774645106886273, guid: 3ea7eabd8948ec84ca32a264d0031500, type: 3}
-  desbloqueado: 0
-  unitPrefab: {fileID: 5183917217429670950, guid: 82047d41f197848bb9bc6b85604fbe01, type: 3}
+  - {fileID: -4179945356743944876, guid: e5baae5809e144d23b75698cf492a4f7, type: 3}
+  - {fileID: 6584539317323027048, guid: b732d4b268287492c996e3cfdf4c881b, type: 3}
   onCoolDown: 0
   coolDown: 0
   currentCoolDown: 0

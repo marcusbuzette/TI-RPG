@@ -22,7 +22,7 @@ public class IntimidateSkill : BaseSkills {
     }
 
     public override List<GridPosition> GetValidGridPositionList() {
-        if(targetsList != null) {
+        if (targetsList != null) {
             targetsList.Clear();
         }
         GridPosition unitGridPosition = unit.GetGridPosition();

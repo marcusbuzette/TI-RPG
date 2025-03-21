@@ -48,6 +48,14 @@ public class GridSystem<TGridObject> {
     public GridPosition GetGridPosition(Vector3 worldPosition) {
         int auxX = Mathf.RoundToInt(worldPosition.x / cellSize);
         int auxZ = Mathf.RoundToInt(worldPosition.z / cellSize);
+
+        /*if (auxX < 0) {
+            auxX = 0;
+        }
+        if (auxZ < 0){
+            auxZ = 0;
+        }*/
+        
         return gridPositionList[auxX, auxZ];
     }
 
