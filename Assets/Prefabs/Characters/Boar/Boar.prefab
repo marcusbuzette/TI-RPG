@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 4403019826488641271}
   - component: {fileID: 984923278628091388}
   - component: {fileID: 7808786601691350061}
-  - component: {fileID: 657710944179920874}
   m_Layer: 7
   m_Name: Boar
   m_TagString: Player
@@ -57,15 +56,19 @@ MonoBehaviour:
   possibleSkills:
   - {fileID: 5647303888008814838, guid: 2c7835928b6cd8045917bffe59d5e936, type: 3}
   - {fileID: 268774645106886273, guid: 3ea7eabd8948ec84ca32a264d0031500, type: 3}
+  possibleUpgrades: []
   xpSystem: {fileID: 0}
-  unitId: 
+  unitId: Javali
   unitName: Boar
-  unitStats:
-    speed: 8
-    attack: 4
-    defence: 6
-    accuracy: 0
-    xpSpoil: 0
+  baseUnitStats:
+    speed: 4
+    attack: 10
+    defence: 10
+    accuracy: 10
+    maxHealthPoints: 150
+    maxMove: 5
+    xpSpoil: 1
+    range: 0
   actionsArray:
   - {fileID: 6321738193073905294}
   - {fileID: 984923278628091388}
@@ -168,29 +171,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &657710944179920874
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4096442209837572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4c588a935c0a4f56b855794c3e7145d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  animationSpeed: 1
-  obstaclesLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  maxShootDistance: 1
-  aimingTimer: 0.1
-  shootingTimer: 0.3
-  cooloffTimer: 0.1
-  rotateSpeed: 10
-  shootDamage: 100
 --- !u!1 &2514534788501685165
 GameObject:
   m_ObjectHideFlags: 0

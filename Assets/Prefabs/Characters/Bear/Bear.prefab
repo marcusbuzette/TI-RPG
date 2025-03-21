@@ -186,7 +186,6 @@ GameObject:
   - component: {fileID: 2097310020669889435}
   - component: {fileID: 1588787654514465551}
   - component: {fileID: 9088706029583021094}
-  - component: {fileID: 3120446797937524625}
   m_Layer: 7
   m_Name: Bear
   m_TagString: Untagged
@@ -226,15 +225,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemy: 1
   possibleSkills: []
+  possibleUpgrades: []
   xpSystem: {fileID: 0}
-  unitId: 
+  unitId: bear
   unitName: Urso
-  unitStats:
-    speed: 2
-    attack: 0
-    defence: 0
-    accuracy: 0
-    xpSpoil: 2
+  baseUnitStats:
+    speed: 4
+    attack: 50
+    defence: 50
+    accuracy: 50
+    maxHealthPoints: 200
+    maxMove: 3
+    xpSpoil: 3
+    range: 0
   actionsArray: []
   hasMoved: 0
   hasPerformedAction: 0
@@ -254,6 +257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 2175122629404696588}
+  animationSpeed: 1
   moveSpeed: 3
   rotateSpeed: 4
   stopDistance: 0.1
@@ -307,30 +311,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  animationSpeed: 1
   maxShootDistance: 1
   hitDamage: 50
---- !u!114 &3120446797937524625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3791870941818718484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4c588a935c0a4f56b855794c3e7145d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  obstaclesLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  maxShootDistance: 1
-  aimingTimer: 0.1
-  shootingTimer: 0.3
-  cooloffTimer: 0.1
   rotateSpeed: 10
-  shootDamage: 25
+  Attack: 1
 --- !u!1 &5267392209920688284
 GameObject:
   m_ObjectHideFlags: 0

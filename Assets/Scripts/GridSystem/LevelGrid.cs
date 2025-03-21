@@ -65,7 +65,8 @@ public class LevelGrid : MonoBehaviour {
     }
 
     private GridSystem<GridObject> GetGridSystem(int floor) {
-        return gridSystemList[floor];
+        
+        return floor < gridSystemList.Count ? gridSystemList[floor] : gridSystemList[0];
     }
 
     private void Update() {

@@ -25,3 +25,9 @@ MonoBehaviour:
   - x: 7
     z: 7
     floor: 0
+  - x: 6
+    z: 7
+    floor: 0
+  - x: 8
+    z: 7
+    floor: 0
