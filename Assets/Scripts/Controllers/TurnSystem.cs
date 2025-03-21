@@ -161,6 +161,10 @@ public class TurnSystem : MonoBehaviour {
         Time.timeScale = turnSpeeds[turnSpeedIndex];
     }
 
+
+
+
+//test
     public Unit GetPlayerUnitToExplore() {
         foreach (Unit unit in unitiesOrderList) {
             if (!unit.IsEnemy()) {
