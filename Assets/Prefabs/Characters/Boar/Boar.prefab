@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4403019826488641271}
   - component: {fileID: 984923278628091388}
   - component: {fileID: 7808786601691350061}
+  - component: {fileID: 3533902492998687438}
   m_Layer: 7
   m_Name: Boar
   m_TagString: Player
@@ -72,7 +73,7 @@ MonoBehaviour:
   actionsArray:
   - {fileID: 6321738193073905294}
   - {fileID: 984923278628091388}
-  - {fileID: 0}
+  - {fileID: 3533902492998687438}
   hasMoved: 0
   hasPerformedAction: 0
   hasPerformedSkill: 0
@@ -171,6 +172,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3533902492998687438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4096442209837572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca8109a6c61647b98b7a6017a3ded5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  animationSpeed: 1
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  maxShootDistance: 1
 --- !u!1 &2514534788501685165
 GameObject:
   m_ObjectHideFlags: 0
