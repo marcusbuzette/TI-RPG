@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571337, b: 0.3069219, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2940,6 +2940,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1309272587}
     m_Modifications:
+    - target: {fileID: 2672855175812891822, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
+      propertyPath: baseUnitStats.maxMove
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2672855175812891822, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
+      propertyPath: baseUnitStats.maxHealthPoints
+      value: 150
+      objectReference: {fileID: 0}
     - target: {fileID: 4908714323277675324, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
       propertyPath: healthPoints
       value: 1000000
@@ -3312,6 +3320,7 @@ GameObject:
   - component: {fileID: 1868139150}
   - component: {fileID: 1868139155}
   - component: {fileID: 1868139156}
+  - component: {fileID: 1868139157}
   m_Layer: 0
   m_Name: UnitTest
   m_TagString: Untagged
@@ -3351,15 +3360,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemy: 0
   possibleSkills: []
+  possibleUpgrades: []
   xpSystem: {fileID: 0}
   unitId: 
   unitName: 
-  unitStats:
-    speed: 5
-    attack: 2
-    defence: 2
-    accuracy: 2
-    xpSpoil: 2
+  baseUnitStats:
+    speed: 0
+    attack: 0
+    defence: 0
+    accuracy: 0
+    maxHealthPoints: 150
+    maxMove: 4
+    xpSpoil: 0
+    range: 0
   actionsArray: []
   hasMoved: 0
   hasPerformedAction: 0
@@ -3487,6 +3500,41 @@ MonoBehaviour:
   shootingTimer: 0.3
   cooloffTimer: 0.1
   rotateSpeed: 10
+--- !u!114 &1868139157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868139143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 628ed14bc140cbe48923828c53a1bbcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  animationSpeed: 1
+  nome: 
+  descricao: 
+  custo: 0
+  preRequisitos: []
+  onCoolDown: 0
+  coolDown: 0
+  currentCoolDown: 0
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  fireAttackObject: {fileID: 0}
+  maxShootDistance: 5
+  aimingTimer: 0.1
+  shootingTimer: 0.3
+  cooloffTimer: 0.1
+  rotateSpeed: 10
+  shootDamage: 100
+  areaDamage: 3
+  damage: 3
+  selectedGrid: {x: 0, y: 0, z: 0}
+  isAiming: 0
 --- !u!1 &1870922294
 GameObject:
   m_ObjectHideFlags: 0

@@ -81,6 +81,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4633854017524985698, guid: 89f3889fb3ea74709b6afc04cf5f1c0e, type: 3}
     - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: baseUnitStats.maxHealthPoints
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: possibleUpgrades.Array.data[0].level
       value: 5
       objectReference: {fileID: 0}
