@@ -109,7 +109,7 @@ public class UnitActionSystem : MonoBehaviour {
 
     public void SetSelectedAction(BaseAction action) {
         switch (selectedAction) {
-            case FireAttack fireAttack:
+            case HealArea fireAttack:
                 fireAttack.isAiming = false;
                 break;
         }

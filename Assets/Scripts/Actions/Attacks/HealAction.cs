@@ -2,73 +2,59 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
 
 public class HealAction : BaseAction {
-    [SerializeField] private int maxShootDistance = 1;
-    [SerializeField] private int hitDamage = 50;
-    [SerializeField] private float rotateSpeed = 10f;
-    public int Attack = 1;
-
-    private Unit targetUnit;
-
-
-    public override string GetActionName() {
-        return "Curar";
-    }
+    [SerializeField] private List<Unit> targetsList = new List<Unit>();
+    [SerializeField] private int maxHealDistance = 1;
+    [SerializeField] private int healPoints = 10;
 
     public override void Action() {
-        if (Attack == 1) {
-            targetUnit?.Damage(hitDamage);
-            animator?.SetTrigger("Attack");
-            AudioManager.instance?.PlaySFX("Melee");
-            Attack = 0;
+        foreach (Unit target in targetsList) {
+            target.GetHealthSystem().Heal(healPoints);
         }
-        StartCoroutine(DelayActionFinish());
 
+        ActionFinish();
     }
 
-    private IEnumerator DelayActionFinish() {
-        yield return new WaitForSeconds(0.5f); // Ajuste o tempo conforme necessário
-        ActionFinish();
-        Attack = 1;
-
+    public override string GetActionName() {
+        return "Cura em area";
     }
 
     public override List<GridPosition> GetValidGridPositionList() {
-        List<GridPosition> validGridPositionList = new List<GridPosition>();
-
+        if (targetsList != null) {
+            targetsList.Clear();
+        }
         GridPosition unitGridPosition = unit.GetGridPosition();
-
-        for (int x = -maxShootDistance; x <= maxShootDistance; x++) {
-            for (int z = -maxShootDistance; z <= maxShootDistance; z++) {
-                GridPosition offsetGridPosition = new GridPosition(x, z, 0);
-                GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
+        int i = 0;
+        for (int x = -maxHealDistance; x <= maxHealDistance; x++) {
+            for (int z = -maxHealDistance; z <= maxHealDistance; z++) {
+                GridPosition testGridPosition = unitGridPosition + new GridPosition(x, z, 0);
 
                 if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) {
                     continue;
                 }
 
-
-                if (!LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition)) {
+                int testDistance = Mathf.Abs(x) + Mathf.Abs(z);
+                if (testDistance > maxHealDistance) {
                     continue;
                 }
 
-                Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition);
-
-                if (targetUnit.IsEnemy() == unit.IsEnemy()) {
-                    continue;
+                if (LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition) != null) {
+                    if (!LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition).IsEnemy()) {
+                        targetsList.Add(LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition));
+                        i++;
+                    }
                 }
-
-                validGridPositionList.Add(testGridPosition);
             }
         }
 
-        return validGridPositionList;
+        return new List<GridPosition> {
+            unitGridPosition
+        };
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
-        targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
-
         ActionStart(onActionComplete);
     }
 
@@ -79,18 +65,15 @@ public class HealAction : BaseAction {
         };
     }
 
-    public Unit GetTargetUnit() {
-        return targetUnit;
+    public int GetMaxHealDistance() { return maxHealDistance; }
+
+    public List<Unit> GetTargetList() { return targetsList; }
+
+    public override bool GetOnCooldown() {
+        throw new NotImplementedException();
     }
 
-    public override bool GetOnCooldown() { return false; }
-
-    public override void IsAnotherRound() { }
-
-    public int GetDamage() {
-        int damage = hitDamage;
-        AudioManager.instance?.PlaySFX("DamageTaken");
-        return damage;
-
+    public override void IsAnotherRound() {
+        throw new NotImplementedException();
     }
 }

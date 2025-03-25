@@ -256,4 +256,8 @@ public class Unit : MonoBehaviour {
     public void UpdateGridPositionZone(int zone) {
         this.gridPosition.zone = zone;
     }
+
+    public HealthSystem GetHealthSystem() {
+        return healthSystem;
+    }
 }
