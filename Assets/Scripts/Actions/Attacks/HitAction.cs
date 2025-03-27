@@ -24,14 +24,20 @@ public class HitAction : BaseAction {
 
     public override void Action() {
         if (Attack == 1) {
-            targetUnit?.Damage(hitDamage);
             animator?.SetTrigger("Attack");
             AudioManager.instance?.PlaySFX("Melee");
             Attack = 0;
         }
         StartCoroutine(DelayActionFinish());
 
+
+
     }
+
+     public void Damaged()
+        {
+            targetUnit?.Damage(hitDamage);
+        }
 
     private IEnumerator DelayActionFinish() {
         yield return new WaitForSeconds(0.5f); // Ajuste o tempo conforme necessário
