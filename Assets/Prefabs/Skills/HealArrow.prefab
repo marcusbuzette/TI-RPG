@@ -46,8 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   animationSpeed: 1
-  nome: 
-  descricao: 
+  nome: Flecha de cura
+  descricao: Cria uma zona de cura ao redor do local atingido
   custo: 20
   preRequisitos:
   - {fileID: -3443926730875403986, guid: 975259ed73f6b40d5b4f6d3628155e02, type: 3}
@@ -55,4 +55,16 @@ MonoBehaviour:
   onCoolDown: 0
   coolDown: 0
   currentCoolDown: 0
-  MAX_SPIN: 360
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  healAreaObject: {fileID: 0}
+  maxShootDistance: 1
+  aimingTimer: 0.1
+  shootingTimer: 0.3
+  cooloffTimer: 0.1
+  rotateSpeed: 10
+  areaHeal: 3
+  healPoints: 3
+  selectedGrid: {x: 0, y: 0, z: 0}
+  isAiming: 0

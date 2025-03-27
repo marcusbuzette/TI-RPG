@@ -16,6 +16,10 @@ public class HealthSystem : MonoBehaviour {
         animator = GetComponentInChildren<Animator>();
     }
 
+    private void Start() {
+        OnDamage?.Invoke(this, EventArgs.Empty);
+    }
+
     public void Damage(int damage) {
 
         healthPoints -= damage;
@@ -36,7 +40,6 @@ public class HealthSystem : MonoBehaviour {
     }
 
     public void Heal(int amount) {
-        amount = 20;
         healthPoints += amount;
         if (healthPoints > maxHealthPoints) healthPoints = maxHealthPoints;
         OnDamage?.Invoke(this, EventArgs.Empty);
