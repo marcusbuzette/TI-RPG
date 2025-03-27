@@ -218,7 +218,7 @@ public class Unit : MonoBehaviour {
 
     public string GetUnitId() { return this.unitId; }
     public XpSystem GetUnitXpSystem() { return this.xpSystem; }
-    public UnitStats GetUnitStats() { return this.unitStats; }
+    public UnitStats GetUnitStats() { return this.unitStats != null ? this.unitStats : this.baseUnitStats; }
     public UnitStats GetBaseUnitStats() { return this.baseUnitStats; }
     public void UpdateUnitStats(UnitStats unitStats) { this.unitStats = unitStats; }
 

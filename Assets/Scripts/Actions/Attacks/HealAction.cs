@@ -69,11 +69,7 @@ public class HealAction : BaseAction {
 
     public List<Unit> GetTargetList() { return targetsList; }
 
-    public override bool GetOnCooldown() {
-        throw new NotImplementedException();
-    }
+    public override bool GetOnCooldown() { return false;}
 
-    public override void IsAnotherRound() {
-        throw new NotImplementedException();
-    }
+    public override void IsAnotherRound() {}
 }
