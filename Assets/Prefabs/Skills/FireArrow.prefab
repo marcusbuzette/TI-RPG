@@ -41,13 +41,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 797911341500782089}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 628ed14bc140cbe48923828c53a1bbcf, type: 3}
+  m_Script: {fileID: 11500000, guid: b26dcc9098726be4593e0d47c75aa31b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   animationSpeed: 1
-  nome: Flecha Incendiaria
-  descricao: Cria um campo de fogo ao redor do local atingido
+  nome: Flecha de Fogo
+  descricao: Cira um incendio em uma area
   custo: 10
   preRequisitos: []
   onCoolDown: 0
@@ -57,7 +57,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   fireAttackObject: {fileID: 0}
-  maxShootDistance: 4
+  maxShootDistance: 1
   aimingTimer: 0.1
   shootingTimer: 0.3
   cooloffTimer: 0.1
