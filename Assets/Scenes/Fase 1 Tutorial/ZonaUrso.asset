@@ -13,21 +13,21 @@ MonoBehaviour:
   m_Name: ZonaUrso
   m_EditorClassIdentifier: 
   zoneNumber: 1
-  startX: 14
-  startZ: 13
+  startX: 18
+  startZ: 18
   floor: 0
-  endX: 20
-  endZ: 19
+  endX: 24
+  endZ: 22
   spawnPoints:
-  - x: 14
-    z: 13
+  - x: 20
+    z: 19
     floor: 0
-  - x: 16
-    z: 13
+  - x: 20
+    z: 18
     floor: 0
-  - x: 15
-    z: 13
+  - x: 21
+    z: 18
     floor: 0
-  - x: 16
-    z: 13
+  - x: 22
+    z: 18
     floor: 0

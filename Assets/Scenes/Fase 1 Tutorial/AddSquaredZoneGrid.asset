@@ -13,21 +13,21 @@ MonoBehaviour:
   m_Name: AddSquaredZoneGrid
   m_EditorClassIdentifier: 
   zoneNumber: 2
-  startX: 5
-  startZ: 7
+  startX: 3
+  startZ: 6
   floor: 0
   endX: 9
-  endZ: 11
+  endZ: 12
   spawnPoints:
-  - x: 5
+  - x: 4
     z: 7
     floor: 0
-  - x: 7
+  - x: 5
     z: 7
     floor: 0
   - x: 6
     z: 7
     floor: 0
-  - x: 8
+  - x: 7
     z: 7
     floor: 0

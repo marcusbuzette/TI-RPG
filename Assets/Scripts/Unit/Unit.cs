@@ -165,6 +165,8 @@ public class Unit : MonoBehaviour {
     }
 
     public void AddXp(int xpAmount) {
+        Debug.Log("ganhou xp");
+        GameController.controller.UpdateUnitRecords(this);
         xpSystem.AddXp(xpAmount);
     }
 
