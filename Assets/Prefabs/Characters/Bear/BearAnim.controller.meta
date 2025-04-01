@@ -1,6 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Characters/Bear/BearAnim.controller.meta
 guid: a8a08ee6e8ea729479b093cd494e8162
 NativeFormatImporter:
+========
+guid: 9b8d71d12326d5046a6f1ec57e8aa250
+folderAsset: yes
+DefaultImporter:
+>>>>>>>> main:Assets/TextMesh Pro/Examples & Extras.meta
   externalObjects: {}
   mainObjectFileID: 9100000
   userData: 
