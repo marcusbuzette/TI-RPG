@@ -9,6 +9,7 @@ public class SkillUi : MonoBehaviour {
     public Text nome;
     public Text descricao;
     public Text custo;
+    public Sprite skillUI;
     public Button botaoDesbloquear;
 
     private void Start() {
@@ -35,6 +36,7 @@ public class SkillUi : MonoBehaviour {
 
     //Define e altera os nodes da arvore de talentos.  
     public void SetBaseSkill(BaseSkills skill) {
+        Debug.Log("SetBaseSkill");
         this.skills = skill;
         nome.text = skills.nome;
         // descricao.text = skills.descricao;

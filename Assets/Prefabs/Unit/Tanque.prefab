@@ -239,9 +239,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8a40b60fda1ef4f8c9d0f466e29e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
-  maxShootDistance: 1
+  speed: 0
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  maxHitDistance: 1
   hitDamage: 100
   rotateSpeed: 10
   Attack: 1
@@ -257,8 +261,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b6385d0c60b4827aaab7b864fdef3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 21300000, guid: a8713a01c9a8cc14e8509f0517cfb674, type: 3}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   maxShootDistance: 1
   hitDamage: 50
   rotateSpeed: 10
@@ -275,8 +280,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d080ed6cd128408b82a8d741eeacab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
 --- !u!114 &7609521906278373366 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2170219948549848153, guid: 35802ef038968144e82bb11a407e1793, type: 3}

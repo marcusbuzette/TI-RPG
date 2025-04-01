@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class ActionButtonUI : MonoBehaviour {
 
     [SerializeField] protected TextMeshProUGUI textMeshPro;
+    private Sprite actionImage;
     [SerializeField] protected Button  button;
     [SerializeField] private Color  NORMAL_COLOR;
     [SerializeField] private Color  SELECTED_COLOR;
@@ -14,6 +15,12 @@ public class ActionButtonUI : MonoBehaviour {
 
     public void SetBaseAction(BaseAction baseAction) {
         textMeshPro.text = baseAction.GetActionName().ToUpper();
+        this.actionImage = baseAction.GetActionImage();
+
+        // if (actionImage != null) {
+        //     textMeshPro.enabled = false;
+        //     this.button.GetComponent<Image>().sprite = this.actionImage;
+        // }
 
         button.onClick.AddListener(() => {
             SelectAction();

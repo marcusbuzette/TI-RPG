@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum ActionType { MOVE, ACTION, INVENTORY, ITEM, SKILL };
 
@@ -13,6 +14,7 @@ public abstract class BaseAction : MonoBehaviour {
     protected bool isActive;
     protected Action onActionComplete;
     protected ActionType actionType;
+    [SerializeField] protected Sprite actionImage;
     public Animator animator;
     public float speed;
 
@@ -37,6 +39,7 @@ public abstract class BaseAction : MonoBehaviour {
 
     public abstract void Action();
     public abstract string GetActionName();
+    public Sprite GetActionImage() {return this.actionImage;}
 
     public virtual bool IsValidActionGridPosition(GridPosition gridPosition) {
         List<GridPosition> validGridPositionList = GetValidGridPositionList();
