@@ -51,7 +51,11 @@ public class Unit : MonoBehaviour {
             this.xpSystem.SetXp(unitRecords.xp);
             this.unitStats = unitRecords.unitStats;
             foreach (BaseSkills skill in unitRecords.baseSkills) {
+                BaseSkills aux = possibleSkills.Find((s) => s.nome == skill.nome);
                 BaseSkills bs = gameObject.AddComponent(skill.GetType()) as BaseSkills;
+                if (aux != null) {
+                   bs.SetSkillImage(aux.GetActionImage());   
+                }
             }
             actionsArray = GetComponents<BaseAction>();
             if (OnAnyActionPerformed != null) {
@@ -165,7 +169,6 @@ public class Unit : MonoBehaviour {
     }
 
     public void AddXp(int xpAmount) {
-        Debug.Log("ganhou xp");
         GameController.controller.UpdateUnitRecords(this);
         xpSystem.AddXp(xpAmount);
     }

@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9014cf97bae6f414da57656fd3ec3610, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 21300000, guid: 3e44a0f6bd0c36041894ce0a9a52533a, type: 3}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   nome: Flecha VEnenosa
   descricao: Flecha que causa dano a cada turno ao inimigo atingido
   custo: 20

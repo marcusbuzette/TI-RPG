@@ -31,4 +31,8 @@ public abstract class BaseSkills : BaseAction
     public int GetCoolDown() {
         return coolDown;
     }
+
+    public void SetSkillImage(Sprite image) {
+        this.actionImage = image;
+    }
 }

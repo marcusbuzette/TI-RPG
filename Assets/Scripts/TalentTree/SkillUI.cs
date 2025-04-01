@@ -9,6 +9,7 @@ public class SkillUi : MonoBehaviour {
     public Text nome;
     public Text descricao;
     public Text custo;
+    public Sprite skillUI;
     public Button botaoDesbloquear;
 
     private void Start() {
@@ -37,6 +38,11 @@ public class SkillUi : MonoBehaviour {
     public void SetBaseSkill(BaseSkills skill) {
         this.skills = skill;
         nome.text = skills.nome;
+        if (skill.GetActionImage() != null) {
+            botaoDesbloquear.GetComponent<Image>().sprite = skill.GetActionImage();
+            nome.enabled = false;
+            botaoDesbloquear.transform.Rotate(new Vector3(0,0,-45));
+        }
         // descricao.text = skills.descricao;
         // custo.text = skills.custo.ToString();
     }
