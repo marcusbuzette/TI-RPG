@@ -17,10 +17,10 @@ public class ActionButtonUI : MonoBehaviour {
         textMeshPro.text = baseAction.GetActionName().ToUpper();
         this.actionImage = baseAction.GetActionImage();
 
-        // if (actionImage != null) {
-        //     textMeshPro.enabled = false;
-        //     this.button.GetComponent<Image>().sprite = this.actionImage;
-        // }
+        if (actionImage != null) {
+            textMeshPro.enabled = false;
+            this.button.GetComponent<Image>().sprite = this.actionImage;
+        }
 
         button.onClick.AddListener(() => {
             SelectAction();

@@ -17,3 +17,4 @@ MonoBehaviour:
   description: Adiciona + 5 nos pontos de vida
   upgradeType: 0
   upgradeAmount: 5
+  upgradeImage: {fileID: 21300000, guid: 70a7fbfaefecee341925ead4bde6550b, type: 3}

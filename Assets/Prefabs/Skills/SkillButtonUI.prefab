@@ -377,4 +377,5 @@ MonoBehaviour:
   nome: {fileID: 165591074397969131}
   descricao: {fileID: 1256059835556778344}
   custo: {fileID: 3587839142063040626}
+  skillUI: {fileID: 0}
   botaoDesbloquear: {fileID: 4290718803422079323}

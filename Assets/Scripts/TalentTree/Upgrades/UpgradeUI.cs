@@ -36,6 +36,11 @@ public class UpgradeUI : MonoBehaviour {
         this.upgrade = upgrade;
         this.upgradeIndex = index;
         nome.text = upgrade.upgrade[index].name;
+        if (upgrade.upgrade[index].upgradeImage != null) {
+            botaoDesbloquear.GetComponent<Image>().sprite = upgrade.upgrade[index].upgradeImage;
+            nome.enabled = false;
+            botaoDesbloquear.transform.Rotate(new Vector3(0,0,-45));
+        }
     }
 
     private void OnDestroy() {

@@ -66,7 +66,6 @@ public class TalentManager : MonoBehaviour {
 
     //Verifica se existem pontos suficientes e todas as condições estão cumpridas para o desbloqueio do skills
     public void TentarDesbloquearskills(BaseSkills skills) {
-        Debug.Log("Tentar desbloquear");
         if (pontosDisponiveis >= skills.custo && PodeSerDesbloqueado(skills)) {
             Unit unitAux = playerUnitList.Find(unit => unit.GetComponent<Unit>().GetUnitId() == this.SelectedUnit).GetComponent<Unit>();
             this.UpdateLevelBar();

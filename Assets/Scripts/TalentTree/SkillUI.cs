@@ -36,9 +36,13 @@ public class SkillUi : MonoBehaviour {
 
     //Define e altera os nodes da arvore de talentos.  
     public void SetBaseSkill(BaseSkills skill) {
-        Debug.Log("SetBaseSkill");
         this.skills = skill;
         nome.text = skills.nome;
+        if (skill.GetActionImage() != null) {
+            botaoDesbloquear.GetComponent<Image>().sprite = skill.GetActionImage();
+            nome.enabled = false;
+            botaoDesbloquear.transform.Rotate(new Vector3(0,0,-45));
+        }
         // descricao.text = skills.descricao;
         // custo.text = skills.custo.ToString();
     }
