@@ -68,3 +68,4 @@ MonoBehaviour:
   damage: 3
   selectedGrid: {x: 0, y: 0, z: 0}
   isAiming: 0
+  fireArrowSFX: FlechaFogo

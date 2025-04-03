@@ -62,3 +62,4 @@ MonoBehaviour:
   shootingTimer: 0.3
   cooloffTimer: 0.1
   rotateSpeed: 10
+  freezeArrowSFX: FlechaGelo

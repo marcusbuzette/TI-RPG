@@ -8,10 +8,12 @@ using UnityEngine.SocialPlatforms;
 public class EnemyFocusSkill : BaseSkills
 {
     [SerializeField] private int skillRounds;
-
+    public string provokeSFX;
     public override void Action() {
         unit.FocusOnMe(skillRounds);
-        AudioManager.instance?.PlaySFX("Provocar");
+        if (!string.IsNullOrEmpty(provokeSFX)) {
+            AudioManager.instance?.PlaySFX(provokeSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
+        }
         ActionFinish();
         ActiveCoolDown();
     }

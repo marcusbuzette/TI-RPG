@@ -14,6 +14,7 @@ public class FreezeAttack : BaseSkills {
     [SerializeField] private float cooloffTimer = .1f;
     [SerializeField] private float rotateSpeed = 10f;
 
+    public string freezeArrowSFX;
 
     private State currentState;
     private float stateTimer;
@@ -36,7 +37,10 @@ public class FreezeAttack : BaseSkills {
                 break;
             case State.Shooting:
                 if (canShoot) {
-                    AudioManager.instance?.PlaySFX("Arrows");
+                    if (!string.IsNullOrEmpty(freezeArrowSFX)) 
+                    {
+                        AudioManager.instance?.PlaySFX(freezeArrowSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
+                    }
                     Shoot();
                     canShoot = false;
                     NextState();
@@ -138,7 +142,7 @@ public class FreezeAttack : BaseSkills {
         }
         else targetUnit.gameObject.AddComponent<FreezeEffect>().SetFreezeEffect(targetUnit, coolDown);
         animator?.SetTrigger("Attack");
-        AudioManager.instance?.PlaySFX("Arrows");
+        //AudioManager.instance?.PlaySFX("Arrows");
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {

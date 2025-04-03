@@ -6,7 +6,7 @@ using System;
 public class BuffDefArea : BaseSkills {
     private float totalSpinAmmount = 0;
     [SerializeField] private float MAX_SPIN = 360f;
-
+    public string buffDefSFX;
 
     public override void Action() {
         float spinAddAmmount = 360f * Time.deltaTime;
@@ -14,6 +14,9 @@ public class BuffDefArea : BaseSkills {
         totalSpinAmmount += spinAddAmmount;
         if (totalSpinAmmount > MAX_SPIN) {
             totalSpinAmmount = 0;
+            if (!string.IsNullOrEmpty(buffDefSFX)) {
+                AudioManager.instance?.PlaySFX(buffDefSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
+            }
             ActionFinish();
             ActiveCoolDown();
         }

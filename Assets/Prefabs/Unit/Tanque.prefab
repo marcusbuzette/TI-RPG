@@ -153,6 +153,10 @@ PrefabInstance:
       value: Tanque
       objectReference: {fileID: 0}
     - target: {fileID: 5740676890434492411, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: damageSFX
+      value: GuerreiroDano
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740676890434492411, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: healthPoints
       value: 200
       objectReference: {fileID: 0}
@@ -248,6 +252,7 @@ MonoBehaviour:
   maxHitDistance: 1
   hitDamage: 100
   rotateSpeed: 10
+  meleeSFX: GuerreiroHit
   Attack: 1
 --- !u!114 &1907622572709071836
 MonoBehaviour:

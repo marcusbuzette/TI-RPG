@@ -90,6 +90,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8a40b60fda1ef4f8c9d0f466e29e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxShootDistance: 1
-  MAX_SPIN: 360
+  actionImage: {fileID: 0}
+  animator: {fileID: 0}
+  speed: 0
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  maxHitDistance: 1
   hitDamage: 50
+  rotateSpeed: 10
+  meleeSFX: 
+  Attack: 1
