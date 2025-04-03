@@ -11,7 +11,7 @@ public class HealthSystem : MonoBehaviour {
     public int healthPoints = 100;
     public int maxHealthPoints = 100;
     public Animator animator;
-
+    public string damageSFX;
     private void Awake() {
         animator = GetComponentInChildren<Animator>();
     }
@@ -25,7 +25,10 @@ public class HealthSystem : MonoBehaviour {
         healthPoints -= damage;
         
         animator?.SetTrigger("TookDamage");
-
+        if (!string.IsNullOrEmpty(damageSFX))
+        {
+            AudioManager.instance?.PlaySFX(damageSFX);  // vai tocar o sfx q ta no inspector do healthSystem do cada boneco
+        }
         if (healthPoints < 0) healthPoints = 0;
         OnDamage?.Invoke(this, EventArgs.Empty);
         if (healthPoints == 0) Die();

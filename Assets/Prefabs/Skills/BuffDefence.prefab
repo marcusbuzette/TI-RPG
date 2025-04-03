@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d15b369e0f6bf4c8a9688b077ea7f389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   nome: Modo de Defesa
   descricao: Aumenta a desefa dos aliados proximos durante 1 turno
   custo: 20
@@ -56,3 +57,4 @@ MonoBehaviour:
   coolDown: 0
   currentCoolDown: 0
   MAX_SPIN: 360
+  buffDefSFX: BuffDefesa

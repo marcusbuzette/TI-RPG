@@ -27,6 +27,8 @@ public class FireAttack : BaseSkills {
     public Vector3 selectedGrid;
     public bool isAiming = false;
 
+    public string fireArrowSFX;
+
     GridPosition mouseGridPosition;
 
     private void Start() {
@@ -57,8 +59,11 @@ public class FireAttack : BaseSkills {
                 break;
             case State.Shooting:
                 if (canShoot) {
-                    AudioManager.instance?.PlaySFX("Arrows");
-                    isAiming = false;
+                    if (!string.IsNullOrEmpty(fireArrowSFX)) 
+                        {
+                        AudioManager.instance?.PlaySFX(fireArrowSFX);
+                        }
+                        isAiming = false;
                     canShoot = false;
                 }
                 break;

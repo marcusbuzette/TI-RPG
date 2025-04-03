@@ -431,7 +431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0b3338ac2914f4ba75c869397aca3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xp: 12
+  xp: 0
 --- !u!114 &-1861747851849192615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -453,6 +453,7 @@ MonoBehaviour:
   maxHitDistance: 1
   hitDamage: 40
   rotateSpeed: 10
+  meleeSFX: MacacoHit
   Attack: 1
 --- !u!114 &9134479801138775507
 MonoBehaviour:

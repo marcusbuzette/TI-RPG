@@ -7,11 +7,20 @@ using UnityEngine.Audio;
 public class AudioManager : MonoBehaviour {
     public static AudioManager instance;
 
-    public Sound[] musicSounds, sfxSounds;
-    public AudioSource masterSource, musicSource, sfxSource;
+    public Sound[] musicSounds, sfxSounds, ArqueiraSFX, GuerreiroSFX, ProtagSFX, MacacoSFX;
+    public AudioSource masterSource, musicSource, sfxSource, ambientSource;
+    private Dictionary<string, AudioClip> sfxDictionary = new Dictionary<string, AudioClip>();
     [SerializeField] private AudioMixer audioMixer;
 
     private void Awake() {
+
+        AddSoundsToDictionary(sfxSounds);
+        AddSoundsToDictionary(ArqueiraSFX);
+        AddSoundsToDictionary(GuerreiroSFX);
+        AddSoundsToDictionary(ProtagSFX);
+        AddSoundsToDictionary(MacacoSFX);
+
+
         if (instance == null) {
             instance = this;
             DontDestroyOnLoad(gameObject);
@@ -26,7 +35,19 @@ public class AudioManager : MonoBehaviour {
         PlayMusic("");
     }
 
-    public void PlayMusic(string name) {
+
+    private void AddSoundsToDictionary(Sound[] soundArray) 
+    {
+        foreach (Sound s in soundArray) 
+        {
+            if (!sfxDictionary.ContainsKey(s.name)) 
+            {
+                sfxDictionary.Add(s.name, s.clip);
+            }
+        }
+    }
+
+public void PlayMusic(string name) {
         Sound s = Array.Find(musicSounds, x => x.name == name);
 
         if (s == null) {
@@ -41,7 +62,13 @@ public class AudioManager : MonoBehaviour {
     }
 
     public void PlaySFX(string name) {
-        Sound s = Array.Find(sfxSounds, x => x.name == name);
+        if (sfxDictionary.TryGetValue(name, out AudioClip clip)) {
+            sfxSource.PlayOneShot(clip, sfxSource.volume * masterSource.volume);
+        }
+        else {
+            Debug.Log("Sound Not Found: " + name);
+        }
+        /*Sound s = Array.Find(sfxSounds, x => x.name == name);
 
         if (s == null) {
             Debug.Log("Sound Not Found");
@@ -49,7 +76,7 @@ public class AudioManager : MonoBehaviour {
 
         else {
             sfxSource.PlayOneShot(s.clip, sfxSource.volume * masterSource.volume);
-        }
+        }*/
     }
 
     public void ToggleMusic() {
