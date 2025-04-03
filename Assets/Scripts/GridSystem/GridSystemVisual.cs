@@ -173,7 +173,7 @@ public class GridSystemVisual : MonoBehaviour {
                 case HealAction healAction:
                     gridVisualType = GridVisualType.Green;
 
-                    ShowGridPositionRange(selectedUnit.GetGridPosition(), healAction.GetMaxHealDistance(), GridVisualType.GreenSoft, selectedUnit.transform.position, true, true);
+                    ShowGridPositionRange(selectedUnit.GetGridPosition(), healAction.GetMaxHealDistance(), GridVisualType.GreenSoft, selectedUnit.transform.position, false, true);
                     break;
                 case HealArea healArea:
                     gridVisualType = GridVisualType.White;

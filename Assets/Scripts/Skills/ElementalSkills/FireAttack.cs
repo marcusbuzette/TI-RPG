@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static GridSystemVisual;
 using UnityEngine.SocialPlatforms;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 public class FireAttack : BaseSkills {
     private enum State {
@@ -12,6 +13,7 @@ public class FireAttack : BaseSkills {
     }
     [SerializeField] private LayerMask obstaclesLayerMask;
     [SerializeField] private GameObject fireAttackObject;
+    [SerializeField] private GameObject particleFire;
     [SerializeField] private int maxShootDistance = 1;
     [SerializeField] private float aimingTimer = .1f;
     [SerializeField] private float shootingTimer = .3f;
@@ -38,6 +40,7 @@ public class FireAttack : BaseSkills {
 
     private void Update() {
         if(isAiming) {
+            if (UnitActionSystem.Instance.GetSelectedAction() != this) return;
             mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
             ViewAreaDamage(mouseGridPosition);
         }
@@ -139,7 +142,7 @@ public class FireAttack : BaseSkills {
                 break;
             case State.Cooloff:
                 fireAttackObject = Instantiate(new GameObject(), selectedGrid, Quaternion.identity);
-                fireAttackObject.AddComponent<FireAttackObject>().SetFireAttackObject(this, damage, areaDamage, coolDown);
+                fireAttackObject.AddComponent<FireAttackObject>().SetFireAttackObject(this, particleFire, damage, areaDamage, coolDown);
                 ActionFinish();
                 break;
         }
