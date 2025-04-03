@@ -12,16 +12,16 @@ public class FireAttackObject : MonoBehaviour
     [SerializeField] private int areaDamage;
     [SerializeField] private int coolDown;
 
-    private FireAttack fireAttack;
-    private void Update() {
-        ViewDamageArea();
-    }
+    private GameObject particleFire;
 
-    public void SetFireAttackObject(FireAttack fireAttack, int damage, int areaDamage, int coolDown) {
+    private FireAttack fireAttack;
+
+    public void SetFireAttackObject(FireAttack fireAttack, GameObject particleFire, int damage, int areaDamage, int coolDown) {
         this.fireAttack = fireAttack;
         this.coolDown = coolDown;
         this.damage = damage;
         this.areaDamage = areaDamage;
+        this.particleFire = particleFire;
 
         obstaclesLayerMask = LayerMask.GetMask("Obstacles");
         TurnSystem.Instance.onTurnChange += TurnSystem_onTurnChange;
@@ -126,6 +126,13 @@ public class FireAttackObject : MonoBehaviour
             }
         }
 
-        GridSystemVisual.Instance.ShowGridPositionList(attackGridPositionList, GridVisualType.Yellow);
+        CreateParticles(attackGridPositionList);
+    }
+
+    private void CreateParticles(List<GridPosition> postions) {
+        for(int i = 0; i < postions.Count; i++) {
+            Instantiate(particleFire, LevelGrid.Instance.GetWorldPosition(postions[i]), Quaternion.identity)
+                .transform.parent = transform;
+        }
     }
 }

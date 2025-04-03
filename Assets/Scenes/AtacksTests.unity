@@ -249,7 +249,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &165459947
 Transform:
   m_ObjectHideFlags: 0
@@ -340,8 +340,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cbdf6c65100fd54da66fd8515835c33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   nome: Congelar
   descricao: 
   custo: 0
@@ -369,8 +370,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4c588a935c0a4f56b855794c3e7145d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -392,8 +394,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a98aa284f9b23428a071063490ad6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   moveSpeed: 4
   rotateSpeed: 4
   stopDistance: 0.1
@@ -434,63 +437,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   xp: 0
---- !u!1001 &207961874
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1003836979848573920, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 1003836979848573920, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1003836979848573920, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1003836979848573920, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1003836979848573920, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1003836979848573920, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1003836979848573920, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1003836979848573920, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1003836979848573920, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1003836979848573920, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8008494300259903858, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
-      propertyPath: m_Name
-      value: Wall_For_Test
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
 --- !u!4 &232223605 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8156640269489831220, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
@@ -3420,8 +3366,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1715821487}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.42415538, y: -0.000000015581922, z: 0.0000000072981816, w: 0.90558946}
-  m_LocalPosition: {x: 0.63, y: 12, z: -9.24}
+  m_LocalRotation: {x: 0.14521313, y: -0.000000032966827, z: 0.0000000048385016, w: 0.98940045}
+  m_LocalPosition: {x: 0.63, y: 3, z: -9.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3788,7 +3734,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 12, z: -10}
+  m_FollowOffset: {x: 0, y: 3, z: -10}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0
@@ -3961,13 +3907,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1868139144}
-  - component: {fileID: 1868139156}
   - component: {fileID: 1868139145}
   - component: {fileID: 1868139146}
   - component: {fileID: 1868139153}
   - component: {fileID: 1868139152}
   - component: {fileID: 1868139150}
   - component: {fileID: 1868139155}
+  - component: {fileID: 1868139157}
+  - component: {fileID: 1868139158}
   m_Layer: 0
   m_Name: UnitTest
   m_TagString: Untagged
@@ -4053,8 +4000,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a98aa284f9b23428a071063490ad6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   moveSpeed: 4
   rotateSpeed: 4
   stopDistance: 0.1
@@ -4107,8 +4055,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4c588a935c0a4f56b855794c3e7145d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -4118,7 +4067,44 @@ MonoBehaviour:
   cooloffTimer: 0.1
   rotateSpeed: 10
   shootDamage: 100
---- !u!114 &1868139156
+--- !u!114 &1868139157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868139143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b26dcc9098726be4593e0d47c75aa31b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
+  animator: {fileID: 0}
+  speed: 0
+  nome: 
+  descricao: 
+  custo: 0
+  preRequisitos: []
+  onCoolDown: 0
+  coolDown: 3
+  currentCoolDown: 0
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  fireAttackObject: {fileID: 0}
+  particleFire: {fileID: 6033032414094306690, guid: 71e91b07b92fcd7409bae60a8df9bd2d, type: 3}
+  maxShootDistance: 5
+  aimingTimer: 0.1
+  shootingTimer: 0.3
+  cooloffTimer: 0.1
+  rotateSpeed: 10
+  shootDamage: 100
+  areaDamage: 2
+  damage: 3
+  selectedGrid: {x: 0, y: 0, z: 0}
+  isAiming: 0
+--- !u!114 &1868139158
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4130,25 +4116,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c719e63af947e4a79aa9af6829e4b54f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
-  nome: Curar
+  speed: 0
+  nome: 
   descricao: 
   custo: 0
   preRequisitos: []
   onCoolDown: 0
-  coolDown: 3
+  coolDown: 0
   currentCoolDown: 0
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 0
   healAreaObject: {fileID: 0}
-  maxShootDistance: 6
+  particleHeal: {fileID: 6033032414094306690, guid: 92b6cff2a2f3df5408482406ece2f68f, type: 3}
+  maxShootDistance: 5
   aimingTimer: 0.1
   shootingTimer: 0.3
   cooloffTimer: 0.1
   rotateSpeed: 10
-  areaHeal: 3
+  areaHeal: 2
   healPoints: 50
   selectedGrid: {x: 0, y: 0, z: 0}
   isAiming: 0
@@ -4404,8 +4392,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2048497479}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.42415538, y: -0.000000015581922, z: 0.0000000072981816, w: 0.90558946}
-  m_LocalPosition: {x: 0.63, y: 12, z: -9.24}
+  m_LocalRotation: {x: 0.14521313, y: -0.000000032966827, z: 0.0000000048385016, w: 0.98940045}
+  m_LocalPosition: {x: 0.63, y: 3, z: -9.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4609,4 +4597,3 @@ SceneRoots:
   - {fileID: 1660157974}
   - {fileID: 808334544}
   - {fileID: 1309272587}
-  - {fileID: 207961874}

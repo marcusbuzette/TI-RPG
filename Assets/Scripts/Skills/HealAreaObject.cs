@@ -11,16 +11,16 @@ public class HealAreaObject : MonoBehaviour {
     [SerializeField] private int areaHeal;
     [SerializeField] private int coolDown;
 
-    private HealArea healArea;
-    private void Update() {
-        ViewHealArea();
-    }
+    private GameObject particleHeal;
 
-    public void SetHealAreaObject(HealArea healArea, int healPoints, int areaHeal, int coolDown) {
+    private HealArea healArea;
+
+    public void SetHealAreaObject(HealArea healArea, GameObject particleHeal, int healPoints, int areaHeal, int coolDown) {
         this.healArea = healArea;
         this.coolDown = coolDown;
         this.healPoints = healPoints;
         this.areaHeal = areaHeal;
+        this.particleHeal = particleHeal;
 
         obstaclesLayerMask = LayerMask.GetMask("Obstacles");
         TurnSystem.Instance.onTurnChange += TurnSystem_onTurnChange;
@@ -131,6 +131,13 @@ public class HealAreaObject : MonoBehaviour {
             }
         }
 
-        GridSystemVisual.Instance.ShowGridPositionList(attackGridPositionList, GridVisualType.Green);
+        CreateParticles(attackGridPositionList);
+    }
+
+    private void CreateParticles(List<GridPosition> postions) {
+        for (int i = 0; i < postions.Count; i++) {
+            Instantiate(particleHeal, LevelGrid.Instance.GetWorldPosition(postions[i]), Quaternion.identity)
+                .transform.parent = transform;
+        }
     }
 }
