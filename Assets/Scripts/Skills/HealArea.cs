@@ -10,6 +10,7 @@ public class HealArea : BaseSkills {
     }
     [SerializeField] private LayerMask obstaclesLayerMask;
     [SerializeField] private GameObject healAreaObject;
+    [SerializeField] private GameObject particleHeal;
     [SerializeField] private int maxShootDistance = 1;
     [SerializeField] private float aimingTimer = .1f;
     [SerializeField] private float shootingTimer = .3f;
@@ -35,6 +36,7 @@ public class HealArea : BaseSkills {
 
     private void Update() {
         if (isAiming) {
+            if (UnitActionSystem.Instance.GetSelectedAction() != this) return;
             mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
             ViewAreaHeal(mouseGridPosition);
         }
@@ -134,7 +136,7 @@ public class HealArea : BaseSkills {
                 break;
             case State.Cooloff:
                 healAreaObject = Instantiate(new GameObject(), selectedGrid, Quaternion.identity);
-                healAreaObject.AddComponent<HealAreaObject>().SetHealAreaObject(this, healPoints, areaHeal, coolDown);
+                healAreaObject.AddComponent<HealAreaObject>().SetHealAreaObject(this, particleHeal,healPoints, areaHeal, coolDown);
                 ActionFinish();
                 break;
         }

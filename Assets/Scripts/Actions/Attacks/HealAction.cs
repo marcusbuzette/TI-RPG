@@ -35,11 +35,6 @@ public class HealAction : BaseAction {
                     continue;
                 }
 
-                int testDistance = Mathf.Abs(x) + Mathf.Abs(z);
-                if (testDistance > maxHealDistance) {
-                    continue;
-                }
-
                 if (LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition) != null) {
                     if (!LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition).IsEnemy()) {
                         targetsList.Add(LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition));
