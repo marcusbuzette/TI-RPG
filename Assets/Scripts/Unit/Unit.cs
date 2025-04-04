@@ -210,7 +210,7 @@ public class Unit : MonoBehaviour {
         }
 
         for (int i = 0; i < actionsArray.Length; i++) {
-            if (actionsArray[i].GetActionType() == ActionType.SKILL) {
+            if (actionsArray[i].GetActionType() == ActionType.SKILL || actionsArray[i].GetActionType() == ActionType.ACTION) {
                 actionsArray[i].IsAnotherRound();
             }
         }

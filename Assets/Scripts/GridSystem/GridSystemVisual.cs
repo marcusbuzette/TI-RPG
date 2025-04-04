@@ -203,7 +203,7 @@ public class GridSystemVisual : MonoBehaviour {
         UpdateGridVisual();
     }
 
-    private Material GetGridVisualTypeMaterial(GridVisualType gridVisualType) {
+    public Material GetGridVisualTypeMaterial(GridVisualType gridVisualType) {
         foreach (GridVisualTypeMaterial gridVisualTypeMaterial in gridVisualTypeMaterialList) {
             if (gridVisualTypeMaterial.gridVisualType == gridVisualType) {
                 return gridVisualTypeMaterial.material;
