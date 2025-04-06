@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class SkillUi : MonoBehaviour {
+public class SkillUi : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
     public BaseSkills skills;
     public Text nome;
     public Text descricao;
@@ -49,5 +50,17 @@ public class SkillUi : MonoBehaviour {
 
     private void OnDestroy() {
         TalentManager.Instance.onSkillUpdate -= TalentManager_OnSkillUpdate;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData) {
+        Tooltip.Instance.ShowTooltip(skillTooltipText());
+    }
+
+    public void OnPointerExit(PointerEventData eventData) {
+        Tooltip.Instance.HideTooltip();
+    }
+
+    private string skillTooltipText() {
+        return "<b>" + nome.text + ": </b> <br>" + this.skills.descricao;
     }
 }

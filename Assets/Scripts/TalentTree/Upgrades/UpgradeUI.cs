@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class UpgradeUI : MonoBehaviour {
+public class UpgradeUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
     public PossibleUpgrade upgrade;
     public int upgradeIndex;
     public Text nome;
@@ -45,5 +46,13 @@ public class UpgradeUI : MonoBehaviour {
 
     private void OnDestroy() {
         TalentManager.Instance.onSkillUpdate -= TalentManager_OnSkillUpdate;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData) {
+        Tooltip.Instance.ShowTooltip(nome.text);
+    }
+
+    public void OnPointerExit(PointerEventData eventData) {
+        Tooltip.Instance.HideTooltip();
     }
 }

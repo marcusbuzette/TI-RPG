@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ActionButtonUI : MonoBehaviour {
+public class ActionButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
     [SerializeField] protected TextMeshProUGUI textMeshPro;
     private Sprite actionImage;
@@ -13,8 +14,12 @@ public class ActionButtonUI : MonoBehaviour {
     [SerializeField] private Color  SELECTED_COLOR;
     [SerializeField] private ActionType actionType;
 
+    private string name;
+    private string description;
+
     public void SetBaseAction(BaseAction baseAction) {
         textMeshPro.text = baseAction.GetActionName().ToUpper();
+        this.name = baseAction.GetActionName();
         this.actionImage = baseAction.GetActionImage();
 
         if (actionImage != null) {
@@ -28,6 +33,7 @@ public class ActionButtonUI : MonoBehaviour {
         });
     }
 
+
     public void SelectAction() {
         GetComponent<Outline>().effectColor = SELECTED_COLOR;
     }
@@ -39,5 +45,14 @@ public class ActionButtonUI : MonoBehaviour {
     }
     public void DisableActionButton() {
         button.interactable = false;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData) {
+        Tooltip.Instance.ShowTooltip(textMeshPro.text);
+    }
+
+    public void OnPointerExit(PointerEventData eventData) {
+        Debug.Log("Exit - " + this.name);
+        Tooltip.Instance.HideTooltip();
     }
 }
