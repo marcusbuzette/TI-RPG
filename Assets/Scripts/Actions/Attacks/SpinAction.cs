@@ -5,8 +5,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class SpinAction : BaseAction {
-
-
+    [SerializeField] private List<Unit> targetsList = new List<Unit>();
+    [SerializeField] private int maxAttackDistance = 1;
+    [SerializeField] private int attackAttenuation = 2;
+    [SerializeField] private int hitDamage = 30;
     private float totalSpinAmmount = 0;
     [SerializeField] private float MAX_SPIN = 360f;
 
@@ -16,21 +18,45 @@ public class SpinAction : BaseAction {
         transform.eulerAngles += new Vector3(0, spinAddAmmount, 0);
         totalSpinAmmount += spinAddAmmount;
         if (totalSpinAmmount > MAX_SPIN) {
+            Debug.Log(GetComponent<Unit>().GetUnitStats().GetAttack() - attackAttenuation);
+            foreach (Unit target in targetsList) {
+            target.GetHealthSystem().Damage(this.hitDamage);
+        }
             totalSpinAmmount = 0;
             ActionFinish();
         }
     }
 
     public override string GetActionName() {
-        return "Girar";
+        return "Tornado de Aço";
     }
 
     public override List<GridPosition> GetValidGridPositionList() {
+        if (targetsList != null) {
+            targetsList.Clear();
+        }
         GridPosition unitGridPosition = unit.GetGridPosition();
+        List<GridPosition> possibleAttackPositions = new List<GridPosition>();;
+        int i = 0;
+        for (int x = -maxAttackDistance; x <= maxAttackDistance; x++) {
+            for (int z = -maxAttackDistance; z <= maxAttackDistance; z++) {
+                GridPosition testGridPosition = unitGridPosition + new GridPosition(x, z, 0);
 
-        return new List<GridPosition> {
-            unitGridPosition
-        };
+                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) {
+                    continue;
+                }
+                possibleAttackPositions.Add(testGridPosition);
+
+                if (LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition) != null) {
+                    if (LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition).IsEnemy()) {
+                        targetsList.Add(LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition));
+                        i++;
+                    }
+                }
+            }
+        }
+
+        return possibleAttackPositions;
     }
 
 
