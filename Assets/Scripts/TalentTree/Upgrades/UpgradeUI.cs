@@ -12,6 +12,7 @@ public class UpgradeUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public Text descricao;
     public Text custo;
     public Button botaoDesbloquear;
+    [SerializeField] private TooltipPosition tooltipPosition = TooltipPosition.NULL;
 
     private void Start() {
         TalentManager.Instance.onSkillUpdate += TalentManager_OnSkillUpdate;
@@ -37,6 +38,7 @@ public class UpgradeUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         this.upgrade = upgrade;
         this.upgradeIndex = index;
         nome.text = upgrade.upgrade[index].name;
+        this.tooltipPosition = index % 2 == 0 ? TooltipPosition.LEFT : TooltipPosition.RIGHT;
         if (upgrade.upgrade[index].upgradeImage != null) {
             botaoDesbloquear.GetComponent<Image>().sprite = upgrade.upgrade[index].upgradeImage;
             nome.enabled = false;
@@ -49,7 +51,7 @@ public class UpgradeUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
-        Tooltip.Instance.ShowTooltip(nome.text);
+        Tooltip.Instance.ShowTooltip(nome.text, transform, tooltipPosition);
     }
 
     public void OnPointerExit(PointerEventData eventData) {

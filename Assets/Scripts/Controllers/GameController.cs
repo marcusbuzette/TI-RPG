@@ -38,10 +38,6 @@ public class GameController : MonoBehaviour, IDataPersistence {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             Application.Quit();
         }
-
-        if (Input.GetKeyDown(KeyCode.T)) {
-            Tooltip.Instance.ShowTooltip("asdasdasdasdasdasdas");
-        }
     }
 
     public bool GetDebugMode() { return this.debugMode; }

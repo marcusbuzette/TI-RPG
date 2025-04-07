@@ -48,11 +48,10 @@ public class ActionButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
-        Tooltip.Instance.ShowTooltip(textMeshPro.text);
+        Tooltip.Instance.ShowTooltip(textMeshPro.text, transform, TooltipPosition.TOP);
     }
 
     public void OnPointerExit(PointerEventData eventData) {
-        Debug.Log("Exit - " + this.name);
         Tooltip.Instance.HideTooltip();
     }
 }

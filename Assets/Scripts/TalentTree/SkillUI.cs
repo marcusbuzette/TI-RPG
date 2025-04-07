@@ -11,7 +11,8 @@ public class SkillUi : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
     public Text descricao;
     public Text custo;
     public Sprite skillUI;
-    public Button botaoDesbloquear;
+    public Button botaoDesbloquear; 
+    [SerializeField] private TooltipPosition tooltipPosition = TooltipPosition.NULL;
 
     private void Start() {
         TalentManager.Instance.onSkillUpdate += TalentManager_OnSkillUpdate;
@@ -53,7 +54,7 @@ public class SkillUi : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
-        Tooltip.Instance.ShowTooltip(skillTooltipText());
+        Tooltip.Instance.ShowTooltip(skillTooltipText(), transform, tooltipPosition);
     }
 
     public void OnPointerExit(PointerEventData eventData) {
@@ -61,6 +62,10 @@ public class SkillUi : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
     }
 
     private string skillTooltipText() {
-        return "<b>" + nome.text + ": </b> <br>" + this.skills.descricao;
+        return "<b><size=28>" + nome.text + ": </size></b> <br><br>" + this.skills.descricao;
+    }
+
+    public void SetSkillToolTipPos(TooltipPosition pos) {
+        this.tooltipPosition = pos;
     }
 }
