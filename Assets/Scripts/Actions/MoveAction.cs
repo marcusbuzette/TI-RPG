@@ -10,6 +10,8 @@ public class MoveAction : BaseAction {
     [SerializeField] private float moveSpeed = 4f;
     [SerializeField] private float rotateSpeed = 4f;
     [SerializeField] private float stopDistance = .1f;
+    private float lastDistance = 0;
+    private bool hastLastDistance = false;
 
     [SerializeField] private int maxMoveDistance = 4;
 
@@ -31,15 +33,20 @@ public class MoveAction : BaseAction {
 
     public override void Action() {
         Vector3 targetPosition = positionList[currentPositionIndex];
-
-        if (Vector3.Distance(targetPosition, transform.position) > stopDistance) {
+        if (Vector3.Distance(targetPosition, transform.position) > stopDistance && 
+        (hastLastDistance == false || Vector3.Distance(targetPosition, transform.position) < lastDistance)) {
+            this.hastLastDistance = true;
+            this.lastDistance = Vector3.Distance(targetPosition, transform.position);
             Vector3 moveDirection = (targetPosition - transform.position).normalized;
             transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
             transform.position += moveDirection * moveSpeed * Time.deltaTime;
             animator?.SetBool("IsWalking", true);
         } else {
             currentPositionIndex++;
+            this.hastLastDistance = false;
+            lastDistance = 0;
             if(currentPositionIndex >= positionList.Count) {
+                transform.position = positionList[currentPositionIndex - 1];
                 ActionFinish();
                 animator?.SetBool("IsWalking", false);
             }
