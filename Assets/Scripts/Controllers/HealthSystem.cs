@@ -12,6 +12,7 @@ public class HealthSystem : MonoBehaviour {
     public int maxHealthPoints = 100;
     public Animator animator;
     public string damageSFX;
+    private bool isDefending = false;
     private void Awake() {
         animator = GetComponentInChildren<Animator>();
     }
@@ -21,6 +22,7 @@ public class HealthSystem : MonoBehaviour {
     }
 
     public void Damage(int damage) {
+        if (isDefending) return;
 
         healthPoints -= damage;
         
@@ -60,5 +62,8 @@ public class HealthSystem : MonoBehaviour {
         this.maxHealthPoints = hp;
         this.healthPoints = this.maxHealthPoints;
     }
+
+    public void SetDefenceMode(bool isDefending) {this.isDefending = isDefending;}
+    public bool GetDefenceMode() {return this.isDefending;}
 
 }

@@ -131,6 +131,9 @@ public class GridSystemVisual : MonoBehaviour {
                 case SpinAction spinAction:
                     gridVisualType = GridVisualType.Red;
                     break;
+                case DefendAction defendAction:
+                    gridVisualType = GridVisualType.Blue;
+                    break;
                 case ShootAction shootAction:
                     gridVisualType = GridVisualType.Red;
 
