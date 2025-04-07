@@ -10,6 +10,8 @@ public class MoveAction : BaseAction {
     [SerializeField] private float moveSpeed = 4f;
     [SerializeField] private float rotateSpeed = 4f;
     [SerializeField] private float stopDistance = .1f;
+    private float lastDistance = 0;
+    private bool hastLastDistance = false;
 
     [SerializeField] private int maxMoveDistance = 4;
 
@@ -18,7 +20,7 @@ public class MoveAction : BaseAction {
     // private bool changedBattleZone = false;
     private int startZone = 0;
 
-    
+
 
     protected override void Awake() {
         base.Awake();
@@ -31,15 +33,21 @@ public class MoveAction : BaseAction {
 
     public override void Action() {
         Vector3 targetPosition = positionList[currentPositionIndex];
-
-        if (Vector3.Distance(targetPosition, transform.position) > stopDistance) {
+        if (Vector3.Distance(targetPosition, transform.position) > stopDistance &&
+        (hastLastDistance == false || Vector3.Distance(targetPosition, transform.position) < lastDistance)) {
+            this.hastLastDistance = true;
+            this.lastDistance = Vector3.Distance(targetPosition, transform.position);
             Vector3 moveDirection = (targetPosition - transform.position).normalized;
             transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
             transform.position += moveDirection * moveSpeed * Time.deltaTime;
             animator?.SetBool("IsWalking", true);
-        } else {
+        }
+        else {
             currentPositionIndex++;
-            if(currentPositionIndex >= positionList.Count) {
+            this.hastLastDistance = false;
+            lastDistance = 0;
+            if (currentPositionIndex >= positionList.Count) {
+                transform.position = positionList[currentPositionIndex - 1];
                 ActionFinish();
                 animator?.SetBool("IsWalking", false);
             }
@@ -55,14 +63,36 @@ public class MoveAction : BaseAction {
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         List<GridPosition> pathGridPositionList = PathFinding.Instance.FindPath(unit.GetGridPosition(), mouseGridPosition, out int pathLenght);
-        
-        currentPositionIndex = 0;
-        this.startZone = unit.GetGridPosition().zone;
-        positionList = new List<Vector3>();
 
-        foreach(GridPosition pathGridPosition in pathGridPositionList) {
-            positionList.Add(LevelGrid.Instance.GetWorldPosition(pathGridPosition));
+        if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE) {
+            if (positionList == null || positionList.Count < 1) {
+                positionList = new List<Vector3>();
+                currentPositionIndex = 0;
+                this.startZone = unit.GetGridPosition().zone;
+
+                foreach (GridPosition pathGridPosition in pathGridPositionList) {
+                    positionList.Add(LevelGrid.Instance.GetWorldPosition(pathGridPosition));
+                }
+            }
+            else if (LevelGrid.Instance.GetWorldPosition(mouseGridPosition) != positionList[positionList.Count - 1]) {
+                positionList = new List<Vector3>() { positionList[0] };
+                currentPositionIndex = 1;
+                this.startZone = unit.GetGridPosition().zone;
+
+                foreach (GridPosition pathGridPosition in pathGridPositionList) {
+                    positionList.Add(LevelGrid.Instance.GetWorldPosition(pathGridPosition));
+                }
+            }
         }
+        else if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE) {
+            positionList = new List<Vector3>();
+            currentPositionIndex = 0;
+            this.startZone = unit.GetGridPosition().zone;
+            foreach (GridPosition pathGridPosition in pathGridPositionList) {
+                positionList.Add(LevelGrid.Instance.GetWorldPosition(pathGridPosition));
+            }
+        }
+
 
         ActionStart(onActionComplete);
     }
@@ -78,7 +108,7 @@ public class MoveAction : BaseAction {
 
         for (int x = -maxMoveDistance; x <= maxMoveDistance; x++) {
             for (int z = -maxMoveDistance; z <= maxMoveDistance; z++) {
-                for(int floor = -maxMoveDistance; floor <= maxMoveDistance; floor++) {
+                for (int floor = -maxMoveDistance; floor <= maxMoveDistance; floor++) {
                     GridPosition offsetGridPosition = new GridPosition(x, z, floor);
                     GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
@@ -125,7 +155,7 @@ public class MoveAction : BaseAction {
         };
     }
 
-    public void SetMaxMoveDistance(int maxDistance) {this.maxMoveDistance = maxDistance;}
+    public void SetMaxMoveDistance(int maxDistance) { this.maxMoveDistance = maxDistance; }
 
     public override bool GetOnCooldown() { return false; }
 
