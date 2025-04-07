@@ -28,15 +28,11 @@ public class SniperActionFieldOfView : MonoBehaviour
     }
 
     private void CheckHasEnemyOnFieldOfView(object sender, EventArgs e) {
-        foreach (GridPosition gridPos in gridObjects) {
-            if(LevelGrid.Instance.HasAnyUnitOnGridPosition(gridPos)) {
-                if (LevelGrid.Instance.GetUnitAtGridPosition(gridPos).IsEnemy())
-                {
-                    LevelGrid.Instance.GetUnitAtGridPosition(gridPos).Damage(damage);
-                    StopSniper();
-                }
-
-            }
+        if ((e as LevelGridEventArgs).unit.IsEnemy() && 
+            (e as LevelGridEventArgs).unit.isUnitTurn &&
+           gridObjects.Exists((gridPos => gridPos == (e as LevelGridEventArgs).currentGridPos)) ) {
+            (e as LevelGridEventArgs).unit.Damage(damage);
+                StopSniper();
         }
     }
     private void DrawFieldOFView() {
@@ -50,6 +46,7 @@ public class SniperActionFieldOfView : MonoBehaviour
     }
 
     public void StopSniper() {
+        LevelGrid.Instance.OnAnyUnitMovedGridPosition -= CheckHasEnemyOnFieldOfView;
         sniperAction.SetFiewdOfViewNull();
         Destroy(gameObject);
     }
