@@ -649,6 +649,10 @@ MonoBehaviour:
   actionImage: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  targetsList: []
+  maxAttackDistance: 1
+  attackAttenuation: 2
+  hitDamage: 30
   MAX_SPIN: 360
 --- !u!1001 &8948093288391262455
 PrefabInstance:

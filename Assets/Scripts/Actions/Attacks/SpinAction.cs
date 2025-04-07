@@ -36,6 +36,7 @@ public class SpinAction : BaseAction {
             targetsList.Clear();
         }
         GridPosition unitGridPosition = unit.GetGridPosition();
+        List<GridPosition> possibleAttackPositions = new List<GridPosition>();;
         int i = 0;
         for (int x = -maxAttackDistance; x <= maxAttackDistance; x++) {
             for (int z = -maxAttackDistance; z <= maxAttackDistance; z++) {
@@ -44,6 +45,7 @@ public class SpinAction : BaseAction {
                 if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) {
                     continue;
                 }
+                possibleAttackPositions.Add(testGridPosition);
 
                 if (LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition) != null) {
                     if (LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition).IsEnemy()) {
@@ -54,9 +56,7 @@ public class SpinAction : BaseAction {
             }
         }
 
-        return new List<GridPosition> {
-            unitGridPosition
-        };
+        return possibleAttackPositions;
     }
 
 
