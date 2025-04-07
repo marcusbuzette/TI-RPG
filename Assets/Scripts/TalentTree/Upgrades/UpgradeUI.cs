@@ -3,14 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class UpgradeUI : MonoBehaviour {
+public class UpgradeUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
     public PossibleUpgrade upgrade;
     public int upgradeIndex;
     public Text nome;
     public Text descricao;
     public Text custo;
     public Button botaoDesbloquear;
+    [SerializeField] private TooltipPosition tooltipPosition = TooltipPosition.NULL;
 
     private void Start() {
         TalentManager.Instance.onSkillUpdate += TalentManager_OnSkillUpdate;
@@ -36,6 +38,7 @@ public class UpgradeUI : MonoBehaviour {
         this.upgrade = upgrade;
         this.upgradeIndex = index;
         nome.text = upgrade.upgrade[index].name;
+        this.tooltipPosition = index % 2 == 0 ? TooltipPosition.LEFT : TooltipPosition.RIGHT;
         if (upgrade.upgrade[index].upgradeImage != null) {
             botaoDesbloquear.GetComponent<Image>().sprite = upgrade.upgrade[index].upgradeImage;
             nome.enabled = false;
@@ -45,5 +48,13 @@ public class UpgradeUI : MonoBehaviour {
 
     private void OnDestroy() {
         TalentManager.Instance.onSkillUpdate -= TalentManager_OnSkillUpdate;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData) {
+        Tooltip.Instance.ShowTooltip(nome.text, transform, tooltipPosition);
+    }
+
+    public void OnPointerExit(PointerEventData eventData) {
+        Tooltip.Instance.HideTooltip();
     }
 }
