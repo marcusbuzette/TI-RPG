@@ -77,14 +77,14 @@ public class TalentManager : MonoBehaviour {
     }
 
     public void TryToUpgrade(PossibleUpgrade upgrade, int index) {
-       if (CanUpgrade(upgrade)) {
+        if (CanUpgrade(upgrade)) {
             Unit unitAux = playerUnitList.Find(unit => unit.GetComponent<Unit>().GetUnitId() == this.SelectedUnit).GetComponent<Unit>();
             this.UpdateLevelBar();
             DesbloquearUpgrade(upgrade, index);
         }
         else {
             Debug.Log("upgrade não pode ser desbloqueado!");
-        } 
+        }
     }
 
     //Muda o status do skills de desbloqueado para true
@@ -156,10 +156,11 @@ public class TalentManager : MonoBehaviour {
             this.selectedLevelSkill.Add(unitSkills.custo, unitSkills);
         }
 
-        foreach (BaseSkills bs in skills) {
+        for (int i = 0; i < skills.Count; i++) {
             Button skillButton = Instantiate(skillButtonPrefab, skillTreeContainer);
-            skillButton.GetComponent<SkillUi>().SetBaseSkill(bs);
-            skillButton.onClick.AddListener(() => { TentarDesbloquearskills(bs); });
+            skillButton.GetComponent<SkillUi>().SetBaseSkill(skills[i]);
+            skillButton.GetComponent<SkillUi>().SetSkillToolTipPos(TooltipPosition.RIGHT);
+            skillButton.onClick.AddListener(() => { TentarDesbloquearskills(skills[i]); });
         }
 
         upgrades.Sort((a, b) => a.level.CompareTo(b.level));
@@ -168,7 +169,7 @@ public class TalentManager : MonoBehaviour {
                 Button upgradeButton = Instantiate(upgradeButtonPrefab, upgradesTreeContainer);
                 upgradeButton.GetComponent<UpgradeUI>().SetBaseUpgrade(possibleUpgrade, i);
                 upgradeButton.onClick.AddListener(() => { TryToUpgrade(possibleUpgrade, upgradeButton.GetComponent<UpgradeUI>().upgradeIndex); });
-                
+
             }
         }
     }

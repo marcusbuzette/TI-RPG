@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571337, b: 0.3069219, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -316,6 +316,7 @@ MonoBehaviour:
   healthPoints: 1
   maxHealthPoints: 100
   animator: {fileID: 0}
+  damageSFX: 
 --- !u!114 &165459950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,6 +359,7 @@ MonoBehaviour:
   shootingTimer: 0.3
   cooloffTimer: 0.1
   rotateSpeed: 10
+  freezeArrowSFX: 
 --- !u!114 &165459952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,6 +384,7 @@ MonoBehaviour:
   cooloffTimer: 0.1
   rotateSpeed: 10
   shootDamage: 100
+  arrowSFX: 
 --- !u!114 &165459953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3366,7 +3369,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1715821487}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.14521313, y: -0.000000032966827, z: 0.0000000048385016, w: 0.98940045}
+  m_LocalRotation: {x: 0.14521314, y: 8.619646e-15, z: -9.284736e-16, w: 0.98940045}
   m_LocalPosition: {x: 0.63, y: 3, z: -9.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3988,6 +3991,7 @@ MonoBehaviour:
   healthPoints: 100
   maxHealthPoints: 100
   animator: {fileID: 0}
+  damageSFX: 
 --- !u!114 &1868139150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4067,6 +4071,7 @@ MonoBehaviour:
   cooloffTimer: 0.1
   rotateSpeed: 10
   shootDamage: 100
+  arrowSFX: 
 --- !u!114 &1868139157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4079,7 +4084,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b26dcc9098726be4593e0d47c75aa31b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionImage: {fileID: 0}
+  actionImage: {fileID: 21300000, guid: f7fe60f8d5adabc459fb05f55e57981e, type: 3}
   animator: {fileID: 0}
   speed: 0
   nome: 
@@ -4104,6 +4109,7 @@ MonoBehaviour:
   damage: 3
   selectedGrid: {x: 0, y: 0, z: 0}
   isAiming: 0
+  fireArrowSFX: 
 --- !u!114 &1868139158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4116,7 +4122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c719e63af947e4a79aa9af6829e4b54f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionImage: {fileID: 0}
+  actionImage: {fileID: 21300000, guid: 2bfe953e8b194c04f9b2310519b1071b, type: 3}
   animator: {fileID: 0}
   speed: 0
   nome: 
@@ -4124,7 +4130,7 @@ MonoBehaviour:
   custo: 0
   preRequisitos: []
   onCoolDown: 0
-  coolDown: 0
+  coolDown: 2
   currentCoolDown: 0
   obstaclesLayerMask:
     serializedVersion: 2
@@ -4392,7 +4398,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2048497479}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.14521313, y: -0.000000032966827, z: 0.0000000048385016, w: 0.98940045}
+  m_LocalRotation: {x: 0.14521314, y: 8.619646e-15, z: -9.284736e-16, w: 0.98940045}
   m_LocalPosition: {x: 0.63, y: 3, z: -9.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
