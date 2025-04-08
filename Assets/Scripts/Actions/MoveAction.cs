@@ -33,6 +33,7 @@ public class MoveAction : BaseAction {
     }
 
     public override void Action() {
+        if (currentPositionIndex > positionList.Count - 1) return;
         Vector3 targetPosition = positionList[currentPositionIndex];
         if (Vector3.Distance(targetPosition, transform.position) > stopDistance &&
         (hastLastDistance == false || Vector3.Distance(targetPosition, transform.position) < lastDistance)) {
@@ -64,6 +65,7 @@ public class MoveAction : BaseAction {
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
+        if (GetComponent<Unit>().GetGridPosition() == mouseGridPosition) return;
         List<GridPosition> pathGridPositionList = PathFinding.Instance.FindPath(unit.GetGridPosition(), mouseGridPosition, out int pathLenght);
 
         if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE) {
@@ -75,6 +77,7 @@ public class MoveAction : BaseAction {
                 foreach (GridPosition pathGridPosition in pathGridPositionList) {
                     positionList.Add(LevelGrid.Instance.GetWorldPosition(pathGridPosition));
                 }
+                ActionStart(onActionComplete);
             }
             else if (LevelGrid.Instance.GetWorldPosition(mouseGridPosition) != positionList[positionList.Count - 1]) {
                 positionList = new List<Vector3>() { positionList[0] };
@@ -83,12 +86,14 @@ public class MoveAction : BaseAction {
                     this.startZone = unit.GetGridPosition().zone;
                     this.hasStartZone = true;
                 }
-                Debug.Log(this.startZone);
-                pathGridPositionList.RemoveAt(0);
+                if (pathGridPositionList.Count > 2) {
+                    pathGridPositionList.RemoveAt(0);
+                }
 
                 foreach (GridPosition pathGridPosition in pathGridPositionList) {
                     positionList.Add(LevelGrid.Instance.GetWorldPosition(pathGridPosition));
                 }
+                ActionStart(onActionComplete);
             }
         }
         else if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE) {
@@ -98,10 +103,8 @@ public class MoveAction : BaseAction {
             foreach (GridPosition pathGridPosition in pathGridPositionList) {
                 positionList.Add(LevelGrid.Instance.GetWorldPosition(pathGridPosition));
             }
+            ActionStart(onActionComplete);
         }
-
-
-        ActionStart(onActionComplete);
     }
 
     public override string GetActionName() {
