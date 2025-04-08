@@ -19,6 +19,7 @@ public class MoveAction : BaseAction {
     private int currentPositionIndex;
     // private bool changedBattleZone = false;
     private int startZone = 0;
+    private bool hasStartZone = false;
 
 
 
@@ -49,6 +50,7 @@ public class MoveAction : BaseAction {
             if (currentPositionIndex >= positionList.Count) {
                 transform.position = positionList[currentPositionIndex - 1];
                 ActionFinish();
+                this.hasStartZone = false;
                 animator?.SetBool("IsWalking", false);
             }
 
@@ -77,7 +79,12 @@ public class MoveAction : BaseAction {
             else if (LevelGrid.Instance.GetWorldPosition(mouseGridPosition) != positionList[positionList.Count - 1]) {
                 positionList = new List<Vector3>() { positionList[0] };
                 currentPositionIndex = 1;
-                this.startZone = unit.GetGridPosition().zone;
+                if (!this.hasStartZone) {
+                    this.startZone = unit.GetGridPosition().zone;
+                    this.hasStartZone = true;
+                }
+                Debug.Log(this.startZone);
+                pathGridPositionList.RemoveAt(0);
 
                 foreach (GridPosition pathGridPosition in pathGridPositionList) {
                     positionList.Add(LevelGrid.Instance.GetWorldPosition(pathGridPosition));
