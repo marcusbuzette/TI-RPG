@@ -31,7 +31,7 @@ public class SniperActionFieldOfView : MonoBehaviour
         if ((e as LevelGridEventArgs).unit.IsEnemy() && 
             (e as LevelGridEventArgs).unit.isUnitTurn &&
            gridObjects.Exists((gridPos => gridPos == (e as LevelGridEventArgs).currentGridPos)) ) {
-            (e as LevelGridEventArgs).unit.Damage(damage);
+            (e as LevelGridEventArgs).unit.Damage(damage, this.GetComponent<Unit>());
                 StopSniper();
         }
     }

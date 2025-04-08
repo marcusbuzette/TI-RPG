@@ -21,18 +21,19 @@ public class HealthSystem : MonoBehaviour {
         OnDamage?.Invoke(this, EventArgs.Empty);
     }
 
-    public void Damage(int damage) {
+    public void Damage(int damage, Unit attackedBy) {
         if (isDefending) return;
+        Debug.Log("Damage");
+        animator?.SetTrigger("TookDamage");
 
         healthPoints -= damage;
         
-        animator?.SetTrigger("TookDamage");
         if (!string.IsNullOrEmpty(damageSFX))
         {
             AudioManager.instance?.PlaySFX(damageSFX);  // vai tocar o sfx q ta no inspector do healthSystem do cada boneco
         }
         if (healthPoints < 0) healthPoints = 0;
-        OnDamage?.Invoke(this, EventArgs.Empty);
+        OnDamage?.Invoke(this, new HealthSystemEvent(attackedBy));
         if (healthPoints == 0) Die();
     }
 

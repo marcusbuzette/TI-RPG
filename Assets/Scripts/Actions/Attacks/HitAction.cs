@@ -32,7 +32,7 @@ public class HitAction : BaseAction {
                 AudioManager.instance?.PlaySFX(meleeSFX); // para cada personagem com esta ação, tem que colocar o respectivo som no inspector do prefab. Exemplo o protagonista tem no sound manager o ProtagHit, então esse nome tem que estar no inspector de seu prefab.
                 }
             Attack = 0;
-            targetUnit?.Damage(hitDamage);
+            targetUnit?.Damage(hitDamage, this.GetComponent<Unit>());
         }
         StartCoroutine(DelayActionFinish());
 

@@ -156,7 +156,7 @@ public class ShootAction : BaseAction
 
     private void Shoot()
     {
-        targetUnit.Damage(shootDamage);
+        targetUnit.Damage(shootDamage, this.GetComponent<Unit>());
         animator?.SetTrigger("Attack");
         AudioManager.instance?.PlaySFX("Arrows");
     }

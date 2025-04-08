@@ -20,7 +20,7 @@ public class SpinAction : BaseAction {
         if (totalSpinAmmount > MAX_SPIN) {
             Debug.Log(GetComponent<Unit>().GetUnitStats().GetAttack() - attackAttenuation);
             foreach (Unit target in targetsList) {
-            target.GetHealthSystem().Damage(this.hitDamage);
+            target.Damage(this.hitDamage, this.GetComponent<Unit>());
         }
             totalSpinAmmount = 0;
             ActionFinish();

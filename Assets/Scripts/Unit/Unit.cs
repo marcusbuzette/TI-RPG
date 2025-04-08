@@ -164,8 +164,8 @@ public class Unit : MonoBehaviour {
         return isEnemy;
     }
 
-    public void Damage(int damage) {
-        healthSystem.Damage(damage);
+    public void Damage(int damage, Unit attackedBy = null) {
+        healthSystem.Damage(damage, attackedBy);
     }
 
     public void AddXp(int xpAmount) {
