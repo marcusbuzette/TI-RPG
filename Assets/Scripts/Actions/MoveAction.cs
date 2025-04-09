@@ -45,7 +45,7 @@ public class MoveAction : BaseAction {
             transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
             transform.position += moveDirection * moveSpeed * Time.deltaTime;
             // animator?.SetBool("IsWalking", true);
-            unit.PlayAnimation("IsWalking", true);
+            // unit.PlayAnimation("IsWalking", true);
 
             if (moveDirControl == Vector3.zero ||
              (moveDirControl.x * moveDirection.x > 0 && moveDirControl.z * moveDirection.z > 0)) {
@@ -53,7 +53,7 @@ public class MoveAction : BaseAction {
                 transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
                 transform.position += moveDirection * moveSpeed * Time.deltaTime;
                 // animator?.SetBool("IsWalking", true);
-                unit.PlayAnimation("IsWalking", true);
+                // unit.PlayAnimation("IsWalking", true);
             }
 
         }
@@ -93,6 +93,7 @@ public class MoveAction : BaseAction {
                 foreach (GridPosition pathGridPosition in pathGridPositionList) {
                     positionList.Add(LevelGrid.Instance.GetWorldPosition(pathGridPosition));
                 }
+                unit.PlayAnimation("IsWalking", true);
                 ActionStart(onActionComplete);
             }
             else if (LevelGrid.Instance.GetWorldPosition(mouseGridPosition) != positionList[positionList.Count - 1]) {
@@ -109,6 +110,7 @@ public class MoveAction : BaseAction {
                 foreach (GridPosition pathGridPosition in pathGridPositionList) {
                     positionList.Add(LevelGrid.Instance.GetWorldPosition(pathGridPosition));
                 }
+                unit.PlayAnimation("IsWalking", true);
                 ActionStart(onActionComplete);
             }
         }
@@ -119,6 +121,7 @@ public class MoveAction : BaseAction {
             foreach (GridPosition pathGridPosition in pathGridPositionList) {
                 positionList.Add(LevelGrid.Instance.GetWorldPosition(pathGridPosition));
             }
+            unit.PlayAnimation("IsWalking", true);
             ActionStart(onActionComplete);
         }
     }

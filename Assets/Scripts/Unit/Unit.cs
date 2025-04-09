@@ -280,7 +280,6 @@ public class Unit : MonoBehaviour {
 
     private void PlayNextAnimation() {
         KeyValuePair<string, bool> trigger = animationTriggersStack.ElementAt(0);
-        Debug.Log("Unit - " + unitId + ", Playing - " + trigger.Key);
         animationTriggersStack.Remove(trigger.Key);
         if (animator == null) return;
         if (trigger.Value) {
