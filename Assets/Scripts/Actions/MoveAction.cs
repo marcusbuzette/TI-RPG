@@ -9,9 +9,10 @@ public class MoveAction : BaseAction {
 
     [SerializeField] private float moveSpeed = 4f;
     [SerializeField] private float rotateSpeed = 4f;
-    [SerializeField] private float stopDistance = .1f;
+    [SerializeField] private float stopDistance = .05f;
     private float lastDistance = 0;
     private bool hastLastDistance = false;
+    private Vector3 moveDirControl = Vector3.zero;
 
     [SerializeField] private int maxMoveDistance = 4;
 
@@ -36,19 +37,31 @@ public class MoveAction : BaseAction {
         if (currentPositionIndex > positionList.Count - 1) return;
         Vector3 targetPosition = positionList[currentPositionIndex];
         if (Vector3.Distance(targetPosition, transform.position) > stopDistance &&
-        (hastLastDistance == false || Vector3.Distance(targetPosition, transform.position) < lastDistance)) {
+            (hastLastDistance == false || Vector3.Distance(targetPosition, transform.position) < lastDistance)) {
             this.hastLastDistance = true;
             this.lastDistance = Vector3.Distance(targetPosition, transform.position);
             Vector3 moveDirection = (targetPosition - transform.position).normalized;
+
             transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
             transform.position += moveDirection * moveSpeed * Time.deltaTime;
-            animator?.SetBool("IsWalking", true);
-            // unit.PlayAnimation("IsWalking", true);
+            // animator?.SetBool("IsWalking", true);
+            unit.PlayAnimation("IsWalking", true);
+
+            if (moveDirControl == Vector3.zero ||
+             (moveDirControl.x * moveDirection.x > 0 && moveDirControl.z * moveDirection.z > 0)) {
+                moveDirControl = moveDirection;
+                transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
+                transform.position += moveDirection * moveSpeed * Time.deltaTime;
+                // animator?.SetBool("IsWalking", true);
+                unit.PlayAnimation("IsWalking", true);
+            }
+
         }
         else {
             currentPositionIndex++;
             this.hastLastDistance = false;
             lastDistance = 0;
+            moveDirControl = Vector3.zero;
             if (currentPositionIndex >= positionList.Count) {
                 transform.position = positionList[currentPositionIndex - 1];
                 ActionFinish();
