@@ -23,18 +23,21 @@ public class HealthSystem : MonoBehaviour {
 
     public void Damage(int damage, Unit attackedBy) {
         if (isDefending) return;
-        Debug.Log("Damage");
-        animator?.SetTrigger("TookDamage");
+        // animator?.SetTrigger("TookDamage");
+        GetComponent<Unit>().PlayAnimation("TookDamage");
 
         healthPoints -= damage;
-        
-        if (!string.IsNullOrEmpty(damageSFX))
-        {
+
+        if (!string.IsNullOrEmpty(damageSFX)) {
             AudioManager.instance?.PlaySFX(damageSFX);  // vai tocar o sfx q ta no inspector do healthSystem do cada boneco
         }
         if (healthPoints < 0) healthPoints = 0;
-        OnDamage?.Invoke(this, new HealthSystemEvent(attackedBy));
-        if (healthPoints == 0) Die();
+        if (healthPoints == 0) {
+            Die();
+        }
+        else {
+            OnDamage?.Invoke(this, new HealthSystemEvent(attackedBy));
+        }
     }
 
     private void Die() {
@@ -64,7 +67,7 @@ public class HealthSystem : MonoBehaviour {
         this.healthPoints = this.maxHealthPoints;
     }
 
-    public void SetDefenceMode(bool isDefending) {this.isDefending = isDefending;}
-    public bool GetDefenceMode() {return this.isDefending;}
+    public void SetDefenceMode(bool isDefending) { this.isDefending = isDefending; }
+    public bool GetDefenceMode() { return this.isDefending; }
 
 }

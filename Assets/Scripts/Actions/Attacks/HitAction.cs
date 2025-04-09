@@ -25,7 +25,8 @@ public class HitAction : BaseAction {
 
     public override void Action() {
         if (Attack == 1) {
-            animator?.SetTrigger("Attack");
+            // animator?.SetTrigger("Attack");
+            unit.PlayAnimation("Attack");
 
             if (!string.IsNullOrEmpty(meleeSFX)) 
                 {

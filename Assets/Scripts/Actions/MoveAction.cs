@@ -43,6 +43,7 @@ public class MoveAction : BaseAction {
             transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
             transform.position += moveDirection * moveSpeed * Time.deltaTime;
             animator?.SetBool("IsWalking", true);
+            // unit.PlayAnimation("IsWalking", true);
         }
         else {
             currentPositionIndex++;
@@ -52,13 +53,15 @@ public class MoveAction : BaseAction {
                 transform.position = positionList[currentPositionIndex - 1];
                 ActionFinish();
                 this.hasStartZone = false;
-                animator?.SetBool("IsWalking", false);
+                unit.EndAnimation("IsWalking", true);
+                // animator?.SetBool("IsWalking", false);
             }
 
             if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE &&
                  startZone != unit.GetGridPosition().zone) {
                 ActionFinish();
-                animator?.SetBool("IsWalking", false);
+                // animator?.SetBool("IsWalking", false);
+                unit.EndAnimation("IsWalking", true);
                 LevelGrid.Instance.BattleMode(unit.GetGridPosition().zone);
             }
         }

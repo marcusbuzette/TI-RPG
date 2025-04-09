@@ -44,7 +44,8 @@ public class SniperAction : BaseAction {
 
     public override void Action() {
         if (Attack == 1) {
-            animator?.SetTrigger("Attack");
+            // animator?.SetTrigger("Attack");
+            unit.PlayAnimation("Attack");
             AudioManager.instance?.PlaySFX("Melee");
             Attack = 0;
         }

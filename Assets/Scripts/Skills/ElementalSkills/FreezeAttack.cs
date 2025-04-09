@@ -141,7 +141,8 @@ public class FreezeAttack : BaseSkills {
             targetUnit.gameObject.AddComponent<FreezeEffect>().SetFreezeEffect(targetUnit, coolDown);
         }
         else targetUnit.gameObject.AddComponent<FreezeEffect>().SetFreezeEffect(targetUnit, coolDown);
-        animator?.SetTrigger("Attack");
+        // animator?.SetTrigger("Attack");
+        unit.PlayAnimation("Attack");
         //AudioManager.instance?.PlaySFX("Arrows");
     }
 

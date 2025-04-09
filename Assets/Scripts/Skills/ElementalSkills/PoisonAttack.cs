@@ -142,7 +142,8 @@ public class PoisonAttack : BaseSkills
             targetUnit.gameObject.AddComponent<PoisonEffect>().SetPoisonEffect(targetUnit, damage, coolDown);
         }
         else targetUnit.gameObject.AddComponent<PoisonEffect>().SetPoisonEffect(targetUnit, damage, coolDown);
-        animator?.SetTrigger("Attack");
+        // animator?.SetTrigger("Attack");
+        unit.PlayAnimation("Attack");
         //AudioManager.instance?.PlaySFX("Arrows");
     }
 
