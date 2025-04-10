@@ -21,6 +21,7 @@ public class CameraController : MonoBehaviour
         cinemachineTransposer = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineTransposer>();
         targetFollowOffset = cinemachineTransposer.m_FollowOffset;
         TurnSystem.Instance.SetCameraController(this);
+        Camera.main.useOcclusionCulling = true;
     }
     void Update()
     {
@@ -79,6 +80,7 @@ public class CameraController : MonoBehaviour
         float zoomAmount = 1f;
         if (Input.mouseScrollDelta.y > 0)
         {
+            Debug.Log("Apertou");
             targetFollowOffset.y -= zoomAmount;
         }
         if (Input.mouseScrollDelta.y < 0)
