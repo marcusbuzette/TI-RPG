@@ -88,8 +88,13 @@ public class TurnSystem : MonoBehaviour {
 
     public void RemoveUnitFromList(Unit unitDead) {
         int unitDeadIndex = unitiesOrderList.FindIndex((u) => u.transform == unitDead.transform);
+        if (unitDead.IsEnemy()) {
+            this.unitiesOrderList[this.turnNumber]
+                .AddXp(this.unitiesOrderList[unitDeadIndex].GetUnitStats().GetXpSpoil());
+                
+            allEnemies.Remove(unitDead);
+        }
         unitiesOrderList.Remove(unitDead);
-        if (unitDead.IsEnemy()) { allEnemies.Remove(unitDead); }
         if (turnNumber > unitDeadIndex) { turnNumber--; }
         if (isPlayerTurn && CheckEnemiesLeftInTheBattleZone()) {
             ComboKill();
@@ -109,6 +114,10 @@ public class TurnSystem : MonoBehaviour {
         }
         else if (isPlayerTurn && !CheckEnemiesLeft()) {
             ResetTurnSpeed();
+            foreach (Unit u in unitiesOrderList) {
+                if (!u.IsEnemy()) u.AddXp(2);
+            }
+
             GameController.controller.NextLevel();
             SceneManager.LoadScene("HUB");
         }
@@ -164,12 +173,12 @@ public class TurnSystem : MonoBehaviour {
 
 
 
-//test
+    //test
     public Unit GetPlayerUnitToExplore() {
         foreach (Unit unit in unitiesOrderList) {
             if (!unit.IsEnemy()) {
-                return unit;  
-            } 
+                return unit;
+            }
         }
         return null;
     }

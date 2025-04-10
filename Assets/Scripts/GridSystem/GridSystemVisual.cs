@@ -69,7 +69,7 @@ public class GridSystemVisual : MonoBehaviour {
         }
     }
 
-    private void ShowGridPositionRange(GridPosition gridPosition, int range, GridVisualType gridVisualType, Vector3 unitWorldPosition, bool isBlockedByObstacles) {
+    private void ShowGridPositionRange(GridPosition gridPosition, int range, GridVisualType gridVisualType, Vector3 unitWorldPosition, bool haveTestDistance, bool isBlockedByObstacles) {
         List<GridPosition> gridPositionList = new List<GridPosition>();
         //LayerMask obstaclesLayerMask = LayerMask.GetMask("Obstacles");
         for (int x = -range; x <= range; x++) {
@@ -81,7 +81,7 @@ public class GridSystemVisual : MonoBehaviour {
                 }
 
                 int testDistance = Mathf.Abs(x) + Mathf.Abs(z);
-                if (testDistance > range) {
+                if (testDistance > range && haveTestDistance) {
                     continue;
                 }
 
@@ -134,13 +134,15 @@ public class GridSystemVisual : MonoBehaviour {
                 case ShootAction shootAction:
                     gridVisualType = GridVisualType.Red;
 
-                    ShowGridPositionRange(selectedUnit.GetGridPosition(), shootAction.GetMaxShootDistance(), GridVisualType.RedSoft, selectedUnit.transform.position, true);
+                    ShowGridPositionRange(selectedUnit.GetGridPosition(), shootAction.GetMaxShootDistance(), GridVisualType.RedSoft, selectedUnit.transform.position, true, true);
                     break;
                 case ItemAction itemAction:
                     gridVisualType = GridVisualType.Yellow;
                     break;
                 case HitAction hitAction:
                     gridVisualType = GridVisualType.Red;
+
+                    ShowGridPositionRange(selectedUnit.GetGridPosition(), hitAction.GetMaxHitDistance(), GridVisualType.RedSoft, selectedUnit.transform.position, false, true);
                     break;
                 case TeleportSkill teleportSkill:
                     gridVisualType = GridVisualType.Blue;
@@ -148,7 +150,7 @@ public class GridSystemVisual : MonoBehaviour {
                 case IntimidateSkill intimidateSkill:
                     gridVisualType = GridVisualType.Blue;
 
-                    ShowGridPositionRange(selectedUnit.GetGridPosition(), intimidateSkill.GetMaxIntimidateDistance(), GridVisualType.BlueSoft, selectedUnit.transform.position, false);
+                    ShowGridPositionRange(selectedUnit.GetGridPosition(), intimidateSkill.GetMaxIntimidateDistance(), GridVisualType.BlueSoft, selectedUnit.transform.position, true, false);
                     break;
                 case EnemyFocusSkill enemyFocusSkill:
                     gridVisualType = GridVisualType.Blue;
@@ -156,17 +158,27 @@ public class GridSystemVisual : MonoBehaviour {
                 case FireAttack fireAttack:
                     gridVisualType = GridVisualType.White;
 
-                    ShowGridPositionRange(selectedUnit.GetGridPosition(), fireAttack.GetMaxShootDistance(), GridVisualType.White, selectedUnit.transform.position, true);
+                    ShowGridPositionRange(selectedUnit.GetGridPosition(), fireAttack.GetMaxShootDistance(), GridVisualType.White, selectedUnit.transform.position, true, true);
                     break;
                 case PoisonAttack poisonAttack:
                     gridVisualType = GridVisualType.Green;
 
-                    ShowGridPositionRange(selectedUnit.GetGridPosition(), poisonAttack.GetMaxShootDistance(), GridVisualType.GreenSoft, selectedUnit.transform.position, true);
+                    ShowGridPositionRange(selectedUnit.GetGridPosition(), poisonAttack.GetMaxShootDistance(), GridVisualType.GreenSoft, selectedUnit.transform.position, true, true);
                     break;
                 case FreezeAttack freezeAttack:
                     gridVisualType = GridVisualType.Blue;
 
-                    ShowGridPositionRange(selectedUnit.GetGridPosition(), freezeAttack.GetMaxShootDistance(), GridVisualType.BlueSoft, selectedUnit.transform.position, true);
+                    ShowGridPositionRange(selectedUnit.GetGridPosition(), freezeAttack.GetMaxShootDistance(), GridVisualType.BlueSoft, selectedUnit.transform.position, true, true);
+                    break;
+                case HealAction healAction:
+                    gridVisualType = GridVisualType.Green;
+
+                    ShowGridPositionRange(selectedUnit.GetGridPosition(), healAction.GetMaxHealDistance(), GridVisualType.GreenSoft, selectedUnit.transform.position, true, true);
+                    break;
+                case HealArea healArea:
+                    gridVisualType = GridVisualType.White;
+
+                    ShowGridPositionRange(selectedUnit.GetGridPosition(), healArea.GetMaxShootDistance(), GridVisualType.White, selectedUnit.transform.position, true, true);
                     break;
             }
             ShowGridPositionList(selectedAction.GetValidGridPositionList(), gridVisualType);

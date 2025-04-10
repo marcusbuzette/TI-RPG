@@ -165,6 +165,8 @@ public class Unit : MonoBehaviour {
     }
 
     public void AddXp(int xpAmount) {
+        Debug.Log("ganhou xp");
+        GameController.controller.UpdateUnitRecords(this);
         xpSystem.AddXp(xpAmount);
     }
 
@@ -218,7 +220,7 @@ public class Unit : MonoBehaviour {
 
     public string GetUnitId() { return this.unitId; }
     public XpSystem GetUnitXpSystem() { return this.xpSystem; }
-    public UnitStats GetUnitStats() { return this.unitStats; }
+    public UnitStats GetUnitStats() { return this.unitStats != null ? this.unitStats : this.baseUnitStats; }
     public UnitStats GetBaseUnitStats() { return this.baseUnitStats; }
     public void UpdateUnitStats(UnitStats unitStats) { this.unitStats = unitStats; }
 
@@ -255,5 +257,9 @@ public class Unit : MonoBehaviour {
 
     public void UpdateGridPositionZone(int zone) {
         this.gridPosition.zone = zone;
+    }
+
+    public HealthSystem GetHealthSystem() {
+        return healthSystem;
     }
 }

@@ -23,6 +23,7 @@ public class UnitActionSystemUI : MonoBehaviour {
         LevelGrid.Instance.OnGameModeChanged += LevelGrid_OnGameModeChanged;
 
         CreateUnitActionButtons();
+        this.UpdateStatus();
     }
 
 
@@ -143,6 +144,10 @@ public class UnitActionSystemUI : MonoBehaviour {
     }
 
     private void LevelGrid_OnGameModeChanged(object sender, EventArgs e) {
+        this.UpdateStatus();
+    }
+
+    private void UpdateStatus() {
         for (int i = 0; i < transform.childCount; i++) {
             transform.GetChild(i).gameObject.SetActive(LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE ? true : false);
         }

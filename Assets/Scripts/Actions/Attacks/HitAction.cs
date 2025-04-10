@@ -5,13 +5,18 @@ using System;
 using Unity.VisualScripting;
 
 public class HitAction : BaseAction {
-    [SerializeField] private int maxShootDistance = 1;
+
+    [SerializeField] private LayerMask obstaclesLayerMask;
+    [SerializeField] private int maxHitDistance = 1;
     [SerializeField] private int hitDamage = 50;
     [SerializeField] private float rotateSpeed = 10f;
     public int Attack = 1;
 
     private Unit targetUnit;
 
+    private void Start() {
+        obstaclesLayerMask = LayerMask.GetMask("Obstacles"); //add layer mask to don't shoot through obstacles
+    }
 
     public override string GetActionName() {
         return "Ataque";
@@ -40,8 +45,8 @@ public class HitAction : BaseAction {
 
         GridPosition unitGridPosition = unit.GetGridPosition();
 
-        for (int x = -maxShootDistance; x <= maxShootDistance; x++) {
-            for (int z = -maxShootDistance; z <= maxShootDistance; z++) {
+        for (int x = -maxHitDistance; x <= maxHitDistance; x++) {
+            for (int z = -maxHitDistance; z <= maxHitDistance; z++) {
                 GridPosition offsetGridPosition = new GridPosition(x, z, 0);
                 GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
@@ -57,6 +62,18 @@ public class HitAction : BaseAction {
                 Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition);
 
                 if (targetUnit.IsEnemy() == unit.IsEnemy()) {
+                    continue;
+                }
+
+                Vector3 unitWorldPosition = LevelGrid.Instance.GetWorldPosition(unitGridPosition);
+                Vector3 shootDir = (LevelGrid.Instance.GetWorldPosition(testGridPosition) - unitWorldPosition).normalized;
+
+                float unitShoulderHeight = 1.7f;
+                if (Physics.Raycast(unitWorldPosition + Vector3.up * unitShoulderHeight,
+                    shootDir,
+                    Vector3.Distance(unitWorldPosition, LevelGrid.Instance.GetWorldPosition(testGridPosition)),
+                    obstaclesLayerMask)) {
+                    //Blocked by an Obstacle
                     continue;
                 }
 
@@ -93,5 +110,9 @@ public class HitAction : BaseAction {
         AudioManager.instance?.PlaySFX("DamageTaken");
         return damage;
 
+    }
+
+    public int GetMaxHitDistance() {
+        return maxHitDistance;
     }
 }
