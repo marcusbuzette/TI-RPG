@@ -10,6 +10,7 @@ public class HitAction : BaseAction {
     [SerializeField] private int maxHitDistance = 1;
     [SerializeField] private int hitDamage = 50;
     [SerializeField] private float rotateSpeed = 10f;
+    public string meleeSFX;
     public int Attack = 1;
 
     private Unit targetUnit;
@@ -24,14 +25,24 @@ public class HitAction : BaseAction {
 
     public override void Action() {
         if (Attack == 1) {
-            targetUnit?.Damage(hitDamage);
-            animator?.SetTrigger("Attack");
-            AudioManager.instance?.PlaySFX("Melee");
+            // animator?.SetTrigger("Attack");
+            unit.PlayAnimation("Attack");
+
+            if (!string.IsNullOrEmpty(meleeSFX)) 
+                {
+                AudioManager.instance?.PlaySFX(meleeSFX); // para cada personagem com esta ação, tem que colocar o respectivo som no inspector do prefab. Exemplo o protagonista tem no sound manager o ProtagHit, então esse nome tem que estar no inspector de seu prefab.
+                }
             Attack = 0;
+            targetUnit?.Damage(hitDamage, this.GetComponent<Unit>());
         }
         StartCoroutine(DelayActionFinish());
 
+
+
     }
+
+     //public void Damaged(){
+            //targetUnit?.Damage(hitDamage);}
 
     private IEnumerator DelayActionFinish() {
         yield return new WaitForSeconds(0.5f); // Ajuste o tempo conforme necessário
@@ -107,7 +118,7 @@ public class HitAction : BaseAction {
 
     public int GetDamage() {
         int damage = hitDamage;
-        AudioManager.instance?.PlaySFX("DamageTaken");
+        //AudioManager.instance?.PlaySFX("DamageTaken");
         return damage;
 
     }

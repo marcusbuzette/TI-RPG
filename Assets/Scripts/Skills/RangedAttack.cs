@@ -20,7 +20,7 @@ public class RangedAttack : BaseSkills {
     }
 
     public override string GetActionName() {
-        return "Arremeço";
+        return "Arremesso";
     }
 
     public override List<GridPosition> GetValidGridPositionList() {

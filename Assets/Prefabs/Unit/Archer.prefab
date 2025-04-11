@@ -176,6 +176,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5740676890434492411, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: damageSFX
+      value: ArcherDano
+      objectReference: {fileID: 0}
     - target: {fileID: 8829183408524775923, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -261,8 +265,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4c588a935c0a4f56b855794c3e7145d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -272,6 +277,7 @@ MonoBehaviour:
   cooloffTimer: 0.1
   rotateSpeed: 10
   shootDamage: 60
+  arrowSFX: ArcherHit
 --- !u!114 &2725831191132171572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,8 +290,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 272359c525b7a47b382f31920349d06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   maxShootDistance: 1
   hitDamage: 50
   rotateSpeed: 10
@@ -302,8 +309,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d080ed6cd128408b82a8d741eeacab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
 --- !u!114 &8293743739561429572 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2170219948549848153, guid: 35802ef038968144e82bb11a407e1793, type: 3}

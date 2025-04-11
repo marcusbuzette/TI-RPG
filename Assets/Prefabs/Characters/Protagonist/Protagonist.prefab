@@ -552,8 +552,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a98aa284f9b23428a071063490ad6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   moveSpeed: 4
   rotateSpeed: 4
   stopDistance: 0.1
@@ -573,6 +574,7 @@ MonoBehaviour:
   healthPoints: 100
   maxHealthPoints: 100
   animator: {fileID: 0}
+  damageSFX: ProtagDano
 --- !u!114 &1220537054330633468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -585,11 +587,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8a40b60fda1ef4f8c9d0f466e29e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
-  maxShootDistance: 1
+  speed: 0
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  maxHitDistance: 1
   hitDamage: 50
   rotateSpeed: 10
+  meleeSFX: ProtagHit
   Attack: 1
 --- !u!114 &898693236174174977
 MonoBehaviour:
@@ -603,8 +610,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d080ed6cd128408b82a8d741eeacab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
 --- !u!95 &3177319531651322102
 Animator:
   serializedVersion: 5
@@ -638,8 +646,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfbc725d5c76b47b28e3ccd3e66dc849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
+  targetsList: []
+  maxAttackDistance: 1
+  attackAttenuation: 2
+  hitDamage: 30
   MAX_SPIN: 360
 --- !u!1001 &8948093288391262455
 PrefabInstance:

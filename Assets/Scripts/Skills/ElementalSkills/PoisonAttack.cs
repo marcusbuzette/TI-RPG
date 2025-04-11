@@ -16,7 +16,7 @@ public class PoisonAttack : BaseSkills
     [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private int damage = 100;
 
-
+    public string poisonArrowSFX;
     private State currentState;
     private float stateTimer;
     private Unit targetUnit;
@@ -38,7 +38,10 @@ public class PoisonAttack : BaseSkills
                 break;
             case State.Shooting:
                 if (canShoot) {
-                    AudioManager.instance?.PlaySFX("Arrows");
+                    if (!string.IsNullOrEmpty(poisonArrowSFX)) 
+                    {
+                        AudioManager.instance?.PlaySFX(poisonArrowSFX);
+                    }
                     Shoot();
                     canShoot = false;
                     NextState();
@@ -139,8 +142,9 @@ public class PoisonAttack : BaseSkills
             targetUnit.gameObject.AddComponent<PoisonEffect>().SetPoisonEffect(targetUnit, damage, coolDown);
         }
         else targetUnit.gameObject.AddComponent<PoisonEffect>().SetPoisonEffect(targetUnit, damage, coolDown);
-        animator?.SetTrigger("Attack");
-        AudioManager.instance?.PlaySFX("Arrows");
+        // animator?.SetTrigger("Attack");
+        unit.PlayAnimation("Attack");
+        //AudioManager.instance?.PlaySFX("Arrows");
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {

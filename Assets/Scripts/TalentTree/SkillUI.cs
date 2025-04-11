@@ -3,13 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class SkillUi : MonoBehaviour {
+public class SkillUi : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
     public BaseSkills skills;
     public Text nome;
     public Text descricao;
     public Text custo;
-    public Button botaoDesbloquear;
+    public Sprite skillUI;
+    public Button botaoDesbloquear; 
+    [SerializeField] private TooltipPosition tooltipPosition = TooltipPosition.NULL;
 
     private void Start() {
         TalentManager.Instance.onSkillUpdate += TalentManager_OnSkillUpdate;
@@ -37,11 +40,32 @@ public class SkillUi : MonoBehaviour {
     public void SetBaseSkill(BaseSkills skill) {
         this.skills = skill;
         nome.text = skills.nome;
+        if (skill.GetActionImage() != null) {
+            botaoDesbloquear.GetComponent<Image>().sprite = skill.GetActionImage();
+            nome.enabled = false;
+            botaoDesbloquear.transform.Rotate(new Vector3(0,0,-45));
+        }
         // descricao.text = skills.descricao;
         // custo.text = skills.custo.ToString();
     }
 
     private void OnDestroy() {
         TalentManager.Instance.onSkillUpdate -= TalentManager_OnSkillUpdate;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData) {
+        Tooltip.Instance.ShowTooltip(skillTooltipText(), transform, tooltipPosition);
+    }
+
+    public void OnPointerExit(PointerEventData eventData) {
+        Tooltip.Instance.HideTooltip();
+    }
+
+    private string skillTooltipText() {
+        return "<b><size=28>" + nome.text + ": </size></b> <br><br>" + this.skills.descricao;
+    }
+
+    public void SetSkillToolTipPos(TooltipPosition pos) {
+        this.tooltipPosition = pos;
     }
 }

@@ -99,7 +99,7 @@ public class LevelGrid : MonoBehaviour {
 
         AddUnitAtGridPosition(toGridPosition, unit);
 
-        OnAnyUnitMovedGridPosition?.Invoke(this, EventArgs.Empty);
+        OnAnyUnitMovedGridPosition?.Invoke(this, new LevelGridEventArgs(unit, toGridPosition));
     }
 
     public int GetFloor(Vector3 worldPosition) {

@@ -6,7 +6,7 @@ using System;
 public class Inspire : BaseSkills {
     private float totalSpinAmmount = 0;
     [SerializeField] private float MAX_SPIN = 360f;
-
+    public string inspireSFX;
 
     public override void Action() {
         float spinAddAmmount = 360f * Time.deltaTime;
@@ -14,6 +14,9 @@ public class Inspire : BaseSkills {
         totalSpinAmmount += spinAddAmmount;
         if (totalSpinAmmount > MAX_SPIN) {
             totalSpinAmmount = 0;
+            if (!string.IsNullOrEmpty(inspireSFX)) {
+                AudioManager.instance?.PlaySFX(inspireSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
+            }
             ActionFinish();
             ActiveCoolDown();
         }

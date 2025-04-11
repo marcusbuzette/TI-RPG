@@ -9,6 +9,7 @@ public class UpgradeObject : ScriptableObject {
     public string description;
     public UpgradeType upgradeType;
     public int upgradeAmount;
+    public Sprite upgradeImage;
     
 }
 

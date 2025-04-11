@@ -242,7 +242,6 @@ GameObject:
   - component: {fileID: 165459953}
   - component: {fileID: 165459952}
   - component: {fileID: 165459951}
-  - component: {fileID: 165459950}
   m_Layer: 0
   m_Name: UnitTest (1)
   m_TagString: Untagged
@@ -316,18 +315,7 @@ MonoBehaviour:
   healthPoints: 1
   maxHealthPoints: 100
   animator: {fileID: 0}
---- !u!114 &165459950
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 165459946}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 628ed14bc140cbe48923828c53a1bbcf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  damageSFX: 
 --- !u!114 &165459951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,8 +328,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cbdf6c65100fd54da66fd8515835c33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   nome: Congelar
   descricao: 
   custo: 0
@@ -357,6 +346,7 @@ MonoBehaviour:
   shootingTimer: 0.3
   cooloffTimer: 0.1
   rotateSpeed: 10
+  freezeArrowSFX: 
 --- !u!114 &165459952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,8 +359,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4c588a935c0a4f56b855794c3e7145d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -380,6 +371,7 @@ MonoBehaviour:
   cooloffTimer: 0.1
   rotateSpeed: 10
   shootDamage: 100
+  arrowSFX: 
 --- !u!114 &165459953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -392,8 +384,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a98aa284f9b23428a071063490ad6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   moveSpeed: 4
   rotateSpeed: 4
   stopDistance: 0.1
@@ -434,63 +427,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   xp: 0
---- !u!1001 &207961874
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1003836979848573920, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 1003836979848573920, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1003836979848573920, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1003836979848573920, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1003836979848573920, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1003836979848573920, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1003836979848573920, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1003836979848573920, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1003836979848573920, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1003836979848573920, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8008494300259903858, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
-      propertyPath: m_Name
-      value: Wall_For_Test
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 07da772b52b30b345b3ad28bfa28a2c6, type: 3}
 --- !u!4 &232223605 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8156640269489831220, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
@@ -3961,13 +3897,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1868139144}
-  - component: {fileID: 1868139156}
   - component: {fileID: 1868139145}
   - component: {fileID: 1868139146}
   - component: {fileID: 1868139153}
   - component: {fileID: 1868139152}
   - component: {fileID: 1868139150}
   - component: {fileID: 1868139155}
+  - component: {fileID: 1868139156}
+  - component: {fileID: 1868139157}
   m_Layer: 0
   m_Name: UnitTest
   m_TagString: Untagged
@@ -4041,6 +3978,7 @@ MonoBehaviour:
   healthPoints: 100
   maxHealthPoints: 100
   animator: {fileID: 0}
+  damageSFX: 
 --- !u!114 &1868139150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4053,8 +3991,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a98aa284f9b23428a071063490ad6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   moveSpeed: 4
   rotateSpeed: 4
   stopDistance: 0.1
@@ -4107,8 +4046,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4c588a935c0a4f56b855794c3e7145d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -4118,6 +4058,7 @@ MonoBehaviour:
   cooloffTimer: 0.1
   rotateSpeed: 10
   shootDamage: 100
+  arrowSFX: 
 --- !u!114 &1868139156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4127,31 +4068,58 @@ MonoBehaviour:
   m_GameObject: {fileID: 1868139143}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c719e63af947e4a79aa9af6829e4b54f, type: 3}
+  m_Script: {fileID: 11500000, guid: 272359c525b7a47b382f31920349d06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
-  nome: Curar
+  speed: 0
+  maxShootDistance: 2
+  hitDamage: 1000
+  rotateSpeed: 10
+  isAiming: 0
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  Attack: 1
+--- !u!114 &1868139157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868139143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b26dcc9098726be4593e0d47c75aa31b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
+  animator: {fileID: 0}
+  speed: 0
+  nome: 
   descricao: 
   custo: 0
   preRequisitos: []
   onCoolDown: 0
-  coolDown: 3
+  coolDown: 4
   currentCoolDown: 0
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 0
-  healAreaObject: {fileID: 0}
-  maxShootDistance: 6
+  fireAttackObject: {fileID: 0}
+  particleFire: {fileID: 6033032414094306690, guid: 71e91b07b92fcd7409bae60a8df9bd2d, type: 3}
+  maxShootDistance: 1
   aimingTimer: 0.1
   shootingTimer: 0.3
   cooloffTimer: 0.1
   rotateSpeed: 10
-  areaHeal: 3
-  healPoints: 50
+  shootDamage: 100
+  areaDamage: 3
+  damage: 3
   selectedGrid: {x: 0, y: 0, z: 0}
   isAiming: 0
+  fireArrowSFX: 
 --- !u!1 &1870922294
 GameObject:
   m_ObjectHideFlags: 0
@@ -4609,4 +4577,3 @@ SceneRoots:
   - {fileID: 1660157974}
   - {fileID: 808334544}
   - {fileID: 1309272587}
-  - {fileID: 207961874}

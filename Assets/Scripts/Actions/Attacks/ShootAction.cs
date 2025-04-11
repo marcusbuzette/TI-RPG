@@ -18,6 +18,7 @@ public class ShootAction : BaseAction
     [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private int shootDamage = 100;
 
+    public string arrowSFX;
 
     private State currentState;
     private float stateTimer;
@@ -45,7 +46,10 @@ public class ShootAction : BaseAction
             case State.Shooting:
                 if (canShoot)
                 {
-                    AudioManager.instance?.PlaySFX("Arrows");
+                    if (!string.IsNullOrEmpty(arrowSFX))
+                    {
+                        AudioManager.instance?.PlaySFX(arrowSFX);
+                    }
                     Shoot();
                     canShoot = false;
                 }
@@ -152,8 +156,9 @@ public class ShootAction : BaseAction
 
     private void Shoot()
     {
-        targetUnit.Damage(shootDamage);
-        animator?.SetTrigger("Attack");
+        targetUnit.Damage(shootDamage, this.GetComponent<Unit>());
+        // animator?.SetTrigger("Attack");
+        unit.PlayAnimation("Attack");
         AudioManager.instance?.PlaySFX("Arrows");
     }
 
@@ -194,7 +199,7 @@ public class ShootAction : BaseAction
 
     public int GetDamage(){
         int damage = shootDamage;
-        AudioManager.instance?.PlaySFX("DamageTaken");
+        //AudioManager.instance?.PlaySFX("DamageTaken");
         return damage;
         
     }

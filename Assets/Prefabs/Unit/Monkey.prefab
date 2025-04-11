@@ -376,8 +376,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a98aa284f9b23428a071063490ad6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   moveSpeed: 8
   rotateSpeed: 4
   stopDistance: 0.1
@@ -430,7 +431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0b3338ac2914f4ba75c869397aca3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xp: 12
+  xp: 0
 --- !u!114 &-1861747851849192615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -443,14 +444,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8a40b60fda1ef4f8c9d0f466e29e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 21300000, guid: 2c26a45bf5cd6d141806fb703779d405, type: 3}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 0
   maxHitDistance: 1
   hitDamage: 40
   rotateSpeed: 10
+  meleeSFX: MacacoHit
   Attack: 1
 --- !u!114 &9134479801138775507
 MonoBehaviour:
@@ -464,8 +467,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b257115c592644b78ac47c320d9a80d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   targetsList: []
   maxHealDistance: 1
   healPoints: 10
@@ -481,8 +485,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d080ed6cd128408b82a8d741eeacab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
 --- !u!1 &5551651001676021999
 GameObject:
   m_ObjectHideFlags: 0

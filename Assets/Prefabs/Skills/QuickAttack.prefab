@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b2c316aac064bf8959289238a3782d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   nome: Ataque rapido
   descricao: 
   custo: 10
@@ -54,3 +55,4 @@ MonoBehaviour:
   coolDown: 0
   currentCoolDown: 0
   MAX_SPIN: 360
+  quickAttackSFX: AtaqueRapido

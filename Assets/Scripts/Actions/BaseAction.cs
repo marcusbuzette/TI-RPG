@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum ActionType { MOVE, ACTION, INVENTORY, ITEM, SKILL };
 
@@ -13,26 +14,16 @@ public abstract class BaseAction : MonoBehaviour {
     protected bool isActive;
     protected Action onActionComplete;
     protected ActionType actionType;
+    [SerializeField] protected Sprite actionImage;
     public Animator animator;
-    public float animationSpeed = 1f;
+    public float speed;
 
-    public void SetAnimationSpeed(float speed)
-    {
-        if (animator != null)
-        {
-            animator.speed = speed;
-        }
-        else
-        {
-            Debug.LogWarning("Animator não encontrado!");
-        }
-    }
+
 
     protected virtual void Awake() {
         unit = GetComponent<Unit>();
         actionType = ActionType.ACTION;
         animator = GetComponentInChildren<Animator>();
-        SetAnimationSpeed(animationSpeed);
     }
 
     protected virtual void Update() {
@@ -40,8 +31,15 @@ public abstract class BaseAction : MonoBehaviour {
         Action();
     }
 
+    public void SetAnimationSpeed()
+    {
+        speed = 1f;
+        animator.SetFloat("SpeedMultiplier", speed);
+    }
+
     public abstract void Action();
     public abstract string GetActionName();
+    public Sprite GetActionImage() {return this.actionImage;}
 
     public virtual bool IsValidActionGridPosition(GridPosition gridPosition) {
         List<GridPosition> validGridPositionList = GetValidGridPositionList();

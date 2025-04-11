@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5266,12 +5266,6 @@ MonoBehaviour:
   - name: Combat
     clip: {fileID: 8300000, guid: 79573b85cb21dd748a75a7000db163c4, type: 3}
   sfxSounds:
-  - name: Walk
-    clip: {fileID: 0}
-  - name: DamageTaken
-    clip: {fileID: 8300000, guid: f21d00d6ff999f249b7501e888337788, type: 3}
-  - name: Melee
-    clip: {fileID: 8300000, guid: 2b83f0f72f3da3e4baa2ffd9c48df82f, type: 3}
   - name: Arrows
     clip: {fileID: 8300000, guid: 4dffef02b4ca67940a0e41c84ac0fe66, type: 3}
   - name: Teleport
@@ -5280,35 +5274,18 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 4a640579b248e3c4bac9c017f2f30e54, type: 3}
   - name: Potion
     clip: {fileID: 8300000, guid: e7336ce4338b37346bbe4de6cc362e90, type: 3}
-  - name: FireMagic
-    clip: {fileID: 8300000, guid: 348ff5c03a508a542b6da2c21e94a64f, type: 3}
-  - name: IceMagic
-    clip: {fileID: 0}
-  - name: Intimidar
-    clip: {fileID: 8300000, guid: 4300ca122c5143249ba54232884478e2, type: 3}
-  - name: Provocar
-    clip: {fileID: 8300000, guid: 1322eff6170a8da46bf06b59bf2c56bc, type: 3}
-  protagSFX:
-  - name: ProtagWalk
-    clip: {fileID: 0}
-  - name: ProtagHit
-    clip: {fileID: 8300000, guid: 2b83f0f72f3da3e4baa2ffd9c48df82f, type: 3}
-  - name: ProtagDamage
-    clip: {fileID: 8300000, guid: fd284e6b115b0e149a0d0fb9b4cde100, type: 3}
-  - name: ProtagInspirar
-    clip: {fileID: 8300000, guid: e9102600b4c8c7b408609adc26b9517f, type: 3}
-  - name: ProtagContraAtaque
-    clip: {fileID: 8300000, guid: fe50ee14325dca743945678261509461, type: 3}
-  - name: ProtagAtaqueRapido
-    clip: {fileID: 8300000, guid: 9bc406eb4adce154dacd44d2af6a19f9, type: 3}
-  - name: ProtagInitimidar
-    clip: {fileID: 0}
-  archerSFX:
-  - name: ArcherWalk
-    clip: {fileID: 0}
+  - name: FireDamage
+    clip: {fileID: 8300000, guid: 2f34e23eb213f664da6f22f8d773ea3b, type: 3}
+  - name: IceEffect
+    clip: {fileID: 8300000, guid: d75435bfd47b85f468d95dc66fda076c, type: 3}
+  - name: PoisonEffect
+    clip: {fileID: 8300000, guid: 5305b21d947e8fe40a11e64ddf1efa43, type: 3}
+  ArqueiraSFX:
   - name: ArcherHit
     clip: {fileID: 8300000, guid: 4dffef02b4ca67940a0e41c84ac0fe66, type: 3}
-  - name: ArcherDamage
+  - name: ArcherWalk
+    clip: {fileID: 0}
+  - name: ArcherDano
     clip: {fileID: 8300000, guid: 7fe815b3249e8e0448541529c3a058a2, type: 3}
   - name: FlechaFogo
     clip: {fileID: 8300000, guid: 4d5adb1b10b15f2429e633ff7f59bc61, type: 3}
@@ -5316,41 +5293,43 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 0445db24b61dbca45bc5a7adc9a48a16, type: 3}
   - name: FlechaVeneno
     clip: {fileID: 8300000, guid: 45d70523db692fc498800de7ea777144, type: 3}
-  - name: CuraArqueira
+  - name: Cura
     clip: {fileID: 8300000, guid: ba0c1f0bb2aa6f349a53cf428c6ab620, type: 3}
-  macacoSFX:
-  - name: MacacoWalk
-    clip: {fileID: 0}
-  - name: MacacoHit
-    clip: {fileID: 0}
-  - name: MacacoDamage
-    clip: {fileID: 0}
-  - name: Buff MoveSpeed
-    clip: {fileID: 0}
-  - name: DebuffDef
-    clip: {fileID: 0}
-  - name: Tp ou Pulo
-    clip: {fileID: 0}
-  - name: Stun
-    clip: {fileID: 0}
-  guerreiroSFX:
-  - name: GuerreiroWalk
-    clip: {fileID: 0}
+  GuerreiroSFX:
   - name: GuerreiroHit
     clip: {fileID: 8300000, guid: 1a43dab04a6e6f64b92fa0256851fa1a, type: 3}
-  - name: GuerreiroDamage
+  - name: GuerreiroWalk
     clip: {fileID: 0}
+  - name: GuerreiroDano
+    clip: {fileID: 8300000, guid: fd284e6b115b0e149a0d0fb9b4cde100, type: 3}
   - name: Provocar
     clip: {fileID: 8300000, guid: 769c3f10cb3bb1a4fb93ee6eecdc8eb8, type: 3}
-  - name: Defesa em area
+  - name: Defesa
     clip: {fileID: 8300000, guid: 6df9345089179434199f13dcc87bccf4, type: 3}
-  - name: Buff Defesa
+  - name: BuffDefesa
     clip: {fileID: 8300000, guid: b9891953783ca55418cf8928d38b0ae1, type: 3}
   - name: AtaqueAOE
     clip: {fileID: 8300000, guid: 7a238ba7c0adc7e4d823c95ec2adeb9a, type: 3}
+  ProtagSFX:
+  - name: ProtagHit
+    clip: {fileID: 8300000, guid: 2b83f0f72f3da3e4baa2ffd9c48df82f, type: 3}
+  - name: ProtagWalk
+    clip: {fileID: 0}
+  - name: ProtagDano
+    clip: {fileID: 8300000, guid: fd284e6b115b0e149a0d0fb9b4cde100, type: 3}
+  - name: AtaqueRapido
+    clip: {fileID: 8300000, guid: 9bc406eb4adce154dacd44d2af6a19f9, type: 3}
+  - name: ContraAtaque
+    clip: {fileID: 8300000, guid: fe50ee14325dca743945678261509461, type: 3}
+  - name: Inspirar
+    clip: {fileID: 8300000, guid: e9102600b4c8c7b408609adc26b9517f, type: 3}
+  - name: Intimidar
+    clip: {fileID: 0}
+  MacacoSFX: []
   masterSource: {fileID: 1901677262}
   musicSource: {fileID: 1208278567}
   sfxSource: {fileID: 358558285}
+  ambientSource: {fileID: 0}
   audioMixer: {fileID: 24100000, guid: 4e37b6f44a0ae304fbab6f92be2c5513, type: 2}
 --- !u!4 &1901677261
 Transform:

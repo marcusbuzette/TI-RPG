@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cbdf6c65100fd54da66fd8515835c33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 21300000, guid: f883c02551e847b4eac9a2cd240b221d, type: 3}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   nome: Flecha de Gelo
   descricao: Impede o movimento do inimigo atingido
   custo: 10
@@ -61,3 +62,4 @@ MonoBehaviour:
   shootingTimer: 0.3
   cooloffTimer: 0.1
   rotateSpeed: 10
+  freezeArrowSFX: FlechaGelo

@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b26dcc9098726be4593e0d47c75aa31b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 21300000, guid: f7fe60f8d5adabc459fb05f55e57981e, type: 3}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   nome: Flecha de Fogo
   descricao: Cira um incendio em uma area
   custo: 10
@@ -57,6 +58,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   fireAttackObject: {fileID: 0}
+  particleFire: {fileID: 797911341500782089}
   maxShootDistance: 1
   aimingTimer: 0.1
   shootingTimer: 0.3
@@ -67,3 +69,4 @@ MonoBehaviour:
   damage: 3
   selectedGrid: {x: 0, y: 0, z: 0}
   isAiming: 0
+  fireArrowSFX: FlechaFogo
