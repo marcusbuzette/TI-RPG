@@ -7,12 +7,14 @@ using UnityEngine.SocialPlatforms;
 public class IntimidateSkill : BaseSkills {
     [SerializeField] private List<Unit> targetsList = new List<Unit>();
     [SerializeField] private int maxIntimidateDistance = 1;
+    [SerializeField] private int debufAmount = 2;
+    [SerializeField] private BuffType buffType = BuffType.ATTACK;
 
     public override void Action() {
-        foreach (Unit target in targetsList) {
-            target.BeIntimidate();
-        }
         AudioManager.instance?.PlaySFX("Intimidar");
+        foreach (Unit target in targetsList) {
+            target.GetModifiers().Debuff(buffType, debufAmount);
+        }
         ActionFinish();
         ActiveCoolDown();
     }
@@ -26,6 +28,8 @@ public class IntimidateSkill : BaseSkills {
             targetsList.Clear();
         }
         GridPosition unitGridPosition = unit.GetGridPosition();
+        List<GridPosition> affectedPositions = new List<GridPosition>();
+        affectedPositions.Add(unitGridPosition);
         int i = 0;
         for (int x = -maxIntimidateDistance; x <= maxIntimidateDistance; x++) {
             for (int z = -maxIntimidateDistance; z <= maxIntimidateDistance; z++) {
@@ -35,11 +39,11 @@ public class IntimidateSkill : BaseSkills {
                     continue;
                 }
 
-                int testDistance = Mathf.Abs(x) + Mathf.Abs(z);
-                if (testDistance > maxIntimidateDistance) {
+               if ((Mathf.Abs(x) > maxIntimidateDistance) || ( Mathf.Abs(z) > maxIntimidateDistance)) {
                     continue;
                 }
 
+                affectedPositions.Add(testGridPosition);
                 if (LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition) != null) {
                     if (LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition).IsEnemy()) {
                         targetsList.Add(LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition));
@@ -49,9 +53,7 @@ public class IntimidateSkill : BaseSkills {
             }
         }
 
-        return new List<GridPosition> {
-            unitGridPosition
-        };
+        return affectedPositions;
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
@@ -70,6 +72,7 @@ public class IntimidateSkill : BaseSkills {
             currentCoolDown--;
         }
         if (currentCoolDown == 0) {
+            onEndEffect.Invoke(this, EventArgs.Empty);
             onCoolDown = false;
         }
     }
@@ -79,4 +82,6 @@ public class IntimidateSkill : BaseSkills {
     public int GetMaxIntimidateDistance() { return maxIntimidateDistance; }
 
     public List<Unit> GetTargetList() { return targetsList; }
+
+    public override BuffType? GetBuffType() {return this.buffType;}
 }

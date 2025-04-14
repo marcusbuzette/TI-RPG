@@ -29,10 +29,12 @@ public class Unit : MonoBehaviour {
     [SerializeField] public string unitName = "";
     [SerializeField] private UnitStats baseUnitStats;
     private UnitStats unitStats;
+    [SerializeField] private UnitStatsModifiers statsModifiers;
     [SerializeField] private BaseAction[] actionsArray;
     [SerializeField] private bool hasMoved = false;
     [SerializeField] private bool hasPerformedAction = false;
     [SerializeField] private bool hasPerformedSkill = false;
+    [SerializeField] private List<Unit> modifiedBy = new List<Unit>();
     public bool isUnitTurn = false;
 
     private Dictionary<string, bool> animationTriggersStack = new Dictionary<string, bool>();
@@ -76,6 +78,7 @@ public class Unit : MonoBehaviour {
 
         healthSystem.OnDead += HealthSystem_OnDie;
         OnAnyUnitSpawn?.Invoke(this, EventArgs.Empty);
+        statsModifiers = new UnitStatsModifiers();
     }
 
     private void Update() {
@@ -298,9 +301,22 @@ public class Unit : MonoBehaviour {
             else {
                 animator?.ResetTrigger(animation);
             }
-        };
+        }
+        ;
         if (animationTriggersStack.Count > 0) {
             this.PlayNextAnimation();
         }
+    }
+
+    public UnitStatsModifiers GetModifiers() { return this.statsModifiers; }
+    public void SubscribeToModifiedEvent(BaseSkills baseSkill) {
+        baseSkill.onEndEffect += BaseSkill_onEndEffect;
+    }
+
+    private void BaseSkill_onEndEffect(object sender, EventArgs e) {
+        if ((sender as BaseSkills).GetBuffType() != null) {
+            statsModifiers.ResetModifier((BuffType)(sender as BaseSkills).GetBuffType());
+        }
+        (sender as BaseSkills).onEndEffect -= BaseSkill_onEndEffect;
     }
 }
