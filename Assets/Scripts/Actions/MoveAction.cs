@@ -63,7 +63,6 @@ public class MoveAction : BaseAction {
         foreach(GridPosition pathGridPosition in pathGridPositionList) {
             positionList.Add(LevelGrid.Instance.GetWorldPosition(pathGridPosition));
         }
-
         ActionStart(onActionComplete);
     }
 
