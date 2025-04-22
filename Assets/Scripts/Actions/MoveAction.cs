@@ -42,10 +42,6 @@ public class MoveAction : BaseAction {
             this.lastDistance = Vector3.Distance(targetPosition, transform.position);
             Vector3 moveDirection = (targetPosition - transform.position).normalized;
 
-            transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
-            transform.position += moveDirection * moveSpeed * Time.deltaTime;
-            // animator?.SetBool("IsWalking", true);
-            // unit.PlayAnimation("IsWalking", true);
 
             if (moveDirControl == Vector3.zero ||
              (moveDirControl.x * moveDirection.x > 0 && moveDirControl.z * moveDirection.z > 0)) {
