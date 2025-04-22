@@ -124,6 +124,7 @@ public class MoveAction : BaseAction {
             unit.PlayAnimation("IsWalking", true);
             ActionStart(onActionComplete);
         }
+        // ActionStart(onActionComplete);
     }
 
     public override string GetActionName() {
