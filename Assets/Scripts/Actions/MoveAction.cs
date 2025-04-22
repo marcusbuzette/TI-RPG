@@ -30,7 +30,7 @@ public class MoveAction : BaseAction {
     }
 
     private void Start() {
-        this.maxMoveDistance = GetComponent<Unit>().GetUnitStats().GetMaxMove();
+        this.maxMoveDistance = GetComponent<Unit>().GetUnitStats().GetMaxMove(unit);
     }
 
     public override void Action() {
