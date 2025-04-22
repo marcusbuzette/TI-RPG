@@ -156,11 +156,11 @@ public class TalentManager : MonoBehaviour {
             this.selectedLevelSkill.Add(unitSkills.custo, unitSkills);
         }
 
-        for (int i = 0; i < skills.Count; i++) {
+        foreach(BaseSkills bs in skills) {
             Button skillButton = Instantiate(skillButtonPrefab, skillTreeContainer);
-            skillButton.GetComponent<SkillUi>().SetBaseSkill(skills[i]);
+            skillButton.GetComponent<SkillUi>().SetBaseSkill(bs);
             skillButton.GetComponent<SkillUi>().SetSkillToolTipPos(TooltipPosition.RIGHT);
-            skillButton.onClick.AddListener(() => { TentarDesbloquearskills(skills[i]); });
+            skillButton.onClick.AddListener(() => { TentarDesbloquearskills(bs); });
         }
 
         upgrades.Sort((a, b) => a.level.CompareTo(b.level));

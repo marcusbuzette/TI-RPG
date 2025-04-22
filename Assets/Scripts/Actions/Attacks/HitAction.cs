@@ -25,13 +25,15 @@ public class HitAction : BaseAction {
 
     public override void Action() {
         if (Attack == 1) {
-            animator?.SetTrigger("Attack");
+            // animator?.SetTrigger("Attack");
+            unit.PlayAnimation("Attack");
 
             if (!string.IsNullOrEmpty(meleeSFX)) 
                 {
                 AudioManager.instance?.PlaySFX(meleeSFX); // para cada personagem com esta ação, tem que colocar o respectivo som no inspector do prefab. Exemplo o protagonista tem no sound manager o ProtagHit, então esse nome tem que estar no inspector de seu prefab.
                 }
             Attack = 0;
+            targetUnit?.Damage(hitDamage, this.GetComponent<Unit>());
         }
         StartCoroutine(DelayActionFinish());
 
@@ -39,10 +41,8 @@ public class HitAction : BaseAction {
 
     }
 
-     public void Damaged()
-        {
-            targetUnit?.Damage(hitDamage);
-        }
+     //public void Damaged(){
+            //targetUnit?.Damage(hitDamage);}
 
     private IEnumerator DelayActionFinish() {
         yield return new WaitForSeconds(0.5f); // Ajuste o tempo conforme necessário

@@ -35,6 +35,9 @@ public class Unit : MonoBehaviour {
     [SerializeField] private bool hasPerformedSkill = false;
     public bool isUnitTurn = false;
 
+    private Dictionary<string, bool> animationTriggersStack = new Dictionary<string, bool>();
+    private Animator animator;
+
 
     private int intimidateCoolDown = 0;
     [SerializeField] private int enemyFocus = 0;
@@ -43,6 +46,7 @@ public class Unit : MonoBehaviour {
         actionsArray = GetComponents<BaseAction>();
         healthSystem = GetComponent<HealthSystem>();
         xpSystem = GetComponent<XpSystem>();
+        animator = GetComponent<Animator>();
     }
 
     private void Start() {
@@ -54,14 +58,15 @@ public class Unit : MonoBehaviour {
                 BaseSkills aux = possibleSkills.Find((s) => s.nome == skill.nome);
                 BaseSkills bs = gameObject.AddComponent(skill.GetType()) as BaseSkills;
                 if (aux != null) {
-                   bs.SetSkillImage(aux.GetActionImage());   
+                    bs.SetSkillImage(aux.GetActionImage());
                 }
             }
             actionsArray = GetComponents<BaseAction>();
             if (OnAnyActionPerformed != null) {
                 OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
             }
-        } else {
+        }
+        else {
             this.unitStats = baseUnitStats;
         }
         this.healthSystem.SetMaxHP(this.unitStats.GetMaxHP());
@@ -164,8 +169,8 @@ public class Unit : MonoBehaviour {
         return isEnemy;
     }
 
-    public void Damage(int damage) {
-        healthSystem.Damage(damage);
+    public void Damage(int damage, Unit attackedBy = null) {
+        healthSystem.Damage(damage, attackedBy);
     }
 
     public void AddXp(int xpAmount) {
@@ -210,7 +215,7 @@ public class Unit : MonoBehaviour {
         }
 
         for (int i = 0; i < actionsArray.Length; i++) {
-            if (actionsArray[i].GetActionType() == ActionType.SKILL) {
+            if (actionsArray[i].GetActionType() == ActionType.SKILL || actionsArray[i].GetActionType() == ActionType.ACTION) {
                 actionsArray[i].IsAnotherRound();
             }
         }
@@ -264,5 +269,38 @@ public class Unit : MonoBehaviour {
 
     public HealthSystem GetHealthSystem() {
         return healthSystem;
+    }
+
+    public void PlayAnimation(string animation, bool isBooleanCondition = false) {
+        this.animationTriggersStack.Add(animation, isBooleanCondition);
+        if (this.animationTriggersStack.Count <= 1) {
+            this.PlayNextAnimation();
+        }
+    }
+
+    private void PlayNextAnimation() {
+        KeyValuePair<string, bool> trigger = animationTriggersStack.ElementAt(0);
+        animationTriggersStack.Remove(trigger.Key);
+        if (animator == null) return;
+        if (trigger.Value) {
+            animator?.SetBool(trigger.Key, true);
+        }
+        else {
+            animator?.SetTrigger(trigger.Key);
+        }
+    }
+
+    public void EndAnimation(string animation, bool isBooleanCondition) {
+        if (animator != null) {
+            if (isBooleanCondition) {
+                animator?.SetBool(animation, false);
+            }
+            else {
+                animator?.ResetTrigger(animation);
+            }
+        };
+        if (animationTriggersStack.Count > 0) {
+            this.PlayNextAnimation();
+        }
     }
 }

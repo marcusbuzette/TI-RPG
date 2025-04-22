@@ -129,6 +129,9 @@ public class GridSystemVisual : MonoBehaviour {
                     gridVisualType = GridVisualType.White;
                     break;
                 case SpinAction spinAction:
+                    gridVisualType = GridVisualType.Red;
+                    break;
+                case DefendAction defendAction:
                     gridVisualType = GridVisualType.Blue;
                     break;
                 case ShootAction shootAction:
@@ -203,7 +206,7 @@ public class GridSystemVisual : MonoBehaviour {
         UpdateGridVisual();
     }
 
-    private Material GetGridVisualTypeMaterial(GridVisualType gridVisualType) {
+    public Material GetGridVisualTypeMaterial(GridVisualType gridVisualType) {
         foreach (GridVisualTypeMaterial gridVisualTypeMaterial in gridVisualTypeMaterialList) {
             if (gridVisualTypeMaterial.gridVisualType == gridVisualType) {
                 return gridVisualTypeMaterial.material;
