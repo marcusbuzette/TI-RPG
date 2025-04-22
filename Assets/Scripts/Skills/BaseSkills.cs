@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public abstract class BaseSkills : BaseAction
     public string descricao;
     public int custo;
     public List<BaseSkills> preRequisitos;
+    public EventHandler onEndEffect;
     [SerializeField] protected bool onCoolDown;
     [SerializeField] protected int coolDown;
     [SerializeField] protected int currentCoolDown = 0;
@@ -35,4 +37,6 @@ public abstract class BaseSkills : BaseAction
     public void SetSkillImage(Sprite image) {
         this.actionImage = image;
     }
+
+    public virtual BuffType? GetBuffType() {return null;}
 }
