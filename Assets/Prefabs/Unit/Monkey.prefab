@@ -355,6 +355,12 @@ MonoBehaviour:
     maxMove: 4
     xpSpoil: 0
     range: 3
+  statsModifiers:
+    attack: 0
+    deffence: 0
+    move: 0
+    accuracy: 0
+    speed: 0
   actionsArray:
   - {fileID: 9186709859666415746}
   - {fileID: -1861747851849192615}
@@ -362,6 +368,7 @@ MonoBehaviour:
   hasMoved: 0
   hasPerformedAction: 0
   hasPerformedSkill: 0
+  modifiedBy: []
   isUnitTurn: 0
   enemyFocus: 0
 --- !u!114 &9186709859666415746
@@ -419,6 +426,7 @@ MonoBehaviour:
   healthPoints: 100
   maxHealthPoints: 100
   animator: {fileID: 0}
+  damageSFX: 
 --- !u!114 &1913271140186555034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,6 +481,7 @@ MonoBehaviour:
   targetsList: []
   maxHealDistance: 1
   healPoints: 10
+  curaMacacoSFX: Cura
 --- !u!114 &1702000940489070525
 MonoBehaviour:
   m_ObjectHideFlags: 0

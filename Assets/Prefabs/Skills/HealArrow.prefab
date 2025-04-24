@@ -60,6 +60,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   healAreaObject: {fileID: 0}
+  particleHeal: {fileID: 0}
   maxShootDistance: 1
   aimingTimer: 0.1
   shootingTimer: 0.3
@@ -69,3 +70,4 @@ MonoBehaviour:
   healPoints: 3
   selectedGrid: {x: 0, y: 0, z: 0}
   isAiming: 0
+  healArrowSFX: Cura

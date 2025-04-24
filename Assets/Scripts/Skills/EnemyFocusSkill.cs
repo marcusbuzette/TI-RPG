@@ -11,9 +11,6 @@ public class EnemyFocusSkill : BaseSkills
     public string provokeSFX;
     public override void Action() {
         unit.FocusOnMe(skillRounds);
-        if (!string.IsNullOrEmpty(provokeSFX)) {
-            AudioManager.instance?.PlaySFX(provokeSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
-        }
         ActionFinish();
         ActiveCoolDown();
     }
@@ -31,7 +28,11 @@ public class EnemyFocusSkill : BaseSkills
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
+        if (!string.IsNullOrEmpty(provokeSFX)) {
+            AudioManager.instance?.PlaySFX(provokeSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
+        }
         ActionStart(onActionComplete);
+
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {
