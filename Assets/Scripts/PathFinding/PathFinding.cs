@@ -8,6 +8,8 @@ public class PathFinding : MonoBehaviour {
 
     public static PathFinding Instance { get; private set; }
 
+    public event EventHandler OnRecalculatedpath;
+
     private const int MOVE_STRAIGHT_COST = 10;
     private const int MOVE_DIAGONAL_COST = 14;
 
@@ -113,6 +115,7 @@ public class PathFinding : MonoBehaviour {
             if (currentNode == endNode) {
                 //Reached final node
                 pathLenght = endNode.GetFCost();
+                OnRecalculatedpath?.Invoke(this, EventArgs.Empty);
                 return CalculatePath(endNode);
             }
 

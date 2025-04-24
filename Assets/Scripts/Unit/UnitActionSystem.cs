@@ -17,6 +17,7 @@ public class UnitActionSystem : MonoBehaviour {
 
     [SerializeField] private Unit selectedUnit;
     [SerializeField] private LayerMask unitLayerMask;
+    [SerializeField] private LayerMask chestLayerMask;
 
     private BaseAction selectedAction;
 
@@ -67,8 +68,16 @@ public class UnitActionSystem : MonoBehaviour {
                     OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
                     OnSelectedActionChanged?.Invoke(this, EventArgs.Empty);
                 }
-                
-                selectedUnit?.GetComponent<MoveAction>().TriggerAction(mouseGridPosition, ClearBusy);
+
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, chestLayerMask)) {
+                    Chest chest = hit.collider.GetComponent<Chest>();
+                    chest.MoveUnitToGridPostion(selectedUnit);
+                    return;
+                }
+
+                    selectedUnit?.GetComponent<MoveAction>().TriggerAction(mouseGridPosition, ClearBusy);
             }
         }
     }

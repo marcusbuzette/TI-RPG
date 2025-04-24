@@ -148,6 +148,10 @@ public class LevelGrid : MonoBehaviour {
 
     }
 
+    public void OnGameModeChangedTest() {
+        OnGameModeChanged?.Invoke(this, EventArgs.Empty);
+    }
+
     public GameMode GetGameMode() { return gameMode; }
 
     public List<GridPosition> GetZoneList() { return this.zoneList; }

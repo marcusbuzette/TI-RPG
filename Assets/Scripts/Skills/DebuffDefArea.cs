@@ -4,19 +4,19 @@ using UnityEngine;
 using System;
 
 public class DEbuffDefArea : BaseSkills {
-    private float totalSpinAmmount = 0;
-    [SerializeField] private float MAX_SPIN = 360f;
+    [SerializeField] private List<Unit> targetsList = new List<Unit>();
+    [SerializeField] private int maxIntimidateDistance = 1;
+    [SerializeField] private int debufDefenceAmount = 1;
+    [SerializeField] private BuffType buffType = BuffType.DEFENCE;
 
 
     public override void Action() {
-        float spinAddAmmount = 360f * Time.deltaTime;
-        transform.eulerAngles += new Vector3(0, spinAddAmmount, 0);
-        totalSpinAmmount += spinAddAmmount;
-        if (totalSpinAmmount > MAX_SPIN) {
-            totalSpinAmmount = 0;
-            ActionFinish();
-            ActiveCoolDown();
+        // AudioManager.instance?.PlaySFX("Intimidar");
+        foreach (Unit target in targetsList) {
+            target.GetModifiers().Debuff(buffType, debufDefenceAmount);
         }
+        ActionFinish();
+        ActiveCoolDown();
     }
 
     public override string GetActionName() {
@@ -24,11 +24,36 @@ public class DEbuffDefArea : BaseSkills {
     }
 
     public override List<GridPosition> GetValidGridPositionList() {
+        if (targetsList != null) {
+            targetsList.Clear();
+        }
         GridPosition unitGridPosition = unit.GetGridPosition();
+        List<GridPosition> affectedPositions = new List<GridPosition>();
+        affectedPositions.Add(unitGridPosition);
+        int i = 0;
+        for (int x = -maxIntimidateDistance; x <= maxIntimidateDistance; x++) {
+            for (int z = -maxIntimidateDistance; z <= maxIntimidateDistance; z++) {
+                GridPosition testGridPosition = unitGridPosition + new GridPosition(x, z, 0);
 
-        return new List<GridPosition> {
-            unitGridPosition
-        };
+                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) {
+                    continue;
+                }
+
+               if ((Mathf.Abs(x) > maxIntimidateDistance) || ( Mathf.Abs(z) > maxIntimidateDistance)) {
+                    continue;
+                }
+
+                affectedPositions.Add(testGridPosition);
+                if (LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition) != null) {
+                    if (LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition).IsEnemy()) {
+                        targetsList.Add(LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition));
+                        i++;
+                    }
+                }
+            }
+        }
+
+        return affectedPositions;
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
@@ -47,9 +72,16 @@ public class DEbuffDefArea : BaseSkills {
             currentCoolDown--;
         }
         if (currentCoolDown == 0) {
+            onEndEffect.Invoke(this, EventArgs.Empty);
             onCoolDown = false;
         }
     }
 
     public override bool GetOnCooldown() { return onCoolDown; }
+
+    public int GetMaxIntimidateDistance() { return maxIntimidateDistance; }
+
+    public List<Unit> GetTargetList() { return targetsList; }
+
+    public override BuffType? GetBuffType() {return this.buffType;}
 }
