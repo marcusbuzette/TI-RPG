@@ -16,6 +16,8 @@ public class FireAttackObject : MonoBehaviour
 
     private FireAttack fireAttack;
 
+    public string fireDamageSFX;
+
     public void SetFireAttackObject(FireAttack fireAttack, GameObject particleFire, int damage, int areaDamage, int coolDown) {
         this.fireAttack = fireAttack;
         this.coolDown = coolDown;
