@@ -9,6 +9,10 @@ public class Lever : MonoBehaviour, IInteractiveObjects
     private GridPosition targetToUnit;
     private Unit currentUnit;
 
+    public GameObject m_ObjectToCall;
+
+    bool used = false;
+
     private void Start() {
         GetFowardGridObject();
     }
@@ -19,8 +23,9 @@ public class Lever : MonoBehaviour, IInteractiveObjects
                 LevelGrid.Instance.OnGameModeChanged -= UnitStopGoingTo;
                 PathFinding.Instance.OnRecalculatedpath -= UnitStopGoingTo;
 
-                Debug.Log("Abrir Porta");
+                m_ObjectToCall.GetComponent<ICalledObject>().Action();
 
+                used = true;
                 goingTo = false;
             }
         }
@@ -33,6 +38,8 @@ public class Lever : MonoBehaviour, IInteractiveObjects
     }
 
     public void MoveUnitToGridPostion(Unit unit) {
+        if (used) return;
+
         goingTo = true;
         currentUnit = unit;
 
