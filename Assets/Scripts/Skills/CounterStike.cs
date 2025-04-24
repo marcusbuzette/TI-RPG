@@ -80,6 +80,8 @@ public class CounterStike : BaseSkills {
 
     private void PerformCounterStrike(Unit attacker) {
         this.StopCounter();
+        if ((attacker.GetGridPosition().x == unit.GetGridPosition().x+1 || attacker.GetGridPosition().x == unit.GetGridPosition().x-1) &&
+        (attacker.GetGridPosition().z == unit.GetGridPosition().z+1 || attacker.GetGridPosition().z == unit.GetGridPosition().z-1))
         attackToPerform.TriggerAction(
             attacker.GetGridPosition(),
             AfterCounterAttack
