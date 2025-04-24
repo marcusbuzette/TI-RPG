@@ -38,10 +38,6 @@ public class PoisonAttack : BaseSkills
                 break;
             case State.Shooting:
                 if (canShoot) {
-                    if (!string.IsNullOrEmpty(poisonArrowSFX)) 
-                    {
-                        AudioManager.instance?.PlaySFX(poisonArrowSFX);
-                    }
                     Shoot();
                     canShoot = false;
                     NextState();
@@ -115,7 +111,9 @@ public class PoisonAttack : BaseSkills
         stateTimer = aimingTimer;
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
         canShoot = true;
-
+        if (!string.IsNullOrEmpty(poisonArrowSFX)) {
+            AudioManager.instance?.PlaySFX(poisonArrowSFX);
+        }
         ActionStart(onActionComplete);
     }
 

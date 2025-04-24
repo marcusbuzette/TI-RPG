@@ -14,9 +14,6 @@ public class QucikAttack : BaseSkills {
         totalSpinAmmount += spinAddAmmount;
         if (totalSpinAmmount > MAX_SPIN) {
             totalSpinAmmount = 0;
-            if (!string.IsNullOrEmpty(quickAttackSFX)) {
-                AudioManager.instance?.PlaySFX(quickAttackSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
-            }
             ActionFinish();
             ActiveCoolDown();
         }
@@ -35,7 +32,11 @@ public class QucikAttack : BaseSkills {
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
+        if (!string.IsNullOrEmpty(quickAttackSFX)) {
+            AudioManager.instance?.PlaySFX(quickAttackSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
+        }
         ActionStart(onActionComplete);
+
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {

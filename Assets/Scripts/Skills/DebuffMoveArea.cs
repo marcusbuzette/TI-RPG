@@ -4,19 +4,18 @@ using UnityEngine;
 using System;
 
 public class DebuffMoveArea : BaseSkills {
-    private float totalSpinAmmount = 0;
-    [SerializeField] private float MAX_SPIN = 360f;
+    [SerializeField] private List<Unit> targetsList = new List<Unit>();
+    [SerializeField] private int maxSlowDistance = 1;
+    [SerializeField] private int debufDefenceAmount = 1;
+    [SerializeField] private BuffType buffType = BuffType.MOVE;
 
 
     public override void Action() {
-        float spinAddAmmount = 360f * Time.deltaTime;
-        transform.eulerAngles += new Vector3(0, spinAddAmmount, 0);
-        totalSpinAmmount += spinAddAmmount;
-        if (totalSpinAmmount > MAX_SPIN) {
-            totalSpinAmmount = 0;
-            ActionFinish();
-            ActiveCoolDown();
+        foreach (Unit target in targetsList) {
+            target.GetModifiers().Debuff(buffType, debufDefenceAmount);
         }
+        ActionFinish();
+        ActiveCoolDown();
     }
 
     public override string GetActionName() {
@@ -24,11 +23,36 @@ public class DebuffMoveArea : BaseSkills {
     }
 
     public override List<GridPosition> GetValidGridPositionList() {
+        if (targetsList != null) {
+            targetsList.Clear();
+        }
         GridPosition unitGridPosition = unit.GetGridPosition();
+        List<GridPosition> affectedPositions = new List<GridPosition>();
+        affectedPositions.Add(unitGridPosition);
+        int i = 0;
+        for (int x = -maxSlowDistance; x <= maxSlowDistance; x++) {
+            for (int z = -maxSlowDistance; z <= maxSlowDistance; z++) {
+                GridPosition testGridPosition = unitGridPosition + new GridPosition(x, z, 0);
 
-        return new List<GridPosition> {
-            unitGridPosition
-        };
+                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) {
+                    continue;
+                }
+
+               if ((Mathf.Abs(x) > maxSlowDistance) || ( Mathf.Abs(z) > maxSlowDistance)) {
+                    continue;
+                }
+
+                affectedPositions.Add(testGridPosition);
+                if (LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition) != null) {
+                    if (LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition).IsEnemy()) {
+                        targetsList.Add(LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition));
+                        i++;
+                    }
+                }
+            }
+        }
+
+        return affectedPositions;
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
@@ -47,9 +71,16 @@ public class DebuffMoveArea : BaseSkills {
             currentCoolDown--;
         }
         if (currentCoolDown == 0) {
+            onEndEffect.Invoke(this, EventArgs.Empty);
             onCoolDown = false;
         }
     }
 
     public override bool GetOnCooldown() { return onCoolDown; }
+
+    public int GetmaxSlowDistance() { return maxSlowDistance; }
+
+    public List<Unit> GetTargetList() { return targetsList; }
+
+    public override BuffType? GetBuffType() {return this.buffType;}
 }

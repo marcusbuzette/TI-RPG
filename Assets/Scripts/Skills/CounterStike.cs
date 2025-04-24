@@ -22,10 +22,7 @@ public class CounterStike : BaseSkills {
     }
 
     public override void Action() {
-        if (Attack == 1) {
-            AudioManager.instance?.PlaySFX("Melee");
-            Attack = 0;
-        }
+        
         StartCoroutine(DelayActionFinish());
     }
 
@@ -49,6 +46,10 @@ public class CounterStike : BaseSkills {
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         this.isCountering = true;
+        if (Attack == 1) {
+            AudioManager.instance?.PlaySFX("Melee");
+            Attack = 0;
+        }
         ActionStart(onActionComplete);
     }
 
@@ -80,6 +81,8 @@ public class CounterStike : BaseSkills {
 
     private void PerformCounterStrike(Unit attacker) {
         this.StopCounter();
+        if ((attacker.GetGridPosition().x == unit.GetGridPosition().x+1 || attacker.GetGridPosition().x == unit.GetGridPosition().x-1) &&
+        (attacker.GetGridPosition().z == unit.GetGridPosition().z+1 || attacker.GetGridPosition().z == unit.GetGridPosition().z-1))
         attackToPerform.TriggerAction(
             attacker.GetGridPosition(),
             AfterCounterAttack

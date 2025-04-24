@@ -28,10 +28,7 @@ public class HitAction : BaseAction {
             // animator?.SetTrigger("Attack");
             unit.PlayAnimation("Attack");
 
-            if (!string.IsNullOrEmpty(meleeSFX)) 
-                {
-                AudioManager.instance?.PlaySFX(meleeSFX); // para cada personagem com esta ação, tem que colocar o respectivo som no inspector do prefab. Exemplo o protagonista tem no sound manager o ProtagHit, então esse nome tem que estar no inspector de seu prefab.
-                }
+            
             Attack = 0;
             targetUnit?.Damage(hitDamage, this.GetComponent<Unit>());
         }
@@ -99,7 +96,9 @@ public class HitAction : BaseAction {
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
-
+        if (!string.IsNullOrEmpty(meleeSFX)) {
+            AudioManager.instance?.PlaySFX(meleeSFX); // para cada personagem com esta ação, tem que colocar o respectivo som no inspector do prefab. Exemplo o protagonista tem no sound manager o ProtagHit, então esse nome tem que estar no inspector de seu prefab.
+        }
         ActionStart(onActionComplete);
     }
 

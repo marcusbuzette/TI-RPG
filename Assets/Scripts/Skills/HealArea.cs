@@ -24,7 +24,7 @@ public class HealArea : BaseSkills {
     private bool canShoot;
     public Vector3 selectedGrid;
     public bool isAiming = false;
-
+    public string healArrowSFX;
     GridPosition mouseGridPosition;
 
     private void Start() {
@@ -120,7 +120,9 @@ public class HealArea : BaseSkills {
         stateTimer = aimingTimer;
         selectedGrid = LevelGrid.Instance.GetWorldPosition(mouseGridPosition);
         canShoot = true;
-
+        if (!string.IsNullOrEmpty(healArrowSFX)) {
+            AudioManager.instance?.PlaySFX(healArrowSFX);
+        }
         ActionStart(onActionComplete);
     }
 

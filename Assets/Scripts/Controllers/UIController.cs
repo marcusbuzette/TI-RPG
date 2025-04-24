@@ -8,7 +8,7 @@ public class UIController : MonoBehaviour
 {
 
     public static UIController instance;
-    public Slider _masterSlider, _musicSlider, _sfxSlider;
+    public Slider _masterSlider, _musicSlider, _sfxSlider, _ambientSlider;
 
     private void Awake() {
         // if (instance == null) {
@@ -37,6 +37,10 @@ public class UIController : MonoBehaviour
         AudioManager.instance.ToggleMaster();
     }
 
+    public void ToggleAmbient() {
+        AudioManager.instance.ToggleAmbient();
+    }
+
     public void MusicVolume()
     {
         AudioManager.instance.MusicVolume(_musicSlider.value);
@@ -47,27 +51,34 @@ public class UIController : MonoBehaviour
         AudioManager.instance.SFXVolume(_sfxSlider.value);
     }
 
+    public void SFXAmbient() {
+        AudioManager.instance.AmbientVolume(_ambientSlider.value);
+    }
+
     public void MasterVolume()
     {
         AudioManager.instance.MasterVolume(_masterSlider.value);
     }
 
     public void ChangeScene(string scene) {
-        //SceneManager.LoadScene(scene);
+        
         string musicToPlay = ""; // Nome da m�sica da pr�xima cena
+        string ambientToPlay = "";
         switch (scene) {
             case "HUB":
                 musicToPlay = "HUB"; // Substitua com o nome da m�sica
+                ambientToPlay = "aHUB";
                 break;
             case "MenuPrincipal":
                 musicToPlay = "Menu"; // M�sica do menu
                 break;
-            case "Cena Level Design":
+            /*case "Tutorial":
                 musicToPlay = "Combat"; // M�sica padr�o, se necess�rio
-                break;
+                break;*/
         }
-
+        
         AudioManager.instance.PlayMusic(musicToPlay);
+        AudioManager.instance.PlayAmbient(ambientToPlay);
         SceneManager.LoadScene(scene);
 
     } 
