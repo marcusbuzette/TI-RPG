@@ -312,4 +312,9 @@ public class PathFinding : MonoBehaviour {
         FindPath(startGridPosition, endGridPosition, out int pathLenght);
         return pathLenght;
     }
+
+    public void SetNodeIsWalkable(Vector3 nodeWordPos, bool isWalkable) {
+        var nodePos = LevelGrid.Instance.GetGridPosition(nodeWordPos);
+        GetNode(nodePos.x, nodePos.z, nodePos.floor).SetIsWalkable(isWalkable);
+    }
 }

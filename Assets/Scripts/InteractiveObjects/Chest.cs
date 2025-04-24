@@ -7,7 +7,7 @@ using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Chest : MonoBehaviour
+public class Chest : MonoBehaviour, IInteractiveObjects
 {
     private bool goingTo = false;
     private GridPosition targetToUnit;
@@ -36,7 +36,6 @@ public class Chest : MonoBehaviour
                 LevelGrid.Instance.OnGameModeChanged -= UnitStopGoingTo;
                 PathFinding.Instance.OnRecalculatedpath -= UnitStopGoingTo;
 
-                Debug.Log("Chegou");
                 RecolherItens();
 
                 goingTo = false;
@@ -44,7 +43,7 @@ public class Chest : MonoBehaviour
         }
     }
 
-    private void GetFowardGridObject() {
+    public void GetFowardGridObject() {
         Vector3 pos = (transform.forward * 2) + transform.position;
         targetToUnit = LevelGrid.Instance.GetGridPosition(pos);
         Debug.Log(targetToUnit);
