@@ -51,7 +51,7 @@ public class UIController : MonoBehaviour
         AudioManager.instance.SFXVolume(_sfxSlider.value);
     }
 
-    public void SFXAmbient() {
+    public void AmbientVolume() {
         AudioManager.instance.AmbientVolume(_ambientSlider.value);
     }
 
