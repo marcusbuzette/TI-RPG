@@ -22,8 +22,8 @@ public class FireAttack : BaseSkills {
     [SerializeField] private int shootDamage = 100;
     [SerializeField] private int areaDamage = 3;
     [SerializeField] private int damage = 3;
-    [SerializeField] private GameObject FireFbx; // Referência ao GameObject do VFX
 
+    private ArcherVFXController VfxController;
     private State currentState;
     private float stateTimer;
     private bool canShoot;
@@ -34,17 +34,15 @@ public class FireAttack : BaseSkills {
 
     GridPosition mouseGridPosition;
 
-    private void Awake() {
-          GameObject FireFbx = GameObject.Find("Fire Magic Cast");
-        // Garantir que o VFX comece desativado
-        if (FireFbx != null) {
-            FireFbx.SetActive(false);
-        }
+    private void Awake() 
+    {
+    VfxController = GetComponent<ArcherVFXController>();
+    VfxController.CastEnd();
+    
     }
 
     private void Start() {
         obstaclesLayerMask = LayerMask.GetMask("Obstacles"); //add layer mask to don't shoot through obstacles
-         GameObject FireFbx = GameObject.Find("Fire Magic Cast");
     }
 
     public override string GetActionName() {
@@ -138,9 +136,7 @@ public class FireAttack : BaseSkills {
         canShoot = true;
 
         // Ativa o VFX quando começa a ação
-        if (FireFbx != null) {
-            FireFbx.SetActive(true);
-        }
+         VfxController.FireCast();
 
         ActionStart(onActionComplete);
     }
@@ -157,10 +153,7 @@ public class FireAttack : BaseSkills {
                 break;
             case State.Cooloff:
                 // Desativa o VFX quando entra em cooldown
-                if (FireFbx != null) {
-                    FireFbx.SetActive(false);
-                }
-
+                 VfxController.CastEnd();
                 fireAttackObject = Instantiate(new GameObject(), selectedGrid, Quaternion.identity);
                 fireAttackObject.AddComponent<FireAttackObject>().SetFireAttackObject(this, particleFire, damage, areaDamage, coolDown);
                 ActionFinish();

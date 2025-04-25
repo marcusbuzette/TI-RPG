@@ -43,4 +43,18 @@ public class ArcherVFXController : MonoBehaviour
             Debug.LogWarning("PoisonAttack script não encontrado. 'Fire Magic Cast' desativado.");
         }
     }
+
+    public void FireCast()
+    {
+
+         fireMagicCastObject.SetActive(true);
+
+    }
+
+    public void CastEnd()
+    {
+    fireMagicCastObject.SetActive(false);
+    iceMagicCastObject.SetActive(false);
+    poisonMagicCastObject.SetActive(false);
+    }
 }
