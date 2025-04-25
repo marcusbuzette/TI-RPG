@@ -58,6 +58,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   fireAttackObject: {fileID: 0}
+  particleFire: {fileID: 797911341500782089}
   maxShootDistance: 1
   aimingTimer: 0.1
   shootingTimer: 0.3

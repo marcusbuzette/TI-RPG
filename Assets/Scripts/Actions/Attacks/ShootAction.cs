@@ -46,10 +46,7 @@ public class ShootAction : BaseAction
             case State.Shooting:
                 if (canShoot)
                 {
-                    if (!string.IsNullOrEmpty(arrowSFX))
-                    {
-                        AudioManager.instance?.PlaySFX(arrowSFX);
-                    }
+                    
                     Shoot();
                     canShoot = false;
                 }
@@ -131,7 +128,9 @@ public class ShootAction : BaseAction
         stateTimer = aimingTimer;
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
         canShoot = true;
-
+        if (!string.IsNullOrEmpty(arrowSFX)) {
+            AudioManager.instance?.PlaySFX(arrowSFX);
+        }
         ActionStart(onActionComplete);
     }
 
@@ -156,8 +155,9 @@ public class ShootAction : BaseAction
 
     private void Shoot()
     {
-        targetUnit.Damage(shootDamage);
-        animator?.SetTrigger("Attack");
+        targetUnit.Damage(shootDamage, this.GetComponent<Unit>());
+        // animator?.SetTrigger("Attack");
+        unit.PlayAnimation("Attack");
         AudioManager.instance?.PlaySFX("Arrows");
     }
 

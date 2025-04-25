@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class LevelGrid : MonoBehaviour {
     public static LevelGrid Instance { get; private set; }
 
-    public const float FLOOR_HEIGHT = 3f;
+    public const float FLOOR_HEIGHT = 2f;
 
     public event EventHandler OnAnyUnitMovedGridPosition;
     public event EventHandler OnGameModeChanged;
@@ -99,7 +99,7 @@ public class LevelGrid : MonoBehaviour {
 
         AddUnitAtGridPosition(toGridPosition, unit);
 
-        OnAnyUnitMovedGridPosition?.Invoke(this, EventArgs.Empty);
+        OnAnyUnitMovedGridPosition?.Invoke(this, new LevelGridEventArgs(unit, toGridPosition));
     }
 
     public int GetFloor(Vector3 worldPosition) {
@@ -146,6 +146,10 @@ public class LevelGrid : MonoBehaviour {
         GridSystemVisual.Instance.UpdateGridVisual();
         TurnSystem.Instance.StartBattleNewZone();
 
+    }
+
+    public void OnGameModeChangedTest() {
+        OnGameModeChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public GameMode GetGameMode() { return gameMode; }

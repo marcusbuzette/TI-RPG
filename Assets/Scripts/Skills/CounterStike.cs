@@ -8,22 +8,32 @@ public class CounterStike : BaseSkills {
     [SerializeField] private float MAX_SPIN = 360f;
     public string counterStrikeSFX;
 
+    [SerializeField] private BaseAction attackToPerform;
+
+    private bool isCountering = false;
+    private int Attack = 1;
+
+    private HealthSystem hs;
+
+    void Start() {
+        hs = GetComponent<Unit>().GetHealthSystem();
+        hs.OnDamage += HealthSystem_OnDamage;
+        if (attackToPerform == null) attackToPerform = GetComponent<HitAction>();
+    }
+
     public override void Action() {
-        float spinAddAmmount = 360f * Time.deltaTime;
-        transform.eulerAngles += new Vector3(0, spinAddAmmount, 0);
-        totalSpinAmmount += spinAddAmmount;
-        if (totalSpinAmmount > MAX_SPIN) {
-            totalSpinAmmount = 0;
-            if (!string.IsNullOrEmpty(counterStrikeSFX)) {
-                AudioManager.instance?.PlaySFX(counterStrikeSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
-            }
-            ActionFinish();
-            ActiveCoolDown();
-        }
+        
+        StartCoroutine(DelayActionFinish());
     }
 
     public override string GetActionName() {
         return "Contra Ataque";
+    }
+
+    private IEnumerator DelayActionFinish() {
+        yield return new WaitForSeconds(0.5f); // Ajuste o tempo conforme necessário
+        ActionFinish();
+        Attack = 1;
     }
 
     public override List<GridPosition> GetValidGridPositionList() {
@@ -35,6 +45,11 @@ public class CounterStike : BaseSkills {
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
+        this.isCountering = true;
+        if (Attack == 1) {
+            AudioManager.instance?.PlaySFX("Melee");
+            Attack = 0;
+        }
         ActionStart(onActionComplete);
     }
 
@@ -46,13 +61,39 @@ public class CounterStike : BaseSkills {
     }
 
     public override void IsAnotherRound() {
-        if (currentCoolDown != 0) {
+        if (this.isCountering) this.StopCounter();
+        if (currentCoolDown > 0) {
             currentCoolDown--;
         }
-        if (currentCoolDown == 0) {
+        if (currentCoolDown <= 0) {
             onCoolDown = false;
         }
     }
 
+    private void StopCounter() {
+        this.isCountering = false;
+        //voltar animação de idle aqui
+    }
+
+    private void HealthSystem_OnDamage(object sender, EventArgs e) {
+        if (this.isCountering) this.PerformCounterStrike((e as HealthSystemEvent).attacker);
+    }
+
+    private void PerformCounterStrike(Unit attacker) {
+        this.StopCounter();
+        if ((attacker.GetGridPosition().x == unit.GetGridPosition().x+1 || attacker.GetGridPosition().x == unit.GetGridPosition().x-1) &&
+        (attacker.GetGridPosition().z == unit.GetGridPosition().z+1 || attacker.GetGridPosition().z == unit.GetGridPosition().z-1))
+        attackToPerform.TriggerAction(
+            attacker.GetGridPosition(),
+            AfterCounterAttack
+        );
+    }
+
+    private void AfterCounterAttack() {return;}
+
     public override bool GetOnCooldown() { return onCoolDown; }
+
+    private void OnDestroy() {
+       hs.OnDamage -= HealthSystem_OnDamage;
+    }
 }

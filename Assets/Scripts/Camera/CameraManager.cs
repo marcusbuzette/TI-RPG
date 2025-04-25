@@ -52,11 +52,11 @@ public class CameraManager : MonoBehaviour
                 if (targetUnit.GetHealthPoints() - shootDamage <= 0) ShowActionCamera();
                 break;
   case HitAction hitAction:
-    Debug.Log("Entrou no Case HitAction");
+    // Debug.Log("Entrou no Case HitAction");
     Unit hitterUnit = hitAction.GetUnit();
     Unit targetUnitH = hitAction.GetTargetUnit();
 
-    Debug.Log($"Health before hit: {targetUnitH.GetHealthPoints()}, Damage: {hitAction.GetDamage()}");
+    // Debug.Log($"Health before hit: {targetUnitH.GetHealthPoints()}, Damage: {hitAction.GetDamage()}");
 
     Vector3 hitDir = (targetUnitH.GetWorldPosition() - hitterUnit.GetWorldPosition()).normalized;
 
@@ -72,7 +72,7 @@ public class CameraManager : MonoBehaviour
 
     int hitDamage = hitAction.GetDamage();
 
-    Debug.Log($"Health after hit: {targetUnitH.GetHealthPoints() - hitDamage}");
+    // Debug.Log($"Health after hit: {targetUnitH.GetHealthPoints() - hitDamage}");
 
     if (targetUnitH.GetHealthPoints() - hitDamage <= 0)
     {

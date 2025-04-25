@@ -29,20 +29,28 @@ public class Unit : MonoBehaviour {
     [SerializeField] public string unitName = "";
     [SerializeField] private UnitStats baseUnitStats;
     private UnitStats unitStats;
+    [SerializeField] private UnitStatsModifiers statsModifiers;
     [SerializeField] private BaseAction[] actionsArray;
     [SerializeField] private bool hasMoved = false;
     [SerializeField] private bool hasPerformedAction = false;
     [SerializeField] private bool hasPerformedSkill = false;
+    [SerializeField] private List<Unit> modifiedBy = new List<Unit>();
     public bool isUnitTurn = false;
+
+    private Dictionary<string, bool> animationTriggersStack = new Dictionary<string, bool>();
+    private Animator animator;
+
+    private GridPosition newGridPosition;
+    private Vector3 lastPosition;
 
 
     private int intimidateCoolDown = 0;
     [SerializeField] private int enemyFocus = 0;
 
     private void Awake() {
-        actionsArray = GetComponents<BaseAction>();
         healthSystem = GetComponent<HealthSystem>();
         xpSystem = GetComponent<XpSystem>();
+        animator = GetComponent<Animator>();
     }
 
     private void Start() {
@@ -54,14 +62,14 @@ public class Unit : MonoBehaviour {
                 BaseSkills aux = possibleSkills.Find((s) => s.nome == skill.nome);
                 BaseSkills bs = gameObject.AddComponent(skill.GetType()) as BaseSkills;
                 if (aux != null) {
-                   bs.SetSkillImage(aux.GetActionImage());   
+                    bs.SetSkillImage(aux.GetActionImage());
                 }
             }
             actionsArray = GetComponents<BaseAction>();
-            if (OnAnyActionPerformed != null) {
-                OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
-            }
-        } else {
+            OnAnyActionPerformed?.Invoke(this, EventArgs.Empty);
+
+        }
+        else {
             this.unitStats = baseUnitStats;
         }
         this.healthSystem.SetMaxHP(this.unitStats.GetMaxHP());
@@ -71,17 +79,20 @@ public class Unit : MonoBehaviour {
 
         healthSystem.OnDead += HealthSystem_OnDie;
         OnAnyUnitSpawn?.Invoke(this, EventArgs.Empty);
+        statsModifiers = new UnitStatsModifiers();
     }
 
     private void Update() {
+        if (transform.position != lastPosition) {
+            lastPosition = transform.position;
+            newGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
 
-        GridPosition newGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
+            if (newGridPosition != gridPosition) {
+                GridPosition oldGridPosition = gridPosition;
+                gridPosition = newGridPosition;
 
-        if (newGridPosition != gridPosition) {
-            GridPosition oldGridPosition = gridPosition;
-            gridPosition = newGridPosition;
-
-            LevelGrid.Instance.UnitMovedGridPosition(this, oldGridPosition, newGridPosition);
+                LevelGrid.Instance.UnitMovedGridPosition(this, oldGridPosition, newGridPosition);
+            }
         }
     }
 
@@ -142,7 +153,7 @@ public class Unit : MonoBehaviour {
                 hasPerformedSkill = true;
                 break;
         }
-        OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
+        OnAnyActionPerformed?.Invoke(this, EventArgs.Empty);
     }
 
     public bool GetHasMoved() { return hasMoved; }
@@ -164,17 +175,13 @@ public class Unit : MonoBehaviour {
         return isEnemy;
     }
 
-    public void Damage(int damage) {
-        healthSystem.Damage(damage);
+    public void Damage(int damage, Unit attackedBy = null) {
+        healthSystem.Damage(damage, attackedBy);
     }
 
     public void AddXp(int xpAmount) {
         GameController.controller.UpdateUnitRecords(this);
         xpSystem.AddXp(xpAmount);
-    }
-
-    public void AddActionToArray(BaseAction action) {
-
     }
 
     private void HealthSystem_OnDie(object sender, EventArgs e) {
@@ -210,15 +217,14 @@ public class Unit : MonoBehaviour {
         }
 
         for (int i = 0; i < actionsArray.Length; i++) {
-            if (actionsArray[i].GetActionType() == ActionType.SKILL) {
+            if (actionsArray[i].GetActionType() == ActionType.SKILL || actionsArray[i].GetActionType() == ActionType.ACTION) {
                 actionsArray[i].IsAnotherRound();
             }
         }
 
         UnitActionSystem.Instance.ChangeSelectedUnit(this);
-        if (OnAnyActionPerformed != null) {
-            OnAnyActionPerformed.Invoke(this, EventArgs.Empty);
-        }
+        OnAnyActionPerformed?.Invoke(this, EventArgs.Empty);
+
     }
 
     public string GetUnitId() { return this.unitId; }
@@ -264,5 +270,51 @@ public class Unit : MonoBehaviour {
 
     public HealthSystem GetHealthSystem() {
         return healthSystem;
+    }
+
+    public void PlayAnimation(string animation, bool isBooleanCondition = false) {
+        this.animationTriggersStack.Add(animation, isBooleanCondition);
+        if (this.animationTriggersStack.Count <= 1) {
+            this.PlayNextAnimation();
+        }
+    }
+
+    private void PlayNextAnimation() {
+        KeyValuePair<string, bool> trigger = animationTriggersStack.ElementAt(0);
+        animationTriggersStack.Remove(trigger.Key);
+        if (animator == null) return;
+        if (trigger.Value) {
+            animator?.SetBool(trigger.Key, true);
+        }
+        else {
+            animator?.SetTrigger(trigger.Key);
+        }
+    }
+
+    public void EndAnimation(string animation, bool isBooleanCondition) {
+        if (animator != null) {
+            if (isBooleanCondition) {
+                animator?.SetBool(animation, false);
+            }
+            else {
+                animator?.ResetTrigger(animation);
+            }
+        }
+        ;
+        if (animationTriggersStack.Count > 0) {
+            this.PlayNextAnimation();
+        }
+    }
+
+    public UnitStatsModifiers GetModifiers() { return this.statsModifiers; }
+    public void SubscribeToModifiedEvent(BaseSkills baseSkill) {
+        baseSkill.onEndEffect += BaseSkill_onEndEffect;
+    }
+
+    private void BaseSkill_onEndEffect(object sender, EventArgs e) {
+        if ((sender as BaseSkills).GetBuffType() != null) {
+            statsModifiers.ResetModifier((BuffType)(sender as BaseSkills).GetBuffType());
+        }
+        (sender as BaseSkills).onEndEffect -= BaseSkill_onEndEffect;
     }
 }

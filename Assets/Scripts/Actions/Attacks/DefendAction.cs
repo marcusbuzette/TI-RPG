@@ -4,9 +4,6 @@ using UnityEngine;
 using System;
 
 public class DefendAction : BaseAction {
-    [SerializeField] private int maxShootDistance = 1;
-    [SerializeField] private int hitDamage = 50;
-    [SerializeField] private float rotateSpeed = 10f;
     public int Attack = 1;
 
     private Unit targetUnit;
@@ -18,9 +15,7 @@ public class DefendAction : BaseAction {
 
     public override void Action() {
         if (Attack == 1) {
-            targetUnit?.Damage(hitDamage);
-            animator?.SetTrigger("Attack");
-            AudioManager.instance?.PlaySFX("Melee");
+            // Add defending animation here
             Attack = 0;
         }
         StartCoroutine(DelayActionFinish());
@@ -35,40 +30,16 @@ public class DefendAction : BaseAction {
     }
 
     public override List<GridPosition> GetValidGridPositionList() {
-        List<GridPosition> validGridPositionList = new List<GridPosition>();
-
         GridPosition unitGridPosition = unit.GetGridPosition();
 
-        for (int x = -maxShootDistance; x <= maxShootDistance; x++) {
-            for (int z = -maxShootDistance; z <= maxShootDistance; z++) {
-                GridPosition offsetGridPosition = new GridPosition(x, z, 0);
-                GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
-
-                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) {
-                    continue;
-                }
-
-
-                if (!LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition)) {
-                    continue;
-                }
-
-                Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition);
-
-                if (targetUnit.IsEnemy() == unit.IsEnemy()) {
-                    continue;
-                }
-
-                validGridPositionList.Add(testGridPosition);
-            }
-        }
-
-        return validGridPositionList;
+        return new List<GridPosition>() {
+            unitGridPosition
+        };
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
-
+        targetUnit.GetHealthSystem().SetDefenceMode(true);
         ActionStart(onActionComplete);
     }
 
@@ -85,12 +56,20 @@ public class DefendAction : BaseAction {
 
     public override bool GetOnCooldown() { return false; }
 
-    public override void IsAnotherRound() { }
+    public override void IsAnotherRound() {
+        if (this.targetUnit != null &&
+            this.targetUnit.GetHealthSystem().GetDefenceMode()) {
+            StopDefending();
+        }
+    }
 
-    public int GetDamage() {
-        int damage = hitDamage;
+
+    public void GetDamage() {
         AudioManager.instance?.PlaySFX("DamageTaken");
-        return damage;
+    }
 
+    private void StopDefending() {
+        this.targetUnit.GetHealthSystem().SetDefenceMode(false);
+        // remove defending animation here
     }
 }

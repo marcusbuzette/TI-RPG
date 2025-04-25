@@ -15,3 +15,4 @@ MonoBehaviour:
   id: 1
   displayName: Potion
   prefab: {fileID: 959054419738605824, guid: 3938934a894c14343b69e125355950d7, type: 3}
+  image: {fileID: 21300000, guid: 3aa683589d3872648ab6fe8df9892d7c, type: 3}
