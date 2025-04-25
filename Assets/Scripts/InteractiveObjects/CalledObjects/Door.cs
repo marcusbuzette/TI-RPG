@@ -6,33 +6,22 @@ public class Door : MonoBehaviour, ICalledObject {
     [Header("Transform target"), SerializeField]
     Transform targetTransform;
 
+    [Header("Transform target"), SerializeField]
+    Transform[] pathNodesPositions;
+
     public float transformTime;
 
     public void Action() {
         StartCoroutine(GoToPosition(transformTime));
         
-        SetIsWalkableNode(true);
+        SetIsWalkableNodes(true);
     }
 
-    private void SetIsWalkableNode(bool isWalkable) {
-        PathFinding.Instance.SetNodeIsWalkable(transform.position ,isWalkable);
-    }
-
-    /*private IEnumerator GoToPosition(float time) {
-        Vector3 startingPos = transform.position;
-        Vector3 finalPos = targetTransform.position;
-        Debug.Log("Entrou");
-        float elapsedTime = 0;
-
-        while (elapsedTime < time) {
-            Debug.Log("indo");
-            transform.position = Vector3.Lerp(startingPos, finalPos, (elapsedTime / time));
-            elapsedTime += Time.deltaTime;
-            yield return null;
+    private void SetIsWalkableNodes(bool isWalkable) {
+        foreach (var node in pathNodesPositions) {
+            PathFinding.Instance.SetNodeIsWalkable(node.position, isWalkable);
         }
-
-        yield return null;
-    }*/
+    }
 
     private IEnumerator GoToPosition(float time) {
         Vector3 startingPos = transform.position;

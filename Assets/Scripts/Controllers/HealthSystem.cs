@@ -1,4 +1,5 @@
 using System;
+using Random = UnityEngine.Random;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class HealthSystem : MonoBehaviour {
 
     public event EventHandler OnDead;
     public event EventHandler OnDamage;
+    private UnitWorldUI worldUI;
     public int healthPoints = 100;
     public int maxHealthPoints = 100;
     public Animator animator;
@@ -22,11 +24,24 @@ public class HealthSystem : MonoBehaviour {
     }
 
     public void Damage(int damage, Unit attackedBy) {
-        if (isDefending) return;
+        if (isDefending) {
+            worldUI.ShowUIValue(0, "Defending");
+            return;
+        }
+
+        int dice = Random.Range(0, 10);
+
+        if(dice <= 1) {
+            attackedBy.GetHealthSystem().GetUnitWorldUI().ShowUIValue(0, "Miss");
+            return;
+        }
+
         // animator?.SetTrigger("TookDamage");
         GetComponent<Unit>().PlayAnimation("TookDamage");
 
         healthPoints -= damage;
+
+        worldUI.ShowUIValue(damage, "Damage");
 
         if (!string.IsNullOrEmpty(damageSFX)) {
             AudioManager.instance?.PlaySFX(damageSFX);  // vai tocar o sfx q ta no inspector do healthSystem do cada boneco
@@ -52,6 +67,8 @@ public class HealthSystem : MonoBehaviour {
         healthPoints += amount;
         if (healthPoints > maxHealthPoints) healthPoints = maxHealthPoints;
         OnDamage?.Invoke(this, EventArgs.Empty);
+
+        worldUI.ShowUIValue(amount, "Heal");
     }
 
     public HealthSystem GetHealthSystem() {
@@ -70,4 +87,6 @@ public class HealthSystem : MonoBehaviour {
     public void SetDefenceMode(bool isDefending) { this.isDefending = isDefending; }
     public bool GetDefenceMode() { return this.isDefending; }
 
+    public void SetUnitWorldUI(UnitWorldUI worldUI) { this.worldUI = worldUI; }
+    public UnitWorldUI GetUnitWorldUI() { return worldUI; }
 }

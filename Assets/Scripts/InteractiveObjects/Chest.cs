@@ -24,6 +24,8 @@ public class Chest : MonoBehaviour, IInteractiveObjects
     public float imageTimer;
     public AnimatorController animController;
 
+    bool used = false;
+
     private void Start() {
         inventory = InventorySystem.inventorySystem;
 
@@ -38,6 +40,7 @@ public class Chest : MonoBehaviour, IInteractiveObjects
 
                 RecolherItens();
 
+                used = true;
                 goingTo = false;
             }
         }
@@ -50,6 +53,8 @@ public class Chest : MonoBehaviour, IInteractiveObjects
     }
 
     public void MoveUnitToGridPostion(Unit unit) {
+        if (used) return;
+
         goingTo = true;
         currentUnit = unit;
 
