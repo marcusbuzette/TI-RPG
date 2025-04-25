@@ -44,8 +44,7 @@ public class MoveAction : BaseAction {
             Vector3 moveDirection = (targetPosition - transform.position).normalized;
 
 
-            if (moveDirControl == Vector3.zero ||
-             (moveDirControl.x * moveDirection.x > 0 && moveDirControl.z * moveDirection.z > 0)) {
+            if (currentPositionIndex <= positionList.Count - 1) {
                 moveDirControl = moveDirection;
                 transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
                 transform.position += moveDirection * moveSpeed * Time.deltaTime;
