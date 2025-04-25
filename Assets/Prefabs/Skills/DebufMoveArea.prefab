@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1c30a8c8cf92422894e313f2ea294f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 21300000, guid: 9ae9e8cbb6011a3409a912b87b8d8cfd, type: 3}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   nome: "Lentid\xE3o"
   descricao: Cria uma zona de lentidao que diminui a movimentacao de quem eta nela
   custo: 10

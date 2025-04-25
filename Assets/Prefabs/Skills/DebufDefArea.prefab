@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d11fdccebe0c4c66be39fa9ed98c1b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 21300000, guid: bdfcdadb9d17fb8419d144b99b455acf, type: 3}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   nome: Baixar Guarda
   descricao: Diminui a defesa dos inimigos dentro dessa
   custo: 10
