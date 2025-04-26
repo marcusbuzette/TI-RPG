@@ -57,6 +57,9 @@ public abstract class BaseAction : MonoBehaviour {
     protected void ActionStart(Action onActionComplete) {
         isActive = true;
         this.onActionComplete += onActionComplete;
+        if(LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE) {
+            GridSystemVisual.Instance.HideAllGridPosition();
+        }
 
         OnAnyActionStarted?.Invoke(this, EventArgs.Empty);
     }
