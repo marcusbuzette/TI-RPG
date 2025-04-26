@@ -15,6 +15,7 @@ public class PoisonAttack : BaseSkills
     [SerializeField] private float cooloffTimer = .1f;
     [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private int damage = 100;
+    [SerializeField] private GameObject PoisonFbx;
 
     public string poisonArrowSFX;
     private State currentState;
@@ -22,7 +23,13 @@ public class PoisonAttack : BaseSkills
     private Unit targetUnit;
     private bool canShoot;
 
+
     private void Start() {
+        GameObject PoisonFbx = GameObject.Find("Poison Arrow Cast");
+        // Garantir que o VFX comece desativado
+        if (PoisonFbx != null) {
+            PoisonFbx.SetActive(false);
+        }
         obstaclesLayerMask = LayerMask.GetMask("Obstacles"); //add layer mask to don't shoot through obstacles
     }
     public override string GetActionName() {
@@ -111,6 +118,13 @@ public class PoisonAttack : BaseSkills
         stateTimer = aimingTimer;
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
         canShoot = true;
+
+
+        // Ativa o VFX quando começa a ação
+        if (PoisonFbx != null) {
+            PoisonFbx.SetActive(true);
+        }
+
         if (!string.IsNullOrEmpty(poisonArrowSFX)) {
             AudioManager.instance?.PlaySFX(poisonArrowSFX);
         }
@@ -128,6 +142,9 @@ public class PoisonAttack : BaseSkills
                 stateTimer = shootingTimer;
                 break;
             case State.Cooloff:
+             if (PoisonFbx != null) {
+                    PoisonFbx.SetActive(false);
+                }
                 ActionFinish();
                 break;
 
