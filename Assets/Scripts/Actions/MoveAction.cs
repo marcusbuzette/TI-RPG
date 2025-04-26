@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using static System.Collections.Specialized.BitVector32;
@@ -43,8 +44,7 @@ public class MoveAction : BaseAction {
             Vector3 moveDirection = (targetPosition - transform.position).normalized;
 
 
-            if (moveDirControl == Vector3.zero ||
-             (moveDirControl.x * moveDirection.x > 0 && moveDirControl.z * moveDirection.z > 0)) {
+            if (currentPositionIndex <= positionList.Count - 1) {
                 moveDirControl = moveDirection;
                 transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
                 transform.position += moveDirection * moveSpeed * Time.deltaTime;
@@ -173,7 +173,13 @@ public class MoveAction : BaseAction {
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {
-        int targetCountAtGridPosition = unit.GetAction<TargetAction>().GetTargetCountAtPosition(gridPosition);
+        int targetCountAtGridPosition = 0;
+
+        HitAction hitAction = unit.GetComponent<HitAction>();
+        ShootAction shootAction = unit.GetComponent<ShootAction>();
+
+        if(hitAction != null) targetCountAtGridPosition = hitAction.GetTargetCountAtPosition(gridPosition);
+        else targetCountAtGridPosition = shootAction.GetTargetCountAtPosition(gridPosition);
 
         return new EnemyAIAction {
             gridPosition = gridPosition,

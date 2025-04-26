@@ -17,3 +17,4 @@ MonoBehaviour:
   description: Aumenta a alcance do ataque em 1
   upgradeType: 6
   upgradeAmount: 1
+  upgradeImage: {fileID: 21300000, guid: aaa4c3e2f065c78499340ed1a5a704f7, type: 3}

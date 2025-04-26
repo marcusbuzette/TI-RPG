@@ -8,7 +8,7 @@ public class HealAction : BaseAction {
     [SerializeField] private List<Unit> targetsList = new List<Unit>();
     [SerializeField] private int maxHealDistance = 1;
     [SerializeField] private int healPoints = 10;
-
+    public string curaMacacoSFX;
     public override void Action() {
         foreach (Unit target in targetsList) {
             target.GetHealthSystem().Heal(healPoints);
@@ -51,6 +51,9 @@ public class HealAction : BaseAction {
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         ActionStart(onActionComplete);
+        if (!string.IsNullOrEmpty(curaMacacoSFX)){
+            AudioManager.instance?.PlaySFX(curaMacacoSFX);
+        }
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {

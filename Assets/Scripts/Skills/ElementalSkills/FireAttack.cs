@@ -23,6 +23,7 @@ public class FireAttack : BaseSkills {
     [SerializeField] private int areaDamage = 3;
     [SerializeField] private int damage = 3;
 
+    private ArcherVFXController VfxController;
     private State currentState;
     private float stateTimer;
     private bool canShoot;
@@ -33,9 +34,17 @@ public class FireAttack : BaseSkills {
 
     GridPosition mouseGridPosition;
 
+    private void Awake() 
+    {
+    VfxController = GetComponent<ArcherVFXController>();
+    VfxController.CastEnd();
+    
+    }
+
     private void Start() {
         obstaclesLayerMask = LayerMask.GetMask("Obstacles"); //add layer mask to don't shoot through obstacles
     }
+
     public override string GetActionName() {
         return "Fogo";
     }
@@ -61,19 +70,13 @@ public class FireAttack : BaseSkills {
                 transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
                 break;
             case State.Shooting:
-                if (canShoot) {
-                    if (!string.IsNullOrEmpty(fireArrowSFX)) 
-                        {
-                        AudioManager.instance?.PlaySFX(fireArrowSFX);
-                        }
-                        isAiming = false;
+                if (canShoot) {                  
+                    isAiming = false;
                     canShoot = false;
                 }
                 break;
             case State.Cooloff:
-
                 break;
-
         }
         if (stateTimer <= 0) {
             NextState();
@@ -115,7 +118,6 @@ public class FireAttack : BaseSkills {
                     continue;
                 }
 
-
                 validGridPositionList.Add(testGridPosition);
             }
         }
@@ -130,22 +132,28 @@ public class FireAttack : BaseSkills {
         selectedGrid = LevelGrid.Instance.GetWorldPosition(mouseGridPosition);
         canShoot = true;
 
+        // Ativa o VFX quando começa a ação
+         VfxController.FireCast();
+
+        if (!string.IsNullOrEmpty(fireArrowSFX)) {
+            AudioManager.instance?.PlaySFX(fireArrowSFX);
+        }
         ActionStart(onActionComplete);
     }
 
-    private void NextState()
-    {
-        switch (currentState)
-        {
+    private void NextState() {
+        switch (currentState) {
             case State.Aiming:
                 currentState = State.Shooting;
                 stateTimer = shootingTimer;
                 break;
             case State.Shooting:
                 currentState = State.Cooloff;
-                stateTimer = shootingTimer;
+                stateTimer = cooloffTimer;
                 break;
             case State.Cooloff:
+                // Desativa o VFX quando entra em cooldown
+                 VfxController.CastEnd();
                 fireAttackObject = Instantiate(new GameObject(), selectedGrid, Quaternion.identity);
                 fireAttackObject.AddComponent<FireAttackObject>().SetFireAttackObject(this, particleFire, damage, areaDamage, coolDown);
                 ActionFinish();
@@ -229,4 +237,5 @@ public class FireAttack : BaseSkills {
 
         GridSystemVisual.Instance.ShowGridPositionList(attackGridPositionList, GridVisualType.Red);
     }
+
 }

@@ -107,7 +107,50 @@ public class EnemyIA : MonoBehaviour {
             }
         }
 
-        // Debug.Log(bestBaseAction);
+        if (bestBaseAction != null && bestEnemyAIAction != null) {
+            //Verifica se a acao escolhida foi um movimento e se for verifica se o valor é 0
+            if (bestBaseAction.GetActionType() == ActionType.MOVE && bestEnemyAIAction.actionValue == 0) {
+                int closeDistance = int.MaxValue;
+                GridPosition closestPlayer = enemyUnit.GetGridPosition();
+
+                //Separa os players da lista de unidades
+                List<Unit> units = TurnSystem.Instance.GetTurnOrder();
+                List<Unit> playerUnits = new List<Unit>();
+                foreach (Unit unit in units) {
+                    if (!unit.IsEnemy()) {
+                        playerUnits.Add(unit);
+                    }
+                }
+
+                //Encontra a distancia do player mais proximo
+                foreach (Unit playerUnit in playerUnits) {
+                    var dist = PathFinding.Instance.CalculateDistance(
+                        enemyUnit.GetGridPosition(), playerUnit.GetGridPosition());
+
+                    //salva a GridPosition do player mais proximo
+                    if (dist < closeDistance) {
+                        closeDistance = dist;
+                        closestPlayer = playerUnit.GetGridPosition();
+                    }
+                }
+
+                //Recebe a lista de GridPositions de locais possiveis para o inimigo se movimentar
+                var moveAction = bestBaseAction.gameObject.GetComponent<MoveAction>();
+                List<GridPosition> gridList = moveAction.GetValidGridPositionList();
+
+                closeDistance = int.MaxValue;
+
+                //Calcula qual a posição mais próxima do jogador e vai para essa posição
+                foreach (GridPosition grid in gridList) {
+                    var dist = PathFinding.Instance.CalculateDistance(
+                        grid, closestPlayer);
+                    if (dist < closeDistance) {
+                        closeDistance = dist;
+                        bestEnemyAIAction.gridPosition = grid;
+                    }
+                }
+            }
+        }
 
         if( bestEnemyAIAction != null && enemyUnit.TryToPerformAction(bestBaseAction)) {
             bestBaseAction.TriggerAction(bestEnemyAIAction.gridPosition, onEnemyAIActionComplete);

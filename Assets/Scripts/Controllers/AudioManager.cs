@@ -7,7 +7,7 @@ using UnityEngine.Audio;
 public class AudioManager : MonoBehaviour {
     public static AudioManager instance;
 
-    public Sound[] musicSounds, sfxSounds, ArqueiraSFX, GuerreiroSFX, ProtagSFX, MacacoSFX;
+    public Sound[] musicSounds, ambientSounds, sfxSounds, ArqueiraSFX, GuerreiroSFX, ProtagSFX, MacacoSFX;
     public AudioSource masterSource, musicSource, sfxSource, ambientSource;
     private Dictionary<string, AudioClip> sfxDictionary = new Dictionary<string, AudioClip>();
     [SerializeField] private AudioMixer audioMixer;
@@ -19,7 +19,7 @@ public class AudioManager : MonoBehaviour {
         AddSoundsToDictionary(GuerreiroSFX);
         AddSoundsToDictionary(ProtagSFX);
         AddSoundsToDictionary(MacacoSFX);
-
+        AddSoundsToDictionary (ambientSounds);
 
         if (instance == null) {
             instance = this;
@@ -61,6 +61,20 @@ public void PlayMusic(string name) {
         }
     }
 
+    public void PlayAmbient(string name) {
+        Sound s = Array.Find(ambientSounds, x => x.name == name);
+        if (s == null){
+            Debug.Log("Ambient sound not found: " + name);
+        }
+        else {
+            ambientSource.clip = s.clip;
+            ambientSource.volume = ambientSource.volume * masterSource.volume;
+            ambientSource.loop = true;
+            ambientSource.Play();
+
+        }
+    }
+
     public void PlaySFX(string name) {
         if (sfxDictionary.TryGetValue(name, out AudioClip clip)) {
             sfxSource.PlayOneShot(clip, sfxSource.volume * masterSource.volume);
@@ -87,8 +101,16 @@ public void PlayMusic(string name) {
         sfxSource.mute = !sfxSource.mute;
     }
 
+    public void ToggleAmbient() {
+        ambientSource.mute = !ambientSource.mute;
+    }
+
     public void MusicVolume(float volume) {
         musicSource.volume = volume * masterSource.volume;
+    }
+
+    public void AmbientVolume(float volume) {
+        ambientSource.volume = volume * masterSource.volume;
     }
 
     public void SFXVolume(float volume) {
