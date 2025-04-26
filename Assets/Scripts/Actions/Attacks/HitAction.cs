@@ -28,10 +28,7 @@ public class HitAction : BaseAction {
             // animator?.SetTrigger("Attack");
             unit.PlayAnimation("Attack");
 
-            if (!string.IsNullOrEmpty(meleeSFX)) 
-                {
-                AudioManager.instance?.PlaySFX(meleeSFX); // para cada personagem com esta ação, tem que colocar o respectivo som no inspector do prefab. Exemplo o protagonista tem no sound manager o ProtagHit, então esse nome tem que estar no inspector de seu prefab.
-                }
+            
             Attack = 0;
             targetUnit?.Damage(hitDamage, this.GetComponent<Unit>());
         }
@@ -50,11 +47,13 @@ public class HitAction : BaseAction {
         Attack = 1;
 
     }
-
     public override List<GridPosition> GetValidGridPositionList() {
-        List<GridPosition> validGridPositionList = new List<GridPosition>();
-
         GridPosition unitGridPosition = unit.GetGridPosition();
+        return GetValidGridPositionList(unitGridPosition);
+    }
+
+    public List<GridPosition> GetValidGridPositionList(GridPosition unitGridPosition) {
+        List<GridPosition> validGridPositionList = new List<GridPosition>();
 
         for (int x = -maxHitDistance; x <= maxHitDistance; x++) {
             for (int z = -maxHitDistance; z <= maxHitDistance; z++) {
@@ -97,15 +96,32 @@ public class HitAction : BaseAction {
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
-
+        if (!string.IsNullOrEmpty(meleeSFX)) {
+            AudioManager.instance?.PlaySFX(meleeSFX); // para cada personagem com esta ação, tem que colocar o respectivo som no inspector do prefab. Exemplo o protagonista tem no sound manager o ProtagHit, então esse nome tem que estar no inspector de seu prefab.
+        }
         ActionStart(onActionComplete);
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {
-        return new EnemyAIAction {
-            gridPosition = gridPosition,
-            actionValue = 0,
-        };
+        Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
+        if (!targetUnit.GetEnemyFocus()) {
+            return new EnemyAIAction {
+                gridPosition = gridPosition,
+                actionValue = 100 + Mathf.RoundToInt((1 - targetUnit.GetHealthNormalized()) * 100f),
+            };
+        }
+        else {
+            Debug.Log(targetUnit);
+            return new EnemyAIAction {
+                gridPosition = gridPosition,
+                actionValue = 1000 + Mathf.RoundToInt((1 - targetUnit.GetHealthNormalized()) * 100f),
+            };
+        }
+    }
+
+    public int GetTargetCountAtPosition(GridPosition gridPosition) {
+        // Debug.Log("called");
+        return GetValidGridPositionList(gridPosition).Count;
     }
 
     public Unit GetTargetUnit() {

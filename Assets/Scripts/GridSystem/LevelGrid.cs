@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class LevelGrid : MonoBehaviour {
     public static LevelGrid Instance { get; private set; }
 
-    public const float FLOOR_HEIGHT = 3f;
+    public const float FLOOR_HEIGHT = 2f;
 
     public event EventHandler OnAnyUnitMovedGridPosition;
     public event EventHandler OnGameModeChanged;

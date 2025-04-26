@@ -55,6 +55,8 @@ public class OpenMapHUB : MonoBehaviour, IChangeCamera
     }
 
     public void DoSomething() {
+        AudioManager.instance.PlayMusic("Combat");
+        AudioManager.instance.PlayAmbient("AmbientFloresta");
         SceneManager.LoadScene(sceneToLoad);
     }
 }

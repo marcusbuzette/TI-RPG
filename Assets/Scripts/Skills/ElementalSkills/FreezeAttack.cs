@@ -45,10 +45,6 @@ public class FreezeAttack : BaseSkills {
                 break;
             case State.Shooting:
                 if (canShoot) {
-                    if (!string.IsNullOrEmpty(freezeArrowSFX)) 
-                    {
-                        AudioManager.instance?.PlaySFX(freezeArrowSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
-                    }
                     Shoot();
                     canShoot = false;
                     NextState();
@@ -128,6 +124,9 @@ public class FreezeAttack : BaseSkills {
             IceFbx.SetActive(true);
         }
 
+        if (!string.IsNullOrEmpty(freezeArrowSFX)) {
+            AudioManager.instance?.PlaySFX(freezeArrowSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
+        }
         ActionStart(onActionComplete);
     }
 

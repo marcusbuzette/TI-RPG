@@ -70,10 +70,7 @@ public class FireAttack : BaseSkills {
                 transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
                 break;
             case State.Shooting:
-                if (canShoot) {
-                    if (!string.IsNullOrEmpty(fireArrowSFX)) {
-                        AudioManager.instance?.PlaySFX(fireArrowSFX);
-                    }
+                if (canShoot) {                  
                     isAiming = false;
                     canShoot = false;
                 }
@@ -138,6 +135,9 @@ public class FireAttack : BaseSkills {
         // Ativa o VFX quando começa a ação
          VfxController.FireCast();
 
+        if (!string.IsNullOrEmpty(fireArrowSFX)) {
+            AudioManager.instance?.PlaySFX(fireArrowSFX);
+        }
         ActionStart(onActionComplete);
     }
 
