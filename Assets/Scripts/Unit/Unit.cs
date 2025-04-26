@@ -65,13 +65,13 @@ public class Unit : MonoBehaviour {
                     bs.SetSkillImage(aux.GetActionImage());
                 }
             }
-            actionsArray = GetComponents<BaseAction>();
             OnAnyActionPerformed?.Invoke(this, EventArgs.Empty);
 
         }
         else {
             this.unitStats = baseUnitStats;
         }
+        actionsArray = GetComponents<BaseAction>();
         this.healthSystem.SetMaxHP(this.unitStats.GetMaxHP());
         gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
@@ -223,7 +223,7 @@ public class Unit : MonoBehaviour {
         }
 
         UnitActionSystem.Instance.ChangeSelectedUnit(this);
-        OnAnyActionPerformed?.Invoke(this, EventArgs.Empty);
+        // OnAnyActionPerformed?.Invoke(this, EventArgs.Empty);
 
     }
 

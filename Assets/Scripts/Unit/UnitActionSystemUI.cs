@@ -13,6 +13,7 @@ public class UnitActionSystemUI : MonoBehaviour {
     [SerializeField] private Transform inventoryButtonsContainer;
 
     private Transform inventoyButton;
+    private Animator unitActionUIAnimator;
 
     private void Start() {
         UnitActionSystem.Instance.OnSelectedUnitChanged += UnitActionSystem_OnSelectedUnitChanged;
@@ -21,6 +22,7 @@ public class UnitActionSystemUI : MonoBehaviour {
         Unit.OnAnyActionPerformed += Unit_OnAnyActionPerformed;
         UnitActionSystem.Instance.OnInventoryClicked += UnitActionSystem_OnInventoryClicked;
         LevelGrid.Instance.OnGameModeChanged += LevelGrid_OnGameModeChanged;
+        unitActionUIAnimator = GetComponent<Animator>();
 
         CreateUnitActionButtons();
         this.UpdateStatus();
@@ -28,19 +30,11 @@ public class UnitActionSystemUI : MonoBehaviour {
 
 
     private void CreateUnitActionButtons() {
-        foreach (Transform buttonTransform in actionButtonsContainer) {
-            Destroy(buttonTransform.gameObject);
-        }
-
-        foreach (Transform buttonTransform in attackButtonsContainer) {
-            Destroy(buttonTransform.gameObject);
-        }
-
-        foreach (Transform buttonTransform in skillsButtonsContainer) {
-            Destroy(buttonTransform.gameObject);
-        }
+        this.CleanActionButtons();
 
         Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
+
+        unitActionUIAnimator.SetBool("openActionButtons",true);
 
         if (selectedUnit == null) return;
         foreach (BaseAction action in selectedUnit.GetActionsArray()) {
@@ -113,8 +107,17 @@ public class UnitActionSystemUI : MonoBehaviour {
     }
 
     private void UnitActionSystem_OnSelectedUnitChanged(object sender, EventArgs e) {
-        CreateUnitActionButtons();
+        Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
         CloseInventory();
+        if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE && 
+        selectedUnit.isUnitTurn) {
+            CreateUnitActionButtons();
+
+        } else {
+            unitActionUIAnimator.SetBool("openActionButtons",false);
+            // CleanActionButtons();
+        }
+
     }
 
     private void UnitActionSystem_OnActionStarted(object sender, EventArgs e) {
@@ -150,6 +153,21 @@ public class UnitActionSystemUI : MonoBehaviour {
     private void UpdateStatus() {
         for (int i = 0; i < transform.childCount; i++) {
             transform.GetChild(i).gameObject.SetActive(LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE ? true : false);
+        }
+    }
+
+    private void CleanActionButtons() {
+
+        foreach (Transform buttonTransform in actionButtonsContainer) {
+            Destroy(buttonTransform.gameObject);
+        }
+
+        foreach (Transform buttonTransform in attackButtonsContainer) {
+            Destroy(buttonTransform.gameObject);
+        }
+
+        foreach (Transform buttonTransform in skillsButtonsContainer) {
+            Destroy(buttonTransform.gameObject);
         }
     }
 }
