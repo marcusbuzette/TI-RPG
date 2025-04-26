@@ -25,6 +25,7 @@ public class ActionButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (actionImage != null) {
             textMeshPro.enabled = false;
             this.button.GetComponent<Image>().sprite = this.actionImage;
+            this.button.GetComponent<Image>().color = Color.white;
         }
 
         button.onClick.AddListener(() => {
