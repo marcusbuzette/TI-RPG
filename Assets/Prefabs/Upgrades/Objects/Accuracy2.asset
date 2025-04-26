@@ -17,3 +17,4 @@ MonoBehaviour:
   description: Aumenta a precisao em 2 pontos
   upgradeType: 4
   upgradeAmount: 2
+  upgradeImage: {fileID: 21300000, guid: 58212db7a0f1b7f4792d842b8e196a5a, type: 3}
