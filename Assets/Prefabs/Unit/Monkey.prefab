@@ -216,6 +216,7 @@ MonoBehaviour:
   healthBar: {fileID: 6601653366607329148}
   healthSystem: {fileID: 5420536572379425080}
   unit: {fileID: 3040281036064970410}
+  healthValuePrefab: {fileID: 0}
 --- !u!114 &7430940811808634073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,7 +384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a98aa284f9b23428a071063490ad6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionImage: {fileID: 0}
+  actionImage: {fileID: 21300000, guid: d24172bb5601f90449d5233c70318796, type: 3}
   animator: {fileID: 0}
   speed: 0
   moveSpeed: 8
@@ -452,7 +453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8a40b60fda1ef4f8c9d0f466e29e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionImage: {fileID: 21300000, guid: 2c26a45bf5cd6d141806fb703779d405, type: 3}
+  actionImage: {fileID: 21300000, guid: 39195be798b6f544b952277c45599e40, type: 3}
   animator: {fileID: 0}
   speed: 0
   obstaclesLayerMask:
@@ -475,7 +476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b257115c592644b78ac47c320d9a80d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionImage: {fileID: 0}
+  actionImage: {fileID: 21300000, guid: 2c26a45bf5cd6d141806fb703779d405, type: 3}
   animator: {fileID: 0}
   speed: 0
   targetsList: []

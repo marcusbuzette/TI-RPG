@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2170219948549848153, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: xp
-      value: 15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: unitId
@@ -221,6 +221,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8930314314492603969, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: actionImage
+      value: 
+      objectReference: {fileID: 21300000, guid: d24172bb5601f90449d5233c70318796, type: 3}
+    - target: {fileID: 8930314314492603969, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: maxMoveDistance
       value: 3
       objectReference: {fileID: 0}
@@ -296,6 +300,10 @@ MonoBehaviour:
   maxShootDistance: 1
   hitDamage: 50
   rotateSpeed: 10
+  isAiming: 0
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   Attack: 1
 --- !u!114 &-1535784102791429935
 MonoBehaviour:
