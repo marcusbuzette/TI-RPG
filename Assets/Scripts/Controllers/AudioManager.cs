@@ -19,7 +19,7 @@ public class AudioManager : MonoBehaviour {
         AddSoundsToDictionary(GuerreiroSFX);
         AddSoundsToDictionary(ProtagSFX);
         AddSoundsToDictionary(MacacoSFX);
-
+        AddSoundsToDictionary (ambientSounds);
 
         if (instance == null) {
             instance = this;
@@ -64,13 +64,14 @@ public void PlayMusic(string name) {
     public void PlayAmbient(string name) {
         Sound s = Array.Find(ambientSounds, x => x.name == name);
         if (s == null){
+            Debug.Log("Ambient sound not found: " + name);
+        }
+        else {
             ambientSource.clip = s.clip;
             ambientSource.volume = ambientSource.volume * masterSource.volume;
             ambientSource.loop = true;
             ambientSource.Play();
-        }
-        else {
-            Debug.Log("Ambient sound not found: " + name);
+
         }
     }
 
