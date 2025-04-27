@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4977763591631847116
 Transform:
@@ -47,17 +47,17 @@ LODGroup:
   m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.3511643
+  - screenRelativeHeight: 0.9650082
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 2739389020159230347}
     - renderer: {fileID: 2739389020159230345}
-  - screenRelativeHeight: 0.23653316
+  - screenRelativeHeight: 0.8401511
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 2739389020159230345}
     - renderer: {fileID: 2739389020159230347}
-  - screenRelativeHeight: 0.15023457
+  - screenRelativeHeight: 0.5092041
     fadeTransitionWidth: 0.382
     renderers:
     - renderer: {fileID: 2739389020159230347}
@@ -111,9 +111,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5372654755048793577, guid: 8a26de1e73de36249a2e401ec09d41b0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5372654755048793579, guid: 8a26de1e73de36249a2e401ec09d41b0, type: 3}
       propertyPath: m_Name
       value: tree_common_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 5372654755048793579, guid: 8a26de1e73de36249a2e401ec09d41b0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

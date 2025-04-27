@@ -1385,7 +1385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1830364957}
   thisCamera: {fileID: 1751424194}
-  sceneToLoad: Tutorial
+  sceneToLoad: Tutorial_Remake
 --- !u!1001 &375602098
 PrefabInstance:
   m_ObjectHideFlags: 0
