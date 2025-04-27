@@ -220,6 +220,11 @@ public class TalentManager : MonoBehaviour {
         return unitUpgardes[upgrade.level] == index;
     }
 
+    public bool AlreadyChoseUpgradeFromLevel(PossibleUpgrade upgrade) {
+        Dictionary<int, int> unitUpgardes = GameController.controller.GetUnitRecords(this.SelectedUnit).GetLevelUpgrades();
+        return unitUpgardes.Keys.Contains(upgrade.level);
+    }
+
     public bool CheckSelectedSkillOnLevel(int level) {
         return this.selectedLevelSkill.Keys.Contains(level);
     }

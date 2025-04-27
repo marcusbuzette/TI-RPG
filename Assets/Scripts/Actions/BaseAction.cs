@@ -15,6 +15,7 @@ public abstract class BaseAction : MonoBehaviour {
     protected Action onActionComplete;
     protected ActionType actionType;
     [SerializeField] protected Sprite actionImage;
+    [SerializeField] protected Sprite actionImageBlocked;
     public Animator animator;
     public float speed;
 
@@ -40,6 +41,7 @@ public abstract class BaseAction : MonoBehaviour {
     public abstract void Action();
     public abstract string GetActionName();
     public Sprite GetActionImage() {return this.actionImage;}
+    public Sprite GetActionBlockedImage() {return this.actionImageBlocked;}
 
     public virtual bool IsValidActionGridPosition(GridPosition gridPosition) {
         List<GridPosition> validGridPositionList = GetValidGridPositionList();
@@ -57,6 +59,9 @@ public abstract class BaseAction : MonoBehaviour {
     protected void ActionStart(Action onActionComplete) {
         isActive = true;
         this.onActionComplete += onActionComplete;
+        if(LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE) {
+            GridSystemVisual.Instance.HideAllGridPosition();
+        }
 
         OnAnyActionStarted?.Invoke(this, EventArgs.Empty);
     }
