@@ -170,6 +170,15 @@ public class TurnSystem : MonoBehaviour {
         Time.timeScale = turnSpeeds[turnSpeedIndex];
     }
 
+public void AddUnitsToUnitOrderList(Unit unit) {
+    if (!unitiesOrderList.Contains(unit)) {
+        unitiesOrderList.Add(unit);
+    }
+     if (unit.IsEnemy() && !allEnemies.Contains(unit)) {
+        allEnemies.Add(unit);
+    }
+    onOrderChange.Invoke(this, EventArgs.Empty);
+}
 
 
 

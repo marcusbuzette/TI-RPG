@@ -13,21 +13,21 @@ MonoBehaviour:
   m_Name: Combate 1
   m_EditorClassIdentifier: 
   zoneNumber: 1
-  startX: 11
-  startZ: 8
-  floor: 0
-  endX: 4
-  endZ: 4
+  startX: 15
+  startZ: 6
+  floor: 1
+  endX: 18
+  endZ: 11
   spawnPoints:
-  - x: 5
-    z: 5
+  - x: 15
+    z: 7
     floor: 0
-  - x: 5
-    z: 6
+  - x: 16
+    z: 7
     floor: 0
-  - x: 6
-    z: 6
+  - x: 18
+    z: 7
     floor: 0
-  - x: 6
-    z: 5
+  - x: 19
+    z: 7
     floor: 0
