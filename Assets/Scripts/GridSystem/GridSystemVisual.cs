@@ -203,7 +203,7 @@ public class GridSystemVisual : MonoBehaviour {
     }
 
     private void LevelGrid_OnAnyUnitMovedGridPosition(object sender, EventArgs e) {
-        UpdateGridVisual();
+        // UpdateGridVisual();
     }
 
     public Material GetGridVisualTypeMaterial(GridVisualType gridVisualType) {

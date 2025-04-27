@@ -10,6 +10,7 @@ public class UpgradeObject : ScriptableObject {
     public UpgradeType upgradeType;
     public int upgradeAmount;
     public Sprite upgradeImage;
+    public Sprite upgradeBlockedImage;
     
 }
 

@@ -18,3 +18,4 @@ MonoBehaviour:
   upgradeType: 1
   upgradeAmount: 2
   upgradeImage: {fileID: 21300000, guid: a8713a01c9a8cc14e8509f0517cfb674, type: 3}
+  upgradeBlockedImage: {fileID: 21300000, guid: f51e6007b558cbf4a8b3f26d5a7b459a, type: 3}

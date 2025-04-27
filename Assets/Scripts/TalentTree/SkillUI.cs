@@ -31,8 +31,18 @@ public class SkillUi : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
 
         if (!botaoDesbloquear.interactable && TalentManager.Instance.AlreadySelected(skills)) {
             var colorAux = GetComponent<Button>().colors;
-            colorAux.disabledColor = Color.yellow;
+            colorAux.disabledColor = skills.GetActionImage() != null ? Color.white : Color.yellow;
             GetComponent<Button>().colors = colorAux;
+        } else if (!botaoDesbloquear.interactable 
+                && TalentManager.Instance.CheckSelectedSkillOnLevel(skills.custo)
+                && !TalentManager.Instance.AlreadySelected(skills)) {
+                    if (skills.GetActionBlockedImage() != null) {
+                        botaoDesbloquear.GetComponent<Image>().sprite = skills.GetActionBlockedImage();
+                    } else {
+                        var colorAux = GetComponent<Button>().colors;
+                        colorAux.disabledColor = Color.grey;
+                        GetComponent<Button>().colors = colorAux;
+                    }
         }
     }
 

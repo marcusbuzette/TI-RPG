@@ -365,7 +365,6 @@ MonoBehaviour:
   actionsArray:
   - {fileID: 9186709859666415746}
   - {fileID: -1861747851849192615}
-  - {fileID: 0}
   hasMoved: 0
   hasPerformedAction: 0
   hasPerformedSkill: 0

@@ -25,11 +25,24 @@ public class UpgradeUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     private void UpdateUpgradeButtonState() {
         botaoDesbloquear.interactable = TalentManager.Instance.CanUpgrade(upgrade);
-
         if (!botaoDesbloquear.interactable && TalentManager.Instance.AlreadyUpgraded(upgrade, upgradeIndex)) {
             var colorAux = GetComponent<Button>().colors;
-            colorAux.disabledColor = Color.yellow;
+            colorAux.disabledColor = upgrade.upgrade[upgradeIndex].upgradeImage != null ?
+             Color.white : Color.yellow;
             GetComponent<Button>().colors = colorAux;
+        }
+        else if (!botaoDesbloquear.interactable &&
+                    TalentManager.Instance.AlreadyChoseUpgradeFromLevel(upgrade) &&
+                    !TalentManager.Instance.AlreadyUpgraded(upgrade, upgradeIndex)) {
+
+            if (upgrade.upgrade[upgradeIndex].upgradeBlockedImage != null) {
+                botaoDesbloquear.GetComponent<Image>().sprite = upgrade.upgrade[upgradeIndex].upgradeBlockedImage;
+            }
+            else {
+                var colorAux = botaoDesbloquear.colors;
+                colorAux.disabledColor = Color.gray;
+                botaoDesbloquear.colors = colorAux;
+            }
         }
     }
 
@@ -42,7 +55,7 @@ public class UpgradeUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (upgrade.upgrade[index].upgradeImage != null) {
             botaoDesbloquear.GetComponent<Image>().sprite = upgrade.upgrade[index].upgradeImage;
             nome.enabled = false;
-            botaoDesbloquear.transform.Rotate(new Vector3(0,0,-45));
+            botaoDesbloquear.transform.Rotate(new Vector3(0, 0, -45));
         }
     }
 
