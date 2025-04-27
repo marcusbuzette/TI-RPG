@@ -395,7 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c51fdeedc79e5b428788df816ec756f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unit: {fileID: 0}
+  unit: {fileID: 4097611372698076066}
 --- !u!1 &6461659213182696477
 GameObject:
   m_ObjectHideFlags: 0
@@ -561,6 +561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionImage: {fileID: 21300000, guid: d24172bb5601f90449d5233c70318796, type: 3}
+  actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
   moveSpeed: 4
@@ -596,6 +597,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionImage: {fileID: 21300000, guid: 39195be798b6f544b952277c45599e40, type: 3}
+  actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
   obstaclesLayerMask:
@@ -619,6 +621,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionImage: {fileID: 0}
+  actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
 --- !u!95 &3177319531651322102
@@ -655,6 +658,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionImage: {fileID: 0}
+  actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
   targetsList: []

@@ -178,7 +178,7 @@ public class MoveAction : BaseAction {
         HitAction hitAction = unit.GetComponent<HitAction>();
         ShootAction shootAction = unit.GetComponent<ShootAction>();
 
-        if(hitAction != null) targetCountAtGridPosition = hitAction.GetTargetCountAtPosition(gridPosition);
+        if (hitAction != null) targetCountAtGridPosition = hitAction.GetTargetCountAtPosition(gridPosition);
         else targetCountAtGridPosition = shootAction.GetTargetCountAtPosition(gridPosition);
 
         return new EnemyAIAction {
@@ -207,5 +207,26 @@ public class MoveAction : BaseAction {
 
     public void SetMaxDistanceMovement(int maxDistanceMovement) {
         this.maxMoveDistance = maxDistanceMovement;
+    }
+
+    public List<Vector3> GetMovePathList() {
+        return this.positionList;
+    }
+
+    public void FollowMove(List<Vector3> posList, int followIndex, Action onActionComplete ) {
+        List<Vector3> posAux = new List<Vector3>();
+        int auxSize = posList.Count - followIndex - 1 ;
+        if (auxSize > 0) {
+            for (int i = 0; i < auxSize; i++) {
+                posAux.Add(posList[i]);
+            }
+            Debug.Log(unit.unitId);
+            Debug.Log(posAux.Count);
+            this.positionList = posAux;
+            currentPositionIndex = 1;
+            unit.PlayAnimation("IsWalking", true);
+            ActionStart(onActionComplete);
+        }
+
     }
 }
