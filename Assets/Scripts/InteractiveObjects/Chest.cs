@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
-using UnityEditor.Animations;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,7 +20,7 @@ public class Chest : MonoBehaviour, IInteractiveObjects
 
     private InventoryItemData _item;
     public float imageTimer;
-    public AnimatorController animController;
+    public RuntimeAnimatorController animController;
 
     bool used = false;
 
