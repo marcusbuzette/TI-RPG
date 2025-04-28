@@ -23,6 +23,7 @@ public class Unit : MonoBehaviour {
     private GridPosition gridPosition;
     private HealthSystem healthSystem;
     [SerializeField] private List<BaseSkills> possibleSkills = new List<BaseSkills>();
+    [SerializeField] private List<BaseSkills> possibleSkillsPrefabs = new List<BaseSkills>();
     [SerializeField] private List<PossibleUpgrade> possibleUpgrades = new List<PossibleUpgrade>();
     [SerializeField] private XpSystem xpSystem;
     [SerializeField] public string unitId = "";
@@ -59,8 +60,9 @@ public class Unit : MonoBehaviour {
             this.xpSystem.SetXp(unitRecords.xp);
             this.unitStats = unitRecords.unitStats;
             foreach (BaseSkills skill in unitRecords.baseSkills) {
-                BaseSkills aux = possibleSkills.Find((s) => s.nome == skill.nome);
+                BaseSkills aux = possibleSkillsPrefabs.Find((s) => s.GetComponent<BaseSkills>().nome == skill.nome);
                 BaseSkills bs = gameObject.AddComponent(skill.GetType()) as BaseSkills;
+                bs.SetSkill();
                 if (aux != null) {
                     bs.SetSkillImage(aux.GetActionImage());
                 }
