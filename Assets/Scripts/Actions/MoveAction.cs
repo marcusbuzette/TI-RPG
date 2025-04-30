@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 using static System.Collections.Specialized.BitVector32;
 
 public class MoveAction : BaseAction {
@@ -184,11 +185,20 @@ public class MoveAction : BaseAction {
             };
         }
 
-        HitAction hitAction = unit.GetComponent<HitAction>();
-        ShootAction shootAction = unit.GetComponent<ShootAction>();
+        List<BaseAction> actions = unit.GetActionsArray().ToList();
 
-        if(hitAction != null) valueGridPosition = hitAction.GetTargetCountAtPosition(gridPosition);
-        else valueGridPosition = shootAction.GetTargetCountAtPosition(gridPosition);
+        for(int i = 0; i < actions.Count; i++) {
+            if (actions[i].GetActionType() == ActionType.MOVE) {
+                actions.Remove(actions[i]);
+            }
+            else if (unit.GetComponent<HealAction>() && actions[i] == unit.GetComponent<HealAction>()) {
+                actions.Remove(actions[i]);
+            }
+        }
+
+        if(actions.Count > 0) {
+            valueGridPosition = actions[Random.Range(0, actions.Count)].GetEnemyAIAction(gridPosition).actionValue;
+        }
 
         return new EnemyAIAction {
             gridPosition = gridPosition,
