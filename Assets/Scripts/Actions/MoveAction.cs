@@ -173,17 +173,26 @@ public class MoveAction : BaseAction {
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {
-        int targetCountAtGridPosition = 0;
+        int valueGridPosition = 0;
+
+        if((unit.GetHealthPoints() * 100) / unit.GetHealthSystem().maxHealthPoints < 15 &&
+            unit.GetComponent<HealAction>()) {
+            valueGridPosition = unit.GetComponent<HealAction>().GetEnemyAIAction(gridPosition).actionValue;
+            return new EnemyAIAction {
+                gridPosition = gridPosition,
+                actionValue = valueGridPosition * 10,
+            };
+        }
 
         HitAction hitAction = unit.GetComponent<HitAction>();
         ShootAction shootAction = unit.GetComponent<ShootAction>();
 
-        if(hitAction != null) targetCountAtGridPosition = hitAction.GetTargetCountAtPosition(gridPosition);
-        else targetCountAtGridPosition = shootAction.GetTargetCountAtPosition(gridPosition);
+        if(hitAction != null) valueGridPosition = hitAction.GetTargetCountAtPosition(gridPosition);
+        else valueGridPosition = shootAction.GetTargetCountAtPosition(gridPosition);
 
         return new EnemyAIAction {
             gridPosition = gridPosition,
-            actionValue = targetCountAtGridPosition * 10,
+            actionValue = valueGridPosition * 10,
         };
     }
 
