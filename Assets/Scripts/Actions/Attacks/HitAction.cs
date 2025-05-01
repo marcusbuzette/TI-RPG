@@ -103,11 +103,9 @@ public class HitAction : BaseAction {
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {
-        Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
-        
         return new EnemyAIAction {
             gridPosition = gridPosition,
-            actionValue = 1000 + Mathf.RoundToInt((GetTargetCountAtPosition(gridPosition)) * 100f),
+            actionValue = 100 + Mathf.RoundToInt((GetTargetCountAtPosition(gridPosition)) * 100f),
         };
     }
 

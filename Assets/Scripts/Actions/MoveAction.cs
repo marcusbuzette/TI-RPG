@@ -176,8 +176,13 @@ public class MoveAction : BaseAction {
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {
         int valueGridPosition = 0;
 
-        if((unit.GetHealthPoints() * 100) / unit.GetHealthSystem().maxHealthPoints < 15 &&
+        //Verifica se o inimigo está com pouca vida e se ele consegue se curar
+        Debug.Log((unit.GetHealthPoints() * 100) / unit.GetHealthSystem().maxHealthPoints);
+        Debug.Log(unit.GetComponent<HealAction>());
+
+        if ((unit.GetHealthPoints() * 100) / unit.GetHealthSystem().maxHealthPoints < 15 &&
             unit.GetComponent<HealAction>()) {
+            Debug.Log("CURAR");
             valueGridPosition = unit.GetComponent<HealAction>().GetEnemyAIAction(gridPosition).actionValue;
             return new EnemyAIAction {
                 gridPosition = gridPosition,
@@ -185,21 +190,26 @@ public class MoveAction : BaseAction {
             };
         }
 
+        //Pega as ações do inimigo
         List<BaseAction> actions = unit.GetActionsArray().ToList();
+        List<BaseAction> attackActions = new List<BaseAction>();
 
+        //Tira a ação de mover e de se curar da escolha de ações
         for(int i = 0; i < actions.Count; i++) {
-            if (actions[i].GetActionType() == ActionType.MOVE) {
-                actions.Remove(actions[i]);
-            }
-            else if (unit.GetComponent<HealAction>() && actions[i] == unit.GetComponent<HealAction>()) {
-                actions.Remove(actions[i]);
+            if (actions[i].GetActionType() != ActionType.MOVE) {
+                if (!unit.GetComponent<HealAction>() || actions[i] != unit.GetComponent<HealAction>()) {
+                    attackActions.Add(actions[i]);
+                }
             }
         }
 
-        if(actions.Count > 0) {
-            valueGridPosition = actions[Random.Range(0, actions.Count)].GetEnemyAIAction(gridPosition).actionValue;
+        //Escolhe uma ação aleatória para performar
+        if(attackActions.Count > 0) {
+            //valueGridPosition = attackActions[Random.Range(0, attackActions.Count)].GetEnemyAIAction(gridPosition).actionValue;
+            valueGridPosition = attackActions[0].GetEnemyAIAction(gridPosition).actionValue;
         }
 
+        //Retorna a melhor ação possivel do inimigo
         return new EnemyAIAction {
             gridPosition = gridPosition,
             actionValue = valueGridPosition * 10,

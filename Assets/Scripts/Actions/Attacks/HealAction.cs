@@ -91,12 +91,12 @@ public class HealAction : BaseAction {
         if ((unit.GetHealthPoints() * 100) / unit.GetHealthSystem().maxHealthPoints < 15) {
             return new EnemyAIAction {
                 gridPosition = gridPosition,
-                actionValue = 100 + Mathf.RoundToInt((GetDistanceNearestUnit(gridPosition)) * 100f),
+                actionValue = 1000 + Mathf.RoundToInt((GetDistanceNearestUnit(gridPosition)) * 100f),
             };
         }
         return new EnemyAIAction {
             gridPosition = gridPosition,
-            actionValue = 0,
+            actionValue = -1,
         };
     }
 
