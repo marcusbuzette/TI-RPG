@@ -177,12 +177,8 @@ public class MoveAction : BaseAction {
         int valueGridPosition = 0;
 
         //Verifica se o inimigo está com pouca vida e se ele consegue se curar
-        Debug.Log((unit.GetHealthPoints() * 100) / unit.GetHealthSystem().maxHealthPoints);
-        Debug.Log(unit.GetComponent<HealAction>());
-
         if ((unit.GetHealthPoints() * 100) / unit.GetHealthSystem().maxHealthPoints < 15 &&
             unit.GetComponent<HealAction>()) {
-            Debug.Log("CURAR");
             valueGridPosition = unit.GetComponent<HealAction>().GetEnemyAIAction(gridPosition).actionValue;
             return new EnemyAIAction {
                 gridPosition = gridPosition,
