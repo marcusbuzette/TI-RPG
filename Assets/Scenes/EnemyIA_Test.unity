@@ -1589,7 +1589,7 @@ MonoBehaviour:
     maxHealthPoints: 150
     maxMove: 4
     xpSpoil: 0
-    range: 0
+    range: 3
   statsModifiers:
     attack: 0
     deffence: 0
@@ -2175,7 +2175,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: -209.703}
+  m_AnchoredPosition: {x: 0, y: -209.703}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &975447119
@@ -3192,12 +3192,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7551674043583017495, guid: 2bb4b9bd9fb8a4a4bb4ef8f6decc17eb, type: 3}
+      propertyPath: baseUnitStats.range
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7551674043583017495, guid: 2bb4b9bd9fb8a4a4bb4ef8f6decc17eb, type: 3}
       propertyPath: baseUnitStats.xpSpoil
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7551674043583017495, guid: 2bb4b9bd9fb8a4a4bb4ef8f6decc17eb, type: 3}
       propertyPath: actionsArray.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7551674043583017495, guid: 2bb4b9bd9fb8a4a4bb4ef8f6decc17eb, type: 3}
+      propertyPath: actionsArray.Array.data[1]
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7551674043583017495, guid: 2bb4b9bd9fb8a4a4bb4ef8f6decc17eb, type: 3}
       propertyPath: actionsArray.Array.data[2]
@@ -3297,6 +3305,7 @@ PrefabInstance:
       objectReference: {fileID: 6309143856928389999, guid: ffb9c5072945b5d4bb650e5b7bf268ed, type: 3}
     m_RemovedComponents:
     - {fileID: 3533902492998687438, guid: 2bb4b9bd9fb8a4a4bb4ef8f6decc17eb, type: 3}
+    - {fileID: 984923278628091388, guid: 2bb4b9bd9fb8a4a4bb4ef8f6decc17eb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -3306,6 +3315,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4096442209837572, guid: 2bb4b9bd9fb8a4a4bb4ef8f6decc17eb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2027892982}
+    - targetCorrespondingSourceObject: {fileID: 4096442209837572, guid: 2bb4b9bd9fb8a4a4bb4ef8f6decc17eb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2027892986}
   m_SourcePrefab: {fileID: 100100000, guid: 2bb4b9bd9fb8a4a4bb4ef8f6decc17eb, type: 3}
 --- !u!1 &1479390451
 GameObject:
@@ -4194,6 +4206,32 @@ MonoBehaviour:
   maxHealDistance: 1
   healPoints: 50
   curaMacacoSFX: 
+--- !u!114 &2027892986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027892972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4c588a935c0a4f56b855794c3e7145d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
+  actionImageBlocked: {fileID: 0}
+  animator: {fileID: 0}
+  speed: 0
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  maxShootDistance: 3
+  aimingTimer: 0.1
+  shootingTimer: 0.3
+  cooloffTimer: 0.1
+  rotateSpeed: 10
+  shootDamage: 10
+  arrowSFX: 
 --- !u!1 &2031008145
 GameObject:
   m_ObjectHideFlags: 0
