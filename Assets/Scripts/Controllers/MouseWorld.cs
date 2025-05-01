@@ -17,6 +17,7 @@ public class MouseWorld : MonoBehaviour {
 
     private void Update() {
         transform.position = MouseWorld.GetPosition();
+        GridSystemVisual.Instance.MousePositionVisual(transform.position);
     }
 
     public static Vector3 GetPosition() {
