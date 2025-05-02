@@ -11,7 +11,12 @@ public class Door : MonoBehaviour, ICalledObject {
 
     public float transformTime;
 
-    public void Action() {
+    private GameObject m_Camera;
+
+    public void Action(GameObject m_Camera) {
+        m_Camera.SetActive(true);
+        this.m_Camera = m_Camera;
+
         StartCoroutine(GoToPosition(transformTime));
         
         SetIsWalkableNodes(true);
@@ -40,6 +45,8 @@ public class Door : MonoBehaviour, ICalledObject {
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+
+        m_Camera.SetActive(false);
 
         // Garante que a posição e rotação finais sejam exatamente as do target
         transform.position = finalPos;

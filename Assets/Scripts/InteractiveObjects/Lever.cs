@@ -11,7 +11,11 @@ public class Lever : MonoBehaviour, IInteractiveObjects
 
     public GameObject m_ObjectToCall;
 
+    public Animator m_Animator;
+
     bool used = false;
+
+    public GameObject m_Camera;
 
     private void Start() {
         GetFowardGridObject();
@@ -23,8 +27,9 @@ public class Lever : MonoBehaviour, IInteractiveObjects
                 LevelGrid.Instance.OnGameModeChanged -= UnitStopGoingTo;
                 PathFinding.Instance.OnRecalculatedpath -= UnitStopGoingTo;
 
-                m_ObjectToCall.GetComponent<ICalledObject>().Action();
+                m_ObjectToCall.GetComponent<ICalledObject>().Action(m_Camera);
 
+                TriggerAnim();
                 used = true;
                 goingTo = false;
             }
@@ -64,5 +69,9 @@ public class Lever : MonoBehaviour, IInteractiveObjects
 
         goingTo = false;
         currentUnit = null;
+    }
+
+    public void TriggerAnim() {
+        m_Animator.SetBool("Used", true);
     }
 }
