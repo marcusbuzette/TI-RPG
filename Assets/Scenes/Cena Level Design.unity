@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571337, b: 0.3069219, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -655,9 +655,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8a40b60fda1ef4f8c9d0f466e29e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
-  maxShootDistance: 1
+  speed: 0
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  maxHitDistance: 1
   hitDamage: 30
+  rotateSpeed: 10
+  meleeSFX: 
+  Attack: 1
 --- !u!1 &104545815
 GameObject:
   m_ObjectHideFlags: 0
@@ -2306,7 +2314,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d080ed6cd128408b82a8d741eeacab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
+  speed: 0
 --- !u!1 &304302531
 GameObject:
   m_ObjectHideFlags: 0
@@ -3008,6 +3018,7 @@ MonoBehaviour:
   width: 30
   height: 40
   cellSize: 2
+  floorAmount: 0
   gameMode: 0
   squaredZoneList: []
   zoneList: []
@@ -3371,7 +3382,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d080ed6cd128408b82a8d741eeacab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
   animator: {fileID: 0}
+  speed: 0
 --- !u!114 &565051339 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4874365344887348852, guid: e4cdb5a43fe194cbbb93ec86261f60ac, type: 3}
@@ -4627,8 +4640,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1x
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d16670a8de0cdd240a133ba562a7c59f, type: 2}
+  m_sharedMaterial: {fileID: 4106604935878803488, guid: d16670a8de0cdd240a133ba562a7c59f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4652,8 +4665,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
-  m_fontSizeBase: 32
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4750,6 +4763,9 @@ MonoBehaviour:
   unitLayerMask:
     serializedVersion: 2
     m_Bits: 128
+  interactiveLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1062753793
 GameObject:
   m_ObjectHideFlags: 0
@@ -4782,6 +4798,7 @@ MonoBehaviour:
   _masterSlider: {fileID: 0}
   _musicSlider: {fileID: 0}
   _sfxSlider: {fileID: 0}
+  _ambientSlider: {fileID: 0}
 --- !u!4 &1062753795
 Transform:
   m_ObjectHideFlags: 0
@@ -6116,7 +6133,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1430207309}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.42415538, y: 0.000000015581923, z: -0.000000007298182, w: 0.90558946}
+  m_LocalRotation: {x: 0.42415538, y: -0.000000015581909, z: 0.0000000072981767, w: 0.90558946}
   m_LocalPosition: {x: 8.17, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6627,6 +6644,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d6732c9ef31fc2459c61840fce2dbf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   gridSystemVisualPrefab: {fileID: 7942761665759518035, guid: 8bace41076cadfc498ab91705dd95d92, type: 3}
   gridVisualTypeMaterialList:
   - gridVisualType: 0
@@ -6754,8 +6774,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 70679515a0e5c8e438d569a681bd1d86, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -6847,7 +6867,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1624793661}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.42415538, y: 0.000000015581923, z: -0.000000007298182, w: 0.90558946}
+  m_LocalRotation: {x: 0.42415538, y: -0.000000015581909, z: 0.0000000072981767, w: 0.90558946}
   m_LocalPosition: {x: 8.17, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9077,12 +9097,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'FINALIZAR
+  m_text: 'Finalizar
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d16670a8de0cdd240a133ba562a7c59f, type: 2}
+  m_sharedMaterial: {fileID: 4106604935878803488, guid: d16670a8de0cdd240a133ba562a7c59f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9106,8 +9126,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
-  m_fontSizeBase: 32
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -10023,6 +10043,10 @@ MonoBehaviour:
   obstaclesLayers:
     serializedVersion: 2
     m_Bits: 256
+  floorLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  pathFindingLinkContainer: {fileID: 0}
 --- !u!1 &2135561497
 GameObject:
   m_ObjectHideFlags: 0
