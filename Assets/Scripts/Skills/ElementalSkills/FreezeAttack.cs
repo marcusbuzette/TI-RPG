@@ -13,6 +13,7 @@ public class FreezeAttack : BaseSkills {
     [SerializeField] private float shootingTimer = .3f;
     [SerializeField] private float cooloffTimer = .1f;
     [SerializeField] private float rotateSpeed = 10f;
+     [SerializeField] private GameObject IceFbx;
 
     public string freezeArrowSFX;
 
@@ -21,8 +22,15 @@ public class FreezeAttack : BaseSkills {
     private Unit targetUnit;
     private bool canShoot;
 
+
+
     private void Start() {
         obstaclesLayerMask = LayerMask.GetMask("Obstacles"); //add layer mask to don't shoot through obstacles
+        GameObject IceFbx = GameObject.Find("Ice Magic Cast");
+        // Garantir que o VFX comece desativado
+        if (IceFbx != null) {
+            IceFbx.SetActive(false);
+        }
     }
     public override string GetActionName() {
         return "Congelar";
@@ -110,6 +118,12 @@ public class FreezeAttack : BaseSkills {
         stateTimer = aimingTimer;
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
         canShoot = true;
+
+        // Ativa o VFX quando começa a ação
+        if (IceFbx != null) {
+            IceFbx.SetActive(true);
+        }
+
         if (!string.IsNullOrEmpty(freezeArrowSFX)) {
             AudioManager.instance?.PlaySFX(freezeArrowSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
         }
@@ -127,6 +141,9 @@ public class FreezeAttack : BaseSkills {
                 stateTimer = shootingTimer;
                 break;
             case State.Cooloff:
+             if (IceFbx != null) {
+                    IceFbx.SetActive(false);
+                }
                 ActionFinish();
                 break;
 

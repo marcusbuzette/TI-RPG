@@ -39,4 +39,10 @@ public abstract class BaseSkills : BaseAction
     }
 
     public virtual BuffType? GetBuffType() {return null;}
+
+    public void SetSkill() {
+        this.actionType = ActionType.SKILL;
+        unit = GetComponent<Unit>();
+        animator = GetComponentInChildren<Animator>();
+    }
 }
