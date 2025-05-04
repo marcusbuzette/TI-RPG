@@ -26,7 +26,7 @@ public class HealthSystem : MonoBehaviour {
     public void TestDamage(int damage, Unit attackedBy, bool haveProjectile) {
         //Verifica se alguma unidade o atacou, se não, foi algum efeito que não tem chance de errar
         if (attackedBy != null) {
-            int dice = Random.Range(0, 1);
+            int dice = Random.Range(0, 10);
 
             if (dice <= 1) {
                 attackedBy.GetHealthSystem().GetUnitWorldUI().ShowUIValue(0, "Miss");
