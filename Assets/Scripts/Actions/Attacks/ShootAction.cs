@@ -12,16 +12,11 @@ public class ShootAction : BaseAction
     }
     [SerializeField] private LayerMask obstaclesLayerMask;
     [SerializeField] private int maxShootDistance = 1;
-    [SerializeField] private float aimingTimer = .1f;
-    [SerializeField] private float shootingTimer = .3f;
-    [SerializeField] private float cooloffTimer = .1f;
-    [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private int shootDamage = 100;
 
     public string arrowSFX;
 
     private State currentState;
-    private float stateTimer;
     private Unit targetUnit;
     private bool canShoot;
 
@@ -36,29 +31,11 @@ public class ShootAction : BaseAction
 
     public override void Action()
     {
-        stateTimer -= Time.deltaTime;
-        switch (currentState)
-        {
-            case State.Aiming:
-                Vector3 moveDirection = (targetUnit.transform.position - transform.position).normalized;
-                transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
-                break;
-            case State.Shooting:
-                if (canShoot)
-                {
-                    
-                    Shoot();
-                    canShoot = false;
-                }
-                break;
-            case State.Cooloff:
-
-                break;
-
-        }
-        if (stateTimer <= 0)
-        {
-            NextState();
+        if (canShoot) {
+            canShoot = false;
+            StartCoroutine(RotateTowardsAndExecute(targetUnit.transform, () => {
+                Shoot();
+            }));
         }
     }
 
@@ -124,8 +101,6 @@ public class ShootAction : BaseAction
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete)
     {
-        currentState = State.Aiming;
-        stateTimer = aimingTimer;
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
         canShoot = true;
         if (!string.IsNullOrEmpty(arrowSFX)) {
@@ -134,17 +109,15 @@ public class ShootAction : BaseAction
         ActionStart(onActionComplete);
     }
 
-    private void NextState()
+    protected void NextState()
     {
         switch (currentState)
         {
             case State.Aiming:
                 currentState = State.Shooting;
-                stateTimer = shootingTimer;
                 break;
             case State.Shooting:
                 currentState = State.Cooloff;
-                stateTimer = shootingTimer;
                 break;
             case State.Cooloff:
                 ActionFinish();
@@ -155,10 +128,12 @@ public class ShootAction : BaseAction
 
     private void Shoot()
     {
-        targetUnit.Damage(shootDamage, this.GetComponent<Unit>());
+        Debug.Log("SHOOT");
+        targetUnit.Damage(shootDamage, true, this.GetComponent<Unit>());
         // animator?.SetTrigger("Attack");
         unit.PlayAnimation("Attack");
         AudioManager.instance?.PlaySFX("Arrows");
+        ActionFinish();
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)

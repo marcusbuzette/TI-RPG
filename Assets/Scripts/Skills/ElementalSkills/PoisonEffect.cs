@@ -21,7 +21,7 @@ public class PoisonEffect : MonoBehaviour
     }
 
     public void TurnSystem_onTurnChange(object sender, EventArgs e) {
-        unit.Damage(damage);
+        unit.Damage(damage, false, null);
         coolDown--;
         if(coolDown <= 0 ) CurePoison();
     }

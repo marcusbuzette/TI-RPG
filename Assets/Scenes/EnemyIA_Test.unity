@@ -304,8 +304,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 97609439}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.33100694, y: 0.000000016236429, z: -0.0000000056954317, w: 0.9436283}
-  m_LocalPosition: {x: 3.54, y: 8, z: -3.4000003}
+  m_LocalRotation: {x: 0.14521319, y: 0.000000008511999, z: -0.0000000012492968, w: 0.9894004}
+  m_LocalPosition: {x: 3.54, y: 3.000001, z: -3.4000003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -802,7 +802,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 8, z: -10}
+  m_FollowOffset: {x: 0, y: 3.000001, z: -10}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0
@@ -1169,6 +1169,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 331906222}
   m_CullTransparentMesh: 1
+--- !u!1 &337492463
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 337492464}
+  m_Layer: 7
+  m_Name: ShootPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &337492464
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337492463}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.357, z: 0.36}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 710926792}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &438692641
 GameObject:
   m_ObjectHideFlags: 0
@@ -1537,7 +1568,6 @@ GameObject:
   - component: {fileID: 710926799}
   - component: {fileID: 710926798}
   - component: {fileID: 710926797}
-  - component: {fileID: 710926796}
   - component: {fileID: 710926795}
   m_Layer: 7
   m_Name: UnitTest
@@ -1562,6 +1592,7 @@ Transform:
   - {fileID: 197312163}
   - {fileID: 1732639873}
   - {fileID: 1305445620}
+  - {fileID: 337492464}
   m_Father: {fileID: 438692642}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &710926793
@@ -1604,6 +1635,8 @@ MonoBehaviour:
   hasPerformedSkill: 0
   modifiedBy: []
   isUnitTurn: 0
+  projectilePrefab: {fileID: 695093204734437254, guid: cd36fd0ad0a723741b520b5c4ec4c717, type: 3}
+  projectilePoint: {fileID: 337492464}
   enemyFocus: 0
 --- !u!114 &710926794
 MonoBehaviour:
@@ -1637,6 +1670,7 @@ MonoBehaviour:
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  rotateSpeed: 10
   nome: 
   descricao: 
   custo: 0
@@ -1659,45 +1693,6 @@ MonoBehaviour:
   selectedGrid: {x: 0, y: 0, z: 0}
   isAiming: 0
   healArrowSFX: 
---- !u!114 &710926796
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 710926791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b26dcc9098726be4593e0d47c75aa31b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionImage: {fileID: 21300000, guid: f7fe60f8d5adabc459fb05f55e57981e, type: 3}
-  actionImageBlocked: {fileID: 0}
-  animator: {fileID: 0}
-  speed: 0
-  nome: 
-  descricao: 
-  custo: 0
-  preRequisitos: []
-  onCoolDown: 0
-  coolDown: 3
-  currentCoolDown: 0
-  obstaclesLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  fireAttackObject: {fileID: 0}
-  particleFire: {fileID: 6033032414094306690, guid: 71e91b07b92fcd7409bae60a8df9bd2d, type: 3}
-  maxShootDistance: 5
-  aimingTimer: 0.1
-  shootingTimer: 0.3
-  cooloffTimer: 0.1
-  rotateSpeed: 10
-  shootDamage: 100
-  areaDamage: 2
-  damage: 3
-  selectedGrid: {x: 0, y: 0, z: 0}
-  isAiming: 0
-  fireArrowSFX: 
 --- !u!114 &710926797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1714,14 +1709,11 @@ MonoBehaviour:
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  rotateSpeed: 10
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 0
-  maxShootDistance: 5
-  aimingTimer: 0.1
-  shootingTimer: 0.3
-  cooloffTimer: 0.1
-  rotateSpeed: 10
+  maxShootDistance: 6
   shootDamage: 100
   arrowSFX: 
 --- !u!114 &710926798
@@ -1740,6 +1732,7 @@ MonoBehaviour:
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  rotateSpeed: 4
   moveSpeed: 4
   rotateSpeed: 4
   stopDistance: 0.1
@@ -3244,7 +3237,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8280494465233947303, guid: 2bb4b9bd9fb8a4a4bb4ef8f6decc17eb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 8280494465233947303, guid: 2bb4b9bd9fb8a4a4bb4ef8f6decc17eb, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3311,17 +3304,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6309143856928389999, guid: ffb9c5072945b5d4bb650e5b7bf268ed, type: 3}
     m_RemovedComponents:
-    - {fileID: 3533902492998687438, guid: 2bb4b9bd9fb8a4a4bb4ef8f6decc17eb, type: 3}
-    - {fileID: 984923278628091388, guid: 2bb4b9bd9fb8a4a4bb4ef8f6decc17eb, type: 3}
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4096442209837572, guid: 2bb4b9bd9fb8a4a4bb4ef8f6decc17eb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2027892979}
-    - targetCorrespondingSourceObject: {fileID: 4096442209837572, guid: 2bb4b9bd9fb8a4a4bb4ef8f6decc17eb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2027892982}
     - targetCorrespondingSourceObject: {fileID: 4096442209837572, guid: 2bb4b9bd9fb8a4a4bb4ef8f6decc17eb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2027892986}
@@ -3577,8 +3566,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1531976572}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.33100694, y: 0.000000016236429, z: -0.0000000056954317, w: 0.9436283}
-  m_LocalPosition: {x: 3.54, y: 8, z: -3.4000003}
+  m_LocalRotation: {x: 0.14521319, y: 0.000000008511999, z: -0.0000000012492968, w: 0.9894004}
+  m_LocalPosition: {x: 3.54, y: 3.000001, z: -3.4000003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4193,26 +4182,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &2027892982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2027892972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b257115c592644b78ac47c320d9a80d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionImage: {fileID: 0}
-  actionImageBlocked: {fileID: 0}
-  animator: {fileID: 0}
-  speed: 0
-  targetsList: []
-  maxHealDistance: 1
-  healPoints: 50
-  curaMacacoSFX: 
 --- !u!114 &2027892986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4229,14 +4198,11 @@ MonoBehaviour:
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  rotateSpeed: 10
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 0
   maxShootDistance: 3
-  aimingTimer: 0.1
-  shootingTimer: 0.3
-  cooloffTimer: 0.1
-  rotateSpeed: 10
   shootDamage: 10
   arrowSFX: 
 --- !u!1 &2031008145
