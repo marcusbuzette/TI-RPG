@@ -334,7 +334,17 @@ public class Unit : MonoBehaviour {
 
         Projectile projectile = projectileTransform.GetComponent<Projectile>();
         projectile.Setup(this, enemy.transform.position, enemy, projectileDemage, miss);
+    }
 
+    public void SpawnProjectile(Vector3 target, Color color) {
+        if (projectilePoint == null) {
+            Debug.LogWarning(transform.name + " <- this unit do not have ProjectilePoint on Unit");
+            projectilePoint = transform;
+        }
 
+        Transform projectileTransform = Instantiate(projectilePrefab, projectilePoint.position, Quaternion.identity);
+
+        Projectile projectile = projectileTransform.GetComponent<Projectile>();
+        projectile.Setup(target, color);
     }
 }

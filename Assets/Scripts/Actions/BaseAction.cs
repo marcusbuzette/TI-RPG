@@ -107,7 +107,22 @@ public abstract class BaseAction : MonoBehaviour {
             yield return null;
         }
 
-        Debug.Log("BASE ACTION");
+        onComplete?.Invoke();
+    }
+
+    protected IEnumerator RotateTowardsAndExecute(Vector3 target, System.Action onComplete) {
+        Vector3 direction = (target - transform.position).normalized;
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+        while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f) {
+            transform.rotation = Quaternion.RotateTowards(
+                transform.rotation,
+                targetRotation,
+                rotateSpeed * Time.deltaTime
+            );
+            yield return null;
+        }
+
         onComplete?.Invoke();
     }
 

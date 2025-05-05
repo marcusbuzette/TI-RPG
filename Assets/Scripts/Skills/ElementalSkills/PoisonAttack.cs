@@ -5,21 +5,13 @@ using UnityEngine;
 
 public class PoisonAttack : BaseSkills 
 {
-    private enum State {
-        Aiming, Shooting, Cooloff
-    }
     [SerializeField] private LayerMask obstaclesLayerMask;
     [SerializeField] private int maxShootDistance = 1;
-    [SerializeField] private float aimingTimer = .1f;
-    [SerializeField] private float shootingTimer = .3f;
-    [SerializeField] private float cooloffTimer = .1f;
     [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private int damage = 100;
     [SerializeField] private GameObject PoisonFbx;
 
     public string poisonArrowSFX;
-    private State currentState;
-    private float stateTimer;
     private Unit targetUnit;
     private bool canShoot;
 
@@ -37,26 +29,12 @@ public class PoisonAttack : BaseSkills
     }
 
     public override void Action() {
-        stateTimer -= Time.deltaTime;
-        switch (currentState) {
-            case State.Aiming:
-                Vector3 moveDirection = (targetUnit.transform.position - transform.position).normalized;
-                transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
-                break;
-            case State.Shooting:
-                if (canShoot) {
-                    Shoot();
-                    canShoot = false;
-                    NextState();
-                }
-                break;
-            case State.Cooloff:
-
-                break;
-
-        }
-        if (stateTimer <= 0) {
-            NextState();
+        if (canShoot) {
+            canShoot = false;
+            GridSystemVisual.Instance.HideAllGridPosition();
+            StartCoroutine(RotateTowardsAndExecute(targetUnit.transform, () => {
+                Shoot();
+            }));
         }
     }
 
@@ -114,8 +92,6 @@ public class PoisonAttack : BaseSkills
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
-        currentState = State.Aiming;
-        stateTimer = aimingTimer;
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
         canShoot = true;
 
@@ -131,28 +107,10 @@ public class PoisonAttack : BaseSkills
         ActionStart(onActionComplete);
     }
 
-    private void NextState() {
-        switch (currentState) {
-            case State.Aiming:
-                currentState = State.Shooting;
-                stateTimer = shootingTimer;
-                break;
-            case State.Shooting:
-                currentState = State.Cooloff;
-                stateTimer = shootingTimer;
-                break;
-            case State.Cooloff:
-             if (PoisonFbx != null) {
-                    PoisonFbx.SetActive(false);
-                }
-                ActionFinish();
-                break;
-
-        }
-    }
-
     private void Shoot() {
-        if(targetUnit.gameObject.GetComponent<PoisonEffect>() != null) {
+        unit.SpawnProjectile(targetUnit.transform.position, Color.green);
+
+        if (targetUnit.gameObject.GetComponent<PoisonEffect>() != null) {
             targetUnit.gameObject.GetComponent<PoisonEffect>().CurePoison();
             targetUnit.gameObject.AddComponent<PoisonEffect>().SetPoisonEffect(targetUnit, damage, coolDown);
         }
@@ -160,6 +118,11 @@ public class PoisonAttack : BaseSkills
         // animator?.SetTrigger("Attack");
         unit.PlayAnimation("Attack");
         //AudioManager.instance?.PlaySFX("Arrows");
+
+        if (PoisonFbx != null) {
+            PoisonFbx.SetActive(false);
+        }
+        ActionFinish();
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {

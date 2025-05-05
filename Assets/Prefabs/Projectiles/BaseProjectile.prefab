@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73de41261da88204180e165886efb468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trailRenderer: {fileID: 3294750083011692748}
 --- !u!1 &6598500284411827289
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ public class Projectile : MonoBehaviour
     int damage;
     Unit attackedBy;
     bool miss;
+    [SerializeField] TrailRenderer trailRenderer;
 
     public void Setup(Unit attackedBy, Vector3 targetPosition, HealthSystem enemy, int damage, bool miss) {
         this.attackedBy = attackedBy;
@@ -17,9 +18,19 @@ public class Projectile : MonoBehaviour
         this.damage = damage;
         this.miss = miss;
 
-        if(miss) {
+        trailRenderer.material.color = Color.white;
+        trailRenderer.material.SetColor("_EmissionColor", Color.white);
+
+        if (miss) {
             this.targetPosition.y = this.targetPosition.y + 5;
         }
+    }
+    public void Setup(Vector3 targetPosition, Color color) {
+        miss = false;
+
+        this.targetPosition = targetPosition;
+        trailRenderer.material.color = color;
+        trailRenderer.material.SetColor("_EmissionColor", color);
     }
 
     private void Update() {
@@ -32,7 +43,7 @@ public class Projectile : MonoBehaviour
         float distanceAfterMoving = Vector3.Distance(transform.position, targetPosition);
 
         if(!miss && distanceBeforeMoving < distanceAfterMoving ) {
-            enemy.Damage(damage, attackedBy);
+            enemy?.Damage(damage, attackedBy);
             Destroy(gameObject);
         }
         Destroy(gameObject, 10f);
