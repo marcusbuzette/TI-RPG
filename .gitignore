@@ -71,3 +71,5 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 .DS_Store
+Assets/Assets/BigRookGames/Nature Pack/HDRP URP/Import for HDRP.unitypackage.meta
+Assets/Assets/BigRookGames/Nature Pack/HDRP URP/Import for URP.unitypackage.meta

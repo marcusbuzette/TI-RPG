@@ -23,16 +23,26 @@ public class HealthSystem : MonoBehaviour {
         OnDamage?.Invoke(this, EventArgs.Empty);
     }
 
+    public void TestDamage(int damage, Unit attackedBy, bool haveProjectile) {
+        //Verifica se alguma unidade o atacou, se não, foi algum efeito que não tem chance de errar
+        if (attackedBy != null) {
+            int dice = Random.Range(0, 10);
+
+            if (dice <= 1) {
+                attackedBy.GetHealthSystem().GetUnitWorldUI().ShowUIValue(0, "Miss");
+                if(haveProjectile) attackedBy.SpawnProjectile(this, 0, true);
+                return;
+            }
+        }
+
+        Debug.Log(haveProjectile);
+        if (haveProjectile) attackedBy.SpawnProjectile(this, damage);
+        else Damage(damage, attackedBy);
+    }
+
     public void Damage(int damage, Unit attackedBy) {
         if (isDefending) {
             worldUI.ShowUIValue(0, "Defending");
-            return;
-        }
-
-        int dice = Random.Range(0, 10);
-
-        if(dice <= 1) {
-            attackedBy.GetHealthSystem().GetUnitWorldUI().ShowUIValue(0, "Miss");
             return;
         }
 

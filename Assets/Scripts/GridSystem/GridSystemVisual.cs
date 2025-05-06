@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class GridSystemVisual : MonoBehaviour {
     public static GridSystemVisual Instance { get; private set; }
     public LayerMask obstaclesLayerMask;
+    public GameObject mouseGridObject;
 
     [Serializable]
     public struct GridVisualTypeMaterial {
@@ -215,5 +217,18 @@ public class GridSystemVisual : MonoBehaviour {
 
         Debug.LogError("Could not find GridVisualTypeMaterial for GridVisualType " + gridVisualType);
         return null;
+    }
+
+    public void MousePositionVisual(Vector3 pos) {
+        var gridMousePos = LevelGrid.Instance.GetGridPosition(pos);
+
+        if (gridMousePos != null &&
+            TurnSystem.Instance.IsPlayerTurn()) {
+            mouseGridObject.transform.position = LevelGrid.Instance.GetWorldPosition(gridMousePos);
+        }
+    }
+
+    public void MousePosVisualHide(bool hide = true) {
+        mouseGridObject.SetActive(!hide);
     }
 }

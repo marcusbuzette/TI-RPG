@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 4403019826488641271}
   - component: {fileID: 984923278628091388}
   - component: {fileID: 7808786601691350061}
-  - component: {fileID: 3533902492998687438}
   m_Layer: 7
   m_Name: Boar
   m_TagString: Player
@@ -57,6 +56,7 @@ MonoBehaviour:
   possibleSkills:
   - {fileID: 5647303888008814838, guid: 2c7835928b6cd8045917bffe59d5e936, type: 3}
   - {fileID: 268774645106886273, guid: 3ea7eabd8948ec84ca32a264d0031500, type: 3}
+  possibleSkillsPrefabs: []
   possibleUpgrades: []
   xpSystem: {fileID: 0}
   unitId: Javali
@@ -70,13 +70,20 @@ MonoBehaviour:
     maxMove: 5
     xpSpoil: 1
     range: 0
+  statsModifiers:
+    attack: 0
+    deffence: 0
+    move: 0
+    accuracy: 0
+    speed: 0
   actionsArray:
   - {fileID: 6321738193073905294}
   - {fileID: 984923278628091388}
-  - {fileID: 3533902492998687438}
+  - {fileID: 0}
   hasMoved: 0
   hasPerformedAction: 0
   hasPerformedSkill: 0
+  modifiedBy: []
   isUnitTurn: 0
   enemyFocus: 0
 --- !u!114 &6321738193073905294
@@ -91,8 +98,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a98aa284f9b23428a071063490ad6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
+  actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
   moveSpeed: 8
   rotateSpeed: 4
   stopDistance: 0.1
@@ -133,6 +142,7 @@ MonoBehaviour:
   healthPoints: 100
   maxHealthPoints: 100
   animator: {fileID: 0}
+  damageSFX: 
 --- !u!114 &984923278628091388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,11 +155,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8a40b60fda1ef4f8c9d0f466e29e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
+  actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
-  maxShootDistance: 1
+  speed: 0
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  maxHitDistance: 1
   hitDamage: 40
   rotateSpeed: 10
+  meleeSFX: 
   Attack: 1
 --- !u!95 &7808786601691350061
 Animator:
@@ -172,24 +188,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3533902492998687438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4096442209837572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ca8109a6c61647b98b7a6017a3ded5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  animationSpeed: 1
-  obstaclesLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  maxShootDistance: 1
 --- !u!1 &2514534788501685165
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,6 +398,7 @@ MonoBehaviour:
   healthBar: {fileID: 5727578267598726787}
   healthSystem: {fileID: 4403019826488641271}
   unit: {fileID: 7551674043583017495}
+  healthValuePrefab: {fileID: 0}
 --- !u!114 &5865127097983931347
 MonoBehaviour:
   m_ObjectHideFlags: 0

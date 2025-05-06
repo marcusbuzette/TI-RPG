@@ -10,8 +10,8 @@ public class CameraManager : MonoBehaviour
 
     private void Start()
     {
-        BaseAction.OnAnyActionStarted += BaseAction_OnAnyActionStarted;
-        BaseAction.OnAnyActionCompleted += BaseAction_OnAnyActionCompleted;
+        //BaseAction.OnAnyActionStarted += BaseAction_OnAnyActionStarted;
+        //BaseAction.OnAnyActionCompleted += BaseAction_OnAnyActionCompleted;
 
         HideActionCamera();
     }
@@ -39,7 +39,7 @@ public class CameraManager : MonoBehaviour
 
                 Vector3 shootDir = (targetUnit.GetWorldPosition() - shooterUnit.GetWorldPosition().normalized);
 
-                float ShoulderOffsetAmount = 0.15f;
+                float ShoulderOffsetAmount = 1.7f;
                 Vector3 ShoulderOffset = Quaternion.Euler(0, 90, 0) * shootDir * ShoulderOffsetAmount;
 
                 Vector3 actionCameraPositionShoot =

@@ -898,6 +898,7 @@ MonoBehaviour:
   _masterSlider: {fileID: 0}
   _musicSlider: {fileID: 0}
   _sfxSlider: {fileID: 0}
+  _ambientSlider: {fileID: 0}
 --- !u!4 &1350810474
 Transform:
   m_ObjectHideFlags: 0
