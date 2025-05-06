@@ -9,7 +9,6 @@ public class HitAction : BaseAction {
     [SerializeField] private LayerMask obstaclesLayerMask;
     [SerializeField] private int maxHitDistance = 1;
     [SerializeField] private int hitDamage = 50;
-    [SerializeField] private float rotateSpeed = 10f;
     public string meleeSFX;
     public int Attack = 1;
 
@@ -25,27 +24,29 @@ public class HitAction : BaseAction {
 
     public override void Action() {
         if (Attack == 1) {
-            // animator?.SetTrigger("Attack");
-            unit.PlayAnimation("Attack");
-
-            
             Attack = 0;
-            targetUnit?.Damage(hitDamage, this.GetComponent<Unit>());
+            RotateAndAttack();
         }
         StartCoroutine(DelayActionFinish());
-
-
-
     }
 
-     //public void Damaged(){
-            //targetUnit?.Damage(hitDamage);}
+    public void RotateAndAttack() {
+        StartCoroutine(RotateTowardsAndExecute(targetUnit.transform, () => {
+            Damage();
+        }));
+    }
+
+    protected void Damage() {
+        // animator?.SetTrigger("Attack");
+        unit.PlayAnimation("Attack");
+
+        targetUnit?.Damage(hitDamage, false, this.GetComponent<Unit>());
+    }
 
     private IEnumerator DelayActionFinish() {
         yield return new WaitForSeconds(0.5f); // Ajuste o tempo conforme necessário
         ActionFinish();
         Attack = 1;
-
     }
     public override List<GridPosition> GetValidGridPositionList() {
         GridPosition unitGridPosition = unit.GetGridPosition();
