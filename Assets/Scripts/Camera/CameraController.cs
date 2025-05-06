@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using Unity.VisualScripting;
+using System;
+
 public class CameraController : MonoBehaviour
 {
 
@@ -24,8 +27,14 @@ public class CameraController : MonoBehaviour
     [Header("Limitador de movimento"), SerializeField]
     private Transform topLimit, bottomLimit, rightLimit, leftLimit;
 
+    private bool freeMoviment;
+    private Transform playerUnit;
+
     void Start()
     {
+        LevelGrid.Instance.OnGameModeChanged += ChangeMovimentMode;
+        SetGameMode();
+
         cinemachineTransposer = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineTransposer>();
         targetFollowOffset = cinemachineTransposer.m_FollowOffset;
         TurnSystem.Instance.SetCameraController(this);
@@ -33,9 +42,11 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         if (TurnSystem.Instance.IsPlayerTurn()) {
-            Movement();
-            Rotation();
             Zoom();
+            Rotation();
+
+            if (freeMoviment) Movement();
+            else FolowPlayerUnit();
         }
         else {
             transform.position = TurnSystem.Instance.GetTurnUnit().GetWorldPosition();
@@ -82,6 +93,11 @@ public class CameraController : MonoBehaviour
         transform.position += moveVector * speed * Time.deltaTime;
     }
 
+    void FolowPlayerUnit() {
+        if(playerUnit == null) { playerUnit = UnitActionSystem.Instance.GetSelectedUnit().transform; }
+        transform.position = playerUnit.position;
+    }
+
     void Rotation()
     {
         Vector3 rotationVector = new Vector3(0, 0, 0);
@@ -117,5 +133,31 @@ public class CameraController : MonoBehaviour
     //Place the camera in anywhere requested
     public void GoToPosition(Vector3 position) {
         transform.position = new Vector3(position.x, 0, position.z);
+    }
+
+    public void ChangeMovimentMode(object sender, EventArgs e) {
+        freeMoviment = !freeMoviment;
+        playerUnit = null;
+
+        var battleZone = LevelGrid.Instance.GetCurrentBattleZone();
+        var zone = LevelGrid.Instance.GetCurrentSquaredZone(battleZone);
+
+        var startGrid = new GridPosition(zone.startX - 1, zone.startZ - 1, zone.floor, battleZone);
+        var endGrid = new GridPosition(zone.endX + 1, zone.endZ + 1, zone.floor, battleZone);
+
+        topLimit.position = new Vector3(
+            LevelGrid.Instance.GetWorldPosition(startGrid).x,
+            0 ,
+            LevelGrid.Instance.GetWorldPosition(endGrid).z);
+
+        bottomLimit.position = new Vector3(
+            LevelGrid.Instance.GetWorldPosition(endGrid).x,
+            0,
+            LevelGrid.Instance.GetWorldPosition(startGrid).z);
+    }
+
+    private void SetGameMode() {
+        if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE) freeMoviment = false;
+        else freeMoviment = true;
     }
 }

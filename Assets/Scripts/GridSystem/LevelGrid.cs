@@ -155,6 +155,15 @@ public class LevelGrid : MonoBehaviour {
     public GameMode GetGameMode() { return gameMode; }
 
     public List<GridPosition> GetZoneList() { return this.zoneList; }
+    public AddSquaredZone GetCurrentSquaredZone(int battleZone) {
+        foreach(AddSquaredZone zone in squaredZoneList) {
+            if (zone.zoneNumber == battleZone) {
+                return zone;
+            }
+        }
+
+        return null;
+    }
     public int GetCurrentBattleZone() { return this.currentBattleZone; }
     public void SetCurrentBattleZone(int zone) { this.currentBattleZone = zone; }
 
