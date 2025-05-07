@@ -42,7 +42,7 @@ public class LevelGrid : MonoBehaviour {
             }
             List<GridPosition> spListAux = new List<GridPosition>();
             foreach (ZoneSpawnPoint sp in item.spawnPoints) {
-                spListAux.Add(new GridPosition(sp.x, sp.z, sp.floor ,item.zoneNumber));
+                spListAux.Add(new GridPosition(sp.x, sp.z, sp.floor, item.zoneNumber));
             }
             zoneStartPositions.Add(item.zoneNumber, spListAux);
         }
@@ -176,4 +176,58 @@ public class LevelGrid : MonoBehaviour {
             gridSystem.RemoveZone(zone);
         }
     }
+
+    public List<Vector3> GetPositionsBehindUnit(Unit unit, int numberOfPositions) {
+        List<Vector3> followPositions = new List<Vector3>();
+        List<Vector3> path = unit.GetComponent<MoveAction>().GetMovePathList();
+
+        if (path.Count < 2)
+            return followPositions;
+
+        Vector3 last = path[path.Count - 1];
+        Vector3 secondLast = path[path.Count - 2];
+        Vector3 direction = (last - secondLast).normalized;
+
+        // Direção invertida (atrás)
+        Vector3 behindDirection = -direction;
+
+        GridPosition centerPos = LevelGrid.Instance.GetGridPosition(last);
+
+        int count = 0;
+        int radius = 1;
+
+        while (count < numberOfPositions) {
+            for (int dx = -radius; dx <= radius; dx++) {
+                for (int dz = -radius; dz <= radius; dz++) {
+                    // Posição candidata relativa à posição final da unidade
+                    GridPosition candidate = new GridPosition(
+                        centerPos.x + dx,
+                        centerPos.z + dz,
+                        centerPos.floor,
+                        centerPos.zone
+                    );
+
+                    Vector3 dirToCandidate = new Vector3(dx, 0, dz).normalized;
+                    float dot = Vector3.Dot(behindDirection, dirToCandidate);
+
+                    // Considera apenas posições mais "atrás"
+                    if (dot < 0.5f) continue;
+
+                    if (IsValidGridPosition(candidate)) {
+                        Vector3 worldPos = LevelGrid.Instance.GetWorldPosition(candidate);
+                        followPositions.Add(worldPos);
+                        count++;
+
+                        if (count >= numberOfPositions)
+                            return followPositions;
+                    }
+                }
+            }
+
+            radius++;
+        }
+
+        return followPositions;
+    }
+
 }

@@ -175,6 +175,8 @@ public class TurnSystem : MonoBehaviour {
 
     //test
     public Unit GetPlayerUnitToExplore() {
+        Unit tryTofindHero = unitiesOrderList.Find((u) => u.unitId == "hero");
+        if (tryTofindHero != null) return tryTofindHero;
         foreach (Unit unit in unitiesOrderList) {
             if (!unit.IsEnemy()) {
                 return unit;
@@ -183,4 +185,6 @@ public class TurnSystem : MonoBehaviour {
         return null;
     }
     public void SetCameraController(CameraController controller) { cameraController = controller; }
+
+    public List<Unit> GetUnitsOrderList() { return this.unitiesOrderList;}
 }

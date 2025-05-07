@@ -47,7 +47,7 @@ public class UnitActionSystem : MonoBehaviour {
 
     private void HandleSelectedAction() {
         if (Input.GetMouseButtonDown(0)) {
-            
+
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
 
             if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE) {
@@ -63,7 +63,7 @@ public class UnitActionSystem : MonoBehaviour {
             else {
                 this.selectedAction = null;
 
-                if (this.selectedUnit == null) {
+                if (this.selectedUnit == null || this.selectedUnit.unitId != "hero") {
                     this.selectedUnit = TurnSystem.Instance.GetPlayerUnitToExplore();
                     OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
                     OnSelectedActionChanged?.Invoke(this, EventArgs.Empty);
@@ -77,7 +77,18 @@ public class UnitActionSystem : MonoBehaviour {
                     return;
                 }
 
-                    selectedUnit?.GetComponent<MoveAction>().TriggerAction(mouseGridPosition, ClearBusy);
+                List<Unit> unitList = TurnSystem.Instance.GetUnitsOrderList();
+                unitList.Remove(selectedUnit);
+                selectedUnit?.GetComponent<MoveAction>().TriggerAction(mouseGridPosition, ClearBusy);
+
+                List<Vector3> possiblePositions = LevelGrid.Instance.GetPositionsBehindUnit(selectedUnit, unitList.Count);
+                for (int i = 0; i < possiblePositions.Count; i++) {
+                    unitList[i].GetComponent<MoveAction>().TriggerAction(
+                                    LevelGrid.Instance.GetGridPosition(possiblePositions[i]),
+                                    ClearBusy
+                                );
+
+                }
             }
         }
     }
