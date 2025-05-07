@@ -11,6 +11,7 @@ public class UnitActionSystem : MonoBehaviour {
 
     public event EventHandler OnSelectedUnitChanged;
     public event EventHandler OnSelectedActionChanged;
+    public event EventHandler OnUnitMovedInExploreMode;
 
     public event EventHandler OnInventoryClicked;
     public event EventHandler OnActionStarted;
@@ -62,7 +63,7 @@ public class UnitActionSystem : MonoBehaviour {
             }
             else {
                 this.selectedAction = null;
-
+                OnUnitMovedInExploreMode?.Invoke(this, EventArgs.Empty);
                 if (this.selectedUnit == null) {
                     this.selectedUnit = TurnSystem.Instance.GetPlayerUnitToExplore();
                     OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);

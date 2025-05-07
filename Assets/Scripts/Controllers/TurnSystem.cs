@@ -73,7 +73,8 @@ public class TurnSystem : MonoBehaviour {
         onTurnChange.Invoke(this, EventArgs.Empty);
         //Place the camera in the unit position of the turn
         Vector3 unitTurnTransform = unitiesOrderList[turnNumber].transform.position;
-        cameraController.GoToPosition(unitTurnTransform);
+        if (isPlayerTurn) { cameraController.LockCameraOnSelectedUnit(unitiesOrderList[turnNumber]); }
+        else cameraController.GoToPosition(unitTurnTransform);
 
         unitiesOrderList[turnNumber].StartUnitTurn();
     }
