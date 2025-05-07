@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using Unity.VisualScripting;
+using System;
+using static UnityEngine.EventSystems.EventTrigger;
+using TMPro;
+
 public class CameraController : MonoBehaviour
 {
 
@@ -24,20 +29,46 @@ public class CameraController : MonoBehaviour
     [Header("Limitador de movimento"), SerializeField]
     private Transform topLimit, bottomLimit, rightLimit, leftLimit;
 
+    private bool exploreMoviment;
+    [SerializeField] private bool lockMoviment = false, stopMove = true;
+    [SerializeField] private Transform playerUnit;
+    public int movimentArroundPlayerArea = 2;
+
+    float distanceBeforeMoving, distanceAfterMoving;
+
+    Vector3 unitTurnPos;
+
     void Start()
     {
+        LevelGrid.Instance.OnGameModeChanged += ChangeMovimentMode;
+        SetGameMode();
+
+        UnitActionSystem.Instance.OnUnitMovedInExploreMode += GoToPositionUnitPos;
+        UnitActionSystem.Instance.OnSelectedUnitChanged += SetSelectedUnit;
+
         cinemachineTransposer = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineTransposer>();
         targetFollowOffset = cinemachineTransposer.m_FollowOffset;
         TurnSystem.Instance.SetCameraController(this);
     }
     void Update()
     {
-        if (TurnSystem.Instance.IsPlayerTurn()) {
-            Movement();
-            Rotation();
-            Zoom();
+        if (TurnSystem.Instance.IsPlayerTurn() && lockMoviment) {
+            lockMoviment = MoveTo(playerUnit.position);
         }
-        else {
+        else if (TurnSystem.Instance.IsPlayerTurn() && !lockMoviment && !stopMove) {
+            transform.position = playerUnit.position;
+        }
+
+        if (TurnSystem.Instance.IsPlayerTurn()) {
+            Zoom();
+            Rotation();
+            if (stopMove) Movement();
+            if (exploreMoviment) FollowPlayerUnit();
+        }
+        else if (!TurnSystem.Instance.IsPlayerTurn() && lockMoviment) {
+            lockMoviment = MoveTo(unitTurnPos);
+        }
+        else if (!TurnSystem.Instance.IsPlayerTurn() && !lockMoviment) {
             transform.position = TurnSystem.Instance.GetTurnUnit().GetWorldPosition();
         }
     }
@@ -116,6 +147,86 @@ public class CameraController : MonoBehaviour
 
     //Place the camera in anywhere requested
     public void GoToPosition(Vector3 position) {
-        transform.position = new Vector3(position.x, 0, position.z);
+        unitTurnPos = position;
+        lockMoviment = true;
+    }
+
+    public void GoToPositionUnitPos(object sender, EventArgs e) {
+        lockMoviment = true;
+        stopMove = false;
+        playerUnit = UnitActionSystem.Instance.GetSelectedUnit().transform;
+        BaseAction.OnAnyActionCompleted += UnitStopMove;
+    }
+
+    public void ChangeMovimentMode(object sender, EventArgs e) {
+        exploreMoviment = !exploreMoviment;
+        playerUnit = null;
+
+        var battleZone = LevelGrid.Instance.GetCurrentBattleZone();
+        var zone = LevelGrid.Instance.GetCurrentSquaredZone(battleZone);
+
+        var startGrid = new GridPosition(zone.startX - 1, zone.startZ - 1, zone.floor, battleZone);
+        var endGrid = new GridPosition(zone.endX + 1, zone.endZ + 1, zone.floor, battleZone);
+
+        topLimit.position = new Vector3(
+            LevelGrid.Instance.GetWorldPosition(startGrid).x,
+            0 ,
+            LevelGrid.Instance.GetWorldPosition(endGrid).z);
+
+        bottomLimit.position = new Vector3(
+            LevelGrid.Instance.GetWorldPosition(endGrid).x,
+            0,
+            LevelGrid.Instance.GetWorldPosition(startGrid).z);
+    }
+
+    private void FollowPlayerUnit() {
+        if (playerUnit == null) { playerUnit = UnitActionSystem.Instance.GetSelectedUnit().transform; }
+
+        topLimit.position = new Vector3(
+            playerUnit.position.x - movimentArroundPlayerArea,
+            0,
+            playerUnit.position.z + movimentArroundPlayerArea);
+
+        bottomLimit.position = new Vector3(
+            playerUnit.position.x + movimentArroundPlayerArea,
+            0,
+            playerUnit.position.z - movimentArroundPlayerArea);
+    }
+
+    private void SetGameMode() {
+        if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE) {
+            exploreMoviment = true;
+        }
+        else exploreMoviment = false;
+    }
+
+    private void UnitStopMove(object sender, EventArgs e) {
+        if ((sender as BaseAction).GetUnit() == playerUnit) { 
+            stopMove = true;
+        }
+    }
+
+    public void LockCameraOnSelectedUnit(Unit selectedUnit) {
+        playerUnit = selectedUnit.transform;
+        lockMoviment = true;
+    }
+
+    private bool MoveTo(Vector3 target) {
+        Vector3 moveDir = (target - transform.position).normalized;
+
+        distanceBeforeMoving = Vector3.Distance(transform.position, target);
+
+        transform.position += moveDir * 20 * Time.deltaTime;
+
+        distanceAfterMoving = Vector3.Distance(transform.position, target);
+
+        if (distanceBeforeMoving < distanceAfterMoving) {
+            return false;
+        }
+        return true;
+    }
+
+    public void SetSelectedUnit(object sender, EventArgs e) {
+        playerUnit = UnitActionSystem.Instance.GetSelectedUnit().transform;
     }
 }

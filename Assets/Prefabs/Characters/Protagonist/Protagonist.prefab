@@ -450,6 +450,7 @@ GameObject:
   - component: {fileID: 898693236174174977}
   - component: {fileID: 3177319531651322102}
   - component: {fileID: 6153364471762481362}
+  - component: {fileID: 1104661637224546848}
   m_Layer: 0
   m_Name: Protagonist
   m_TagString: Untagged
@@ -493,6 +494,7 @@ MonoBehaviour:
   - {fileID: -1049602389130312739, guid: c9e233f267fdd4a0abe93a6bd02b3a5a, type: 3}
   - {fileID: 2046306609090520112, guid: a131eb5504af64b24ae6a125132f17c5, type: 3}
   - {fileID: 268774645106886273, guid: 3ea7eabd8948ec84ca32a264d0031500, type: 3}
+  possibleSkillsPrefabs: []
   possibleUpgrades:
   - level: 5
     upgrade:
@@ -534,6 +536,8 @@ MonoBehaviour:
   hasPerformedSkill: 0
   modifiedBy: []
   isUnitTurn: 0
+  projectilePrefab: {fileID: 0}
+  projectilePoint: {fileID: 0}
   enemyFocus: 0
 --- !u!114 &4904485793414091471
 MonoBehaviour:
@@ -547,7 +551,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0b3338ac2914f4ba75c869397aca3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xp: 20
+  xp: 36
 --- !u!114 &5148555958529166082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -564,6 +568,7 @@ MonoBehaviour:
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  rotateSpeed: 4
   moveSpeed: 4
   rotateSpeed: 4
   stopDistance: 0.1
@@ -600,12 +605,12 @@ MonoBehaviour:
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  rotateSpeed: 10
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 0
   maxHitDistance: 1
   hitDamage: 50
-  rotateSpeed: 10
   meleeSFX: ProtagHit
   Attack: 1
 --- !u!114 &898693236174174977
@@ -624,6 +629,7 @@ MonoBehaviour:
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  rotateSpeed: 180
 --- !u!95 &3177319531651322102
 Animator:
   serializedVersion: 5
@@ -661,11 +667,33 @@ MonoBehaviour:
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  rotateSpeed: 180
   targetsList: []
   maxAttackDistance: 1
   attackAttenuation: 2
   hitDamage: 30
   MAX_SPIN: 360
+--- !u!65 &1104661637224546848
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7923891495559024178}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.6717925, y: 1.6059915, z: 0.55412984}
+  m_Center: {x: -0.033862352, y: 0.787461, z: 0.049745917}
 --- !u!1001 &8948093288391262455
 PrefabInstance:
   m_ObjectHideFlags: 0
