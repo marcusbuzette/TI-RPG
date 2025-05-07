@@ -212,7 +212,8 @@ PrefabInstance:
       propertyPath: maxMoveDistance
       value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2599122497657360192, guid: 35802ef038968144e82bb11a407e1793, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -244,14 +245,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionImage: {fileID: 0}
+  actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  rotateSpeed: 10
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 0
   maxHitDistance: 1
   hitDamage: 100
-  rotateSpeed: 10
   meleeSFX: GuerreiroHit
   Attack: 1
 --- !u!114 &1907622572709071836
@@ -267,10 +269,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionImage: {fileID: 21300000, guid: a8713a01c9a8cc14e8509f0517cfb674, type: 3}
+  actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
-  maxShootDistance: 1
-  hitDamage: 50
   rotateSpeed: 10
   Attack: 1
 --- !u!114 &-3249600224179312206
@@ -286,8 +287,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionImage: {fileID: 0}
+  actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  rotateSpeed: 180
 --- !u!114 &7609521906278373366 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2170219948549848153, guid: 35802ef038968144e82bb11a407e1793, type: 3}

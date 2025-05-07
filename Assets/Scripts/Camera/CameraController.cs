@@ -30,8 +30,8 @@ public class CameraController : MonoBehaviour
     private Transform topLimit, bottomLimit, rightLimit, leftLimit;
 
     private bool exploreMoviment;
-    private bool lockMoviment = false, stopMove = true;
-    private Transform playerUnit;
+    [SerializeField] private bool lockMoviment = false, stopMove = true;
+    [SerializeField] private Transform playerUnit;
     public int movimentArroundPlayerArea = 2;
 
     float distanceBeforeMoving, distanceAfterMoving;
@@ -44,6 +44,7 @@ public class CameraController : MonoBehaviour
         SetGameMode();
 
         UnitActionSystem.Instance.OnUnitMovedInExploreMode += GoToPositionUnitPos;
+        UnitActionSystem.Instance.OnSelectedUnitChanged += SetSelectedUnit;
 
         cinemachineTransposer = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineTransposer>();
         targetFollowOffset = cinemachineTransposer.m_FollowOffset;
@@ -54,7 +55,7 @@ public class CameraController : MonoBehaviour
         if (TurnSystem.Instance.IsPlayerTurn() && lockMoviment) {
             lockMoviment = MoveTo(playerUnit.position);
         }
-        else if (!lockMoviment && !stopMove) {
+        else if (TurnSystem.Instance.IsPlayerTurn() && !lockMoviment && !stopMove) {
             transform.position = playerUnit.position;
         }
 
@@ -200,8 +201,9 @@ public class CameraController : MonoBehaviour
     }
 
     private void UnitStopMove(object sender, EventArgs e) {
-        stopMove = true;
-        BaseAction.OnAnyActionCompleted -= UnitStopMove;
+        if ((sender as BaseAction).GetUnit() == playerUnit) { 
+            stopMove = true;
+        }
     }
 
     public void LockCameraOnSelectedUnit(Unit selectedUnit) {
@@ -222,5 +224,9 @@ public class CameraController : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    public void SetSelectedUnit(object sender, EventArgs e) {
+        playerUnit = UnitActionSystem.Instance.GetSelectedUnit().transform;
     }
 }
