@@ -79,12 +79,14 @@ public class UnitActionSystem : MonoBehaviour {
 
                 List<Unit> unitList = TurnSystem.Instance.GetUnitsOrderList();
                 unitList.Remove(selectedUnit);
-
                 selectedUnit?.GetComponent<MoveAction>().TriggerAction(mouseGridPosition, ClearBusy);
-                List<Vector3> selectedUnitPath = selectedUnit.GetComponent<MoveAction>().GetMovePathList();
 
-                for (int i = 0; i < unitList.Count; i++) {
-                    unitList[i].GetComponent<MoveAction>().FollowMove(selectedUnitPath, i, ClearBusy);
+                List<Vector3> possiblePositions = LevelGrid.Instance.GetPositionsBehindUnit(selectedUnit, unitList.Count);
+                for (int i = 0; i < possiblePositions.Count; i++) {
+                    unitList[i].GetComponent<MoveAction>().TriggerAction(
+                                    LevelGrid.Instance.GetGridPosition(possiblePositions[i]),
+                                    ClearBusy
+                                );
 
                 }
             }
