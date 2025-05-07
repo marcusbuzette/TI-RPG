@@ -176,7 +176,7 @@ public class MoveAction : BaseAction {
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {
         int valueGridPosition = 0;
 
-        //Verifica se o inimigo está com pouca vida e se ele consegue se curar
+        //Verifica se o inimigo estï¿½ com pouca vida e se ele consegue se curar
         if ((unit.GetHealthPoints() * 100) / unit.GetHealthSystem().maxHealthPoints < 15 &&
             unit.GetComponent<HealAction>()) {
             valueGridPosition = unit.GetComponent<HealAction>().GetEnemyAIAction(gridPosition).actionValue;
@@ -186,11 +186,11 @@ public class MoveAction : BaseAction {
             };
         }
 
-        //Pega as ações do inimigo
+        //Pega as aï¿½ï¿½es do inimigo
         List<BaseAction> actions = unit.GetActionsArray().ToList();
         List<BaseAction> attackActions = new List<BaseAction>();
 
-        //Tira a ação de mover e de se curar da escolha de ações
+        //Tira a aï¿½ï¿½o de mover e de se curar da escolha de aï¿½ï¿½es
         for(int i = 0; i < actions.Count; i++) {
             if (actions[i].GetActionType() != ActionType.MOVE) {
                 if (!unit.GetComponent<HealAction>() || actions[i] != unit.GetComponent<HealAction>()) {
@@ -199,13 +199,13 @@ public class MoveAction : BaseAction {
             }
         }
 
-        //Escolhe uma ação aleatória para performar
+        //Escolhe uma aï¿½ï¿½o aleatï¿½ria para performar
         if(attackActions.Count > 0) {
             //valueGridPosition = attackActions[Random.Range(0, attackActions.Count)].GetEnemyAIAction(gridPosition).actionValue;
             valueGridPosition = attackActions[0].GetEnemyAIAction(gridPosition).actionValue;
         }
 
-        //Retorna a melhor ação possivel do inimigo
+        //Retorna a melhor aï¿½ï¿½o possivel do inimigo
         return new EnemyAIAction {
             gridPosition = gridPosition,
             actionValue = valueGridPosition * 10,
@@ -232,5 +232,9 @@ public class MoveAction : BaseAction {
 
     public void SetMaxDistanceMovement(int maxDistanceMovement) {
         this.maxMoveDistance = maxDistanceMovement;
+    }
+
+    public List<Vector3> GetMovePathList() {
+        return this.positionList;
     }
 }
