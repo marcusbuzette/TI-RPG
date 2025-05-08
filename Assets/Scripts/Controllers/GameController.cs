@@ -35,9 +35,6 @@ public class GameController : MonoBehaviour, IDataPersistence {
 
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            Application.Quit();
-        }
     }
 
     public bool GetDebugMode() { return this.debugMode; }
