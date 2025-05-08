@@ -61,6 +61,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 592e95051a3566a40a1158480fc9e734, type: 3}
+--- !u!1 &4061804014727657700 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3005936288887846111, guid: 592e95051a3566a40a1158480fc9e734, type: 3}
+  m_PrefabInstance: {fileID: 1290657445563419707}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5071638086074911185 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6308212583989183978, guid: 592e95051a3566a40a1158480fc9e734, type: 3}
@@ -132,6 +137,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1687215819754493472, guid: c66eff46c0ffe06458446a9b2d0c1055, type: 3}
   m_PrefabInstance: {fileID: 2704338356823462696}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6399864163643957478 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9031793013829743566, guid: c66eff46c0ffe06458446a9b2d0c1055, type: 3}
+  m_PrefabInstance: {fileID: 2704338356823462696}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5868687974457928139
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -194,6 +204,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6806624530028793196, guid: dde914088f1d94c4e97b5be82aa825ef, type: 3}
   m_PrefabInstance: {fileID: 5868687974457928139}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8017114422697026622 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4482004708834119157, guid: dde914088f1d94c4e97b5be82aa825ef, type: 3}
+  m_PrefabInstance: {fileID: 5868687974457928139}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7856354136293013021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -204,7 +219,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2170219948549848153, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: xp
-      value: 1000
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: projectilePoint
@@ -412,9 +427,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3fc5fe414ba05b40971acc666d88b0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireMagicCastObject: {fileID: 0}
-  iceMagicCastObject: {fileID: 0}
-  poisonMagicCastObject: {fileID: 0}
+  fireMagicCastObject: {fileID: 6399864163643957478}
+  iceMagicCastObject: {fileID: 4061804014727657700}
+  poisonMagicCastObject: {fileID: 8017114422697026622}
 --- !u!4 &4078329359069670974 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6169441691008669731, guid: 35802ef038968144e82bb11a407e1793, type: 3}

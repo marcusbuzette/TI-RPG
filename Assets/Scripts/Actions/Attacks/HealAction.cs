@@ -42,8 +42,10 @@ public class HealAction : BaseAction {
 
                 if (LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition) != null) {
                     if (!LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition).IsEnemy()) {
-                        targetsList.Add(LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition));
-                        i++;
+                        if (LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition).GetHealthSystem().GetHealthState() == HealthSystem.HealthState.ALIVE) {
+                            targetsList.Add(LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition));
+                            i++;
+                        }
                     }
                 }
             }

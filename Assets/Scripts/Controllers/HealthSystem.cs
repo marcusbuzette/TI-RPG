@@ -8,7 +8,13 @@ using UnityEngine;
 public class HealthSystem : MonoBehaviour {
 
     public event EventHandler OnDead;
+    public event EventHandler OnRevive;
     public event EventHandler OnDamage;
+
+    public enum HealthState { ALIVE, FAINT }
+
+    [SerializeField] private HealthState healthState = HealthState.ALIVE;
+
     private UnitWorldUI worldUI;
     public int healthPoints = 100;
     public int maxHealthPoints = 100;
@@ -66,7 +72,19 @@ public class HealthSystem : MonoBehaviour {
     }
 
     private void Die() {
+        healthState = HealthState.FAINT;
+
         OnDead.Invoke(this, EventArgs.Empty);
+    }
+
+    public bool Revive(int amount = 20) {
+        if(LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE) { return false; }
+
+        healthState = HealthState.ALIVE;
+        healthPoints += amount;
+        OnRevive.Invoke(this, EventArgs.Empty);
+
+        return true;
     }
 
     public float GetHealthPointsNormalized() {
@@ -99,4 +117,5 @@ public class HealthSystem : MonoBehaviour {
 
     public void SetUnitWorldUI(UnitWorldUI worldUI) { this.worldUI = worldUI; }
     public UnitWorldUI GetUnitWorldUI() { return worldUI; }
+    public HealthState GetHealthState() { return healthState; }
 }

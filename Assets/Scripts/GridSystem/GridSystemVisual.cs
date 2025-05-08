@@ -141,8 +141,13 @@ public class GridSystemVisual : MonoBehaviour {
 
                     ShowGridPositionRange(selectedUnit.GetGridPosition(), shootAction.GetMaxShootDistance(), GridVisualType.RedSoft, selectedUnit.transform.position, true, true);
                     break;
-                case ItemAction itemAction:
+                case HealthPotionAction healthPotionAction:
+                    gridVisualType = GridVisualType.GreenSoft;
+                    break;
+                case ReviveItemAction reviveItemAction:
                     gridVisualType = GridVisualType.Yellow;
+
+                    ShowGridPositionRange(selectedUnit.GetGridPosition(), reviveItemAction.GetUseDistance(), GridVisualType.YellowSoft, selectedUnit.transform.position, false, true);
                     break;
                 case HitAction hitAction:
                     gridVisualType = GridVisualType.Red;

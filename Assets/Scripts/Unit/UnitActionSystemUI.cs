@@ -24,8 +24,8 @@ public class UnitActionSystemUI : MonoBehaviour {
         LevelGrid.Instance.OnGameModeChanged += LevelGrid_OnGameModeChanged;
         unitActionUIAnimator = GetComponent<Animator>();
 
-        CreateUnitActionButtons();
-        this.UpdateStatus();
+        if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE) CreateUnitActionButtonsExploreMode(); 
+        else CreateUnitActionButtons();
     }
 
 
@@ -77,6 +77,29 @@ public class UnitActionSystemUI : MonoBehaviour {
         }
     }
 
+    private void CreateUnitActionButtonsExploreMode() {
+        this.CleanActionButtons();
+
+        Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
+
+        unitActionUIAnimator.SetBool("openActionButtons", true);
+
+        if (selectedUnit == null) return;
+        foreach (BaseAction action in selectedUnit.GetActionsArray()) {
+            if (action.GetActionType() == ActionType.INVENTORY) {
+                Transform parentAux;
+                parentAux = actionButtonsContainer;
+                Transform actioonButtonTransform = Instantiate(actionButtonPrefab, parentAux);
+                actioonButtonTransform.GetComponent<ActionButtonUI>().SetBaseAction(action);
+
+                this.inventoyButton = actioonButtonTransform;
+                if (InventorySystem.inventorySystem.IsEmpty()) {
+                    actioonButtonTransform.GetComponent<ActionButtonUI>().DisableActionButton();
+                }
+            }
+        }
+    }
+
     public void InventoryClick() {
         if (inventoryButtonsContainer.gameObject.activeSelf) {
             CloseInventory();
@@ -102,7 +125,7 @@ public class UnitActionSystemUI : MonoBehaviour {
 
         foreach (KeyValuePair<InventoryItemData, SerializableInventoryItem> item in InventorySystem.inventorySystem.GetInventoryContent()) {
             Transform itemButtonTransform = Instantiate(itemButtonPrefab, inventoryButtonsContainer);
-            itemButtonTransform.GetComponent<ItemButtonUI>().SetBaseAction(item.Value.data.prefab.GetComponent<ItemAction>(), item.Value.stackSize);
+            itemButtonTransform.GetComponent<ItemButtonUI>().SetBaseAction(item.Value.data.prefab.GetComponent<BaseAction>(), item.Value.stackSize);
         }
     }
 
@@ -116,8 +139,8 @@ public class UnitActionSystemUI : MonoBehaviour {
         } else {
             unitActionUIAnimator.SetBool("openActionButtons",false);
             // CleanActionButtons();
+            CreateUnitActionButtonsExploreMode();
         }
-
     }
 
     private void UnitActionSystem_OnActionStarted(object sender, EventArgs e) {
@@ -147,7 +170,9 @@ public class UnitActionSystemUI : MonoBehaviour {
     }
 
     private void LevelGrid_OnGameModeChanged(object sender, EventArgs e) {
-        this.UpdateStatus();
+        //this.UpdateStatus();
+
+        if(LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE) CreateUnitActionButtonsExploreMode();
     }
 
     private void UpdateStatus() {

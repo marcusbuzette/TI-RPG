@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ItemAction : BaseAction {
+public class HealthPotionAction : BaseAction {
     [SerializeField] public int potionHealAmount = 20;
     private HealthSystem healthSystem;
     private string itemName = "Potion";
@@ -25,7 +25,7 @@ public class ItemAction : BaseAction {
     }
 
     public override string GetActionName() {
-        return "PoÃ§Ã£o";
+        return "Poção";
     }
 
     public override List<GridPosition> GetValidGridPositionList() {
