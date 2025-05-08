@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6e95434bfed844f998734c810b9a052, type: 3}
   m_Name: CombateFinal
   m_EditorClassIdentifier: 
-  zoneNumber: 2
+  zoneNumber: 4
   startX: 3
   startZ: 22
   floor: 0

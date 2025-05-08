@@ -12,13 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6e95434bfed844f998734c810b9a052, type: 3}
   m_Name: Combate 2
   m_EditorClassIdentifier: 
-  zoneNumber: 0
+  zoneNumber: 2
   startX: 13
   startZ: 22
   floor: 1
   endX: 19
   endZ: 18
   spawnPoints:
-  - x: 20
+  - x: 14
     z: 18
-    floor: 0
+    floor: 1
+  - x: 15
+    z: 18
+    floor: 1
+  - x: 16
+    z: 18
+    floor: 1
+  - x: 17
+    z: 18
+    floor: 1
