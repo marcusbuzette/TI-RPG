@@ -61,6 +61,7 @@ public class OpenCharacterSkillTreeHUB : MonoBehaviour, IChangeCamera {
 
     public void DoSomething() {
         skillTree.SetActive(true);
+        TalentManager.Instance.UpdateSelectedCharButton();
     }
 
     public void NextSkillTree() {
