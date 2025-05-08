@@ -565,7 +565,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionImage: {fileID: 21300000, guid: d24172bb5601f90449d5233c70318796, type: 3}
-  actionImageBlocked: {fileID: 0}
+  actionImageBlocked: {fileID: 21300000, guid: d5b839f9656be884ca143487fb358ccd, type: 3}
   animator: {fileID: 0}
   speed: 0
   rotateSpeed: 4
@@ -602,7 +602,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionImage: {fileID: 21300000, guid: 39195be798b6f544b952277c45599e40, type: 3}
-  actionImageBlocked: {fileID: 0}
+  actionImageBlocked: {fileID: 21300000, guid: efaa1fec437761e48b59a5e2b5d1225c, type: 3}
   animator: {fileID: 0}
   speed: 0
   rotateSpeed: 10
@@ -663,8 +663,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfbc725d5c76b47b28e3ccd3e66dc849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionImage: {fileID: 0}
-  actionImageBlocked: {fileID: 0}
+  actionImage: {fileID: 21300000, guid: 3ec57346bd4f7734bad8ae1cba400055, type: 3}
+  actionImageBlocked: {fileID: 21300000, guid: e8aaa4b822f9d38489c29a1715a6ab19, type: 3}
   animator: {fileID: 0}
   speed: 0
   rotateSpeed: 180
