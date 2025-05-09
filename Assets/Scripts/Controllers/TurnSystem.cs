@@ -38,7 +38,7 @@ public class TurnSystem : MonoBehaviour {
         unitiesOrderList.Sort((x, y) => y.GetUnitSpeed().CompareTo(x.GetUnitSpeed()));
         isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
         unitiesOrderList[turnNumber].StartUnitTurn();
-        onOrderChange.Invoke(this, EventArgs.Empty);
+        onOrderChange?.Invoke(this, EventArgs.Empty);
 
     }
 
