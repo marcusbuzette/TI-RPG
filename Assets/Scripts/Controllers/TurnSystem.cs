@@ -15,6 +15,7 @@ public class TurnSystem : MonoBehaviour {
     public static TurnSystem Instance { get; private set; }
     public event EventHandler onTurnChange;
     public event EventHandler onOrderChange;
+    public event EventHandler onEnemyKilled;
     private CameraController cameraController;
 
     [SerializeField] private int[] turnSpeeds;
@@ -92,7 +93,9 @@ public class TurnSystem : MonoBehaviour {
         if (unitDead.IsEnemy()) {
             this.unitiesOrderList[this.turnNumber]
                 .AddXp(this.unitiesOrderList[unitDeadIndex].GetUnitStats().GetXpSpoil());
-                
+                Debug.Log(unitDead as object);
+                Debug.Log(onEnemyKilled);
+            onEnemyKilled.Invoke(unitDead,EventArgs.Empty);
             allEnemies.Remove(unitDead);
         }
         unitiesOrderList.Remove(unitDead);
