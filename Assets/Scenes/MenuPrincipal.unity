@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6143,6 +6143,14 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: d75435bfd47b85f468d95dc66fda076c, type: 3}
   - name: PoisonEffect
     clip: {fileID: 8300000, guid: 5305b21d947e8fe40a11e64ddf1efa43, type: 3}
+  - name: BoarHurt
+    clip: {fileID: 8300000, guid: 384c4d9f633b41f41b2a159b45e54f17, type: 3}
+  - name: BoarBatendo
+    clip: {fileID: 8300000, guid: 1eab8bfe5fd875e4c8e362463d9cd667, type: 3}
+  - name: UrsoBatendo
+    clip: {fileID: 8300000, guid: ab4d847b0301e4a45bdebdd508635d70, type: 3}
+  - name: BearHurt
+    clip: {fileID: 8300000, guid: 4300ca122c5143249ba54232884478e2, type: 3}
   ArqueiraSFX:
   - name: ArcherHit
     clip: {fileID: 8300000, guid: 4dffef02b4ca67940a0e41c84ac0fe66, type: 3}

@@ -226,6 +226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemy: 1
   possibleSkills: []
+  possibleSkillsPrefabs: []
   possibleUpgrades: []
   xpSystem: {fileID: 0}
   unitId: bear
@@ -239,11 +240,20 @@ MonoBehaviour:
     maxMove: 3
     xpSpoil: 3
     range: 0
+  statsModifiers:
+    attack: 0
+    deffence: 0
+    move: 0
+    accuracy: 0
+    speed: 0
   actionsArray: []
   hasMoved: 0
   hasPerformedAction: 0
   hasPerformedSkill: 0
+  modifiedBy: []
   isUnitTurn: 0
+  projectilePrefab: {fileID: 0}
+  projectilePoint: {fileID: 0}
   enemyFocus: 0
 --- !u!114 &8376125737511212062
 MonoBehaviour:
@@ -257,8 +267,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a98aa284f9b23428a071063490ad6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
+  actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
+  rotateSpeed: 4
   moveSpeed: 3
   rotateSpeed: 4
   stopDistance: 0.1
@@ -299,6 +312,7 @@ MonoBehaviour:
   healthPoints: 100
   maxHealthPoints: 100
   animator: {fileID: 0}
+  damageSFX: BearHurt
 --- !u!114 &9088706029583021094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,14 +325,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8a40b60fda1ef4f8c9d0f466e29e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
+  actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
+  rotateSpeed: 10
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 0
   maxHitDistance: 1
   hitDamage: 50
-  rotateSpeed: 10
+  meleeSFX: UrsoBatendo
   Attack: 1
 --- !u!95 &-8482216213638336708
 Animator:
@@ -588,6 +605,7 @@ MonoBehaviour:
   healthBar: {fileID: 769484998718453909}
   healthSystem: {fileID: 1588787654514465551}
   unit: {fileID: 710382878516122352}
+  healthValuePrefab: {fileID: 0}
 --- !u!114 &9003825502743855708
 MonoBehaviour:
   m_ObjectHideFlags: 0
