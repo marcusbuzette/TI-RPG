@@ -19,14 +19,14 @@ public abstract class BaseAction : MonoBehaviour {
     [SerializeField] protected Sprite actionImageBlocked;
     public Animator animator;
     public float speed;
-    [SerializeField] private float rotateSpeed = 180f;
+    [SerializeField] private float rotSpeed = 180f;
 
 
     protected virtual void Awake() {
         unit = GetComponent<Unit>();
         actionType = ActionType.ACTION;
         animator = GetComponentInChildren<Animator>();
-        rotateSpeed = 180f;
+        rotSpeed = 180f;
     }
 
     protected virtual void Update() {
@@ -102,7 +102,7 @@ public abstract class BaseAction : MonoBehaviour {
             transform.rotation = Quaternion.RotateTowards(
                 transform.rotation,
                 targetRotation,
-                rotateSpeed * Time.deltaTime
+                rotSpeed * Time.deltaTime
             );
             yield return null;
         }
@@ -118,7 +118,7 @@ public abstract class BaseAction : MonoBehaviour {
             transform.rotation = Quaternion.RotateTowards(
                 transform.rotation,
                 targetRotation,
-                rotateSpeed * Time.deltaTime
+                rotSpeed * Time.deltaTime
             );
             yield return null;
         }

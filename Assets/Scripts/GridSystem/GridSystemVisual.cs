@@ -118,7 +118,7 @@ public class GridSystemVisual : MonoBehaviour {
     public void UpdateGridVisual() {
         HideAllGridPosition();
 
-        if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE) {
+        //if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE) {
             Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
             BaseAction selectedAction = UnitActionSystem.Instance.GetSelectedAction();
 
@@ -142,7 +142,7 @@ public class GridSystemVisual : MonoBehaviour {
                     ShowGridPositionRange(selectedUnit.GetGridPosition(), shootAction.GetMaxShootDistance(), GridVisualType.RedSoft, selectedUnit.transform.position, true, true);
                     break;
                 case HealthPotionAction healthPotionAction:
-                    gridVisualType = GridVisualType.GreenSoft;
+                    gridVisualType = GridVisualType.Green;
                     break;
                 case ReviveItemAction reviveItemAction:
                     gridVisualType = GridVisualType.Yellow;
@@ -192,7 +192,7 @@ public class GridSystemVisual : MonoBehaviour {
                     break;
             }
             ShowGridPositionList(selectedAction.GetValidGridPositionList(), gridVisualType);
-        }
+        /*}
         else {
             // GridVisualType gridVisualType = GridVisualType.White;
             // for (int x = 0; x < LevelGrid.Instance.GetWidth(); x++) {
@@ -201,7 +201,7 @@ public class GridSystemVisual : MonoBehaviour {
             //         gridSystemVisualSingleArray[x, z].Show(GetGridVisualTypeMaterial(gridVisualType));
             //     }
             // }
-        }
+        }*/
 
     }
 

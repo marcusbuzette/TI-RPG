@@ -74,6 +74,10 @@ public class HealAreaObject : MonoBehaviour {
                     continue;
                 }
 
+                if(targetUnit.GetHealthSystem().GetHealthState() == HealthSystem.HealthState.FAINT) {
+                    continue;
+                }
+
                 Vector3 targetPos = LevelGrid.Instance.GetWorldPosition(testGridPosition);
                 Vector3 shootDir = (targetPos - position).normalized;
 

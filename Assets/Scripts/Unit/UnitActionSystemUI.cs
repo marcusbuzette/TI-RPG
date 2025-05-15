@@ -24,7 +24,7 @@ public class UnitActionSystemUI : MonoBehaviour {
         LevelGrid.Instance.OnGameModeChanged += LevelGrid_OnGameModeChanged;
         unitActionUIAnimator = GetComponent<Animator>();
 
-        if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE) CreateUnitActionButtonsExploreMode(); 
+        if (!LevelGrid.Instance.IsInBattleMode()) CreateUnitActionButtonsExploreMode(); 
         else CreateUnitActionButtons();
     }
 
@@ -132,11 +132,16 @@ public class UnitActionSystemUI : MonoBehaviour {
     private void UnitActionSystem_OnSelectedUnitChanged(object sender, EventArgs e) {
         Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
         CloseInventory();
-        if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE && 
-        selectedUnit.isUnitTurn) {
-            CreateUnitActionButtons();
 
-        } else {
+        if (LevelGrid.Instance.IsInBattleMode()) {
+            if (selectedUnit.isUnitTurn) {
+                CreateUnitActionButtons();
+            }
+            else {
+                unitActionUIAnimator.SetBool("openActionButtons", false);
+            }
+        }
+        else {
             unitActionUIAnimator.SetBool("openActionButtons",false);
             // CleanActionButtons();
             CreateUnitActionButtonsExploreMode();
@@ -144,15 +149,18 @@ public class UnitActionSystemUI : MonoBehaviour {
     }
 
     private void UnitActionSystem_OnActionStarted(object sender, EventArgs e) {
-        CreateUnitActionButtons();
+        if (LevelGrid.Instance.IsInBattleMode()) CreateUnitActionButtons();
+        else CreateUnitActionButtonsExploreMode();
     }
 
     private void TurnSystem_OnTurnChange(object sender, EventArgs e) {
-        CreateUnitActionButtons();
+        if (LevelGrid.Instance.IsInBattleMode()) CreateUnitActionButtons();
+        else CreateUnitActionButtonsExploreMode();
         CloseInventory();
     }
     private void Unit_OnAnyActionPerformed(object sender, EventArgs e) {
-        CreateUnitActionButtons();
+        if (LevelGrid.Instance.IsInBattleMode()) CreateUnitActionButtons();
+        else CreateUnitActionButtonsExploreMode();
         CloseInventory();
     }
 
@@ -172,7 +180,7 @@ public class UnitActionSystemUI : MonoBehaviour {
     private void LevelGrid_OnGameModeChanged(object sender, EventArgs e) {
         //this.UpdateStatus();
 
-        if(LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE) CreateUnitActionButtonsExploreMode();
+        if(!LevelGrid.Instance.IsInBattleMode()) CreateUnitActionButtonsExploreMode();
     }
 
     private void UpdateStatus() {

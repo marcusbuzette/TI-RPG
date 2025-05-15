@@ -21,6 +21,9 @@ public class HealthSystem : MonoBehaviour {
     public Animator animator;
     public string damageSFX;
     private bool isDefending = false;
+
+    public Transform faintText; //TEMPORARIO <----- (ATENÇÃO)
+
     private void Awake() {
         animator = GetComponentInChildren<Animator>();
     }
@@ -74,6 +77,11 @@ public class HealthSystem : MonoBehaviour {
     private void Die() {
         healthState = HealthState.FAINT;
 
+        if (!GetComponent<Unit>().IsEnemy()) {
+            worldUI.GetHealthBarPrefab().SetActive(false);
+            faintText?.gameObject.SetActive(true);
+        }
+
         OnDead.Invoke(this, EventArgs.Empty);
     }
 
@@ -83,6 +91,10 @@ public class HealthSystem : MonoBehaviour {
         healthState = HealthState.ALIVE;
         healthPoints += amount;
         OnRevive.Invoke(this, EventArgs.Empty);
+        OnDamage?.Invoke(this, EventArgs.Empty);
+
+        faintText?.gameObject.SetActive(false);
+        worldUI.GetHealthBarPrefab().SetActive(true);
 
         return true;
     }

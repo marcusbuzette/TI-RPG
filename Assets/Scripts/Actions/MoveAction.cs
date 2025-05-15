@@ -10,7 +10,7 @@ using static System.Collections.Specialized.BitVector32;
 public class MoveAction : BaseAction {
 
     [SerializeField] private float moveSpeed = 4f;
-    [SerializeField] private float rotateSpeed = 4f;
+    private float rotateSpeed = 4f;
     [SerializeField] private float stopDistance = .05f;
     private float lastDistance = 0;
     private bool hastLastDistance = false;
