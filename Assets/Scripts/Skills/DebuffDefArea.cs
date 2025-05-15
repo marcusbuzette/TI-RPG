@@ -8,6 +8,7 @@ public class DEbuffDefArea : BaseSkills {
     [SerializeField] private int maxIntimidateDistance = 1;
     [SerializeField] private int debufDefenceAmount = 1;
     [SerializeField] private BuffType buffType = BuffType.DEFENCE;
+    public string debuffDefSFX;
 
 
     public override void Action() {
@@ -57,6 +58,9 @@ public class DEbuffDefArea : BaseSkills {
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
+        if (!string.IsNullOrEmpty(debuffDefSFX)) {
+            AudioManager.instance?.PlaySFX(debuffDefSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
+        }
         ActionStart(onActionComplete);
     }
 

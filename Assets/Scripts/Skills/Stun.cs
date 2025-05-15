@@ -6,7 +6,7 @@ using System;
 public class Stun : BaseSkills {
     private float totalSpinAmmount = 0;
     [SerializeField] private float MAX_SPIN = 360f;
-
+    public string stunSFX;
 
     public override void Action() {
         float spinAddAmmount = 360f * Time.deltaTime;
@@ -32,6 +32,9 @@ public class Stun : BaseSkills {
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
+        if (!string.IsNullOrEmpty(stunSFX)) {
+            AudioManager.instance?.PlaySFX(stunSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
+        }
         ActionStart(onActionComplete);
     }
 

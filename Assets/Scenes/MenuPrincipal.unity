@@ -6197,8 +6197,20 @@ MonoBehaviour:
   - name: Intimidar
     clip: {fileID: 0}
   MacacoSFX:
+  - name: MonkeyHit
+    clip: {fileID: 8300000, guid: f309c3d250f989b45b5000243dfc62f7, type: 3}
+  - name: MonkeyWalk
+    clip: {fileID: 0}
+  - name: MonkeyDano
+    clip: {fileID: 8300000, guid: 801314ab26d08cb44b03e29af5ef3be7, type: 3}
   - name: Cura
     clip: {fileID: 8300000, guid: ba0c1f0bb2aa6f349a53cf428c6ab620, type: 3}
+  - name: Stun
+    clip: {fileID: 8300000, guid: a98bc1e88e6b5144f9a691982357d2a5, type: 3}
+  - name: DebuffSpeed
+    clip: {fileID: 8300000, guid: 5d828d6453ced8d4d8ee580cadca694d, type: 3}
+  - name: DebuffDefense
+    clip: {fileID: 8300000, guid: d7a62162ad83ba043a0b4f6cad7eae3f, type: 3}
   masterSource: {fileID: 1901677262}
   musicSource: {fileID: 1208278567}
   sfxSource: {fileID: 358558285}

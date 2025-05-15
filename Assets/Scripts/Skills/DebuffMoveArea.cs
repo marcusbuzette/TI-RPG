@@ -8,7 +8,7 @@ public class DebuffMoveArea : BaseSkills {
     [SerializeField] private int maxSlowDistance = 1;
     [SerializeField] private int debufDefenceAmount = 1;
     [SerializeField] private BuffType buffType = BuffType.MOVE;
-
+    public string debuffSpeedSFX;
 
     public override void Action() {
         foreach (Unit target in targetsList) {
@@ -56,6 +56,10 @@ public class DebuffMoveArea : BaseSkills {
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
+        if (!string.IsNullOrEmpty(debuffSpeedSFX)) 
+        {
+            AudioManager.instance?.PlaySFX(debuffSpeedSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
+        }
         ActionStart(onActionComplete);
     }
 

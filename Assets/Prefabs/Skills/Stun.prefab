@@ -60,3 +60,4 @@ MonoBehaviour:
   coolDown: 0
   currentCoolDown: 0
   MAX_SPIN: 360
+  stunSFX: Stun
