@@ -17,16 +17,17 @@ public class QuestManager : MonoBehaviour {
     void Awake() {
         if (Instance != null) {
             Destroy(this);
-        } else {
+        }
+        else {
             Instance = this;
             DontDestroyOnLoad(this);
         }
     }
 
 
-    public void SetLevelQuest(Quest quest) {this.levelQuest = quest;}
+    public void SetLevelQuest(Quest quest) { this.levelQuest = quest; }
 
-    public Quest GetLevelQuest() {return this.levelQuest;}
+    public Quest GetLevelQuest() { return this.levelQuest; }
 
     public void StartQuest() {
         this.ChangeLevelQuestState(QuestState.IN_PROGRESS);
@@ -35,22 +36,25 @@ public class QuestManager : MonoBehaviour {
     }
 
     public void AdvanceQuest() {
-        if(levelQuest == null) return;
+        if (levelQuest == null) return;
         levelQuest.MoveToNextStep();
         if (levelQuest.CurrentQuestStepExists()) {
+            onQuestAdvanced?.Invoke(this, EventArgs.Empty);
             levelQuest.InstantiateCurrentQuestStep(transform);
-        } else {
-             foreach (Unit u in TurnSystem.Instance.GetUnitsOrderList()) {
-                if (!u.IsEnemy()) u.AddXp(levelQuest.info.playerXp);
-            }
-            GameController.controller.AddMoney(levelQuest.info.moneyRewards);
-            GameController.controller.NextLevel();
-            GameController.controller.uicontroller.ChangeScene("HUB");
+        }
+        else {
+            this.FinishQuest();
         }
     }
 
-    public void FinishQuest(string id) {
-
+    public void FinishQuest() {
+        onQuestFinished?.Invoke(this, EventArgs.Empty);
+        foreach (Unit u in TurnSystem.Instance.GetUnitsOrderList()) {
+            if (!u.IsEnemy()) u.AddXp(levelQuest.info.playerXp);
+        }
+        GameController.controller.AddMoney(levelQuest.info.moneyRewards);
+        GameController.controller.NextLevel();
+        GameController.controller.uicontroller.ChangeScene("HUB");
     }
 
     public void QuestStateChange(Quest quest) {
