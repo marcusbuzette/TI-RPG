@@ -4601,6 +4601,9 @@ MonoBehaviour:
   height: 25
   cellSize: 2
   floorAmount: 1
+  levelQuest:
+    info: {fileID: 11400000, guid: 57dcf3d3707424972893521e23cee2bc, type: 2}
+    state: 1
   gameMode: 1
   squaredZoneList:
   - {fileID: 11400000, guid: af022b46cdd074b5c8c759cd447643ef, type: 2}
@@ -6512,6 +6515,7 @@ Transform:
   m_Children:
   - {fileID: 638162705}
   - {fileID: 571456929}
+  - {fileID: 1096247828}
   - {fileID: 756272021}
   - {fileID: 422284728}
   - {fileID: 671805926}
@@ -10355,6 +10359,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8903648295770564506, guid: 980ee8c592671b6499b6b19d39ae6fd8, type: 3}
   m_PrefabInstance: {fileID: 1085749468}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1096247827
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1096247828}
+  - component: {fileID: 1096247829}
+  m_Layer: 0
+  m_Name: QuestManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1096247828
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1096247827}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 661953489}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1096247829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1096247827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a2277b3b966b4fe2b7bcba6247f5b98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1115740121
 GameObject:
   m_ObjectHideFlags: 0
@@ -17486,10 +17534,10 @@ SceneRoots:
   - {fileID: 613554418}
   - {fileID: 515280858}
   - {fileID: 1047018915}
+  - {fileID: 811251407}
   - {fileID: 1804985354}
   - {fileID: 85054666}
   - {fileID: 26093822}
-  - {fileID: 811251407}
   - {fileID: 391582203}
   - {fileID: 1049023296}
   - {fileID: 1490284540}

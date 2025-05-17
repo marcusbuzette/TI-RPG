@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5640780447877117650}
   - component: {fileID: 5389959249399066191}
   m_Layer: 0
-  m_Name: KillBoarQuestStep
+  m_Name: KillBearQuestStep
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,4 +47,4 @@ MonoBehaviour:
   stepInstruction: Cace os javalis
   enemiesKilled: 0
   enemiesToComplete: 1
-  enemyId: boar
+  enemyId: bear

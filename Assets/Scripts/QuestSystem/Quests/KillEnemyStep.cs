@@ -4,14 +4,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class KillBoarQuestStep : QuestStep {
+public class KillEnemyStep : QuestStep {
 
-    private int boarsKilled = 0;
-    private int boarsToComplete = 4;
+    [SerializeField] private int enemiesKilled = 0;
+    [SerializeField] private int enemiesToComplete = 4;
+    [SerializeField] private string enemyId = "boar";
 
     private void OnEnable() {
-        Debug.Log("Subscribing");
-        Debug.Log(TurnSystem.Instance);
         TurnSystem.Instance.onEnemyKilled += TurnSystem_OnEnemyKilled;
     }
 
@@ -20,11 +19,13 @@ public class KillBoarQuestStep : QuestStep {
     }
 
     private void TurnSystem_OnEnemyKilled(object enemy, EventArgs e) {
-        if(boarsKilled < boarsToComplete && (enemy as Unit).GetUnitId() == "boar") {
-            boarsKilled++;
+        if(enemiesKilled < enemiesToComplete && (enemy as Unit).GetUnitId() == enemyId) {
+            enemiesKilled++;
         }
 
-        if (boarsKilled >= boarsToComplete) {
+        Debug.Log("killed enemy - " + enemiesKilled);
+
+        if (enemiesKilled >= enemiesToComplete) {
             this.FinishQuestStep();
         }
     }

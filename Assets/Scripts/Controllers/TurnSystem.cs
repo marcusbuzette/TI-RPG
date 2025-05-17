@@ -118,12 +118,13 @@ public class TurnSystem : MonoBehaviour {
         }
         else if (isPlayerTurn && !CheckEnemiesLeft()) {
             ResetTurnSpeed();
-            foreach (Unit u in unitiesOrderList) {
-                if (!u.IsEnemy()) u.AddXp(2);
-            }
+            LevelGrid.Instance.ExploreMode();
+            // foreach (Unit u in unitiesOrderList) {
+            //     if (!u.IsEnemy()) u.AddXp(2);
+            // }
 
-            GameController.controller.NextLevel();
-            SceneManager.LoadScene("HUB");
+            // GameController.controller.NextLevel();
+            // SceneManager.LoadScene("HUB");
         }
     }
 
