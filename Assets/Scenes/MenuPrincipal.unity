@@ -7798,6 +7798,14 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: d75435bfd47b85f468d95dc66fda076c, type: 3}
   - name: PoisonEffect
     clip: {fileID: 8300000, guid: 5305b21d947e8fe40a11e64ddf1efa43, type: 3}
+  - name: BoarHurt
+    clip: {fileID: 8300000, guid: 384c4d9f633b41f41b2a159b45e54f17, type: 3}
+  - name: BoarBatendo
+    clip: {fileID: 8300000, guid: 1eab8bfe5fd875e4c8e362463d9cd667, type: 3}
+  - name: UrsoBatendo
+    clip: {fileID: 8300000, guid: ab4d847b0301e4a45bdebdd508635d70, type: 3}
+  - name: BearHurt
+    clip: {fileID: 8300000, guid: 4300ca122c5143249ba54232884478e2, type: 3}
   ArqueiraSFX:
   - name: ArcherHit
     clip: {fileID: 8300000, guid: 4dffef02b4ca67940a0e41c84ac0fe66, type: 3}
@@ -7844,8 +7852,20 @@ MonoBehaviour:
   - name: Intimidar
     clip: {fileID: 0}
   MacacoSFX:
+  - name: MonkeyHit
+    clip: {fileID: 8300000, guid: f309c3d250f989b45b5000243dfc62f7, type: 3}
+  - name: MonkeyWalk
+    clip: {fileID: 0}
+  - name: MonkeyDano
+    clip: {fileID: 8300000, guid: 801314ab26d08cb44b03e29af5ef3be7, type: 3}
   - name: Cura
     clip: {fileID: 8300000, guid: ba0c1f0bb2aa6f349a53cf428c6ab620, type: 3}
+  - name: Stun
+    clip: {fileID: 8300000, guid: a98bc1e88e6b5144f9a691982357d2a5, type: 3}
+  - name: DebuffSpeed
+    clip: {fileID: 8300000, guid: 5d828d6453ced8d4d8ee580cadca694d, type: 3}
+  - name: DebuffDefense
+    clip: {fileID: 8300000, guid: d7a62162ad83ba043a0b4f6cad7eae3f, type: 3}
   masterSource: {fileID: 1901677262}
   musicSource: {fileID: 1208278567}
   sfxSource: {fileID: 358558285}

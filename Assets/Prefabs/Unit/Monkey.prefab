@@ -327,6 +327,7 @@ MonoBehaviour:
   - {fileID: 6584539317323027048, guid: b732d4b268287492c996e3cfdf4c881b, type: 3}
   - {fileID: 6029550433590033149, guid: 9ddb940143034436cb2080c1047fec24, type: 3}
   - {fileID: 4731174655554223439, guid: 150fd9ebac7aa314d81349c4d46e8530, type: 3}
+  possibleSkillsPrefabs: []
   possibleUpgrades:
   - level: 5
     upgrade:
@@ -370,6 +371,8 @@ MonoBehaviour:
   hasPerformedSkill: 0
   modifiedBy: []
   isUnitTurn: 0
+  projectilePrefab: {fileID: 0}
+  projectilePoint: {fileID: 0}
   enemyFocus: 0
 --- !u!114 &9186709859666415746
 MonoBehaviour:
@@ -384,8 +387,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionImage: {fileID: 21300000, guid: d24172bb5601f90449d5233c70318796, type: 3}
+  actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  rotateSpeed: 4
   moveSpeed: 8
   rotateSpeed: 4
   stopDistance: 0.1
@@ -426,7 +431,7 @@ MonoBehaviour:
   healthPoints: 100
   maxHealthPoints: 100
   animator: {fileID: 0}
-  damageSFX: 
+  damageSFX: MonkeyDano
 --- !u!114 &1913271140186555034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -453,15 +458,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionImage: {fileID: 21300000, guid: 39195be798b6f544b952277c45599e40, type: 3}
+  actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  rotateSpeed: 10
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 0
   maxHitDistance: 1
   hitDamage: 40
-  rotateSpeed: 10
-  meleeSFX: MacacoHit
+  meleeSFX: MonkeyHit
   Attack: 1
 --- !u!114 &9134479801138775507
 MonoBehaviour:
@@ -476,8 +482,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionImage: {fileID: 21300000, guid: 2c26a45bf5cd6d141806fb703779d405, type: 3}
+  actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  rotateSpeed: 180
   targetsList: []
   maxHealDistance: 1
   healPoints: 10
@@ -495,8 +503,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionImage: {fileID: 0}
+  actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  rotateSpeed: 180
 --- !u!1 &5551651001676021999
 GameObject:
   m_ObjectHideFlags: 0

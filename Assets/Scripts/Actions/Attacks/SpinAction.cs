@@ -11,7 +11,7 @@ public class SpinAction : BaseAction {
     [SerializeField] private int hitDamage = 30;
     private float totalSpinAmmount = 0;
     [SerializeField] private float MAX_SPIN = 360f;
-
+    public string tornadoSFX;
 
     public override void Action() {
         float spinAddAmmount = 360f * Time.deltaTime;
@@ -62,6 +62,9 @@ public class SpinAction : BaseAction {
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         ActionStart(onActionComplete);
+        if (!string.IsNullOrEmpty(tornadoSFX)) {
+            AudioManager.instance?.PlaySFX(tornadoSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
+        }
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {
