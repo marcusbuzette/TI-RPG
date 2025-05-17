@@ -5,61 +5,69 @@ using System.Linq;
 
 public class DataPersistenseManager : MonoBehaviour {
 
-    [Header("Nome do arquivo")]
-    [SerializeField] private string fileName;
+    [Header("Nome base do arquivo")]
+    [SerializeField] private string baseFileName = "save";
 
-    public static DataPersistenseManager instace { get; private set; }
+    public static DataPersistenseManager instance { get; private set; }
 
     private GameData gameData;
     private List<IDataPersistence> dataPersistenceObjects;
     private FileDataHandler dataHandler;
 
+    public static DataPersistenseManager instace { get; private set; }
+
+    private string currentSaveSlot = "slot1"; // slot padrão
+
     void Awake() {
-        if (instace != null) {
-            Destroy(this);
+        if (instance != null && instance != this) {
+            Destroy(this.gameObject);
             Debug.LogError("Mais de um DataPersistenseManager foi encontrado na cena");
-            DontDestroyOnLoad(this);
+            return;
         }
-        instace = this;
+        instance = this;
+        DontDestroyOnLoad(this.gameObject);
     }
 
     void Start() {
-        this.dataPersistenceObjects = this.FindAllDataPersistenceObjects();
+        dataPersistenceObjects = FindAllDataPersistenceObjects();
+        SetSlot(currentSaveSlot); // Carrega o slot inicial
+    }
+
+    public void SetSlot(string slotName) {
+        currentSaveSlot = slotName;
+        string fileName = $"{baseFileName}_{slotName}.json";
         dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
         Debug.Log(Application.persistentDataPath);
-        LoadGame();
+        LoadGame(); // Carrega automaticamente o slot ao trocar
     }
 
     public void NewGame() {
-        this.gameData = new GameData();
+        gameData = new GameData();
     }
 
     public void LoadGame() {
-        this.gameData = dataHandler.Load();
+        gameData = dataHandler.Load();
 
-
-        if (this.gameData == null) {
-            this.gameData = new GameData();
+        if (gameData == null) {
+            Debug.Log("Nenhum save encontrado, criando novo...");
+            NewGame();
         }
 
-        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) {
-            dataPersistenceObj.LoadData(this.gameData);
+        foreach (IDataPersistence obj in dataPersistenceObjects) {
+            obj.LoadData(gameData);
         }
     }
 
     public void SaveGame() {
-        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) {
-            dataPersistenceObj.SaveData(ref this.gameData);
+        foreach (IDataPersistence obj in dataPersistenceObjects) {
+            obj.SaveData(ref gameData);
         }
 
-        dataHandler.Save(this.gameData);
+        dataHandler.Save(gameData);
     }
 
     private List<IDataPersistence> FindAllDataPersistenceObjects() {
-
-        IEnumerable<IDataPersistence> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistence>();
-
-        return new List<IDataPersistence>(dataPersistenceObjects);
+        return FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistence>().ToList();
     }
 
     void OnApplicationQuit() {
