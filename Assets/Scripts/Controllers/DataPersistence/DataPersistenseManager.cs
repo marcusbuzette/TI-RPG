@@ -37,6 +37,7 @@ public class DataPersistenseManager : MonoBehaviour {
         currentSaveSlot = slotName;
         string fileName = $"{baseFileName}_{slotName}.json";
         dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        Debug.Log(Application.persistentDataPath);
         LoadGame(); // Carrega automaticamente o slot ao trocar
     }
 

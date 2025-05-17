@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ItemAction : BaseAction {
+public class HealthPotionAction : BaseAction {
     [SerializeField] public int potionHealAmount = 20;
     private HealthSystem healthSystem;
     private string itemName = "Potion";
@@ -25,12 +25,49 @@ public class ItemAction : BaseAction {
     }
 
     public override string GetActionName() {
-        return "PoÃ§Ã£o";
+        return "Poção";
     }
 
     public override List<GridPosition> GetValidGridPositionList() {
-        unit = TurnSystem.Instance.GetTurnUnit();
+        
+        if (!LevelGrid.Instance.IsInBattleMode()) {
+            List<GridPosition> validGridPositionList = new List<GridPosition>();
+            GridPosition unitGrid = UnitActionSystem.Instance.GetSelectedUnit().GetGridPosition();
+
+            for (int x = -1; x <= 1; x++) {
+                for (int z = -1; z <= 1; z++) {
+                    GridPosition offsetGridPosition = new GridPosition(x, z, 0);
+                    GridPosition testGridPosition = unitGrid + offsetGridPosition;
+
+                    if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) {
+                        continue;
+                    }
+
+
+                    if (!LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition)) {
+                        continue;
+                    }
+
+                    if (LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition).GetHealthSystem().GetHealthState() == HealthSystem.HealthState.FAINT) {
+                        continue;
+                    }
+
+                    Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition);
+
+                    if (targetUnit.IsEnemy()) {
+                        continue;
+                    }
+
+                    validGridPositionList.Add(testGridPosition);
+                }
+            }
+
+            return validGridPositionList;
+        }
+
+        unit = UnitActionSystem.Instance.GetSelectedUnit();
         GridPosition unitGridPosition = unit.GetGridPosition();
+
         return new List<GridPosition> { unitGridPosition };
     }
 

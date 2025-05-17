@@ -7,7 +7,8 @@ public class ItemButtonUI : ActionButtonUI {
 
     [SerializeField] protected TextMeshProUGUI quantityText;
 
-    public void SetBaseAction(ItemAction itemAction, int quantity) {
+    public void SetBaseAction(BaseAction itemAction, int quantity) {
+        Debug.Log(itemAction);
         base.SetBaseAction(itemAction);
         quantityText.text = quantity.ToString();
     }

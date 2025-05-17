@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 959054419738605831}
   - component: {fileID: 959054419738605830}
   - component: {fileID: 959054419738605825}
-  - component: {fileID: 6723522909995678547}
+  - component: {fileID: 6255988726795813045}
   m_Layer: 0
-  m_Name: Potion
+  m_Name: Revive
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,7 +106,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6723522909995678547
+--- !u!114 &6255988726795813045
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,10 +115,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 959054419738605824}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2e767ee6586d8e4884b70a36b55da67, type: 3}
+  m_Script: {fileID: 11500000, guid: 271ad5ccb999b48489e290cfc43e76f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPotion: {fileID: 0}
-  inventorySystem: {fileID: 0}
-  potionHealAmount: 20
-  unityWorldUI: {fileID: 0}
+  actionImage: {fileID: 0}
+  actionImageBlocked: {fileID: 0}
+  animator: {fileID: 0}
+  speed: 0
+  rotateSpeed: 180
+  healAmount: 20

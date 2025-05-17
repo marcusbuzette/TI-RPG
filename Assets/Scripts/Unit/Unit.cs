@@ -17,6 +17,7 @@ public class Unit : MonoBehaviour {
     public static event EventHandler OnAnyActionPerformed;
     public static event EventHandler OnAnyUnitSpawn;
     public static event EventHandler OnAnyUnitDead;
+    public static event EventHandler OnAnyUnitRevive;
 
     [SerializeField] private bool isEnemy;
 
@@ -84,6 +85,7 @@ public class Unit : MonoBehaviour {
         TurnSystem.Instance.onTurnChange += TurnSystem_OnTurnChange;
 
         healthSystem.OnDead += HealthSystem_OnDie;
+        healthSystem.OnRevive += HealthSystem_OnRevive;
         OnAnyUnitSpawn?.Invoke(this, EventArgs.Empty);
         statsModifiers = new UnitStatsModifiers();
     }
@@ -191,10 +193,13 @@ public class Unit : MonoBehaviour {
     }
 
     private void HealthSystem_OnDie(object sender, EventArgs e) {
-        LevelGrid.Instance.RemoveUnitAtGridPosition(gridPosition, this);
         TurnSystem.Instance.RemoveUnitFromList(this);
-        Destroy(gameObject);
+
         OnAnyUnitDead?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void HealthSystem_OnRevive(object sender, EventArgs e) {
+        OnAnyUnitRevive?.Invoke(this, EventArgs.Empty);
     }
 
     public float GetHealthNormalized() {
