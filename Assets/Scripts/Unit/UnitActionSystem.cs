@@ -20,7 +20,7 @@ public class UnitActionSystem : MonoBehaviour {
     [SerializeField] private LayerMask unitLayerMask;
     [SerializeField] private LayerMask interactiveLayerMask;
 
-    private BaseAction selectedAction;
+    [SerializeField] private BaseAction selectedAction;
 
     private bool isBusy = false;
 
@@ -62,6 +62,17 @@ public class UnitActionSystem : MonoBehaviour {
                 }
             }
             else {
+                if(selectedAction != null &&
+                   selectedAction.IsValidActionGridPosition(mouseGridPosition)) {
+                    if (selectedUnit.TryToPerformAction(selectedAction)) {
+                        SetBusy();
+                        selectedAction.TriggerAction(mouseGridPosition, ClearBusy);
+                        OnActionStarted.Invoke(this, EventArgs.Empty);
+                        this.selectedAction = null;
+                        return;
+                    }
+                }
+                GridSystemVisual.Instance.HideAllGridPosition();
                 this.selectedAction = null;
                 OnUnitMovedInExploreMode?.Invoke(this, EventArgs.Empty);
                 if (this.selectedUnit == null || this.selectedUnit.unitId != "hero") {
@@ -78,7 +89,7 @@ public class UnitActionSystem : MonoBehaviour {
                     return;
                 }
 
-                List<Unit> unitList = TurnSystem.Instance.GetUnitsOrderList();
+                List<Unit> unitList = UnitManager.Instance.GetFriendlyList();
                 unitList.Remove(selectedUnit);
                 selectedUnit?.GetComponent<MoveAction>().TriggerAction(mouseGridPosition, ClearBusy);
 
@@ -99,6 +110,7 @@ public class UnitActionSystem : MonoBehaviour {
         if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, unitLayerMask)) {
             if (hit.transform.TryGetComponent<Unit>(out Unit unit)) {
                 if (unit == selectedUnit) return false;
+                if (unit.GetHealthSystem().GetHealthState() == HealthSystem.HealthState.FAINT) return false;
                 if (unit.IsEnemy()) {
                     return false;
                 }

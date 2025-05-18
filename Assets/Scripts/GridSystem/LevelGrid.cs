@@ -233,4 +233,8 @@ public class LevelGrid : MonoBehaviour {
         return followPositions;
     }
 
+    public bool IsInBattleMode() {
+        if(gameMode == GameMode.BATTLE) return true;
+        return false;
+    }
 }

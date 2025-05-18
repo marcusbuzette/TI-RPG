@@ -20,13 +20,15 @@ public class MouseWorld : MonoBehaviour {
     }
 
     private void Update() {
-        transform.position = MouseWorld.GetPosition();
+        transform.position = MouseWorld.GetPosition() == null? Vector3.zero : MouseWorld.GetPosition();
 
-        //Se o mouse está em cima da UI ele esconde o Visual do Mouse
-        if (!EventSystem.current.IsPointerOverGameObject() &&
-            LevelGrid.Instance.GetGridPosition(transform.position) != null) {
-            GridSystemVisual.Instance.MousePosVisualHide(false);
-            GridSystemVisual.Instance.MousePositionVisual(transform.position);
+        if(transform.position != Vector3.zero) {
+            //Se o mouse está em cima da UI ele esconde o Visual do Mouse
+            if (LevelGrid.Instance.GetGridPosition(transform.position) != null &&
+            !EventSystem.current.IsPointerOverGameObject()) {
+                GridSystemVisual.Instance.MousePosVisualHide(false);
+                GridSystemVisual.Instance.MousePositionVisual(transform.position);
+            }
         }
         else {
             GridSystemVisual.Instance.MousePosVisualHide(true);

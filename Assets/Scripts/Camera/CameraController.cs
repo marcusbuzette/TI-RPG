@@ -56,7 +56,8 @@ public class CameraController : MonoBehaviour
             lockMoviment = MoveTo(playerUnit.position);
         }
         else if (TurnSystem.Instance.IsPlayerTurn() && !lockMoviment && !stopMove) {
-            transform.position = playerUnit.position;
+            if (playerUnit != null) transform.position = playerUnit.position;
+            else playerUnit = UnitActionSystem.Instance.GetSelectedUnit().transform;
         }
 
         if (TurnSystem.Instance.IsPlayerTurn()) {
@@ -201,7 +202,7 @@ public class CameraController : MonoBehaviour
     }
 
     private void UnitStopMove(object sender, EventArgs e) {
-        if ((sender as BaseAction).GetUnit() == playerUnit) { 
+        if ((sender as BaseAction).GetUnit().transform == playerUnit) {
             stopMove = true;
         }
     }

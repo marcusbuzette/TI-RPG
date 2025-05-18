@@ -12,7 +12,6 @@ public class FireAttack : BaseSkills {
     private GameObject fireAttackObject;
     [SerializeField] private GameObject particleFire;
     [SerializeField] private int maxShootDistance = 1;
-    [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private int shootDamage = 100;
     [SerializeField] private int areaDamage = 3;
     [SerializeField] private int damage = 3;

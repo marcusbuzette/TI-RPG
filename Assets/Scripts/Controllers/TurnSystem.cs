@@ -34,17 +34,19 @@ public class TurnSystem : MonoBehaviour {
     private void Start() {
         turnNumber = 0;
         unitiesOrderList = FindObjectsOfType<Unit>(false)
-            .Where(unit => unit.GetGridPosition().zone == LevelGrid.Instance.GetCurrentBattleZone()).ToList<Unit>();
+            .Where(unit => unit.GetGridPosition().zone == LevelGrid.Instance.GetCurrentBattleZone()).
+            Where(unit => unit.GetHealthSystem().GetHealthState() == HealthSystem.HealthState.ALIVE).ToList<Unit>();
         allEnemies = FindObjectsOfType<Unit>(false).Where(unit => unit.IsEnemy()).ToList<Unit>();
-        unitiesOrderList.Sort((x, y) => y.GetUnitSpeed().CompareTo(x.GetUnitSpeed()));
+        if(LevelGrid.Instance.IsInBattleMode()) unitiesOrderList.Sort((x, y) => y.GetUnitSpeed().CompareTo(x.GetUnitSpeed()));
         isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
-        unitiesOrderList[turnNumber].StartUnitTurn();
+        if(LevelGrid.Instance.IsInBattleMode()) unitiesOrderList[turnNumber].StartUnitTurn();
         onOrderChange.Invoke(this, EventArgs.Empty);
-
     }
 
     public void SetUpBattleNewZone() {
-        List<Unit> playerUnits = FindObjectsOfType<Unit>(false).Where(unit => unit.IsEnemy() == false).ToList<Unit>();
+        List<Unit> playerUnits = FindObjectsOfType<Unit>(false).
+            Where(unit => unit.IsEnemy() == false).
+            Where(unit => unit.GetHealthSystem().GetHealthState() == HealthSystem.HealthState.ALIVE).ToList<Unit>();
         for (int i = 0; i < playerUnits.Count; i++) {
             UnitActionSystem.Instance.MoveUnitToGridPosition(playerUnits[i],
             LevelGrid.Instance.GetZoneSpawnList(LevelGrid.Instance.GetCurrentBattleZone())[i]);
@@ -56,7 +58,8 @@ public class TurnSystem : MonoBehaviour {
     public void StartBattleNewZone() {
         turnNumber = 0;
         unitiesOrderList = FindObjectsOfType<Unit>(false)
-            .Where(unit => (unit.GetGridPosition().zone == LevelGrid.Instance.GetCurrentBattleZone() || !unit.IsEnemy())).ToList<Unit>();
+            .Where(unit => (unit.GetGridPosition().zone == LevelGrid.Instance.GetCurrentBattleZone() || !unit.IsEnemy())).
+            Where(unit => unit.GetHealthSystem().GetHealthState() == HealthSystem.HealthState.ALIVE).ToList<Unit>();
         unitiesOrderList.Sort((x, y) => y.GetUnitSpeed().CompareTo(x.GetUnitSpeed()));
         isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
         unitiesOrderList[turnNumber].StartUnitTurn();
@@ -105,7 +108,8 @@ public class TurnSystem : MonoBehaviour {
         }
         else if (isPlayerTurn && !CheckEnemiesLeftInTheBattleZone() && CheckEnemiesLeft()) {
             LevelGrid.Instance.RemoveZoneFromGrid(LevelGrid.Instance.GetCurrentBattleZone());
-            List<Unit> playerUnits = FindObjectsOfType<Unit>(false).Where(unit => unit.IsEnemy() == false).ToList<Unit>();
+            List<Unit> playerUnits = FindObjectsOfType<Unit>(false).Where(unit => unit.IsEnemy() == false).
+                Where(unit => unit.GetHealthSystem().GetHealthState() == HealthSystem.HealthState.ALIVE).ToList<Unit>();
             foreach (Unit unit in playerUnits) {
                 unit.UpdateGridPositionZone(0);
             }

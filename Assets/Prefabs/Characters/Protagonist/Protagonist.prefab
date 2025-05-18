@@ -673,6 +673,7 @@ MonoBehaviour:
   attackAttenuation: 2
   hitDamage: 30
   MAX_SPIN: 360
+  tornadoSFX: AtaqueAOE
 --- !u!65 &1104661637224546848
 BoxCollider:
   m_ObjectHideFlags: 0
