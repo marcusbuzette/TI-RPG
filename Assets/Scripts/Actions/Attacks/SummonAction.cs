@@ -58,16 +58,16 @@ public class SummonAction : BaseAction
     }
 
     private void CreateEnemyUnit(GridPosition position) {
-        if (summonableEnemyPrefab == null) return;
+        // if (summonableEnemyPrefab == null) return;
 
-        Unit summonedEnemy = Instantiate(
-            summonableEnemyPrefab, 
-            LevelGrid.Instance.GetWorldPosition(position), 
-            Quaternion.identity);
+        // Unit summonedEnemy = Instantiate(
+        //     summonableEnemyPrefab, 
+        //     LevelGrid.Instance.GetWorldPosition(position), 
+        //     Quaternion.identity);
 
-        summonedEnemy.GetComponent<HealthSystem>().SetMaxHP(summonedEnemy.GetUnitStats().GetMaxHP());
+        // summonedEnemy.GetComponent<HealthSystem>().SetMaxHP(summonedEnemy.GetUnitStats().GetMaxHP());
         
-        TurnSystem.Instance.GetComponent<TurnSystem>().AddUnitsToUnitOrderList(summonedEnemy);
+        // TurnSystem.Instance.GetComponent<TurnSystem>().AddUnitsToUnitOrderList(summonedEnemy);
     }
 
     private List<GridPosition> GetOptimalSummonPositions() {
