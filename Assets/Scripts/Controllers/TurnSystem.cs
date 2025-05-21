@@ -94,10 +94,8 @@ public class TurnSystem : MonoBehaviour {
     public void RemoveUnitFromList(Unit unitDead) {
         int unitDeadIndex = unitiesOrderList.FindIndex((u) => u.transform == unitDead.transform);
         if (unitDead.IsEnemy()) {
-            this.unitiesOrderList[this.turnNumber]
-                .AddXp(this.unitiesOrderList[unitDeadIndex].GetUnitStats().GetXpSpoil());
-                Debug.Log(unitDead as object);
-                Debug.Log(onEnemyKilled);
+            // this.unitiesOrderList[this.turnNumber]
+            //     .AddXp(this.unitiesOrderList[unitDeadIndex].GetUnitStats().GetXpSpoil());
             onEnemyKilled.Invoke(unitDead,EventArgs.Empty);
             allEnemies.Remove(unitDead);
         }

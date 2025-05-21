@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0090638, g: 0.013170442, b: 0.020601679, a: 1}
+  m_IndirectSpecularColor: {r: 0.009026857, g: 0.01311287, b: 0.020520534, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1528,7 +1528,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1539441621332631354, guid: 1b28e24ed24b1ff4ea136bfcc5168fce, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2415357954633486454, guid: 1b28e24ed24b1ff4ea136bfcc5168fce, type: 3}
       propertyPath: m_FontData.m_Font
@@ -8428,7 +8428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac59a11504afd3d488880254701951de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: {fileID: 1807209269}
+  dialogue: {fileID: 11400000, guid: 869ce8ef27b924dd4b6ec52ca988d94d, type: 2}
 --- !u!1 &1693384667
 GameObject:
   m_ObjectHideFlags: 0
@@ -9526,103 +9526,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5242349251987578011, guid: 1726a7facfeba1740abbd05c834a0917, type: 3}
   m_PrefabInstance: {fileID: 1876326527}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1807209268
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4041436558911177958, guid: 43687c8789ea65847b6369c00d13cfac, type: 3}
-      propertyPath: m_Name
-      value: Dialogo
-      objectReference: {fileID: 0}
-    - target: {fileID: 4041436558911177958, guid: 43687c8789ea65847b6369c00d13cfac, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907950983568005145, guid: 43687c8789ea65847b6369c00d13cfac, type: 3}
-      propertyPath: name
-      value: Fofoqueiro
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907950983568005145, guid: 43687c8789ea65847b6369c00d13cfac, type: 3}
-      propertyPath: sentences.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907950983568005145, guid: 43687c8789ea65847b6369c00d13cfac, type: 3}
-      propertyPath: sentences.Array.data[0]
-      value: Ha 27 anos o Rei teve dois filhos gemeos.
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907950983568005145, guid: 43687c8789ea65847b6369c00d13cfac, type: 3}
-      propertyPath: sentences.Array.data[1]
-      value: Um deles herdou suas capacidades magicas, o outro pouco se sabe sobre.
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907950983568005145, guid: 43687c8789ea65847b6369c00d13cfac, type: 3}
-      propertyPath: sentences.Array.data[2]
-      value: Uns dizem que nao sobreviveu, outros dizem que foi abandodado....
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907950983568005145, guid: 43687c8789ea65847b6369c00d13cfac, type: 3}
-      propertyPath: sentences.Array.data[3]
-      value: Desde a morte de seu pai, o novo Rei esta fazendo varreduras em todo
-        reino
-      objectReference: {fileID: 0}
-    - target: {fileID: 5462567321286342285, guid: 43687c8789ea65847b6369c00d13cfac, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5462567321286342285, guid: 43687c8789ea65847b6369c00d13cfac, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5462567321286342285, guid: 43687c8789ea65847b6369c00d13cfac, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5462567321286342285, guid: 43687c8789ea65847b6369c00d13cfac, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5462567321286342285, guid: 43687c8789ea65847b6369c00d13cfac, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5462567321286342285, guid: 43687c8789ea65847b6369c00d13cfac, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5462567321286342285, guid: 43687c8789ea65847b6369c00d13cfac, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5462567321286342285, guid: 43687c8789ea65847b6369c00d13cfac, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5462567321286342285, guid: 43687c8789ea65847b6369c00d13cfac, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5462567321286342285, guid: 43687c8789ea65847b6369c00d13cfac, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 43687c8789ea65847b6369c00d13cfac, type: 3}
---- !u!114 &1807209269 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4907950983568005145, guid: 43687c8789ea65847b6369c00d13cfac, type: 3}
-  m_PrefabInstance: {fileID: 1807209268}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd39ca780161d084ebf3ffce4e2c7e15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1821325612
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11369,7 +11272,6 @@ SceneRoots:
   - {fileID: 1729806484}
   - {fileID: 566769708}
   - {fileID: 1375161093}
-  - {fileID: 1807209268}
   - {fileID: 1869157753}
   - {fileID: 20805569}
   - {fileID: 660586791}

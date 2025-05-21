@@ -192,6 +192,10 @@ public class Unit : MonoBehaviour {
         xpSystem.AddXp(xpAmount);
     }
 
+    public void NextLevelXp() {
+        xpSystem.NextLevelXp();
+    }
+
     private void HealthSystem_OnDie(object sender, EventArgs e) {
         TurnSystem.Instance.RemoveUnitFromList(this);
 

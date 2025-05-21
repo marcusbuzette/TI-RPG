@@ -19,6 +19,8 @@ public class Quest {
         this.currentQuestStepIndex++;
     }
 
+    public int GetCurrentStepIndex() {return this.currentQuestStepIndex;}
+
     public bool CurrentQuestStepExists() {
         return (currentQuestStepIndex < info.questStepPrefabs.Length);
     }

@@ -22,7 +22,9 @@ public class HealthSystem : MonoBehaviour {
     public string damageSFX;
     private bool isDefending = false;
 
-    public Transform faintText; //TEMPORARIO <----- (ATENÇÃO)
+    public Transform faintText; //TEMPORARIO <----- (ATENï¿½ï¿½O)
+
+    [SerializeField] private List<Unit> damagedBy = new List<Unit>();
 
     private void Awake() {
         animator = GetComponentInChildren<Animator>();
@@ -33,7 +35,7 @@ public class HealthSystem : MonoBehaviour {
     }
 
     public void TestDamage(int damage, Unit attackedBy, bool haveProjectile) {
-        //Verifica se alguma unidade o atacou, se não, foi algum efeito que não tem chance de errar
+        //Verifica se alguma unidade o atacou, se nï¿½o, foi algum efeito que nï¿½o tem chance de errar
         if (attackedBy != null) {
             int dice = Random.Range(0, 10);
 
@@ -44,7 +46,6 @@ public class HealthSystem : MonoBehaviour {
             }
         }
 
-        Debug.Log(haveProjectile);
         if (haveProjectile) attackedBy.SpawnProjectile(this, damage);
         else Damage(damage, attackedBy);
     }
@@ -53,6 +54,10 @@ public class HealthSystem : MonoBehaviour {
         if (isDefending) {
             worldUI.ShowUIValue(0, "Defending");
             return;
+        }
+
+        if (GetComponent<Unit>().IsEnemy() && !this.damagedBy.Find((u) => u.unitId == attackedBy.unitId)) {
+            this.damagedBy.Add(attackedBy);
         }
 
         // animator?.SetTrigger("TookDamage");
@@ -130,4 +135,6 @@ public class HealthSystem : MonoBehaviour {
     public void SetUnitWorldUI(UnitWorldUI worldUI) { this.worldUI = worldUI; }
     public UnitWorldUI GetUnitWorldUI() { return worldUI; }
     public HealthState GetHealthState() { return healthState; }
+
+    public List<Unit> GetDamagedByList() {return this.damagedBy;}
 }

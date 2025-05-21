@@ -23,8 +23,6 @@ public class KillEnemyStep : QuestStep {
             enemiesKilled++;
         }
 
-        Debug.Log("killed enemy - " + enemiesKilled);
-
         if (enemiesKilled >= enemiesToComplete) {
             this.FinishQuestStep();
         }
