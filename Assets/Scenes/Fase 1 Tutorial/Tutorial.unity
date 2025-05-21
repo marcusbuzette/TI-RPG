@@ -1684,7 +1684,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 128644033}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.42415538, y: 0.000000015581923, z: -0.000000007298182, w: 0.90558946}
+  m_LocalRotation: {x: 0.42415538, y: -0.000000015581909, z: 0.0000000072981767, w: 0.90558946}
   m_LocalPosition: {x: 3.54, y: 12, z: -3.4000003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -13129,6 +13129,7 @@ GameObject:
   - component: {fileID: 1265565522}
   - component: {fileID: 1265565524}
   - component: {fileID: 1265565523}
+  - component: {fileID: 1265565525}
   m_Layer: 0
   m_Name: Tela de Vitoria
   m_TagString: Untagged
@@ -13197,6 +13198,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1265565521}
   m_CullTransparentMesh: 1
+--- !u!225 &1265565525
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265565521}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1291406882
 GameObject:
   m_ObjectHideFlags: 0
@@ -16528,7 +16541,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1618477024}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.42415538, y: 0.000000015581923, z: -0.000000007298182, w: 0.90558946}
+  m_LocalRotation: {x: 0.42415538, y: -0.000000015581909, z: 0.0000000072981767, w: 0.90558946}
   m_LocalPosition: {x: 3.54, y: 12, z: -3.4000003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -20211,6 +20224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questsContainer: {fileID: 1828101737}
   questStepPrefab: {fileID: 3777486192927047876, guid: c87730c3467ca4998939da449e8dae5d, type: 3}
+  victoryCanvasGroup: {fileID: 1265565525}
   victoryPanel: {fileID: 1265565522}
   victoryDisplayRoot: {fileID: 1782732029}
 --- !u!222 &2035897075

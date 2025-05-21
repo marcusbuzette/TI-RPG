@@ -54,7 +54,7 @@ public class QuestSystemUI : MonoBehaviour {
     }
 
     private IEnumerator AnimateVictoryPanel() {
-    float duration = 0.5f;
+    float duration = 0.6f;
     float time = 0f;
 
     victoryCanvasGroup.alpha = 0f;
@@ -64,14 +64,24 @@ public class QuestSystemUI : MonoBehaviour {
         time += Time.deltaTime;
         float t = time / duration;
 
+        // Aplica bounce na escala (easeOutBounce estilo)
+        float bounceT = EaseOutBack(t);
+
         victoryCanvasGroup.alpha = Mathf.Lerp(0f, 1f, t);
-        victoryPanel.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, t);
+        victoryPanel.localScale = Vector3.LerpUnclamped(Vector3.zero, Vector3.one, bounceT);
 
         yield return null;
     }
 
     victoryCanvasGroup.alpha = 1f;
     victoryPanel.localScale = Vector3.one;
+}
+
+    private float EaseOutBack(float t) {
+    float c1 = 1.70158f;
+    float c3 = c1 + 1;
+
+    return 1 + c3 * Mathf.Pow(t - 1, 3) + c1 * Mathf.Pow(t - 1, 2);
 }
 
 }
