@@ -22,6 +22,7 @@ public class UnitManager : MonoBehaviour {
     private void Start() {
         Unit.OnAnyUnitSpawn += Unit_OnAnyUnitSpawned;
         Unit.OnAnyUnitDead += Unit_OnAnyUnityDead;
+        Unit.OnAnyUnitRevive += Unit_OnFriendlyUnitRevived;
     }
 
     private void Unit_OnAnyUnitSpawned(object sander, EventArgs e) {
@@ -46,14 +47,23 @@ public class UnitManager : MonoBehaviour {
         unitList.Remove(unit);
 
         if (unit.IsEnemy()) {
-            foreach (var friendlyUnit in friendlyList) {
+            foreach (Unit friendlyUnit in unit.GetHealthSystem().GetDamagedByList()) {
                 friendlyUnit.AddXp(unit.GetUnitStats().GetXpSpoil());
             }
             enemyList.Remove(unit);
+
+            Destroy(unit.gameObject);
         }
         else {
             friendlyList.Remove(unit);
         }
+    }
+
+    private void Unit_OnFriendlyUnitRevived(object sander, EventArgs e) {
+        Unit unit = sander as Unit;
+
+        unitList.Add(unit);
+        friendlyList.Add(unit);
     }
 
     public List<Unit> GetUnitList() {

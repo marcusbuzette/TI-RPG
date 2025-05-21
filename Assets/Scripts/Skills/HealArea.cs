@@ -5,22 +5,14 @@ using System;
 using static GridSystemVisual;
 
 public class HealArea : BaseSkills {
-    private enum State {
-        Aiming, Shooting, Cooloff
-    }
     [SerializeField] private LayerMask obstaclesLayerMask;
-    [SerializeField] private GameObject healAreaObject;
+    private GameObject healAreaObject;
     [SerializeField] private GameObject particleHeal;
     [SerializeField] private int maxShootDistance = 1;
-    [SerializeField] private float aimingTimer = .1f;
-    [SerializeField] private float shootingTimer = .3f;
-    [SerializeField] private float cooloffTimer = .1f;
     [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private int areaHeal = 3;
     [SerializeField] private int healPoints = 3;
 
-    private State currentState;
-    private float stateTimer;
     private bool canShoot;
     public Vector3 selectedGrid;
     public bool isAiming = false;
@@ -47,27 +39,12 @@ public class HealArea : BaseSkills {
     public override void Action() {
         ActiveCoolDown();
 
-        stateTimer -= Time.deltaTime;
-        switch (currentState) {
-            case State.Aiming:
-                GridSystemVisual.Instance.HideAllGridPosition();
-                Vector3 moveDirection = (selectedGrid - transform.position).normalized;
-                transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
-                break;
-            case State.Shooting:
-                if (canShoot) {
-                    AudioManager.instance?.PlaySFX("Arrows");
-                    isAiming = false;
-                    canShoot = false;
-                }
-                break;
-            case State.Cooloff:
-
-                break;
-
-        }
-        if (stateTimer <= 0) {
-            NextState();
+        if (canShoot) {
+            canShoot = false;
+            GridSystemVisual.Instance.HideAllGridPosition();
+            StartCoroutine(RotateTowardsAndExecute(selectedGrid, () => {
+                Shoot();
+            }));
         }
     }
 
@@ -116,8 +93,6 @@ public class HealArea : BaseSkills {
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         isAiming = false;
-        currentState = State.Aiming;
-        stateTimer = aimingTimer;
         selectedGrid = LevelGrid.Instance.GetWorldPosition(mouseGridPosition);
         canShoot = true;
         if (!string.IsNullOrEmpty(healArrowSFX)) {
@@ -126,22 +101,12 @@ public class HealArea : BaseSkills {
         ActionStart(onActionComplete);
     }
 
-    private void NextState() {
-        switch (currentState) {
-            case State.Aiming:
-                currentState = State.Shooting;
-                stateTimer = shootingTimer;
-                break;
-            case State.Shooting:
-                currentState = State.Cooloff;
-                stateTimer = shootingTimer;
-                break;
-            case State.Cooloff:
-                healAreaObject = Instantiate(new GameObject(), selectedGrid, Quaternion.identity);
-                healAreaObject.AddComponent<HealAreaObject>().SetHealAreaObject(this, particleHeal,healPoints, areaHeal, coolDown);
-                ActionFinish();
-                break;
-        }
+    private void Shoot() {
+        unit.SpawnProjectile(selectedGrid, Color.green);
+
+        healAreaObject = Instantiate(new GameObject(), selectedGrid, Quaternion.identity);
+        healAreaObject.AddComponent<HealAreaObject>().SetHealAreaObject(this, particleHeal, healPoints, areaHeal, coolDown);
+        ActionFinish();
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {

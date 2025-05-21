@@ -89,7 +89,7 @@ public class FireAttackObject : MonoBehaviour
         }
 
         foreach(Unit units in DamageUnitList) {
-            units.Damage(_damage);
+            units.Damage(_damage, false, null);
         }
     }
 

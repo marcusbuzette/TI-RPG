@@ -8,24 +8,15 @@ using UnityEngine.SocialPlatforms;
 using System.Runtime.InteropServices.WindowsRuntime;
 
 public class FireAttack : BaseSkills {
-    private enum State {
-        Aiming, Shooting, Cooloff
-    }
     [SerializeField] private LayerMask obstaclesLayerMask;
-    [SerializeField] private GameObject fireAttackObject;
+    private GameObject fireAttackObject;
     [SerializeField] private GameObject particleFire;
     [SerializeField] private int maxShootDistance = 1;
-    [SerializeField] private float aimingTimer = .1f;
-    [SerializeField] private float shootingTimer = .3f;
-    [SerializeField] private float cooloffTimer = .1f;
-    [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private int shootDamage = 100;
     [SerializeField] private int areaDamage = 3;
     [SerializeField] private int damage = 3;
 
     private ArcherVFXController VfxController;
-    private State currentState;
-    private float stateTimer;
     private bool canShoot;
     public Vector3 selectedGrid;
     public bool isAiming = false;
@@ -36,9 +27,9 @@ public class FireAttack : BaseSkills {
 
     private void Awake() 
     {
-    VfxController = GetComponent<ArcherVFXController>();
-    VfxController.CastEnd();
-    
+        base.Awake();
+        VfxController = GetComponent<ArcherVFXController>();
+        VfxController?.CastEnd();
     }
 
     private void Start() {
@@ -62,24 +53,12 @@ public class FireAttack : BaseSkills {
     public override void Action() {
         ActiveCoolDown();
 
-        stateTimer -= Time.deltaTime;
-        switch (currentState) {
-            case State.Aiming:
-                GridSystemVisual.Instance.HideAllGridPosition();
-                Vector3 moveDirection = (selectedGrid - transform.position).normalized;
-                transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
-                break;
-            case State.Shooting:
-                if (canShoot) {                  
-                    isAiming = false;
-                    canShoot = false;
-                }
-                break;
-            case State.Cooloff:
-                break;
-        }
-        if (stateTimer <= 0) {
-            NextState();
+        if (canShoot) {
+            canShoot = false;
+            GridSystemVisual.Instance.HideAllGridPosition();
+            StartCoroutine(RotateTowardsAndExecute(selectedGrid, () => {
+                Shoot();
+            }));
         }
     }
 
@@ -127,13 +106,11 @@ public class FireAttack : BaseSkills {
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         isAiming = false;
-        currentState = State.Aiming;
-        stateTimer = aimingTimer;
         selectedGrid = LevelGrid.Instance.GetWorldPosition(mouseGridPosition);
         canShoot = true;
 
         // Ativa o VFX quando começa a ação
-         VfxController.FireCast();
+        VfxController.FireCast();
 
         if (!string.IsNullOrEmpty(fireArrowSFX)) {
             AudioManager.instance?.PlaySFX(fireArrowSFX);
@@ -141,24 +118,13 @@ public class FireAttack : BaseSkills {
         ActionStart(onActionComplete);
     }
 
-    private void NextState() {
-        switch (currentState) {
-            case State.Aiming:
-                currentState = State.Shooting;
-                stateTimer = shootingTimer;
-                break;
-            case State.Shooting:
-                currentState = State.Cooloff;
-                stateTimer = cooloffTimer;
-                break;
-            case State.Cooloff:
-                // Desativa o VFX quando entra em cooldown
-                 VfxController.CastEnd();
-                fireAttackObject = Instantiate(new GameObject(), selectedGrid, Quaternion.identity);
-                fireAttackObject.AddComponent<FireAttackObject>().SetFireAttackObject(this, particleFire, damage, areaDamage, coolDown);
-                ActionFinish();
-                break;
-        }
+    private void Shoot() {
+        unit.SpawnProjectile(selectedGrid, Color.red);
+
+        VfxController.CastEnd();
+        fireAttackObject = Instantiate(new GameObject(), selectedGrid, Quaternion.identity);
+        fireAttackObject.AddComponent<FireAttackObject>().SetFireAttackObject(this, particleFire, damage, areaDamage, coolDown);
+        ActionFinish();
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {

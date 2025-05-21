@@ -17,12 +17,14 @@ public class Unit : MonoBehaviour {
     public static event EventHandler OnAnyActionPerformed;
     public static event EventHandler OnAnyUnitSpawn;
     public static event EventHandler OnAnyUnitDead;
+    public static event EventHandler OnAnyUnitRevive;
 
     [SerializeField] private bool isEnemy;
 
     private GridPosition gridPosition;
     private HealthSystem healthSystem;
     [SerializeField] private List<BaseSkills> possibleSkills = new List<BaseSkills>();
+    [SerializeField] private List<BaseSkills> possibleSkillsPrefabs = new List<BaseSkills>();
     [SerializeField] private List<PossibleUpgrade> possibleUpgrades = new List<PossibleUpgrade>();
     [SerializeField] private XpSystem xpSystem;
     [SerializeField] public string unitId = "";
@@ -43,6 +45,10 @@ public class Unit : MonoBehaviour {
     private GridPosition newGridPosition;
     private Vector3 lastPosition;
 
+    [Header("Projectile")]
+    [SerializeField] private Transform projectilePrefab;
+    [SerializeField] private Transform projectilePoint;
+
 
     private int intimidateCoolDown = 0;
     [SerializeField] private int enemyFocus = 0;
@@ -59,8 +65,9 @@ public class Unit : MonoBehaviour {
             this.xpSystem.SetXp(unitRecords.xp);
             this.unitStats = unitRecords.unitStats;
             foreach (BaseSkills skill in unitRecords.baseSkills) {
-                BaseSkills aux = possibleSkills.Find((s) => s.nome == skill.nome);
+                BaseSkills aux = possibleSkillsPrefabs.Find((s) => s.GetComponent<BaseSkills>().nome == skill.nome);
                 BaseSkills bs = gameObject.AddComponent(skill.GetType()) as BaseSkills;
+                bs.SetSkill();
                 if (aux != null) {
                     bs.SetSkillImage(aux.GetActionImage());
                 }
@@ -78,6 +85,7 @@ public class Unit : MonoBehaviour {
         TurnSystem.Instance.onTurnChange += TurnSystem_OnTurnChange;
 
         healthSystem.OnDead += HealthSystem_OnDie;
+        healthSystem.OnRevive += HealthSystem_OnRevive;
         OnAnyUnitSpawn?.Invoke(this, EventArgs.Empty);
         statsModifiers = new UnitStatsModifiers();
     }
@@ -175,8 +183,8 @@ public class Unit : MonoBehaviour {
         return isEnemy;
     }
 
-    public void Damage(int damage, Unit attackedBy = null) {
-        healthSystem.Damage(damage, attackedBy);
+    public void Damage(int damage, bool haveProjectile = false, Unit attackedBy = null) {
+        healthSystem.TestDamage(damage, attackedBy, haveProjectile);
     }
 
     public void AddXp(int xpAmount) {
@@ -184,11 +192,18 @@ public class Unit : MonoBehaviour {
         xpSystem.AddXp(xpAmount);
     }
 
+    public void NextLevelXp() {
+        xpSystem.NextLevelXp();
+    }
+
     private void HealthSystem_OnDie(object sender, EventArgs e) {
-        LevelGrid.Instance.RemoveUnitAtGridPosition(gridPosition, this);
         TurnSystem.Instance.RemoveUnitFromList(this);
-        Destroy(gameObject);
+
         OnAnyUnitDead?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void HealthSystem_OnRevive(object sender, EventArgs e) {
+        OnAnyUnitRevive?.Invoke(this, EventArgs.Empty);
     }
 
     public float GetHealthNormalized() {
@@ -316,5 +331,29 @@ public class Unit : MonoBehaviour {
             statsModifiers.ResetModifier((BuffType)(sender as BaseSkills).GetBuffType());
         }
         (sender as BaseSkills).onEndEffect -= BaseSkill_onEndEffect;
+    }
+
+    public void SpawnProjectile(HealthSystem enemy, int projectileDemage, bool miss = false) {
+        if(projectilePoint == null) {
+            Debug.LogWarning(transform.name + " <- this unit do not have ProjectilePoint on Unit");
+            projectilePoint = transform;
+        }
+
+        Transform projectileTransform = Instantiate(projectilePrefab, projectilePoint.position, Quaternion.identity);
+
+        Projectile projectile = projectileTransform.GetComponent<Projectile>();
+        projectile.Setup(this, enemy.transform.position, enemy, projectileDemage, miss);
+    }
+
+    public void SpawnProjectile(Vector3 target, Color color) {
+        if (projectilePoint == null) {
+            Debug.LogWarning(transform.name + " <- this unit do not have ProjectilePoint on Unit");
+            projectilePoint = transform;
+        }
+
+        Transform projectileTransform = Instantiate(projectilePrefab, projectilePoint.position, Quaternion.identity);
+
+        Projectile projectile = projectileTransform.GetComponent<Projectile>();
+        projectile.Setup(target, color);
     }
 }

@@ -8,13 +8,24 @@ using UnityEngine;
 public class HealthSystem : MonoBehaviour {
 
     public event EventHandler OnDead;
+    public event EventHandler OnRevive;
     public event EventHandler OnDamage;
+
+    public enum HealthState { ALIVE, FAINT }
+
+    [SerializeField] private HealthState healthState = HealthState.ALIVE;
+
     private UnitWorldUI worldUI;
     public int healthPoints = 100;
     public int maxHealthPoints = 100;
     public Animator animator;
     public string damageSFX;
     private bool isDefending = false;
+
+    public Transform faintText; //TEMPORARIO <----- (ATEN��O)
+
+    [SerializeField] private List<Unit> damagedBy = new List<Unit>();
+
     private void Awake() {
         animator = GetComponentInChildren<Animator>();
     }
@@ -23,17 +34,30 @@ public class HealthSystem : MonoBehaviour {
         OnDamage?.Invoke(this, EventArgs.Empty);
     }
 
+    public void TestDamage(int damage, Unit attackedBy, bool haveProjectile) {
+        //Verifica se alguma unidade o atacou, se n�o, foi algum efeito que n�o tem chance de errar
+        if (attackedBy != null) {
+            int dice = Random.Range(0, 10);
+
+            if (dice <= 1) {
+                attackedBy.GetHealthSystem().GetUnitWorldUI().ShowUIValue(0, "Miss");
+                if(haveProjectile) attackedBy.SpawnProjectile(this, 0, true);
+                return;
+            }
+        }
+
+        if (haveProjectile) attackedBy.SpawnProjectile(this, damage);
+        else Damage(damage, attackedBy);
+    }
+
     public void Damage(int damage, Unit attackedBy) {
         if (isDefending) {
             worldUI.ShowUIValue(0, "Defending");
             return;
         }
 
-        int dice = Random.Range(0, 10);
-
-        if(dice <= 1) {
-            attackedBy.GetHealthSystem().GetUnitWorldUI().ShowUIValue(0, "Miss");
-            return;
+        if (GetComponent<Unit>().IsEnemy() && !this.damagedBy.Find((u) => u.unitId == attackedBy.unitId)) {
+            this.damagedBy.Add(attackedBy);
         }
 
         // animator?.SetTrigger("TookDamage");
@@ -56,7 +80,28 @@ public class HealthSystem : MonoBehaviour {
     }
 
     private void Die() {
+        healthState = HealthState.FAINT;
+
+        if (!GetComponent<Unit>().IsEnemy()) {
+            worldUI.GetHealthBarPrefab().SetActive(false);
+            faintText?.gameObject.SetActive(true);
+        }
+
         OnDead.Invoke(this, EventArgs.Empty);
+    }
+
+    public bool Revive(int amount = 20) {
+        if(LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE) { return false; }
+
+        healthState = HealthState.ALIVE;
+        healthPoints += amount;
+        OnRevive.Invoke(this, EventArgs.Empty);
+        OnDamage?.Invoke(this, EventArgs.Empty);
+
+        faintText?.gameObject.SetActive(false);
+        worldUI.GetHealthBarPrefab().SetActive(true);
+
+        return true;
     }
 
     public float GetHealthPointsNormalized() {
@@ -89,4 +134,7 @@ public class HealthSystem : MonoBehaviour {
 
     public void SetUnitWorldUI(UnitWorldUI worldUI) { this.worldUI = worldUI; }
     public UnitWorldUI GetUnitWorldUI() { return worldUI; }
+    public HealthState GetHealthState() { return healthState; }
+
+    public List<Unit> GetDamagedByList() {return this.damagedBy;}
 }

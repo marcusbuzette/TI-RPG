@@ -60,4 +60,6 @@ public class UnitWorldUI : MonoBehaviour {
 
         Destroy(obj, 1f);
     }
+
+    public GameObject GetHealthBarPrefab() { return healthBar.gameObject; }
 }

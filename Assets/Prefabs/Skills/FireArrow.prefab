@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionImage: {fileID: 21300000, guid: f7fe60f8d5adabc459fb05f55e57981e, type: 3}
+  actionImageBlocked: {fileID: 21300000, guid: 7e1fee0e577fda84d8bd5c52d61d845b, type: 3}
   animator: {fileID: 0}
   speed: 0
   nome: Flecha de Fogo
@@ -58,7 +59,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   fireAttackObject: {fileID: 0}
-  particleFire: {fileID: 797911341500782089}
+  particleFire: {fileID: 6033032414094306690, guid: 71e91b07b92fcd7409bae60a8df9bd2d, type: 3}
   maxShootDistance: 1
   aimingTimer: 0.1
   shootingTimer: 0.3

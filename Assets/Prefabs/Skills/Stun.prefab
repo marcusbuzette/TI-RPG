@@ -44,9 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6c9b5730dc854e3585f0f61cfa9ead6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionImage: {fileID: 21300000, guid: 469a3c209ecec5e4d8463f4da090d808, type: 3}
+  actionImage: {fileID: 21300000, guid: 53293a6889e709a4886cd8ff923dc907, type: 3}
+  actionImageBlocked: {fileID: 21300000, guid: 8cdc9fa5620bb964e9c837dff8985ccf, type: 3}
   animator: {fileID: 0}
   speed: 0
+  rotateSpeed: 180
   nome: Atordoar
   descricao: "Quando atingido por esse golpe, o alvo perde todas a a\xE7\xF5es no
     proximo turno"
@@ -58,3 +60,4 @@ MonoBehaviour:
   coolDown: 0
   currentCoolDown: 0
   MAX_SPIN: 360
+  stunSFX: Stun

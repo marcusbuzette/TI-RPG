@@ -45,8 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionImage: {fileID: 21300000, guid: 4020a1fbbe02d6549b9f2875a177afb7, type: 3}
+  actionImageBlocked: {fileID: 21300000, guid: fa157705edd6ec04589d56dc1b8df90f, type: 3}
   animator: {fileID: 0}
   speed: 0
+  rotateSpeed: 180
   nome: Saida de emergencia
   descricao: Teleporta para um lugar escolhido
   custo: 20

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,13 +19,14 @@ public abstract class BaseAction : MonoBehaviour {
     [SerializeField] protected Sprite actionImageBlocked;
     public Animator animator;
     public float speed;
-
+    [SerializeField] private float rotSpeed = 180f;
 
 
     protected virtual void Awake() {
         unit = GetComponent<Unit>();
         actionType = ActionType.ACTION;
         animator = GetComponentInChildren<Animator>();
+        rotSpeed = 180f;
     }
 
     protected virtual void Update() {
@@ -90,6 +92,38 @@ public abstract class BaseAction : MonoBehaviour {
             //No possible Enemy AI Actions
             return null;
         }
+    }
+
+    protected IEnumerator RotateTowardsAndExecute(Transform target, System.Action onComplete) {
+        Vector3 direction = (target.position - transform.position).normalized;
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+        while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f) {
+            transform.rotation = Quaternion.RotateTowards(
+                transform.rotation,
+                targetRotation,
+                rotSpeed * Time.deltaTime
+            );
+            yield return null;
+        }
+
+        onComplete?.Invoke();
+    }
+
+    protected IEnumerator RotateTowardsAndExecute(Vector3 target, System.Action onComplete) {
+        Vector3 direction = (target - transform.position).normalized;
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+        while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f) {
+            transform.rotation = Quaternion.RotateTowards(
+                transform.rotation,
+                targetRotation,
+                rotSpeed * Time.deltaTime
+            );
+            yield return null;
+        }
+
+        onComplete?.Invoke();
     }
 
     public abstract EnemyAIAction GetEnemyAIAction(GridPosition gridPosition);

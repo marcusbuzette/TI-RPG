@@ -35,9 +35,6 @@ public class GameController : MonoBehaviour, IDataPersistence {
 
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            Application.Quit();
-        }
     }
 
     public bool GetDebugMode() { return this.debugMode; }
@@ -82,14 +79,18 @@ public class GameController : MonoBehaviour, IDataPersistence {
         DataPersistenseManager.instace?.SaveGame();
     }
 
+    public void AddMoney(int money) {
+        this.dinheiro += money;
+    }
+
     public void LoadData(GameData data) {
         this.currentLevel = data.currentLevel;
         this.dinheiro = data.money;
         if (data.playerUnits.Count > 0) {
             this.playerUnits = data.playerUnits;
-            foreach (KeyValuePair<string, UnitRecords> item in this.playerUnits) {
-                TalentManager.Instance.UpdateLocalUnitValues(item.Key, item.Value);
-            }
+            //foreach (KeyValuePair<string, UnitRecords> item in this.playerUnits) {
+                //TalentManager.Instance.UpdateLocalUnitValues(item.Key, item.Value);
+            //}
         }
     }
 

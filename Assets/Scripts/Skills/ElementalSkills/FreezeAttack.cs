@@ -4,21 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FreezeAttack : BaseSkills {
-    private enum State {
-        Aiming, Shooting, Cooloff
-    }
     [SerializeField] private LayerMask obstaclesLayerMask;
     [SerializeField] private int maxShootDistance = 1;
-    [SerializeField] private float aimingTimer = .1f;
-    [SerializeField] private float shootingTimer = .3f;
-    [SerializeField] private float cooloffTimer = .1f;
     [SerializeField] private float rotateSpeed = 10f;
      [SerializeField] private GameObject IceFbx;
 
     public string freezeArrowSFX;
 
-    private State currentState;
-    private float stateTimer;
     private Unit targetUnit;
     private bool canShoot;
 
@@ -37,26 +29,12 @@ public class FreezeAttack : BaseSkills {
     }
 
     public override void Action() {
-        stateTimer -= Time.deltaTime;
-        switch (currentState) {
-            case State.Aiming:
-                Vector3 moveDirection = (targetUnit.transform.position - transform.position).normalized;
-                transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
-                break;
-            case State.Shooting:
-                if (canShoot) {
-                    Shoot();
-                    canShoot = false;
-                    NextState();
-                }
-                break;
-            case State.Cooloff:
-
-                break;
-
-        }
-        if (stateTimer <= 0) {
-            NextState();
+        if (canShoot) {
+            canShoot = false;
+            GridSystemVisual.Instance.HideAllGridPosition();
+            StartCoroutine(RotateTowardsAndExecute(targetUnit.transform, () => {
+                Shoot();
+            }));
         }
     }
 
@@ -114,8 +92,6 @@ public class FreezeAttack : BaseSkills {
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
-        currentState = State.Aiming;
-        stateTimer = aimingTimer;
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
         canShoot = true;
 
@@ -130,27 +106,9 @@ public class FreezeAttack : BaseSkills {
         ActionStart(onActionComplete);
     }
 
-    private void NextState() {
-        switch (currentState) {
-            case State.Aiming:
-                currentState = State.Shooting;
-                stateTimer = shootingTimer;
-                break;
-            case State.Shooting:
-                currentState = State.Cooloff;
-                stateTimer = shootingTimer;
-                break;
-            case State.Cooloff:
-             if (IceFbx != null) {
-                    IceFbx.SetActive(false);
-                }
-                ActionFinish();
-                break;
-
-        }
-    }
-
     private void Shoot() {
+        unit.SpawnProjectile(targetUnit.transform.position, Color.blue);
+
         if (targetUnit.gameObject.GetComponent<FreezeEffect>() != null) {
             targetUnit.gameObject.GetComponent<FreezeEffect>().CureFreeze();
             targetUnit.gameObject.AddComponent<FreezeEffect>().SetFreezeEffect(targetUnit, coolDown);
@@ -159,6 +117,8 @@ public class FreezeAttack : BaseSkills {
         // animator?.SetTrigger("Attack");
         unit.PlayAnimation("Attack");
         //AudioManager.instance?.PlaySFX("Arrows");
+
+        ActionFinish();
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {

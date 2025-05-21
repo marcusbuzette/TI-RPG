@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class GridSystemVisual : MonoBehaviour {
     public static GridSystemVisual Instance { get; private set; }
     public LayerMask obstaclesLayerMask;
+    public GameObject mouseGridObject;
 
     [Serializable]
     public struct GridVisualTypeMaterial {
@@ -116,7 +118,7 @@ public class GridSystemVisual : MonoBehaviour {
     public void UpdateGridVisual() {
         HideAllGridPosition();
 
-        if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE) {
+        //if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE) {
             Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
             BaseAction selectedAction = UnitActionSystem.Instance.GetSelectedAction();
 
@@ -139,8 +141,13 @@ public class GridSystemVisual : MonoBehaviour {
 
                     ShowGridPositionRange(selectedUnit.GetGridPosition(), shootAction.GetMaxShootDistance(), GridVisualType.RedSoft, selectedUnit.transform.position, true, true);
                     break;
-                case ItemAction itemAction:
+                case HealthPotionAction healthPotionAction:
+                    gridVisualType = GridVisualType.Green;
+                    break;
+                case ReviveItemAction reviveItemAction:
                     gridVisualType = GridVisualType.Yellow;
+
+                    ShowGridPositionRange(selectedUnit.GetGridPosition(), reviveItemAction.GetUseDistance(), GridVisualType.YellowSoft, selectedUnit.transform.position, false, true);
                     break;
                 case HitAction hitAction:
                     gridVisualType = GridVisualType.Red;
@@ -185,7 +192,7 @@ public class GridSystemVisual : MonoBehaviour {
                     break;
             }
             ShowGridPositionList(selectedAction.GetValidGridPositionList(), gridVisualType);
-        }
+        /*}
         else {
             // GridVisualType gridVisualType = GridVisualType.White;
             // for (int x = 0; x < LevelGrid.Instance.GetWidth(); x++) {
@@ -194,7 +201,7 @@ public class GridSystemVisual : MonoBehaviour {
             //         gridSystemVisualSingleArray[x, z].Show(GetGridVisualTypeMaterial(gridVisualType));
             //     }
             // }
-        }
+        }*/
 
     }
 
@@ -215,5 +222,18 @@ public class GridSystemVisual : MonoBehaviour {
 
         Debug.LogError("Could not find GridVisualTypeMaterial for GridVisualType " + gridVisualType);
         return null;
+    }
+
+    public void MousePositionVisual(Vector3 pos) {
+        var gridMousePos = LevelGrid.Instance.GetGridPosition(pos);
+
+        if (gridMousePos != null &&
+            TurnSystem.Instance.IsPlayerTurn()) {
+            mouseGridObject.transform.position = LevelGrid.Instance.GetWorldPosition(gridMousePos);
+        }
+    }
+
+    public void MousePosVisualHide(bool hide = true) {
+        mouseGridObject.SetActive(!hide);
     }
 }
