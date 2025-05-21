@@ -299,6 +299,7 @@ MonoBehaviour:
   healthBar: {fileID: 6105495860261561720}
   healthSystem: {fileID: 4908714323277675324}
   unit: {fileID: 2672855175812891822}
+  healthValuePrefab: {fileID: 0}
 --- !u!114 &7495922362029205213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -399,12 +400,12 @@ GameObject:
   - component: {fileID: 2672855175812891822}
   - component: {fileID: 8096173683310641798}
   - component: {fileID: 2667406634700221940}
-  - component: {fileID: 5971126886717581211}
   - component: {fileID: 4908714323277675324}
-  - component: {fileID: 7034417333151070958}
+  - component: {fileID: 8428029982322859060}
+  - component: {fileID: 8160531672424211794}
   m_Layer: 7
   m_Name: WereWolf
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -441,19 +442,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemy: 1
   possibleSkills: []
+  possibleUpgrades: []
   xpSystem: {fileID: 0}
   unitId: 
   unitName: Lobisomem
-  unitStats:
-    speed: 1
+  baseUnitStats:
+    speed: 2
+    attack: 30
+    defence: 30
+    accuracy: 30
+    maxHealthPoints: 300
+    maxMove: 5
+    xpSpoil: 3
+    range: 0
+  statsModifiers:
     attack: 0
-    defence: 0
+    deffence: 0
+    move: 0
     accuracy: 0
-    xpSpoil: 0
+    speed: 0
   actionsArray: []
   hasMoved: 0
   hasPerformedAction: 0
   hasPerformedSkill: 0
+  modifiedBy: []
   isUnitTurn: 0
   enemyFocus: 0
 --- !u!114 &8096173683310641798
@@ -468,6 +480,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a98aa284f9b23428a071063490ad6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
+  actionImageBlocked: {fileID: 0}
+  animator: {fileID: 0}
+  speed: 0
   moveSpeed: 4
   rotateSpeed: 4
   stopDistance: 0.1
@@ -493,19 +509,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1.5, z: 1}
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &5971126886717581211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5248424051689086498}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfbc725d5c76b47b28e3ccd3e66dc849, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MAX_SPIN: 360
 --- !u!114 &4908714323277675324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -518,9 +521,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5f1e064203584e4781e4f11b8511645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 100
-  maxHealthPoints: 100
---- !u!114 &7034417333151070958
+  healthPoints: 500
+  maxHealthPoints: 500
+  animator: {fileID: 0}
+  damageSFX: 
+--- !u!114 &8428029982322859060
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -529,18 +534,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 5248424051689086498}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4c588a935c0a4f56b855794c3e7145d, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b8a40b60fda1ef4f8c9d0f466e29e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
+  actionImageBlocked: {fileID: 0}
+  animator: {fileID: 0}
+  speed: 0
   obstaclesLayerMask:
     serializedVersion: 2
-    m_Bits: 0
-  maxShootDistance: 7
-  aimingTimer: 0.1
-  shootingTimer: 0.3
-  cooloffTimer: 0.1
+    m_Bits: 2304
+  maxHitDistance: 1
+  hitDamage: 50
   rotateSpeed: 10
-  shootDamage: 30
+  meleeSFX: 
+  Attack: 1
+--- !u!114 &8160531672424211794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5248424051689086498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca8109a6c61647b98b7a6017a3ded5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
+  actionImageBlocked: {fileID: 0}
+  animator: {fileID: 0}
+  speed: 0
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 2304
+  maxShootDistance: 1
 --- !u!1 &5620274420724757863
 GameObject:
   m_ObjectHideFlags: 0
