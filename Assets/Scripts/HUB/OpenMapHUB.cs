@@ -11,6 +11,7 @@ public class OpenMapHUB : MonoBehaviour, IChangeCamera
     private BoxCollider thisCollider;
     bool isActive;
     [SerializeField] private string sceneToLoad;
+    [SerializeField] private FadingScript fadingScript;
 
     private CameraHUB cameraHUB;
 
@@ -42,6 +43,7 @@ public class OpenMapHUB : MonoBehaviour, IChangeCamera
     }
 
     IEnumerator enumerator() {
+        fadingScript.FadeIn();
         yield return new WaitForSeconds(2.5f);
         DoSomething();
     }
