@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class DialogueController : MonoBehaviour
@@ -10,6 +12,9 @@ public class DialogueController : MonoBehaviour
     public Text NameTXT;
     public Text DialogueTXT;
     public Animator animator;
+    public bool isDialogueOpened = false;
+
+    public EventHandler onEndDialogue;
 
     private void Awake() {
         if (dialogueController == null) {
@@ -26,7 +31,8 @@ public class DialogueController : MonoBehaviour
     }
 
     public void StartDialogue(Dialogue dialogue){
-        animator?.SetBool("IsOpen", true);
+        isDialogueOpened = true;
+        animator?.SetBool("IsOpen", isDialogueOpened);
         NameTXT.text = dialogue.name;
         sentences.Clear();
 
@@ -57,6 +63,8 @@ public class DialogueController : MonoBehaviour
     }
 
     public void EndDialogue(){
-        animator?.SetBool("IsOpen", false);
+        isDialogueOpened = false;
+        animator?.SetBool("IsOpen", isDialogueOpened);
+        onEndDialogue?.Invoke(this, EventArgs.Empty);
     }
 }

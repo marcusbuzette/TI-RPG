@@ -79,6 +79,10 @@ public class GameController : MonoBehaviour, IDataPersistence {
         DataPersistenseManager.instace?.SaveGame();
     }
 
+    public void AddMoney(int money) {
+        this.dinheiro += money;
+    }
+
     public void LoadData(GameData data) {
         this.currentLevel = data.currentLevel;
         this.dinheiro = data.money;

@@ -18,6 +18,7 @@ public class LevelGrid : MonoBehaviour {
     [SerializeField] private int height;
     [SerializeField] private float cellSize;
     [SerializeField] private int floorAmount;
+    [SerializeField] private Quest levelQuest;
 
     [SerializeField] private List<GridSystem<GridObject>> gridSystemList;
 
@@ -62,6 +63,8 @@ public class LevelGrid : MonoBehaviour {
     private void Start() {
         this.currentBattleZone = 0;
         PathFinding.Instance.Setup(width, height, cellSize, floorAmount, zoneList);
+        QuestManager.Instance.SetLevelQuest(this.levelQuest);
+        QuestManager.Instance.StartQuest();
         OnGameModeChanged?.Invoke(this, EventArgs.Empty);
     }
 
