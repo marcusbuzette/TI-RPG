@@ -4420,7 +4420,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -4743,7 +4743,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -7812,7 +7812,7 @@ MonoBehaviour:
   - name: ArcherWalk
     clip: {fileID: 0}
   - name: ArcherDano
-    clip: {fileID: 8300000, guid: 7fe815b3249e8e0448541529c3a058a2, type: 3}
+    clip: {fileID: 8300000, guid: a250642632416054e9c3ae404587d0e1, type: 3}
   - name: FlechaFogo
     clip: {fileID: 8300000, guid: 4d5adb1b10b15f2429e633ff7f59bc61, type: 3}
   - name: FlechaGelo
@@ -7821,13 +7821,17 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 45d70523db692fc498800de7ea777144, type: 3}
   - name: Cura
     clip: {fileID: 8300000, guid: ba0c1f0bb2aa6f349a53cf428c6ab620, type: 3}
+  - name: Vigia
+    clip: {fileID: 8300000, guid: c099d7a6b9ee62d45a21183654b3a8b7, type: 3}
+  - name: LyraDeath
+    clip: {fileID: 8300000, guid: 0fb23268a209bab48ae287fc61fb8fa6, type: 3}
   GuerreiroSFX:
   - name: GuerreiroHit
     clip: {fileID: 8300000, guid: 1a43dab04a6e6f64b92fa0256851fa1a, type: 3}
   - name: GuerreiroWalk
     clip: {fileID: 0}
   - name: GuerreiroDano
-    clip: {fileID: 8300000, guid: fd284e6b115b0e149a0d0fb9b4cde100, type: 3}
+    clip: {fileID: 8300000, guid: a46116a31c1697b40ad09ce20d7dca08, type: 3}
   - name: Provocar
     clip: {fileID: 8300000, guid: 769c3f10cb3bb1a4fb93ee6eecdc8eb8, type: 3}
   - name: Defesa
@@ -7836,13 +7840,15 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: b9891953783ca55418cf8928d38b0ae1, type: 3}
   - name: AtaqueAOE
     clip: {fileID: 8300000, guid: 7a238ba7c0adc7e4d823c95ec2adeb9a, type: 3}
+  - name: LeonardDeath
+    clip: {fileID: 8300000, guid: 94d2736cc12dedb4e8a55a4933b431e5, type: 3}
   ProtagSFX:
   - name: ProtagHit
-    clip: {fileID: 8300000, guid: 2b83f0f72f3da3e4baa2ffd9c48df82f, type: 3}
+    clip: {fileID: 8300000, guid: f6ffbc567ad4f70478bc95832a5223f9, type: 3}
   - name: ProtagWalk
     clip: {fileID: 0}
   - name: ProtagDano
-    clip: {fileID: 8300000, guid: fd284e6b115b0e149a0d0fb9b4cde100, type: 3}
+    clip: {fileID: 8300000, guid: 63c2febf74463b141819f4fd9b3d80da, type: 3}
   - name: AtaqueRapido
     clip: {fileID: 8300000, guid: 9bc406eb4adce154dacd44d2af6a19f9, type: 3}
   - name: ContraAtaque

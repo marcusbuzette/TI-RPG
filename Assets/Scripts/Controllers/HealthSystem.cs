@@ -19,10 +19,12 @@ public class HealthSystem : MonoBehaviour {
     public int healthPoints = 100;
     public int maxHealthPoints = 100;
     public Animator animator;
-    public string damageSFX;
     private bool isDefending = false;
 
     public Transform faintText; //TEMPORARIO <----- (ATEN��O)
+
+    public string damageSFX;
+    public string deathSFX;
 
     [SerializeField] private List<Unit> damagedBy = new List<Unit>();
 
@@ -85,6 +87,10 @@ public class HealthSystem : MonoBehaviour {
         if (!GetComponent<Unit>().IsEnemy()) {
             worldUI.GetHealthBarPrefab().SetActive(false);
             faintText?.gameObject.SetActive(true);
+        }
+
+        if (!string.IsNullOrEmpty(deathSFX)) {
+            AudioManager.instance?.PlaySFX(deathSFX);  // vai tocar o sfx q ta no inspector do healthSystem do cada boneco
         }
 
         OnDead.Invoke(this, EventArgs.Empty);
