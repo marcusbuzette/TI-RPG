@@ -13,6 +13,10 @@ public class FreezeEffect : MonoBehaviour
     private int maxMoveDistance;
     private float moveSpeed;
 
+    private void Start() {
+        LevelGrid.Instance.OnGameModeChanged += CureFreeze;
+    }
+
     public void SetFreezeEffect(Unit unit, int coolDown) {
         this.unit = unit;
         this.coolDown = coolDown;
@@ -33,6 +37,14 @@ public class FreezeEffect : MonoBehaviour
     }
 
     public void CureFreeze() {
+        moveAction.SetMaxDistanceMovement(maxMoveDistance);
+        moveAction.SetMovementSpeed(moveSpeed);
+
+        Destroy(this);
+    }
+    
+    public void CureFreeze(object sender, EventArgs e) {
+        LevelGrid.Instance.OnGameModeChanged -= CureFreeze;
         moveAction.SetMaxDistanceMovement(maxMoveDistance);
         moveAction.SetMovementSpeed(moveSpeed);
 

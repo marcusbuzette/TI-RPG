@@ -22,6 +22,10 @@ public class Door : MonoBehaviour, ICalledObject {
         SetIsWalkableNodes(true);
     }
 
+    public void Start() {
+        SetIsWalkableNodes(false);
+    }
+
     private void SetIsWalkableNodes(bool isWalkable) {
         foreach (var node in pathNodesPositions) {
             PathFinding.Instance.SetNodeIsWalkable(node.position, isWalkable);

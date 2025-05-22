@@ -44,7 +44,6 @@ public class HealthSystem : MonoBehaviour {
             }
         }
 
-        Debug.Log(haveProjectile);
         if (haveProjectile) attackedBy.SpawnProjectile(this, damage);
         else Damage(damage, attackedBy);
     }
