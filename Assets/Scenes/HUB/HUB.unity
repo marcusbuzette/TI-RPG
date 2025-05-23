@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.009063503, g: 0.013170158, b: 0.020601284, a: 1}
+  m_IndirectSpecularColor: {r: 0.009026857, g: 0.01311287, b: 0.020520534, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -520,6 +520,7 @@ MonoBehaviour:
   level: 0
   sceneToLoad: Tutorial
   levelName: Tutorial
+  fadingScript: {fileID: 1489543376}
 --- !u!114 &85901848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1078,6 +1079,7 @@ MonoBehaviour:
   level: 1
   sceneToLoad: Floresta
   levelName: Floresta
+  fadingScript: {fileID: 1489543376}
 --- !u!114 &122671067
 MonoBehaviour:
   m_ObjectHideFlags: 0
