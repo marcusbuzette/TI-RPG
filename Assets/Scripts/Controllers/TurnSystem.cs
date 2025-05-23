@@ -40,7 +40,7 @@ public class TurnSystem : MonoBehaviour {
         if(LevelGrid.Instance.IsInBattleMode()) unitiesOrderList.Sort((x, y) => y.GetUnitSpeed().CompareTo(x.GetUnitSpeed()));
         isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
         if(LevelGrid.Instance.IsInBattleMode()) unitiesOrderList[turnNumber].StartUnitTurn();
-        onOrderChange.Invoke(this, EventArgs.Empty);
+        onOrderChange?.Invoke(this, EventArgs.Empty);
     }
 
     public void SetUpBattleNewZone() {
