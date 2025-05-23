@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using static UnityEditor.PlayerSettings;
 
 public class MouseWorld : MonoBehaviour {
 
@@ -23,7 +22,7 @@ public class MouseWorld : MonoBehaviour {
         transform.position = MouseWorld.GetPosition() == null? Vector3.zero : MouseWorld.GetPosition();
 
         if(transform.position != Vector3.zero) {
-            //Se o mouse está em cima da UI ele esconde o Visual do Mouse
+            //Se o mouse estï¿½ em cima da UI ele esconde o Visual do Mouse
             if (LevelGrid.Instance.GetGridPosition(transform.position) != null &&
             !EventSystem.current.IsPointerOverGameObject()) {
                 GridSystemVisual.Instance.MousePosVisualHide(false);
