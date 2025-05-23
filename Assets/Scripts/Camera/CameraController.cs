@@ -181,6 +181,8 @@ public class CameraController : MonoBehaviour
     }
 
     private void FollowPlayerUnit() {
+        Debug.Log(playerUnit);
+        Debug.Log(UnitActionSystem.Instance.GetSelectedUnit().transform);
         if (playerUnit == null) { playerUnit = UnitActionSystem.Instance.GetSelectedUnit().transform; }
 
         topLimit.position = new Vector3(
