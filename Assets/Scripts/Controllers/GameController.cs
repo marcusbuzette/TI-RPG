@@ -74,9 +74,15 @@ public class GameController : MonoBehaviour, IDataPersistence {
         uicontroller.ChangeScene("GameOver");
     }
 
+    public int GetCurrentLevel() {return this.currentLevel;}
+
     public void NextLevel() {
         this.currentLevel++;
         DataPersistenseManager.instace?.SaveGame();
+    }
+
+    public void AddMoney(int money) {
+        this.dinheiro += money;
     }
 
     public void LoadData(GameData data) {

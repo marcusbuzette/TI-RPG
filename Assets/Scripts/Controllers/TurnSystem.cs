@@ -16,6 +16,7 @@ public class TurnSystem : MonoBehaviour {
     public static TurnSystem Instance { get; private set; }
     public event EventHandler onTurnChange;
     public event EventHandler onOrderChange;
+    public event EventHandler onEnemyKilled;
     private CameraController cameraController;
 
     [SerializeField] private int[] turnSpeeds;
@@ -42,7 +43,7 @@ public class TurnSystem : MonoBehaviour {
         if(LevelGrid.Instance.IsInBattleMode()) unitiesOrderList.Sort((x, y) => y.GetUnitSpeed().CompareTo(x.GetUnitSpeed()));
         isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
         if(LevelGrid.Instance.IsInBattleMode()) unitiesOrderList[turnNumber].StartUnitTurn();
-        onOrderChange.Invoke(this, EventArgs.Empty);
+        onOrderChange?.Invoke(this, EventArgs.Empty);
     }
 
     public void SetUpBattleNewZone() {
@@ -109,9 +110,9 @@ public class TurnSystem : MonoBehaviour {
 
         int unitDeadIndex = unitiesOrderList.FindIndex((u) => u.transform == unitDead.transform);
         if (unitDead.IsEnemy()) {
-            this.unitiesOrderList[this.turnNumber]
-                .AddXp(this.unitiesOrderList[unitDeadIndex].GetUnitStats().GetXpSpoil());
-                
+            // this.unitiesOrderList[this.turnNumber]
+            //     .AddXp(this.unitiesOrderList[unitDeadIndex].GetUnitStats().GetXpSpoil());
+            onEnemyKilled.Invoke(unitDead,EventArgs.Empty);
             allEnemies.Remove(unitDead);
         }
         unitiesOrderList.Remove(unitDead);
@@ -135,15 +136,13 @@ public class TurnSystem : MonoBehaviour {
         }
         else if (isPlayerTurn && !CheckEnemiesLeft()) {
             ResetTurnSpeed();
-            foreach (Unit u in unitiesOrderList) {
-                if (!u.IsEnemy()) {
-                    u.isUnitTurn = false;
-                    u.AddXp(2);
-                }
-            }
+            LevelGrid.Instance.ExploreMode();
+            // foreach (Unit u in unitiesOrderList) {
+            //     if (!u.IsEnemy()) u.AddXp(2);
+            // }
 
-            GameController.controller.NextLevel();
-            SceneManager.LoadScene("HUB");
+            // GameController.controller.NextLevel();
+            // SceneManager.LoadScene("HUB");
         }
     }
 

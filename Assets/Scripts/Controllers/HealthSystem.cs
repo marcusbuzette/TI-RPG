@@ -19,10 +19,14 @@ public class HealthSystem : MonoBehaviour {
     public int healthPoints = 100;
     public int maxHealthPoints = 100;
     public Animator animator;
-    public string damageSFX;
     private bool isDefending = false;
 
-    public Transform faintText; //TEMPORARIO <----- (ATENÇÃO)
+    public Transform faintText; //TEMPORARIO <----- (ATENï¿½ï¿½O)
+
+    public string damageSFX;
+    public string deathSFX;
+
+    [SerializeField] private List<Unit> damagedBy = new List<Unit>();
 
     private void Awake() {
         animator = GetComponentInChildren<Animator>();
@@ -33,7 +37,7 @@ public class HealthSystem : MonoBehaviour {
     }
 
     public void TestDamage(int damage, Unit attackedBy, bool haveProjectile) {
-        //Verifica se alguma unidade o atacou, se não, foi algum efeito que não tem chance de errar
+        //Verifica se alguma unidade o atacou, se nï¿½o, foi algum efeito que nï¿½o tem chance de errar
         if (attackedBy != null) {
             int dice = Random.Range(0, 10);
 
@@ -52,6 +56,10 @@ public class HealthSystem : MonoBehaviour {
         if (isDefending) {
             worldUI.ShowUIValue(0, "Defending");
             return;
+        }
+
+        if (GetComponent<Unit>().IsEnemy() && !this.damagedBy.Find((u) => u.unitId == attackedBy.unitId)) {
+            this.damagedBy.Add(attackedBy);
         }
 
         // animator?.SetTrigger("TookDamage");
@@ -79,6 +87,10 @@ public class HealthSystem : MonoBehaviour {
         if (!GetComponent<Unit>().IsEnemy()) {
             worldUI.GetHealthBarPrefab().SetActive(false);
             faintText?.gameObject.SetActive(true);
+        }
+
+        if (!string.IsNullOrEmpty(deathSFX)) {
+            AudioManager.instance?.PlaySFX(deathSFX);  // vai tocar o sfx q ta no inspector do healthSystem do cada boneco
         }
 
         OnDead.Invoke(this, EventArgs.Empty);
@@ -129,4 +141,6 @@ public class HealthSystem : MonoBehaviour {
     public void SetUnitWorldUI(UnitWorldUI worldUI) { this.worldUI = worldUI; }
     public UnitWorldUI GetUnitWorldUI() { return worldUI; }
     public HealthState GetHealthState() { return healthState; }
+
+    public List<Unit> GetDamagedByList() {return this.damagedBy;}
 }

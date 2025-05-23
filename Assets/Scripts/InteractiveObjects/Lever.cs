@@ -39,7 +39,6 @@ public class Lever : MonoBehaviour, IInteractiveObjects
     public void GetFowardGridObject() {
         Vector3 pos = (transform.forward * 2) + transform.position;
         targetToUnit = LevelGrid.Instance.GetGridPosition(pos);
-        Debug.Log(targetToUnit);
     }
 
     public void MoveUnitToGridPostion(Unit unit) {

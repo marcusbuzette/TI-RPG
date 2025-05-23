@@ -8,6 +8,7 @@ public class DefendAction : BaseAction {
 
     private Unit targetUnit;
 
+    public string defesaSFX;
 
     public override string GetActionName() {
         return "Defender";
@@ -41,6 +42,9 @@ public class DefendAction : BaseAction {
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
         targetUnit.GetHealthSystem().SetDefenceMode(true);
         ActionStart(onActionComplete);
+        if (!string.IsNullOrEmpty(defesaSFX)) {
+            AudioManager.instance?.PlaySFX(defesaSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
+        }
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {

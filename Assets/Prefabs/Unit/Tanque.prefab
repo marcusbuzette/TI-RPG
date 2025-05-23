@@ -153,6 +153,10 @@ PrefabInstance:
       value: Tanque
       objectReference: {fileID: 0}
     - target: {fileID: 5740676890434492411, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: deathSFX
+      value: LeonardDeath
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740676890434492411, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: damageSFX
       value: GuerreiroDano
       objectReference: {fileID: 0}
@@ -248,7 +252,7 @@ MonoBehaviour:
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
-  rotateSpeed: 10
+  rotSpeed: 180
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -272,8 +276,9 @@ MonoBehaviour:
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
-  rotateSpeed: 10
+  rotSpeed: 180
   Attack: 1
+  defesaSFX: Defesa
 --- !u!114 &-3249600224179312206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,7 +295,7 @@ MonoBehaviour:
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
-  rotateSpeed: 180
+  rotSpeed: 180
 --- !u!114 &7609521906278373366 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2170219948549848153, guid: 35802ef038968144e82bb11a407e1793, type: 3}

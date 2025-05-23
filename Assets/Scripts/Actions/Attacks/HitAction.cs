@@ -15,7 +15,7 @@ public class HitAction : BaseAction {
     private Unit targetUnit;
 
     private void Start() {
-        obstaclesLayerMask = LayerMask.GetMask("Obstacles"); //add layer mask to don't shoot through obstacles
+        obstaclesLayerMask = LayerMask.GetMask("Obstacles"); 
     }
 
     public override string GetActionName() {
