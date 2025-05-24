@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,6 +21,7 @@ public class TurnSystem : MonoBehaviour {
 
     [SerializeField] private int[] turnSpeeds;
     private int turnSpeedIndex;
+    private bool isOnCombo = false;
 
     private void Awake() {
         if (Instance != null) {
@@ -33,6 +35,7 @@ public class TurnSystem : MonoBehaviour {
 
     private void Start() {
         turnNumber = 0;
+        BaseAction.OnAnyActionCompleted += FinishTurnAuto;
         unitiesOrderList = FindObjectsOfType<Unit>(false)
             .Where(unit => unit.GetGridPosition().zone == LevelGrid.Instance.GetCurrentBattleZone()).
             Where(unit => unit.GetHealthSystem().GetHealthState() == HealthSystem.HealthState.ALIVE).ToList<Unit>();
@@ -50,7 +53,6 @@ public class TurnSystem : MonoBehaviour {
         for (int i = 0; i < playerUnits.Count; i++) {
             UnitActionSystem.Instance.MoveUnitToGridPosition(playerUnits[i],
             LevelGrid.Instance.GetZoneSpawnList(LevelGrid.Instance.GetCurrentBattleZone())[i]);
-
         }
 
     }
@@ -66,7 +68,17 @@ public class TurnSystem : MonoBehaviour {
         onOrderChange.Invoke(this, EventArgs.Empty);
     }
 
+    public void FinishTurnAuto(object sender, EventArgs e) {
+        var unitAction = (sender as BaseAction)?.GetUnit();
 
+        if (unitAction != null) {
+            if (unitAction.isUnitTurn) {
+                if (!unitAction.IsEnemy() && unitAction.CanFinishRound()) {
+                    NextTurn();
+                }
+            }
+        }
+    }
 
     public void NextTurn() {
         turnNumber++;
@@ -84,14 +96,18 @@ public class TurnSystem : MonoBehaviour {
     }
 
     private void ComboKill() {
+
         isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
         onTurnChange.Invoke(this, EventArgs.Empty);
+
+
         unitiesOrderList[turnNumber].StartUnitTurn();
     }
 
     public int GetTurnNumber() { return turnNumber; }
 
     public void RemoveUnitFromList(Unit unitDead) {
+
         int unitDeadIndex = unitiesOrderList.FindIndex((u) => u.transform == unitDead.transform);
         if (unitDead.IsEnemy()) {
             // this.unitiesOrderList[this.turnNumber]

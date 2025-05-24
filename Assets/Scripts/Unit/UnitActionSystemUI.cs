@@ -18,6 +18,7 @@ public class UnitActionSystemUI : MonoBehaviour {
     private void Start() {
         UnitActionSystem.Instance.OnSelectedUnitChanged += UnitActionSystem_OnSelectedUnitChanged;
         UnitActionSystem.Instance.OnActionStarted += UnitActionSystem_OnActionStarted;
+        BaseAction.OnAnyActionCompleted += UnitActionSystem_OnActionCompleted;
         TurnSystem.Instance.onTurnChange += TurnSystem_OnTurnChange;
         Unit.OnAnyActionPerformed += Unit_OnAnyActionPerformed;
         UnitActionSystem.Instance.OnInventoryClicked += UnitActionSystem_OnInventoryClicked;
@@ -33,8 +34,6 @@ public class UnitActionSystemUI : MonoBehaviour {
         this.CleanActionButtons();
 
         Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
-
-        unitActionUIAnimator.SetBool("openActionButtons",true);
 
         if (selectedUnit == null) return;
         foreach (BaseAction action in selectedUnit.GetActionsArray()) {
@@ -74,6 +73,8 @@ public class UnitActionSystemUI : MonoBehaviour {
                     actioonButtonTransform.GetComponent<ActionButtonUI>().DisableActionButton();
                 }
             }
+
+            unitActionUIAnimator.SetBool("openActionButtons", true);
         }
     }
 
@@ -149,6 +150,11 @@ public class UnitActionSystemUI : MonoBehaviour {
     }
 
     private void UnitActionSystem_OnActionStarted(object sender, EventArgs e) {
+        unitActionUIAnimator.SetBool("openActionButtons", false);
+    }
+
+    private void UnitActionSystem_OnActionCompleted(object sender, EventArgs e) {
+        Debug.Log("ACNTION COMPLETED");
         if (LevelGrid.Instance.IsInBattleMode()) CreateUnitActionButtons();
         else CreateUnitActionButtonsExploreMode();
     }

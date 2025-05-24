@@ -51,7 +51,7 @@ public class UnitManager : MonoBehaviour {
                 friendlyUnit.AddXp(unit.GetUnitStats().GetXpSpoil());
             }
             enemyList.Remove(unit);
-
+            LevelGrid.Instance.RemoveUnitAtGridPosition(unit.GetGridPosition(), unit);
             Destroy(unit.gameObject);
         }
         else {

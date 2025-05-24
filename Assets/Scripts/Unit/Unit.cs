@@ -188,6 +188,7 @@ public class Unit : MonoBehaviour {
     }
 
     public void AddXp(int xpAmount) {
+        if (IsEnemy()) return;
         GameController.controller.UpdateUnitRecords(this);
         xpSystem.AddXp(xpAmount);
     }
@@ -355,5 +356,13 @@ public class Unit : MonoBehaviour {
 
         Projectile projectile = projectileTransform.GetComponent<Projectile>();
         projectile.Setup(target, color);
+    }
+
+    public bool CanFinishRound() {
+        if(hasMoved && hasPerformedAction && hasPerformedSkill) {
+            return true;
+        }
+
+        return false;
     }
 }

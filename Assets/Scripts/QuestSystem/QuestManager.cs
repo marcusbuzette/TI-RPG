@@ -12,6 +12,7 @@ public class QuestManager : MonoBehaviour {
     public EventHandler onQuestStarted;
     public EventHandler onQuestAdvanced;
     public EventHandler onQuestFinished;
+    public EventHandler onQuestStepUpdate;
     public EventHandler onQuestStateChanged;
 
     void Awake() {
@@ -59,6 +60,10 @@ public class QuestManager : MonoBehaviour {
     }
 
     public void QuestStateChange(Quest quest) {
+
+    }
+
+    public void QuestStepUpdated() {
 
     }
 

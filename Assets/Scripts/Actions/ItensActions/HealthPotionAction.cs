@@ -58,6 +58,10 @@ public class HealthPotionAction : BaseAction {
                         continue;
                     }
 
+                    if(targetUnit.GetHealthSystem().maxHealthPoints == targetUnit.GetHealthPoints()) {
+                        continue;
+                    }
+
                     validGridPositionList.Add(testGridPosition);
                 }
             }
