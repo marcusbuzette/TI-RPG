@@ -46,5 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stepInstruction: Cace os javalis
   enemiesKilled: 0
-  enemiesToComplete: 3
+  enemiesToComplete: 1
   enemyId: boar
