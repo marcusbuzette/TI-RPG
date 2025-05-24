@@ -5,6 +5,7 @@ using UnityEngine;
 public class QuestStep : MonoBehaviour {
 
     private bool isFinished = false;
+    [SerializeField] protected bool hasDinamicText = false;
     [SerializeField] protected string stepInstruction;
 
     protected void FinishQuestStep() {
@@ -14,4 +15,10 @@ public class QuestStep : MonoBehaviour {
     }
 
     public string GetStepInstruction() {return this.stepInstruction;}
+
+    public bool HasDynamicText() {return this.hasDinamicText;}
+
+    virtual public string GetDynamicText() {
+        Debug.Log("dynamic geral");
+        return "";}
 }

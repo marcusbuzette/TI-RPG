@@ -8,6 +8,7 @@ public class Quest {
     public QuestInfoSO info;
     public QuestState state;
     private int currentQuestStepIndex;
+    private GameObject currentStepReference;
 
     public Quest(QuestInfoSO questInfoSO) {
         this.info = questInfoSO;
@@ -28,7 +29,7 @@ public class Quest {
     public void InstantiateCurrentQuestStep(Transform parentTransform) {
         GameObject questStepPrefab = GetCurrentStepPrefab();
         if (questStepPrefab != null) {
-            Object.Instantiate(questStepPrefab, parentTransform);
+            currentStepReference = Object.Instantiate(questStepPrefab, parentTransform);
         }
     }
 
@@ -41,4 +42,6 @@ public class Quest {
         }
         return questStepPrefab;
     }
+
+    public GameObject GetCurrentStepReference() {return this.currentStepReference;}
 }

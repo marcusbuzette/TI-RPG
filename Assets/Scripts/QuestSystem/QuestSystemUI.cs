@@ -28,7 +28,8 @@ public class QuestSystemUI : MonoBehaviour {
 
     private void QuestManager_OnQuestStarted(object sender, EventArgs e) {
         currentStep = Instantiate(questStepPrefab, questsContainer);
-        currentStep.GetComponent<QuestStepUI>().SetQuesSteptInfo(QuestManager.Instance.GetLevelQuest());
+        currentStep.GetComponent<QuestStepUI>().SetQuesSteptInfo(QuestManager.Instance.GetLevelQuest(),
+        QuestManager.Instance.GetLevelQuest().GetCurrentStepReference());
     }
 
     private void QuestManager_OnQuestAdvanced(object sender, EventArgs e) {
@@ -37,7 +38,8 @@ public class QuestSystemUI : MonoBehaviour {
         if (QuestManager.Instance.GetLevelQuest().info.questStepPrefabs[QuestManager.Instance.GetLevelQuest()
         .GetCurrentStepIndex()].GetComponent<QuestStep>().GetStepInstruction() != "") {
             currentStep = Instantiate(questStepPrefab, questsContainer);
-            currentStep.GetComponent<QuestStepUI>().SetQuesSteptInfo(QuestManager.Instance.GetLevelQuest());
+            currentStep.GetComponent<QuestStepUI>().SetQuesSteptInfo(QuestManager.Instance.GetLevelQuest(),
+            QuestManager.Instance.GetLevelQuest().GetCurrentStepReference());
         }
     }
 

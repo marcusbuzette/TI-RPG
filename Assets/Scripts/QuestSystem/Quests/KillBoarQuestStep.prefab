@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb17a8f2d15404e0182c8e50c1e5ed63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasDinamicText: 1
   stepInstruction: Cace os javalis
   enemiesKilled: 0
-  enemiesToComplete: 1
+  enemiesToComplete: 3
   enemyId: boar

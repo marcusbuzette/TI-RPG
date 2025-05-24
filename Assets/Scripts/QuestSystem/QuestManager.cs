@@ -41,8 +41,8 @@ public class QuestManager : MonoBehaviour {
         if (levelQuest == null) return;
         levelQuest.MoveToNextStep();
         if (levelQuest.CurrentQuestStepExists()) {
-            onQuestAdvanced?.Invoke(this, EventArgs.Empty);
             levelQuest.InstantiateCurrentQuestStep(transform);
+            onQuestAdvanced?.Invoke(this, EventArgs.Empty);
         }
         else {
             this.FinishQuest();
@@ -64,7 +64,8 @@ public class QuestManager : MonoBehaviour {
     }
 
     public void QuestStepUpdated() {
-
+        Debug.Log("QuestStepUpdated");
+        this.onQuestStepUpdate?.Invoke(this, EventArgs.Empty);
     }
 
     private void ChangeLevelQuestState(QuestState state) {
