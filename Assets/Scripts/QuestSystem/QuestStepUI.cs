@@ -10,8 +10,6 @@ public class QuestStepUI : MonoBehaviour {
     [SerializeField] private Color stepCompletedColor;
 
     public void SetQuesSteptInfo(Quest currentQuest) {
-        Debug.Log(this.stepText);
-        Debug.Log(currentQuest);
         this.stepText.text = currentQuest.CurrentQuestStepExists() ? 
         currentQuest.info.questStepPrefabs[currentQuest.GetCurrentStepIndex()]
         .GetComponent<QuestStep>().GetStepInstruction() : "error";
