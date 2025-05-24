@@ -19,6 +19,5 @@ public class QuestStep : MonoBehaviour {
     public bool HasDynamicText() {return this.hasDinamicText;}
 
     virtual public string GetDynamicText() {
-        Debug.Log("dynamic geral");
         return "";}
 }

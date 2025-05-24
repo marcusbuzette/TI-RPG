@@ -34,7 +34,6 @@ public class UnitWorldUI : MonoBehaviour {
 
     public void ShowUIValue(int value, string type) {
         if (healthValuePrefab == null) {
-            Debug.Log("HELTH VALUE PREFAB DO NOT ASSING IN UNIT WORLD UI OF " + unit);
             return;
         }
 

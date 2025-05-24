@@ -23,7 +23,6 @@ public class QuestStepUI : MonoBehaviour {
         if(hasDynamicText) {
             UpdateText();
             QuestManager.Instance.onQuestStepUpdate += QuestManager_onStepUpdate;
-            Debug.Log("inscreveu");
         };
     }
 
@@ -33,12 +32,10 @@ public class QuestStepUI : MonoBehaviour {
     }
 
     private void UpdateText() {
-        Debug.Log("Updating text");
         this.stepText.text = originalText + this.step.GetComponent<QuestStep>().GetDynamicText();
     }
 
     private void QuestManager_onStepUpdate(object sender, EventArgs e) {
-        Debug.Log("chamou utade text");
         UpdateText();
     }
 

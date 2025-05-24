@@ -69,7 +69,6 @@ public class OpenMapHUB : MonoBehaviour, IChangeCamera {
 
     private void CreateLevelButtons() {
         foreach (LevelButton lb in levelButtons) {
-            Debug.Log(lb.level);
             lb.gameObject.SetActive(lb.level <= GameController.controller.GetCurrentLevel());
         }
     }

@@ -154,7 +154,6 @@ public class UnitActionSystemUI : MonoBehaviour {
     }
 
     private void UnitActionSystem_OnActionCompleted(object sender, EventArgs e) {
-        Debug.Log("ACNTION COMPLETED");
         if (LevelGrid.Instance.IsInBattleMode()) CreateUnitActionButtons();
         else CreateUnitActionButtonsExploreMode();
     }

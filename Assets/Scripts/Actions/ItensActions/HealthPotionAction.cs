@@ -15,7 +15,6 @@ public class HealthPotionAction : BaseAction {
             InventoryItemData healthPotion = InventorySystem.inventorySystem.GetInvontoryItemNamed(itemName);
             InventorySystem.inventorySystem.Remove(healthPotion);
             healthSystem.Heal(potionHealAmount);
-            Debug.Log("Used health potion");
         }
         else {
             Debug.LogWarning("HealthSystem or InventorySystem missing!");
@@ -25,7 +24,7 @@ public class HealthPotionAction : BaseAction {
     }
 
     public override string GetActionName() {
-        return "Poção";
+        return "Poï¿½ï¿½o";
     }
 
     public override List<GridPosition> GetValidGridPositionList() {

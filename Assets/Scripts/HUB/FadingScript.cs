@@ -11,7 +11,6 @@ public class FadingScript : MonoBehaviour
 
 public void FadeIn()
 {
-    Debug.Log("Fade");
     StartCoroutine(FadeCanvasGroup(canvasGroup, canvasGroup.alpha, 1, fadeDuration));
 }
 

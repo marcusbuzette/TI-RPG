@@ -36,8 +36,6 @@ public class SerializableInventoryItem : InventoryItem, ISerializationCallbackRe
     }
 
     public int GetItemAmount() {
-        Debug.Log("GetItemAmount");
-        Debug.Log(this.qtd);
         return this.qtd;
     }
 }

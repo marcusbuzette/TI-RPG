@@ -64,7 +64,6 @@ public class QuestManager : MonoBehaviour {
     }
 
     public void QuestStepUpdated() {
-        Debug.Log("QuestStepUpdated");
         this.onQuestStepUpdate?.Invoke(this, EventArgs.Empty);
     }
 

@@ -23,9 +23,6 @@ public class KillEnemyStep : QuestStep {
         if(enemiesKilled < enemiesToComplete && (enemy as Unit).GetUnitId() == enemyId) {
             enemiesKilled++;
 
-            Debug.Log("hasDynamictext " + this.hasDinamicText);
-            Debug.Log("hasDynamictext " + this.enemiesKilled);
-
             if(this.hasDinamicText) {
                 QuestManager.Instance.QuestStepUpdated();
             }
@@ -38,8 +35,6 @@ public class KillEnemyStep : QuestStep {
     }
 
     override public string GetDynamicText() {
-        Debug.Log("Dynamil kill");
-        Debug.Log(" ("  +  this.enemiesKilled + "/" + this.enemiesToComplete + ")");
         return " ("  +  this.enemiesKilled + "/" + this.enemiesToComplete + ")";
         }
 

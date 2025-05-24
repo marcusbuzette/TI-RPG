@@ -18,7 +18,6 @@ public class SpinAction : BaseAction {
         transform.eulerAngles += new Vector3(0, spinAddAmmount, 0);
         totalSpinAmmount += spinAddAmmount;
         if (totalSpinAmmount > MAX_SPIN) {
-            Debug.Log(GetComponent<Unit>().GetUnitStats().GetAttack() - attackAttenuation);
             foreach (Unit target in targetsList) {
             target.Damage(this.hitDamage, false, this.GetComponent<Unit>());
         }

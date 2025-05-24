@@ -65,8 +65,6 @@ public class Chest : MonoBehaviour, IInteractiveObjects
         LevelGrid.Instance.OnGameModeChanged -= UnitStopGoingTo;
         PathFinding.Instance.OnRecalculatedpath -= UnitStopGoingTo;
 
-        Debug.Log("PAROU DE IR");
-
         goingTo = false;
         currentUnit = null;
     }
