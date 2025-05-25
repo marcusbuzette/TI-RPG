@@ -51,7 +51,9 @@ public class QuestManager : MonoBehaviour {
 
     public void FinishQuest() {
         foreach (Unit u in TurnSystem.Instance.GetUnitsOrderList()) {
-            if (!u.IsEnemy()) u.AddXp(levelQuest.info.playerXp);
+            if (!u.IsEnemy()) {
+                u.AddXp(levelQuest.info.playerXp);
+            }
         }
         GameController.controller.AddMoney(levelQuest.info.moneyRewards);
         onQuestFinished?.Invoke(this, EventArgs.Empty);

@@ -189,12 +189,8 @@ public class Unit : MonoBehaviour {
 
     public void AddXp(int xpAmount) {
         if (IsEnemy()) return;
-        GameController.controller.UpdateUnitRecords(this);
         xpSystem.AddXp(xpAmount);
-    }
-
-    public void NextLevelXp() {
-        xpSystem.NextLevelXp();
+        GameController.controller.UpdateUnitRecords(this);
     }
 
     private void HealthSystem_OnDie(object sender, EventArgs e) {

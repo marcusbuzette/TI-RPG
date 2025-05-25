@@ -229,6 +229,6 @@ public class CameraController : MonoBehaviour
     }
 
     public void SetSelectedUnit(object sender, EventArgs e) {
-        playerUnit = UnitActionSystem.Instance.GetSelectedUnit().transform;
+        playerUnit = UnitActionSystem.Instance.GetSelectedUnit()?.transform;
     }
 }
