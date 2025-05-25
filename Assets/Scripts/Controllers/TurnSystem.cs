@@ -6,7 +6,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TurnSystem : MonoBehaviour {
+public class TurnSystem : MonoBehaviour
+{
 
     private int turnNumber = 0;
     [SerializeField] private bool isPlayerTurn = true;
@@ -23,41 +24,48 @@ public class TurnSystem : MonoBehaviour {
     private int turnSpeedIndex;
     private bool isOnCombo = false;
 
-    private void Awake() {
-        if (Instance != null) {
+    private void Awake()
+    {
+        if (Instance != null)
+        {
             Debug.Log("More than one Turn System");
             Destroy(gameObject);
         }
-        else {
+        else
+        {
             Instance = this;
         }
     }
 
-    private void Start() {
+    private void Start()
+    {
         turnNumber = 0;
         BaseAction.OnAnyActionCompleted += FinishTurnAuto;
         unitiesOrderList = FindObjectsOfType<Unit>(false)
             .Where(unit => unit.GetGridPosition().zone == LevelGrid.Instance.GetCurrentBattleZone()).
             Where(unit => unit.GetHealthSystem().GetHealthState() == HealthSystem.HealthState.ALIVE).ToList<Unit>();
         allEnemies = FindObjectsOfType<Unit>(false).Where(unit => unit.IsEnemy()).ToList<Unit>();
-        if(LevelGrid.Instance.IsInBattleMode()) unitiesOrderList.Sort((x, y) => y.GetUnitSpeed().CompareTo(x.GetUnitSpeed()));
+        if (LevelGrid.Instance.IsInBattleMode()) unitiesOrderList.Sort((x, y) => y.GetUnitSpeed().CompareTo(x.GetUnitSpeed()));
         isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
-        if(LevelGrid.Instance.IsInBattleMode()) unitiesOrderList[turnNumber].StartUnitTurn();
+        if (LevelGrid.Instance.IsInBattleMode()) unitiesOrderList[turnNumber].StartUnitTurn();
         onOrderChange?.Invoke(this, EventArgs.Empty);
     }
 
-    public void SetUpBattleNewZone() {
+    public void SetUpBattleNewZone()
+    {
         List<Unit> playerUnits = FindObjectsOfType<Unit>(false).
             Where(unit => unit.IsEnemy() == false).
             Where(unit => unit.GetHealthSystem().GetHealthState() == HealthSystem.HealthState.ALIVE).ToList<Unit>();
-        for (int i = 0; i < playerUnits.Count; i++) {
+        for (int i = 0; i < playerUnits.Count; i++)
+        {
             UnitActionSystem.Instance.MoveUnitToGridPosition(playerUnits[i],
             LevelGrid.Instance.GetZoneSpawnList(LevelGrid.Instance.GetCurrentBattleZone())[i]);
         }
 
     }
 
-    public void StartBattleNewZone() {
+    public void StartBattleNewZone()
+    {
         turnNumber = 0;
         unitiesOrderList = FindObjectsOfType<Unit>(false)
             .Where(unit => (unit.GetGridPosition().zone == LevelGrid.Instance.GetCurrentBattleZone() || !unit.IsEnemy())).
@@ -68,21 +76,27 @@ public class TurnSystem : MonoBehaviour {
         onOrderChange.Invoke(this, EventArgs.Empty);
     }
 
-    public void FinishTurnAuto(object sender, EventArgs e) {
+    public void FinishTurnAuto(object sender, EventArgs e)
+    {
         var unitAction = (sender as BaseAction)?.GetUnit();
 
-        if (unitAction != null) {
-            if (unitAction.isUnitTurn) {
-                if (!unitAction.IsEnemy() && unitAction.CanFinishRound()) {
+        if (unitAction != null)
+        {
+            if (unitAction.isUnitTurn)
+            {
+                if (!unitAction.IsEnemy() && unitAction.CanFinishRound())
+                {
                     NextTurn();
                 }
             }
         }
     }
 
-    public void NextTurn() {
+    public void NextTurn()
+    {
         turnNumber++;
-        if (turnNumber >= unitiesOrderList.Count) {
+        if (turnNumber >= unitiesOrderList.Count)
+        {
             turnNumber = 0;
         }
         isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
@@ -95,7 +109,8 @@ public class TurnSystem : MonoBehaviour {
         unitiesOrderList[turnNumber].StartUnitTurn();
     }
 
-    private void ComboKill() {
+    private void ComboKill()
+    {
 
         isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
         onTurnChange.Invoke(this, EventArgs.Empty);
@@ -106,35 +121,42 @@ public class TurnSystem : MonoBehaviour {
 
     public int GetTurnNumber() { return turnNumber; }
 
-    public void RemoveUnitFromList(Unit unitDead) {
+    public void RemoveUnitFromList(Unit unitDead)
+    {
 
         int unitDeadIndex = unitiesOrderList.FindIndex((u) => u.transform == unitDead.transform);
-        if (unitDead.IsEnemy()) {
+        if (unitDead.IsEnemy())
+        {
             // this.unitiesOrderList[this.turnNumber]
             //     .AddXp(this.unitiesOrderList[unitDeadIndex].GetUnitStats().GetXpSpoil());
-            onEnemyKilled.Invoke(unitDead,EventArgs.Empty);
+            onEnemyKilled.Invoke(unitDead, EventArgs.Empty);
             allEnemies.Remove(unitDead);
         }
         unitiesOrderList.Remove(unitDead);
         if (turnNumber > unitDeadIndex) { turnNumber--; }
-        if (isPlayerTurn && CheckEnemiesLeftInTheBattleZone()) {
+        if (isPlayerTurn && CheckEnemiesLeftInTheBattleZone())
+        {
             ComboKill();
         }
-        else if (isPlayerTurn && !CheckEnemiesLeftInTheBattleZone() && CheckEnemiesLeft()) {
+        else if (isPlayerTurn && !CheckEnemiesLeftInTheBattleZone() && CheckEnemiesLeft())
+        {
             LevelGrid.Instance.RemoveZoneFromGrid(LevelGrid.Instance.GetCurrentBattleZone());
             List<Unit> playerUnits = FindObjectsOfType<Unit>(false).Where(unit => unit.IsEnemy() == false).
                 Where(unit => unit.GetHealthSystem().GetHealthState() == HealthSystem.HealthState.ALIVE).ToList<Unit>();
-            foreach (Unit unit in playerUnits) {
+            foreach (Unit unit in playerUnits)
+            {
                 unit.UpdateGridPositionZone(0);
             }
             ComboKill();
             LevelGrid.Instance.ExploreMode();
         }
-        else if (!isPlayerTurn && !CheckPlayerCharsLeft()) {
+        else if (!isPlayerTurn && !CheckPlayerCharsLeft())
+        {
             ResetTurnSpeed();
             GameController.controller.GameOver();
         }
-        else if (isPlayerTurn && !CheckEnemiesLeft()) {
+        else if (isPlayerTurn && !CheckEnemiesLeft())
+        {
             ResetTurnSpeed();
             LevelGrid.Instance.ExploreMode();
             // foreach (Unit u in unitiesOrderList) {
@@ -146,13 +168,16 @@ public class TurnSystem : MonoBehaviour {
         }
     }
 
-    public bool IsPlayerTurn() {
+    public bool IsPlayerTurn()
+    {
         return isPlayerTurn;
     }
 
-    public List<Unit> GetTurnOrder() {
+    public List<Unit> GetTurnOrder()
+    {
         List<Unit> currentTurnList = new(unitiesOrderList);
-        for (int i = 0; i < turnNumber; i++) {
+        for (int i = 0; i < turnNumber; i++)
+        {
             Unit first = currentTurnList[0];
             currentTurnList.RemoveAt(0);
             currentTurnList.Add(first);
@@ -161,47 +186,62 @@ public class TurnSystem : MonoBehaviour {
 
     }
 
-    public Unit GetTurnUnit() {
+    public Unit GetTurnUnit()
+    {
         return unitiesOrderList[turnNumber];
     }
 
-    private bool CheckEnemiesLeft() {
+    private bool CheckEnemiesLeft()
+    {
         return allEnemies.Count > 0;
     }
-    private bool CheckEnemiesLeftInTheBattleZone() {
-        foreach (Unit unit in unitiesOrderList) {
+    private bool CheckEnemiesLeftInTheBattleZone()
+    {
+        foreach (Unit unit in unitiesOrderList)
+        {
             if (unit.IsEnemy() && unit.GetGridPosition().zone == LevelGrid.Instance.GetCurrentBattleZone()) return true;
         }
         return false;
     }
-    private bool CheckPlayerCharsLeft() {
-        foreach (Unit unit in unitiesOrderList) {
+    private bool CheckPlayerCharsLeft()
+    {
+        foreach (Unit unit in unitiesOrderList)
+        {
             if (!unit.IsEnemy()) return true;
         }
         return false;
     }
 
-    public void ChengeTurnSpeed() {
+    public void ChengeTurnSpeed()
+    {
         if (turnSpeedIndex == turnSpeeds.Length - 1) { turnSpeedIndex = 0; }
         else turnSpeedIndex++;
 
         Time.timeScale = turnSpeeds[turnSpeedIndex];
     }
 
-    public void ResetTurnSpeed() {
+    public void ResetTurnSpeed()
+    {
         turnSpeedIndex = 0;
         Time.timeScale = turnSpeeds[turnSpeedIndex];
     }
 
 
+    public void NotifyOrderChange()
+    {
+        onOrderChange?.Invoke(this, EventArgs.Empty);
+    }
 
 
     //test
-    public Unit GetPlayerUnitToExplore() {
+    public Unit GetPlayerUnitToExplore()
+    {
         Unit tryTofindHero = unitiesOrderList.Find((u) => u.unitId == "hero");
         if (tryTofindHero != null) return tryTofindHero;
-        foreach (Unit unit in unitiesOrderList) {
-            if (!unit.IsEnemy()) {
+        foreach (Unit unit in unitiesOrderList)
+        {
+            if (!unit.IsEnemy())
+            {
                 return unit;
             }
         }
@@ -209,5 +249,5 @@ public class TurnSystem : MonoBehaviour {
     }
     public void SetCameraController(CameraController controller) { cameraController = controller; }
 
-    public List<Unit> GetUnitsOrderList() { return this.unitiesOrderList;}
+    public List<Unit> GetUnitsOrderList() { return this.unitiesOrderList; }
 }
