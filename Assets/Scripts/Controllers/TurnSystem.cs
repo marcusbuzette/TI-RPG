@@ -40,9 +40,9 @@ public class TurnSystem : MonoBehaviour {
             .Where(unit => unit.GetGridPosition().zone == LevelGrid.Instance.GetCurrentBattleZone()).
             Where(unit => unit.GetHealthSystem().GetHealthState() == HealthSystem.HealthState.ALIVE).ToList<Unit>();
         allEnemies = FindObjectsOfType<Unit>(false).Where(unit => unit.IsEnemy()).ToList<Unit>();
-        if(LevelGrid.Instance.IsInBattleMode()) unitiesOrderList.Sort((x, y) => y.GetUnitSpeed().CompareTo(x.GetUnitSpeed()));
+        if (LevelGrid.Instance.IsInBattleMode()) unitiesOrderList.Sort((x, y) => y.GetUnitSpeed().CompareTo(x.GetUnitSpeed()));
         isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
-        if(LevelGrid.Instance.IsInBattleMode()) unitiesOrderList[turnNumber].StartUnitTurn();
+        if (LevelGrid.Instance.IsInBattleMode()) unitiesOrderList[turnNumber].StartUnitTurn();
         onOrderChange?.Invoke(this, EventArgs.Empty);
     }
 
@@ -81,6 +81,15 @@ public class TurnSystem : MonoBehaviour {
     }
 
     public void NextTurn() {
+        Unit currentUnit = unitiesOrderList[turnNumber];
+        Debug.Log(currentUnit);
+        Debug.Log(currentUnit.HasUsedQuickAttack());
+        // Se usou ataque rápido, avança na fila antes de prosseguir
+        if (currentUnit.HasUsedQuickAttack()) {
+            AdvanceTurnToMiddleCircular(currentUnit);  // avanca o turno do presonagem para o meio da fila
+            currentUnit.ClearQuickAttackFlag();
+        }
+
         turnNumber++;
         if (turnNumber >= unitiesOrderList.Count) {
             turnNumber = 0;
@@ -112,7 +121,7 @@ public class TurnSystem : MonoBehaviour {
         if (unitDead.IsEnemy()) {
             // this.unitiesOrderList[this.turnNumber]
             //     .AddXp(this.unitiesOrderList[unitDeadIndex].GetUnitStats().GetXpSpoil());
-            onEnemyKilled.Invoke(unitDead,EventArgs.Empty);
+            onEnemyKilled.Invoke(unitDead, EventArgs.Empty);
             allEnemies.Remove(unitDead);
         }
         unitiesOrderList.Remove(unitDead);
@@ -193,6 +202,51 @@ public class TurnSystem : MonoBehaviour {
         Time.timeScale = turnSpeeds[turnSpeedIndex];
     }
 
+    public void AdvanceTurnToMiddleCircular(Unit unitToAdvance) {
+        int currentIndex = unitiesOrderList.IndexOf(unitToAdvance);
+        if (currentIndex == -1) return;
+
+        // Remove a unidade da lista
+        unitiesOrderList.RemoveAt(currentIndex);
+
+        // Cria uma lista circular dos futuros turnos
+        List<Unit> futureUnits = new List<Unit>();
+
+        // Adiciona de turnNumber + 1 até o final
+        for (int i = turnNumber + 1; i < unitiesOrderList.Count; i++) {
+            futureUnits.Add(unitiesOrderList[i]);
+        }
+        // Adiciona do começo até turnNumber (sem incluir quem está jogando agora)
+        for (int i = 0; i < turnNumber; i++) {
+            futureUnits.Add(unitiesOrderList[i]);
+        }
+
+        // Calcula o ponto central mais próximo do começo
+        int middleOffset = Mathf.FloorToInt(futureUnits.Count / 2f);
+
+        Unit insertAfter = futureUnits[middleOffset % futureUnits.Count];
+        int insertIndex = unitiesOrderList.IndexOf(insertAfter);
+
+        if (insertIndex == -1) {
+            // Fallback se algo estranho acontecer
+            insertIndex = (turnNumber + 1) % unitiesOrderList.Count;
+        }
+        else {
+            insertIndex = (insertIndex + 1) % (unitiesOrderList.Count + 1); // inserir após
+        }
+
+        unitiesOrderList.Insert(insertIndex, unitToAdvance);
+
+        // Ajusta turnNumber se necessário
+        if (currentIndex < turnNumber) {
+            turnNumber--;
+            if (turnNumber < 0) turnNumber += unitiesOrderList.Count;
+        }
+
+        onOrderChange?.Invoke(this, EventArgs.Empty);
+    }
+
+
 
 
 
@@ -209,5 +263,5 @@ public class TurnSystem : MonoBehaviour {
     }
     public void SetCameraController(CameraController controller) { cameraController = controller; }
 
-    public List<Unit> GetUnitsOrderList() { return this.unitiesOrderList;}
+    public List<Unit> GetUnitsOrderList() { return this.unitiesOrderList; }
 }

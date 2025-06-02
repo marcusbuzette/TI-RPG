@@ -38,6 +38,7 @@ public class Unit : MonoBehaviour {
     [SerializeField] private bool hasPerformedSkill = false;
     [SerializeField] private List<Unit> modifiedBy = new List<Unit>();
     public bool isUnitTurn = false;
+    private bool hasUsedQuickAttack = false;
 
     private Dictionary<string, bool> animationTriggersStack = new Dictionary<string, bool>();
     private Animator animator;
@@ -361,4 +362,18 @@ public class Unit : MonoBehaviour {
 
         return false;
     }
+
+
+public void MarkQuickAttackUsed() {
+    Debug.Log("Usou quick attack");
+    hasUsedQuickAttack = true;
+}
+
+public bool HasUsedQuickAttack() {
+    return hasUsedQuickAttack;
+}
+
+public void ClearQuickAttackFlag() {
+    hasUsedQuickAttack = false;
+}
 }
