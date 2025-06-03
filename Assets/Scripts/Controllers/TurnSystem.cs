@@ -69,6 +69,7 @@ public class TurnSystem : MonoBehaviour {
     }
 
     public void FinishTurnAuto(object sender, EventArgs e) {
+
         var unitAction = (sender as BaseAction)?.GetUnit();
 
         if (unitAction != null) {
@@ -95,13 +96,27 @@ public class TurnSystem : MonoBehaviour {
         unitiesOrderList[turnNumber].StartUnitTurn();
     }
 
-    private void ComboKill() {
+    IEnumerator ComboKill() {
+        Debug.Log("COMBO");
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log("ESPEROU");
 
+        if (turnNumber == 0) turnNumber = unitiesOrderList.Count - 1;
+        else turnNumber--;
+
+        Debug.Log(turnNumber);
+        
         isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
         onTurnChange.Invoke(this, EventArgs.Empty);
-
-
         unitiesOrderList[turnNumber].StartUnitTurn();
+
+        Vector3 unitTurnTransform = unitiesOrderList[turnNumber].transform.position;
+        if (isPlayerTurn) { cameraController.LockCameraOnSelectedUnit(unitiesOrderList[turnNumber]); }
+        else cameraController.GoToPosition(unitTurnTransform);
+
+        Debug.Log("VEZ DE: " + unitiesOrderList[turnNumber].unitName);
+
+        yield return null;
     }
 
     public int GetTurnNumber() { return turnNumber; }
@@ -118,7 +133,7 @@ public class TurnSystem : MonoBehaviour {
         unitiesOrderList.Remove(unitDead);
         if (turnNumber > unitDeadIndex) { turnNumber--; }
         if (isPlayerTurn && CheckEnemiesLeftInTheBattleZone()) {
-            ComboKill();
+            StartCoroutine(ComboKill());
         }
         else if (isPlayerTurn && !CheckEnemiesLeftInTheBattleZone() && CheckEnemiesLeft()) {
             LevelGrid.Instance.RemoveZoneFromGrid(LevelGrid.Instance.GetCurrentBattleZone());
@@ -127,7 +142,7 @@ public class TurnSystem : MonoBehaviour {
             foreach (Unit unit in playerUnits) {
                 unit.UpdateGridPositionZone(0);
             }
-            ComboKill();
+            ResetTurnSpeed();
             LevelGrid.Instance.ExploreMode();
         }
         else if (!isPlayerTurn && !CheckPlayerCharsLeft()) {
@@ -192,9 +207,6 @@ public class TurnSystem : MonoBehaviour {
         turnSpeedIndex = 0;
         Time.timeScale = turnSpeeds[turnSpeedIndex];
     }
-
-
-
 
     //test
     public Unit GetPlayerUnitToExplore() {

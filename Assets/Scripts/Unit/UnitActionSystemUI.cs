@@ -150,12 +150,12 @@ public class UnitActionSystemUI : MonoBehaviour {
     }
 
     private void UnitActionSystem_OnActionStarted(object sender, EventArgs e) {
-        unitActionUIAnimator.SetBool("openActionButtons", false);
+        //unitActionUIAnimator.SetBool("openActionButtons", false);
     }
 
     private void UnitActionSystem_OnActionCompleted(object sender, EventArgs e) {
-        if (LevelGrid.Instance.IsInBattleMode()) CreateUnitActionButtons();
-        else CreateUnitActionButtonsExploreMode();
+        /* (LevelGrid.Instance.IsInBattleMode()) CreateUnitActionButtons();
+        else CreateUnitActionButtonsExploreMode();*/
     }
 
     private void TurnSystem_OnTurnChange(object sender, EventArgs e) {
