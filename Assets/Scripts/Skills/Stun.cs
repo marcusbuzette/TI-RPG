@@ -13,7 +13,7 @@ public class Stun : BaseSkills {
     [SerializeField] private int maxHitDistance = 1;
 
     private void Start() {
-        obstaclesLayerMask = LayerMask.GetMask("Obstacles"); 
+        obstaclesLayerMask = LayerMask.GetMask("Obstacles");
     }
 
     public override void Action() {
@@ -99,8 +99,11 @@ public class Stun : BaseSkills {
     protected void Damage() {
         // animator?.SetTrigger("Attack");
         unit.PlayAnimation("Attack");
+        int targetHP = targetUnit.GetHealthPoints();
         targetUnit?.Damage(hitDamage, false, this.GetComponent<Unit>());
-        targetUnit?.StunUnit();
+        if (targetHP != targetUnit.GetHealthPoints()) {
+            targetUnit?.StunUnit();
+        }
     }
 
 

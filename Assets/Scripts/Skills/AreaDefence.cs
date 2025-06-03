@@ -132,10 +132,6 @@ public class AreaDefence : BaseSkills {
                     continue;
                 }
 
-                if (LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition)) {
-                    continue;
-                }
-
                 if (testGridPosition.floor != unit.GetGridPosition().floor) {
                     continue;
                 }

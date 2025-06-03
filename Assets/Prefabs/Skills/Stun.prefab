@@ -48,7 +48,7 @@ MonoBehaviour:
   actionImageBlocked: {fileID: 21300000, guid: 8cdc9fa5620bb964e9c837dff8985ccf, type: 3}
   animator: {fileID: 0}
   speed: 0
-  rotateSpeed: 180
+  rotSpeed: 180
   nome: Atordoar
   descricao: "Quando atingido por esse golpe, o alvo perde todas a a\xE7\xF5es no
     proximo turno"
@@ -57,7 +57,12 @@ MonoBehaviour:
   - {fileID: -4179945356743944876, guid: e5baae5809e144d23b75698cf492a4f7, type: 3}
   - {fileID: 6584539317323027048, guid: b732d4b268287492c996e3cfdf4c881b, type: 3}
   onCoolDown: 0
-  coolDown: 0
+  coolDown: 2
   currentCoolDown: 0
-  MAX_SPIN: 360
-  stunSFX: Stun
+  quickAttackSFX: 
+  Attack: 1
+  hitDamage: 15
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  maxHitDistance: 1

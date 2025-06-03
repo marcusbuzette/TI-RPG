@@ -244,6 +244,10 @@ PrefabInstance:
       propertyPath: projectilePrefab
       value: 
       objectReference: {fileID: 695093204734437254, guid: cd36fd0ad0a723741b520b5c4ec4c717, type: 3}
+    - target: {fileID: 6423823373940769734, guid: f97b08b429ca7425a92ff38bfdc51692, type: 3}
+      propertyPath: baseUnitStats.range
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6649788740336490292, guid: f97b08b429ca7425a92ff38bfdc51692, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
@@ -263,7 +267,13 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1067041010278198756, guid: f97b08b429ca7425a92ff38bfdc51692, type: 3}
       insertIndex: -1
       addedObject: {fileID: 93615558}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3812234490696718666, guid: f97b08b429ca7425a92ff38bfdc51692, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1105753286}
+    - targetCorrespondingSourceObject: {fileID: 3812234490696718666, guid: f97b08b429ca7425a92ff38bfdc51692, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1105753287}
   m_SourcePrefab: {fileID: 100100000, guid: f97b08b429ca7425a92ff38bfdc51692, type: 3}
 --- !u!224 &26093823 stripped
 RectTransform:
@@ -1132,7 +1142,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9068519058520078472, guid: 82047d41f197848bb9bc6b85604fbe01, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1690720053}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5183917217429670950, guid: 82047d41f197848bb9bc6b85604fbe01, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1349703080}
   m_SourcePrefab: {fileID: 100100000, guid: 82047d41f197848bb9bc6b85604fbe01, type: 3}
 --- !u!224 &85054667 stripped
 RectTransform:
@@ -12499,6 +12512,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8903648295770564506, guid: 980ee8c592671b6499b6b19d39ae6fd8, type: 3}
   m_PrefabInstance: {fileID: 1085749468}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1105753276 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3812234490696718666, guid: f97b08b429ca7425a92ff38bfdc51692, type: 3}
+  m_PrefabInstance: {fileID: 26093822}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1105753286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105753276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1e00a9e77e8492f80e62b03c12ff16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
+  actionImageBlocked: {fileID: 0}
+  animator: {fileID: 0}
+  speed: 0
+  rotSpeed: 180
+  nome: Bastiao Irredutivel
+  descricao: 
+  custo: 0
+  preRequisitos: []
+  onCoolDown: 0
+  coolDown: 0
+  currentCoolDown: 0
+  shieldSFX: 
+  obstaclePrefab: {fileID: 6603462031243581493, guid: ab5a424c8945f4da786f76831d637f52, type: 3}
+--- !u!114 &1105753287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105753276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f8a0397a143e4de591276e080d26611, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
+  actionImageBlocked: {fileID: 0}
+  animator: {fileID: 0}
+  speed: 0
+  rotSpeed: 180
+  nome: "Arreme\xE7o"
+  descricao: 
+  custo: 0
+  preRequisitos: []
+  onCoolDown: 0
+  coolDown: 0
+  currentCoolDown: 0
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  maxShootDistance: 1
+  shootDamage: 100
+  arrowSFX: 
 --- !u!1 &1115740121
 GameObject:
   m_ObjectHideFlags: 0
@@ -13971,6 +14045,42 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f9b5e3d50d49e9f4c9ed9425b7dfcbc0, type: 3}
   m_PrefabInstance: {fileID: 1313554681}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1349703070 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5183917217429670950, guid: 82047d41f197848bb9bc6b85604fbe01, type: 3}
+  m_PrefabInstance: {fileID: 85054666}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1349703080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349703070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6c9b5730dc854e3585f0f61cfa9ead6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
+  actionImageBlocked: {fileID: 0}
+  animator: {fileID: 0}
+  speed: 0
+  rotSpeed: 180
+  nome: 
+  descricao: 
+  custo: 0
+  preRequisitos: []
+  onCoolDown: 0
+  coolDown: 0
+  currentCoolDown: 0
+  quickAttackSFX: 
+  Attack: 1
+  hitDamage: 15
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  maxHitDistance: 1
 --- !u!1 &1353969557
 GameObject:
   m_ObjectHideFlags: 0
