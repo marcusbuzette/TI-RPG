@@ -82,14 +82,11 @@ public class TurnSystem : MonoBehaviour {
 
     public void NextTurn() {
         Unit currentUnit = unitiesOrderList[turnNumber];
-        Debug.Log(currentUnit);
-        Debug.Log(currentUnit.HasUsedQuickAttack());
         // Se usou ataque rápido, avança na fila antes de prosseguir
         if (currentUnit.HasUsedQuickAttack()) {
             AdvanceTurnToMiddleCircular(currentUnit);  // avanca o turno do presonagem para o meio da fila
             currentUnit.ClearQuickAttackFlag();
         }
-
         turnNumber++;
         if (turnNumber >= unitiesOrderList.Count) {
             turnNumber = 0;
