@@ -13,13 +13,11 @@ public class XpSystem : MonoBehaviour {
     public int getLevelXpAmount() { return this.levelXp; }
 
     public void AddXp(int xpAmount) { 
-        this.levelXp += xpAmount; }
+        this.levelXp += xpAmount; 
+        this.xp += xpAmount;
+        }
 
     public void SetXp(int xp) {this.xp = xp;}
-
-    public void NextLevelXp() {
-        this.xp += this.levelXp;
-    }
 
     public void UseXp(int xpAmount) {
         if (this.xp > 0) {

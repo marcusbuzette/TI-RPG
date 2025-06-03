@@ -39,7 +39,6 @@ public class HitAction : BaseAction {
     protected void Damage() {
         // animator?.SetTrigger("Attack");
         unit.PlayAnimation("Attack");
-
         targetUnit?.Damage(hitDamage, false, this.GetComponent<Unit>());
     }
 

@@ -1,7 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -38,6 +38,8 @@ public class Unit : MonoBehaviour {
     [SerializeField] private bool hasPerformedSkill = false;
     [SerializeField] private List<Unit> modifiedBy = new List<Unit>();
     public bool isUnitTurn = false;
+    private bool hasUsedQuickAttack = false;
+    private bool isStunned = false;
 
     private Dictionary<string, bool> animationTriggersStack = new Dictionary<string, bool>();
     private Animator animator;
@@ -189,12 +191,8 @@ public class Unit : MonoBehaviour {
 
     public void AddXp(int xpAmount) {
         if (IsEnemy()) return;
-        GameController.controller.UpdateUnitRecords(this);
         xpSystem.AddXp(xpAmount);
-    }
-
-    public void NextLevelXp() {
-        xpSystem.NextLevelXp();
+        GameController.controller.UpdateUnitRecords(this);
     }
 
     private void HealthSystem_OnDie(object sender, EventArgs e) {
@@ -220,6 +218,10 @@ public class Unit : MonoBehaviour {
 
     public void StartUnitTurn() {
         this.isUnitTurn = true;
+        if (isStunned) {
+            StartCoroutine(HandleStunTurn()); // chama a corrotina que espera e passa o turno
+            return;
+        }
 
         if (intimidateCoolDown != 0) {
             hasMoved = true;
@@ -240,6 +242,7 @@ public class Unit : MonoBehaviour {
 
         UnitActionSystem.Instance.ChangeSelectedUnit(this);
         // OnAnyActionPerformed?.Invoke(this, EventArgs.Empty);
+
 
     }
 
@@ -335,7 +338,7 @@ public class Unit : MonoBehaviour {
     }
 
     public void SpawnProjectile(HealthSystem enemy, int projectileDemage, bool miss = false) {
-        if(projectilePoint == null) {
+        if (projectilePoint == null) {
             Debug.LogWarning(transform.name + " <- this unit do not have ProjectilePoint on Unit");
             projectilePoint = transform;
         }
@@ -359,10 +362,42 @@ public class Unit : MonoBehaviour {
     }
 
     public bool CanFinishRound() {
-        if(hasMoved && hasPerformedAction && hasPerformedSkill) {
+        if (hasMoved && hasPerformedAction && hasPerformedSkill) {
             return true;
         }
 
         return false;
+    }
+
+
+    public void MarkQuickAttackUsed() {
+        hasUsedQuickAttack = true;
+    }
+
+    public bool HasUsedQuickAttack() {
+        return hasUsedQuickAttack;
+    }
+
+    public void ClearQuickAttackFlag() {
+        hasUsedQuickAttack = false;
+    }
+
+    public void StunUnit() {
+        isStunned = true;
+    }
+
+    public bool IsStunned() {
+        return isStunned;
+    }
+
+    public void ClearStun() {
+        isStunned = false;
+    }
+
+    private IEnumerator HandleStunTurn() {
+        PlayAnimation("TookDamage");
+        yield return new WaitForSeconds(1f); // Delay visual do stun
+        ClearStun();
+        TurnSystem.Instance.NextTurn(); // Passa o turno
     }
 }

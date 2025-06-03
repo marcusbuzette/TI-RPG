@@ -14,16 +14,10 @@ public class LevelButton : MonoBehaviour {
     void OnEnable() {
         levelButton = GetComponent<Button>();
         levelButton.onClick.AddListener(() => {
-            fadingScript.FadeIn();
+            fadingScript.FadeIn(sceneToLoad);
             AudioManager.instance.PlayMusic("Combat");
             AudioManager.instance.PlayAmbient("AmbientFloresta");
-            StartCoroutine(WaitForFadeIn(3f));
+       
         });
     }
-
-    IEnumerator WaitForFadeIn(float time) {
-        yield return new WaitForSeconds(time);
-        GameController.controller.uicontroller.ChangeScene(levelName);
-    }
-
 }

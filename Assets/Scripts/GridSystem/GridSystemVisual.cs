@@ -154,6 +154,11 @@ public class GridSystemVisual : MonoBehaviour {
 
                     ShowGridPositionRange(selectedUnit.GetGridPosition(), hitAction.GetMaxHitDistance(), GridVisualType.RedSoft, selectedUnit.transform.position, false, true);
                     break;
+                case QucikAttack quickAttack:
+                    gridVisualType = GridVisualType.Red;
+
+                    ShowGridPositionRange(selectedUnit.GetGridPosition(), quickAttack.GetMaxHitDistance(), GridVisualType.RedSoft, selectedUnit.transform.position, false, true);
+                    break;
                 case TeleportSkill teleportSkill:
                     gridVisualType = GridVisualType.Blue;
                     break;

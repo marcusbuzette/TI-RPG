@@ -9,20 +9,18 @@ public class FadingScript : MonoBehaviour
 [SerializeField] private float fadeDuration = 1.5f;
 
 
-public void FadeIn()
+public void FadeIn(string nextScene)
 {
-    StartCoroutine(FadeCanvasGroup(canvasGroup, canvasGroup.alpha, 1, fadeDuration));
+    StartCoroutine(FadeCanvasGroup(canvasGroup, canvasGroup.alpha, 1, fadeDuration, nextScene));
 }
 
 public void FadeOut()
 {
-    StartCoroutine(FadeCanvasGroup(canvasGroup, canvasGroup.alpha, 0, fadeDuration));
+    StartCoroutine(FadeCanvasGroup(canvasGroup, canvasGroup.alpha, 0, fadeDuration, ""));
 }
 
-private IEnumerator FadeCanvasGroup(CanvasGroup cg, float start, float end, float duration)
+private IEnumerator FadeCanvasGroup(CanvasGroup cg, float start, float end, float duration, string nextScene)
 {
-
-    yield return new WaitForSeconds(1.5f);
     float elapsedTime = 0.0f;
     while(elapsedTime<fadeDuration)
     {
@@ -33,6 +31,7 @@ private IEnumerator FadeCanvasGroup(CanvasGroup cg, float start, float end, floa
 
     }
     cg.alpha = end;
+    if (nextScene != "") GameController.controller.uicontroller.ChangeScene(nextScene);
 }
 
 }
