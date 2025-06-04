@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1e00a9e77e8492f80e62b03c12ff16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionImage: {fileID: 0}
-  actionImageBlocked: {fileID: 0}
+  actionImage: {fileID: 21300000, guid: f57a219c1b1295c4da8d07fb184ae3b5, type: 3}
+  actionImageBlocked: {fileID: 21300000, guid: df6e3dfe60322114bb4855bf2091808c, type: 3}
   animator: {fileID: 0}
   speed: 0
   rotSpeed: 180
