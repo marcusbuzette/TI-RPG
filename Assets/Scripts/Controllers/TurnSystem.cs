@@ -103,9 +103,8 @@ public class TurnSystem : MonoBehaviour {
     }
 
     IEnumerator ComboKill() {
-        Debug.Log("COMBO");
+
         yield return new WaitForSeconds(0.5f);
-        Debug.Log("ESPEROU");
 
         if (turnNumber == 0) turnNumber = unitiesOrderList.Count - 1;
         else turnNumber--;
@@ -119,8 +118,6 @@ public class TurnSystem : MonoBehaviour {
         Vector3 unitTurnTransform = unitiesOrderList[turnNumber].transform.position;
         if (isPlayerTurn) { cameraController.LockCameraOnSelectedUnit(unitiesOrderList[turnNumber]); }
         else cameraController.GoToPosition(unitTurnTransform);
-
-        Debug.Log("VEZ DE: " + unitiesOrderList[turnNumber].unitName);
 
         yield return null;
     }
@@ -258,10 +255,6 @@ public class TurnSystem : MonoBehaviour {
         onOrderChange?.Invoke(this, EventArgs.Empty);
     }
 
-
-
-
-
     //test
     public Unit GetPlayerUnitToExplore() {
         Unit tryTofindHero = unitiesOrderList.Find((u) => u.unitId == "hero");
@@ -274,6 +267,7 @@ public class TurnSystem : MonoBehaviour {
         return null;
     }
     public void SetCameraController(CameraController controller) { cameraController = controller; }
+    public CameraController GetCameraController() { return cameraController; }
 
     public List<Unit> GetUnitsOrderList() { return this.unitiesOrderList; }
 }
