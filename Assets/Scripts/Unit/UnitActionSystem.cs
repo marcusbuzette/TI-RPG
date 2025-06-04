@@ -11,6 +11,7 @@ public class UnitActionSystem : MonoBehaviour {
 
     public event EventHandler OnSelectedUnitChanged;
     public event EventHandler OnSelectedActionChanged;
+    public event EventHandler OnUnitMovedInExploreMode;
 
     public event EventHandler OnInventoryClicked;
     public event EventHandler OnActionStarted;
@@ -19,7 +20,7 @@ public class UnitActionSystem : MonoBehaviour {
     [SerializeField] private LayerMask unitLayerMask;
     [SerializeField] private LayerMask interactiveLayerMask;
 
-    private BaseAction selectedAction;
+    [SerializeField] private BaseAction selectedAction;
 
     private bool isBusy = false;
 
@@ -46,8 +47,10 @@ public class UnitActionSystem : MonoBehaviour {
     }
 
     private void HandleSelectedAction() {
-        if (Input.GetMouseButtonDown(0)) {
-            
+        if (Input.GetMouseButtonDown(0) && 
+        (DialogueController.dialogueController == null ||
+        DialogueController.dialogueController != null && !DialogueController.dialogueController.isDialogueOpened)) {
+
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
 
             if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE) {
@@ -61,9 +64,20 @@ public class UnitActionSystem : MonoBehaviour {
                 }
             }
             else {
+                if(selectedAction != null &&
+                   selectedAction.IsValidActionGridPosition(mouseGridPosition)) {
+                    if (selectedUnit.TryToPerformAction(selectedAction)) {
+                        SetBusy();
+                        selectedAction.TriggerAction(mouseGridPosition, ClearBusy);
+                        OnActionStarted.Invoke(this, EventArgs.Empty);
+                        this.selectedAction = null;
+                        return;
+                    }
+                }
+                GridSystemVisual.Instance.HideAllGridPosition();
                 this.selectedAction = null;
-
-                if (this.selectedUnit == null) {
+                OnUnitMovedInExploreMode?.Invoke(this, EventArgs.Empty);
+                if (this.selectedUnit == null || this.selectedUnit.unitId != "hero") {
                     this.selectedUnit = TurnSystem.Instance.GetPlayerUnitToExplore();
                     OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
                     OnSelectedActionChanged?.Invoke(this, EventArgs.Empty);
@@ -77,7 +91,18 @@ public class UnitActionSystem : MonoBehaviour {
                     return;
                 }
 
-                    selectedUnit?.GetComponent<MoveAction>().TriggerAction(mouseGridPosition, ClearBusy);
+                List<Unit> unitList = UnitManager.Instance.GetFriendlyList();
+                unitList.Remove(selectedUnit);
+                selectedUnit?.GetComponent<MoveAction>().TriggerAction(mouseGridPosition, ClearBusy);
+
+                List<Vector3> possiblePositions = LevelGrid.Instance.GetPositionsBehindUnit(selectedUnit, unitList.Count);
+                for (int i = 0; i < possiblePositions.Count; i++) {
+                    unitList[i].GetComponent<MoveAction>().TriggerAction(
+                                    LevelGrid.Instance.GetGridPosition(possiblePositions[i]),
+                                    ClearBusy
+                                );
+
+                }
             }
         }
     }
@@ -87,6 +112,7 @@ public class UnitActionSystem : MonoBehaviour {
         if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, unitLayerMask)) {
             if (hit.transform.TryGetComponent<Unit>(out Unit unit)) {
                 if (unit == selectedUnit) return false;
+                if (unit.GetHealthSystem().GetHealthState() == HealthSystem.HealthState.FAINT) return false;
                 if (unit.IsEnemy()) {
                     return false;
                 }

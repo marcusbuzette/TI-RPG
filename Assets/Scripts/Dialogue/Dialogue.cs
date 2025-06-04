@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Dialogue : MonoBehaviour
+[CreateAssetMenu(menuName = "Dialogue")]
+public class Dialogue : ScriptableObject
 {
     [TextArea(1,3)]
     public string[] sentences;

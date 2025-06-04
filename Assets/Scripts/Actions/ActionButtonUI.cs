@@ -29,6 +29,7 @@ public class ActionButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         textMeshPro.text = baseAction.GetActionName().ToUpper();
         this.name = baseAction.GetActionName();
         this.actionImage = baseAction.GetActionImage();
+        this.actionType = baseAction.GetActionType();
 
         if (actionImage != null) {
             textMeshPro.enabled = false;

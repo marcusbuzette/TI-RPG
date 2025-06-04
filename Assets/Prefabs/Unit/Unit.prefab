@@ -216,6 +216,7 @@ MonoBehaviour:
   healthBar: {fileID: 6849604218487048639}
   healthSystem: {fileID: 5740676890434492411}
   unit: {fileID: 3360346141191727209}
+  healthValuePrefab: {fileID: 0}
 --- !u!114 &7184199287966419482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,6 +267,7 @@ Transform:
   - {fileID: 851992420487505374}
   - {fileID: 4158381878508907688}
   - {fileID: 8740005237863401035}
+  - {fileID: 6169441691008669731}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3360346141191727209
@@ -281,25 +283,55 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isEnemy: 0
-  possibleSkills: []
-  possibleUpgrades: []
-  xpSystem: {fileID: 0}
-  unitId: 
-  unitName: 
+  possibleSkills:
+  - {fileID: -1958982141253679294, guid: 226ef7562a74f45dc92234806d8b64b2, type: 3}
+  - {fileID: -3443926730875403986, guid: 975259ed73f6b40d5b4f6d3628155e02, type: 3}
+  - {fileID: 7003126972002679649, guid: cf31458f552394964a8a4be2631cb4b1, type: 3}
+  - {fileID: 1609624166160888595, guid: e0c9a3f020f0b43e195106b3b3816a7b, type: 3}
+  possibleSkillsPrefabs: []
+  possibleUpgrades:
+  - level: 5
+    upgrade:
+    - {fileID: 11400000, guid: 93d852333b0a1480ca1df9a31ed1180a, type: 2}
+    - {fileID: 11400000, guid: 812d9ab31a0824e47a263b2d3eae97ad, type: 2}
+  - level: 10
+    upgrade:
+    - {fileID: 11400000, guid: ce799d69748104503b655ccdebd0bd51, type: 2}
+    - {fileID: 11400000, guid: d834c0a093d5840ba9f5c0a06bea1324, type: 2}
+  - level: 15
+    upgrade:
+    - {fileID: 11400000, guid: f3e37d9a6755a4f609506d11408e0736, type: 2}
+    - {fileID: 11400000, guid: b26e7cd2680f646bbacfc791b10fb323, type: 2}
+  - level: 20
+    upgrade:
+    - {fileID: 11400000, guid: ce799d69748104503b655ccdebd0bd51, type: 2}
+    - {fileID: 11400000, guid: 93d852333b0a1480ca1df9a31ed1180a, type: 2}
+  xpSystem: {fileID: 2170219948549848153}
+  unitId: archer
+  unitName: Arqueira
   baseUnitStats:
-    speed: 0
-    attack: 0
-    defence: 0
-    accuracy: 0
-    maxHealthPoints: 0
-    maxMove: 0
+    speed: 3
+    attack: 10
+    defence: 2
+    accuracy: 4
+    maxHealthPoints: 100
+    maxMove: 3
     xpSpoil: 0
-    range: 0
+    range: 4
+  statsModifiers:
+    attack: 0
+    deffence: 0
+    move: 0
+    accuracy: 0
+    speed: 0
   actionsArray: []
   hasMoved: 0
   hasPerformedAction: 0
   hasPerformedSkill: 0
+  modifiedBy: []
   isUnitTurn: 0
+  projectilePrefab: {fileID: 695093204734437254, guid: cd36fd0ad0a723741b520b5c4ec4c717, type: 3}
+  projectilePoint: {fileID: 0}
   enemyFocus: 0
 --- !u!114 &8930314314492603969
 MonoBehaviour:
@@ -313,8 +345,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a98aa284f9b23428a071063490ad6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 0}
+  actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
+  rotateSpeed: 4
   moveSpeed: 4
   rotateSpeed: 4
   stopDistance: 0.1
@@ -355,6 +390,7 @@ MonoBehaviour:
   healthPoints: 100
   maxHealthPoints: 100
   animator: {fileID: 0}
+  damageSFX: 
 --- !u!114 &2170219948549848153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,6 +516,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &6089377058308272409
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6169441691008669731}
+  m_Layer: 7
+  m_Name: ProjectilePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6169441691008669731
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6089377058308272409}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.295, z: 0.212}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8829183408524775923}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7244596643279997878
 GameObject:
   m_ObjectHideFlags: 0

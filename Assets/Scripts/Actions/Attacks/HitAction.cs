@@ -9,14 +9,13 @@ public class HitAction : BaseAction {
     [SerializeField] private LayerMask obstaclesLayerMask;
     [SerializeField] private int maxHitDistance = 1;
     [SerializeField] private int hitDamage = 50;
-    [SerializeField] private float rotateSpeed = 10f;
     public string meleeSFX;
     public int Attack = 1;
 
     private Unit targetUnit;
 
     private void Start() {
-        obstaclesLayerMask = LayerMask.GetMask("Obstacles"); //add layer mask to don't shoot through obstacles
+        obstaclesLayerMask = LayerMask.GetMask("Obstacles"); 
     }
 
     public override string GetActionName() {
@@ -25,27 +24,28 @@ public class HitAction : BaseAction {
 
     public override void Action() {
         if (Attack == 1) {
-            // animator?.SetTrigger("Attack");
-            unit.PlayAnimation("Attack");
-
-            
             Attack = 0;
-            targetUnit?.Damage(hitDamage, this.GetComponent<Unit>());
+            RotateAndAttack();
         }
         StartCoroutine(DelayActionFinish());
-
-
-
     }
 
-     //public void Damaged(){
-            //targetUnit?.Damage(hitDamage);}
+    public void RotateAndAttack() {
+        StartCoroutine(RotateTowardsAndExecute(targetUnit.transform, () => {
+            Damage();
+        }));
+    }
+
+    protected void Damage() {
+        // animator?.SetTrigger("Attack");
+        unit.PlayAnimation("Attack");
+        targetUnit?.Damage(hitDamage, false, this.GetComponent<Unit>());
+    }
 
     private IEnumerator DelayActionFinish() {
         yield return new WaitForSeconds(0.5f); // Ajuste o tempo conforme necessário
         ActionFinish();
         Attack = 1;
-
     }
     public override List<GridPosition> GetValidGridPositionList() {
         GridPosition unitGridPosition = unit.GetGridPosition();
@@ -72,6 +72,10 @@ public class HitAction : BaseAction {
                 Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition);
 
                 if (targetUnit.IsEnemy() == unit.IsEnemy()) {
+                    continue;
+                }
+
+                if (targetUnit.GetHealthSystem().GetHealthState() == HealthSystem.HealthState.FAINT) {
                     continue;
                 }
 
@@ -103,20 +107,10 @@ public class HitAction : BaseAction {
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {
-        Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
-        if (!targetUnit.GetEnemyFocus()) {
-            return new EnemyAIAction {
-                gridPosition = gridPosition,
-                actionValue = 100 + Mathf.RoundToInt((1 - targetUnit.GetHealthNormalized()) * 100f),
-            };
-        }
-        else {
-            Debug.Log(targetUnit);
-            return new EnemyAIAction {
-                gridPosition = gridPosition,
-                actionValue = 1000 + Mathf.RoundToInt((1 - targetUnit.GetHealthNormalized()) * 100f),
-            };
-        }
+        return new EnemyAIAction {
+            gridPosition = gridPosition,
+            actionValue = 100 + Mathf.RoundToInt((GetTargetCountAtPosition(gridPosition)) * 100f),
+        };
     }
 
     public int GetTargetCountAtPosition(GridPosition gridPosition) {

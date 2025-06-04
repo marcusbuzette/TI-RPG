@@ -1,4 +1,6 @@
+using UnityEngine;
+
 public interface ICalledObject
 {
-    public void Action();
+    public void Action(GameObject m_Camera);
 }

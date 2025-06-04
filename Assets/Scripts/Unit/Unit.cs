@@ -1,7 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -17,6 +17,7 @@ public class Unit : MonoBehaviour {
     public static event EventHandler OnAnyActionPerformed;
     public static event EventHandler OnAnyUnitSpawn;
     public static event EventHandler OnAnyUnitDead;
+    public static event EventHandler OnAnyUnitRevive;
 
     [SerializeField] private bool isEnemy;
 
@@ -37,12 +38,18 @@ public class Unit : MonoBehaviour {
     [SerializeField] private bool hasPerformedSkill = false;
     [SerializeField] private List<Unit> modifiedBy = new List<Unit>();
     public bool isUnitTurn = false;
+    private bool hasUsedQuickAttack = false;
+    private bool isStunned = false;
 
     private Dictionary<string, bool> animationTriggersStack = new Dictionary<string, bool>();
     private Animator animator;
 
     private GridPosition newGridPosition;
     private Vector3 lastPosition;
+
+    [Header("Projectile")]
+    [SerializeField] private Transform projectilePrefab;
+    [SerializeField] private Transform projectilePoint;
 
 
     private int intimidateCoolDown = 0;
@@ -80,6 +87,7 @@ public class Unit : MonoBehaviour {
         TurnSystem.Instance.onTurnChange += TurnSystem_OnTurnChange;
 
         healthSystem.OnDead += HealthSystem_OnDie;
+        healthSystem.OnRevive += HealthSystem_OnRevive;
         OnAnyUnitSpawn?.Invoke(this, EventArgs.Empty);
         statsModifiers = new UnitStatsModifiers();
     }
@@ -177,20 +185,24 @@ public class Unit : MonoBehaviour {
         return isEnemy;
     }
 
-    public void Damage(int damage, Unit attackedBy = null) {
-        healthSystem.Damage(damage, attackedBy);
+    public void Damage(int damage, bool haveProjectile = false, Unit attackedBy = null) {
+        healthSystem.TestDamage(damage, attackedBy, haveProjectile);
     }
 
     public void AddXp(int xpAmount) {
-        GameController.controller.UpdateUnitRecords(this);
+        if (IsEnemy()) return;
         xpSystem.AddXp(xpAmount);
+        GameController.controller.UpdateUnitRecords(this);
     }
 
     private void HealthSystem_OnDie(object sender, EventArgs e) {
-        LevelGrid.Instance.RemoveUnitAtGridPosition(gridPosition, this);
         TurnSystem.Instance.RemoveUnitFromList(this);
-        Destroy(gameObject);
+
         OnAnyUnitDead?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void HealthSystem_OnRevive(object sender, EventArgs e) {
+        OnAnyUnitRevive?.Invoke(this, EventArgs.Empty);
     }
 
     public float GetHealthNormalized() {
@@ -206,6 +218,10 @@ public class Unit : MonoBehaviour {
 
     public void StartUnitTurn() {
         this.isUnitTurn = true;
+        if (isStunned) {
+            StartCoroutine(HandleStunTurn()); // chama a corrotina que espera e passa o turno
+            return;
+        }
 
         if (intimidateCoolDown != 0) {
             hasMoved = true;
@@ -226,6 +242,7 @@ public class Unit : MonoBehaviour {
 
         UnitActionSystem.Instance.ChangeSelectedUnit(this);
         // OnAnyActionPerformed?.Invoke(this, EventArgs.Empty);
+
 
     }
 
@@ -318,5 +335,69 @@ public class Unit : MonoBehaviour {
             statsModifiers.ResetModifier((BuffType)(sender as BaseSkills).GetBuffType());
         }
         (sender as BaseSkills).onEndEffect -= BaseSkill_onEndEffect;
+    }
+
+    public void SpawnProjectile(HealthSystem enemy, int projectileDemage, bool miss = false) {
+        if (projectilePoint == null) {
+            Debug.LogWarning(transform.name + " <- this unit do not have ProjectilePoint on Unit");
+            projectilePoint = transform;
+        }
+
+        Transform projectileTransform = Instantiate(projectilePrefab, projectilePoint.position, Quaternion.identity);
+
+        Projectile projectile = projectileTransform.GetComponent<Projectile>();
+        projectile.Setup(this, enemy.transform.position, enemy, projectileDemage, miss);
+    }
+
+    public void SpawnProjectile(Vector3 target, Color color) {
+        if (projectilePoint == null) {
+            Debug.LogWarning(transform.name + " <- this unit do not have ProjectilePoint on Unit");
+            projectilePoint = transform;
+        }
+
+        Transform projectileTransform = Instantiate(projectilePrefab, projectilePoint.position, Quaternion.identity);
+
+        Projectile projectile = projectileTransform.GetComponent<Projectile>();
+        projectile.Setup(target, color);
+    }
+
+    public bool CanFinishRound() {
+        if (hasMoved && hasPerformedAction && hasPerformedSkill) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    public void MarkQuickAttackUsed() {
+        hasUsedQuickAttack = true;
+    }
+
+    public bool HasUsedQuickAttack() {
+        return hasUsedQuickAttack;
+    }
+
+    public void ClearQuickAttackFlag() {
+        hasUsedQuickAttack = false;
+    }
+
+    public void StunUnit() {
+        isStunned = true;
+    }
+
+    public bool IsStunned() {
+        return isStunned;
+    }
+
+    public void ClearStun() {
+        isStunned = false;
+    }
+
+    private IEnumerator HandleStunTurn() {
+        PlayAnimation("TookDamage");
+        yield return new WaitForSeconds(1f); // Delay visual do stun
+        ClearStun();
+        TurnSystem.Instance.NextTurn(); // Passa o turno
     }
 }

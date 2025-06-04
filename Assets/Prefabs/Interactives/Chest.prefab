@@ -143,8 +143,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2, y: 0, z: 2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.38, y: 1.38, z: 1.38}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6166626864204997249}
   - {fileID: 7089224389680641345}
@@ -183,7 +183,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fbdfe1e70602bf41b59dc73e88937d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chestItems: []
+  chestItems:
+  - {fileID: 11400000, guid: 110230de560646841bb1f0097e70042a, type: 2}
+  - {fileID: 11400000, guid: 110230de560646841bb1f0097e70042a, type: 2}
+  - {fileID: 11400000, guid: 110230de560646841bb1f0097e70042a, type: 2}
+  - {fileID: 11400000, guid: 110230de560646841bb1f0097e70042a, type: 2}
   chestCanvas: {fileID: 1942872426712599779}
   imageTimer: 1.5
   animController: {fileID: 9100000, guid: 4b8c626bb1bc4d143bb9f3e8e5e2c44f, type: 2}
@@ -201,7 +205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dc000c929f34e7a428d7220679707cfb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.35
+      value: 0.356
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dc000c929f34e7a428d7220679707cfb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -246,10 +250,72 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: dc000c929f34e7a428d7220679707cfb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7818671812756367221}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: dc000c929f34e7a428d7220679707cfb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8503658763159128066}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: dc000c929f34e7a428d7220679707cfb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6726541675732182674}
   m_SourcePrefab: {fileID: 100100000, guid: dc000c929f34e7a428d7220679707cfb, type: 3}
 --- !u!4 &6166626864204997249 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: dc000c929f34e7a428d7220679707cfb, type: 3}
   m_PrefabInstance: {fileID: 5917442974503699818}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6836344221920770107 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dc000c929f34e7a428d7220679707cfb, type: 3}
+  m_PrefabInstance: {fileID: 5917442974503699818}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7818671812756367221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6836344221920770107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 1
+  eraseRenderer: 0
+  startOutline: 0
+--- !u!114 &8503658763159128066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6836344221920770107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7aba72387f884f5f95ac0907b65ab47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &6726541675732182674
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6836344221920770107}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.8, y: 0.7, z: 0.6}
+  m_Center: {x: 0, y: -0.03884098, z: 0.009941357}

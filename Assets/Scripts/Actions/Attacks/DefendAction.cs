@@ -8,6 +8,7 @@ public class DefendAction : BaseAction {
 
     private Unit targetUnit;
 
+    public string defesaSFX;
 
     public override string GetActionName() {
         return "Defender";
@@ -40,7 +41,12 @@ public class DefendAction : BaseAction {
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
         targetUnit.GetHealthSystem().SetDefenceMode(true);
+        Vector3 unitWorldPosition = LevelGrid.Instance.GetWorldPosition(unit.GetGridPosition());
+        PathFinding.Instance.SetNodeIsWalkable(unitWorldPosition, false);
         ActionStart(onActionComplete);
+        if (!string.IsNullOrEmpty(defesaSFX)) {
+            AudioManager.instance?.PlaySFX(defesaSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
+        }
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {
@@ -60,6 +66,8 @@ public class DefendAction : BaseAction {
         if (this.targetUnit != null &&
             this.targetUnit.GetHealthSystem().GetDefenceMode()) {
             StopDefending();
+            Vector3 unitWorldPosition = LevelGrid.Instance.GetWorldPosition(unit.GetGridPosition());
+            PathFinding.Instance.SetNodeIsWalkable(unitWorldPosition, true);
         }
     }
 

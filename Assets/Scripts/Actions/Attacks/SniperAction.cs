@@ -19,6 +19,8 @@ public class SniperAction : BaseAction {
 
     [SerializeField] private LayerMask obstaclesLayerMask;
 
+    public string vigiaSFX;
+
     GridPosition mouseGridPosition;
     public int Attack = 1;
 
@@ -113,6 +115,10 @@ public class SniperAction : BaseAction {
         sniperActionFieldOfView.SetSniperFieldOfView(this, fieldOfView, hitDamage);
 
         ActionStart(onActionComplete);
+
+        if (!string.IsNullOrEmpty(vigiaSFX)) {
+            AudioManager.instance?.PlaySFX(vigiaSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
+        }
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {

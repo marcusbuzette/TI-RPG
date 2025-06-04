@@ -395,7 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c51fdeedc79e5b428788df816ec756f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unit: {fileID: 0}
+  unit: {fileID: 4097611372698076066}
 --- !u!1 &6461659213182696477
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,6 +450,7 @@ GameObject:
   - component: {fileID: 898693236174174977}
   - component: {fileID: 3177319531651322102}
   - component: {fileID: 6153364471762481362}
+  - component: {fileID: 1104661637224546848}
   m_Layer: 0
   m_Name: Protagonist
   m_TagString: Untagged
@@ -493,6 +494,7 @@ MonoBehaviour:
   - {fileID: -1049602389130312739, guid: c9e233f267fdd4a0abe93a6bd02b3a5a, type: 3}
   - {fileID: 2046306609090520112, guid: a131eb5504af64b24ae6a125132f17c5, type: 3}
   - {fileID: 268774645106886273, guid: 3ea7eabd8948ec84ca32a264d0031500, type: 3}
+  possibleSkillsPrefabs: []
   possibleUpgrades:
   - level: 5
     upgrade:
@@ -534,6 +536,8 @@ MonoBehaviour:
   hasPerformedSkill: 0
   modifiedBy: []
   isUnitTurn: 0
+  projectilePrefab: {fileID: 0}
+  projectilePoint: {fileID: 0}
   enemyFocus: 0
 --- !u!114 &4904485793414091471
 MonoBehaviour:
@@ -547,7 +551,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0b3338ac2914f4ba75c869397aca3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xp: 20
+  xp: 36
 --- !u!114 &5148555958529166082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -561,8 +565,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionImage: {fileID: 21300000, guid: d24172bb5601f90449d5233c70318796, type: 3}
+  actionImageBlocked: {fileID: 21300000, guid: d5b839f9656be884ca143487fb358ccd, type: 3}
   animator: {fileID: 0}
   speed: 0
+  rotateSpeed: 4
   moveSpeed: 4
   rotateSpeed: 4
   stopDistance: 0.1
@@ -596,14 +602,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionImage: {fileID: 21300000, guid: 39195be798b6f544b952277c45599e40, type: 3}
+  actionImageBlocked: {fileID: 21300000, guid: efaa1fec437761e48b59a5e2b5d1225c, type: 3}
   animator: {fileID: 0}
   speed: 0
+  rotateSpeed: 10
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 0
   maxHitDistance: 1
   hitDamage: 50
-  rotateSpeed: 10
   meleeSFX: ProtagHit
   Attack: 1
 --- !u!114 &898693236174174977
@@ -619,8 +626,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionImage: {fileID: 0}
+  actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  rotateSpeed: 180
 --- !u!95 &3177319531651322102
 Animator:
   serializedVersion: 5
@@ -654,14 +663,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfbc725d5c76b47b28e3ccd3e66dc849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionImage: {fileID: 0}
+  actionImage: {fileID: 21300000, guid: 3ec57346bd4f7734bad8ae1cba400055, type: 3}
+  actionImageBlocked: {fileID: 21300000, guid: e8aaa4b822f9d38489c29a1715a6ab19, type: 3}
   animator: {fileID: 0}
   speed: 0
+  rotateSpeed: 180
   targetsList: []
   maxAttackDistance: 1
   attackAttenuation: 2
   hitDamage: 30
   MAX_SPIN: 360
+  tornadoSFX: AtaqueAOE
+--- !u!65 &1104661637224546848
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7923891495559024178}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.6717925, y: 1.6059915, z: 0.55412984}
+  m_Center: {x: -0.033862352, y: 0.787461, z: 0.049745917}
 --- !u!1001 &8948093288391262455
 PrefabInstance:
   m_ObjectHideFlags: 0

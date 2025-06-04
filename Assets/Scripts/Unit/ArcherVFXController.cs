@@ -53,8 +53,8 @@ public class ArcherVFXController : MonoBehaviour
 
     public void CastEnd()
     {
-    fireMagicCastObject.SetActive(false);
-    iceMagicCastObject.SetActive(false);
-    poisonMagicCastObject.SetActive(false);
+    fireMagicCastObject?.SetActive(false);
+    iceMagicCastObject?.SetActive(false);
+    poisonMagicCastObject?.SetActive(false);
     }
 }

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd39ca780161d084ebf3ffce4e2c7e15, type: 3}
+  m_Name: Hub1
+  m_EditorClassIdentifier: 
+  sentences:
+  - Ha 27 anos o Rei teve dois filhos gemeos.
+  - Um deles herdou suas capacidades magicas, o outro pouco se sabe sobre.
+  - Uns dizem que nao sobreviveu, outros dizem que foi abandodado....
+  - Desde a morte de seu pai, o novo Rei esta fazendo varreduras em todo reino
+  name: Fofoqueiro

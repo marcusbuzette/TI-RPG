@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 using static System.Collections.Specialized.BitVector32;
 
 public class MoveAction : BaseAction {
 
     [SerializeField] private float moveSpeed = 4f;
-    [SerializeField] private float rotateSpeed = 4f;
+    private float rotateSpeed = 4f;
     [SerializeField] private float stopDistance = .05f;
     private float lastDistance = 0;
     private bool hastLastDistance = false;
@@ -173,17 +174,41 @@ public class MoveAction : BaseAction {
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {
-        int targetCountAtGridPosition = 0;
+        int valueGridPosition = 0;
 
-        HitAction hitAction = unit.GetComponent<HitAction>();
-        ShootAction shootAction = unit.GetComponent<ShootAction>();
+        //Verifica se o inimigo est� com pouca vida e se ele consegue se curar
+        if ((unit.GetHealthPoints() * 100) / unit.GetHealthSystem().maxHealthPoints < 15 &&
+            unit.GetComponent<HealAction>()) {
+            valueGridPosition = unit.GetComponent<HealAction>().GetEnemyAIAction(gridPosition).actionValue;
+            return new EnemyAIAction {
+                gridPosition = gridPosition,
+                actionValue = valueGridPosition * 10,
+            };
+        }
 
-        if(hitAction != null) targetCountAtGridPosition = hitAction.GetTargetCountAtPosition(gridPosition);
-        else targetCountAtGridPosition = shootAction.GetTargetCountAtPosition(gridPosition);
+        //Pega as a��es do inimigo
+        List<BaseAction> actions = unit.GetActionsArray().ToList();
+        List<BaseAction> attackActions = new List<BaseAction>();
 
+        //Tira a a��o de mover e de se curar da escolha de a��es
+        for(int i = 0; i < actions.Count; i++) {
+            if (actions[i].GetActionType() != ActionType.MOVE) {
+                if (!unit.GetComponent<HealAction>() || actions[i] != unit.GetComponent<HealAction>()) {
+                    attackActions.Add(actions[i]);
+                }
+            }
+        }
+
+        //Escolhe uma a��o aleat�ria para performar
+        if(attackActions.Count > 0) {
+            //valueGridPosition = attackActions[Random.Range(0, attackActions.Count)].GetEnemyAIAction(gridPosition).actionValue;
+            valueGridPosition = attackActions[0].GetEnemyAIAction(gridPosition).actionValue;
+        }
+
+        //Retorna a melhor a��o possivel do inimigo
         return new EnemyAIAction {
             gridPosition = gridPosition,
-            actionValue = targetCountAtGridPosition * 10,
+            actionValue = valueGridPosition * 10,
         };
     }
 
@@ -207,5 +232,9 @@ public class MoveAction : BaseAction {
 
     public void SetMaxDistanceMovement(int maxDistanceMovement) {
         this.maxMoveDistance = maxDistanceMovement;
+    }
+
+    public List<Vector3> GetMovePathList() {
+        return this.positionList;
     }
 }

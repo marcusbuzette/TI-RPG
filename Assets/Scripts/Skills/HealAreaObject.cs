@@ -24,7 +24,12 @@ public class HealAreaObject : MonoBehaviour {
 
         obstaclesLayerMask = LayerMask.GetMask("Obstacles");
         TurnSystem.Instance.onTurnChange += TurnSystem_onTurnChange;
+        LevelGrid.Instance.OnGameModeChanged += DestroyObj;
         ViewHealArea();
+    }
+
+    public void DestroyObj(object sender, EventArgs e) {
+        Destroy(gameObject);
     }
 
     private void TurnSystem_onTurnChange(object sender, EventArgs e) {
@@ -43,6 +48,7 @@ public class HealAreaObject : MonoBehaviour {
 
     private void OnDestroy() {
         TurnSystem.Instance.onTurnChange -= TurnSystem_onTurnChange;
+        LevelGrid.Instance.OnGameModeChanged -= DestroyObj;
     }
 
     private void HealOnArea(int _healPoints) {
@@ -71,6 +77,10 @@ public class HealAreaObject : MonoBehaviour {
                 Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition);
 
                 if (targetUnit.IsEnemy()) {
+                    continue;
+                }
+
+                if(targetUnit.GetHealthSystem().GetHealthState() == HealthSystem.HealthState.FAINT) {
                     continue;
                 }
 

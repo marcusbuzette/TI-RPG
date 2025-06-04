@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 
 public class TalentManager : MonoBehaviour {
@@ -28,6 +29,7 @@ public class TalentManager : MonoBehaviour {
 
 
     private String SelectedUnit;
+    private Button selectedButton;
 
     private void Awake() {
         if (Instance == null) {
@@ -58,6 +60,8 @@ public class TalentManager : MonoBehaviour {
             unitButton.gameObject.AddComponent<SkillTreeUnitButtonUI>();
             unitButton.gameObject.GetComponent<SkillTreeUnitButtonUI>().SetUnitData(unitId, playerUnit.GetUnitName());
             unitButton.onClick.AddListener(() => OnSelectedUnitChanged(unitId));
+
+            if (!selectedButton) selectedButton = unitButton;
 
         }
         this.OnSelectedUnitChanged(this.SelectedUnit);
@@ -241,6 +245,10 @@ public class TalentManager : MonoBehaviour {
         }
 
         return true;
+    }
+
+    public void UpdateSelectedCharButton() {
+        EventSystem.current.SetSelectedGameObject(selectedButton.gameObject);
     }
 
 }

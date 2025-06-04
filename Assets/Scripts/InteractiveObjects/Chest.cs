@@ -47,7 +47,6 @@ public class Chest : MonoBehaviour, IInteractiveObjects
     public void GetFowardGridObject() {
         Vector3 pos = (transform.forward * 2) + transform.position;
         targetToUnit = LevelGrid.Instance.GetGridPosition(pos);
-        Debug.Log(targetToUnit);
     }
 
     public void MoveUnitToGridPostion(Unit unit) {
@@ -65,8 +64,6 @@ public class Chest : MonoBehaviour, IInteractiveObjects
     public void UnitStopGoingTo(object sender, EventArgs e) {
         LevelGrid.Instance.OnGameModeChanged -= UnitStopGoingTo;
         PathFinding.Instance.OnRecalculatedpath -= UnitStopGoingTo;
-
-        Debug.Log("PAROU DE IR");
 
         goingTo = false;
         currentUnit = null;
