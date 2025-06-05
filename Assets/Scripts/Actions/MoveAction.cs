@@ -9,6 +9,8 @@ using static System.Collections.Specialized.BitVector32;
 
 public class MoveAction : BaseAction {
 
+    public PathArrowMesh currentArrow;
+
     [SerializeField] private float moveSpeed = 4f;
     private float rotateSpeed = 4f;
     [SerializeField] private float stopDistance = .05f;
@@ -24,7 +26,9 @@ public class MoveAction : BaseAction {
     private int startZone = 0;
     private bool hasStartZone = false;
 
+    private bool isAiming = false;
 
+    List<GridPosition> gridList = new List<GridPosition>();
 
     protected override void Awake() {
         base.Awake();
@@ -33,6 +37,20 @@ public class MoveAction : BaseAction {
 
     private void Start() {
         this.maxMoveDistance = GetComponent<Unit>().GetUnitStats().GetMaxMove(unit);
+        if(currentArrow == null) currentArrow = PathFinding.Instance.pathArrow.GetComponent<PathArrowMesh>();
+    }
+
+    private void Update() {
+        if(!unit.IsEnemy() && UnitActionSystem.Instance.GetSelectedAction() == this && !isActive) {
+            if (TurnSystem.Instance.GetTurnUnit() == unit && LevelGrid.Instance.IsInBattleMode()) {
+                gridList = PathFinding.Instance.FindPath(unit.GetGridPosition(), LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition()), out int pathLenght);
+                currentArrow.DrawPath(gridList);
+            }
+        }
+        if (!isActive) {
+            return;
+        }
+        Action();
     }
 
     public override void Action() {
@@ -236,5 +254,9 @@ public class MoveAction : BaseAction {
 
     public List<Vector3> GetMovePathList() {
         return this.positionList;
+    }
+
+    private void DestroyPathArrow() {
+        Destroy(currentArrow);
     }
 }
