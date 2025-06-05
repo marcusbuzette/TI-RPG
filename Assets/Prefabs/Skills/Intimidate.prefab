@@ -44,8 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee4cfdff77dede64a918ecb8fa1b4fb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionImage: {fileID: 21300000, guid: 94eba12edd19eb042b1cfe87907a0d34, type: 3}
+  actionImageBlocked: {fileID: 21300000, guid: f7fd59d81d16a3c4f9496e92f8db52f1, type: 3}
   animator: {fileID: 0}
-  animationSpeed: 1
+  speed: 0
+  rotSpeed: 180
   nome: Intimidar
   descricao: Intimida os inimigos
   custo: 20
@@ -57,3 +60,5 @@ MonoBehaviour:
   currentCoolDown: 0
   targetsList: []
   maxIntimidateDistance: 1
+  debufAmount: 2
+  buffType: 0

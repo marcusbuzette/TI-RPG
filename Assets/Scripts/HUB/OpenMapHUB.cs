@@ -48,7 +48,7 @@ public class OpenMapHUB : MonoBehaviour, IChangeCamera {
     }
 
     IEnumerator enumerator() {
-        fadingScript.FadeIn();
+        fadingScript.FadeIn("Tutorial");
         yield return new WaitForSeconds(2.5f);
         DoSomething();
     }
