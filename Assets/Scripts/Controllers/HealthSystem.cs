@@ -25,6 +25,7 @@ public class HealthSystem : MonoBehaviour {
 
     public string damageSFX;
     public string deathSFX;
+    public string missSFX;
 
     [SerializeField] private List<Unit> damagedBy = new List<Unit>();
 
@@ -43,7 +44,10 @@ public class HealthSystem : MonoBehaviour {
 
             if (dice <= 1) {
                 attackedBy.GetHealthSystem().GetUnitWorldUI().ShowUIValue(0, "Miss");
-                if(haveProjectile) attackedBy.SpawnProjectile(this, 0, true);
+                /*if(haveProjectile) attackedBy.SpawnProjectile(this, 0, true);
+                if (!string.IsNullOrEmpty(missSFX)) {
+                    AudioManager.instance?.PlaySFX(missSFX);  // vai tocar o sfx q ta no inspector do healthSystem de cada boneco
+                }*/
                 return;
             }
         }
