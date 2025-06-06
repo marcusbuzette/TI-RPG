@@ -259,7 +259,10 @@ public class TurnSystem : MonoBehaviour {
     }
 
 
-
+    public void NotifyOrderChange()
+    {
+        onOrderChange?.Invoke(this, EventArgs.Empty);
+    }
 
 
     //test

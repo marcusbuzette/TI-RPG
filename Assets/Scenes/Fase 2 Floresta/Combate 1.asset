@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6e95434bfed844f998734c810b9a052, type: 3}
   m_Name: Combate 1
   m_EditorClassIdentifier: 
-  zoneNumber: 1
-  startX: 15
+  zoneNumber: 3
+  startX: 13
   startZ: 6
   floor: 1
   endX: 18
@@ -28,6 +28,6 @@ MonoBehaviour:
   - x: 18
     z: 7
     floor: 1
-  - x: 19
-    z: 7
+  - x: 18
+    z: 6
     floor: 1
