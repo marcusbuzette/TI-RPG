@@ -130,7 +130,6 @@ public class FreezeAttack : BaseSkills {
             };
         }
         else {
-            Debug.Log(targetUnit);
             return new EnemyAIAction {
                 gridPosition = gridPosition,
                 actionValue = 1000 + Mathf.RoundToInt((1 - targetUnit.GetHealthNormalized()) * 100f),

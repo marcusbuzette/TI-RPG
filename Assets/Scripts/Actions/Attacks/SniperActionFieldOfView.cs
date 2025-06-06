@@ -15,6 +15,7 @@ public class SniperActionFieldOfView : MonoBehaviour
 
     private void Start() {
         LevelGrid.Instance.OnAnyUnitMovedGridPosition += CheckHasEnemyOnFieldOfView;
+        LevelGrid.Instance.OnGameModeChanged += StopSniper;
     }
 
     public void SetSniperFieldOfView(SniperAction sniperAction, List<GridPosition> gridObjects, int damage) {
@@ -47,6 +48,14 @@ public class SniperActionFieldOfView : MonoBehaviour
 
     public void StopSniper() {
         LevelGrid.Instance.OnAnyUnitMovedGridPosition -= CheckHasEnemyOnFieldOfView;
+        LevelGrid.Instance.OnGameModeChanged -= StopSniper;
+        sniperAction.SetFiewdOfViewNull();
+        Destroy(gameObject);
+    }
+
+    public void StopSniper(object sender, EventArgs e) {
+        LevelGrid.Instance.OnAnyUnitMovedGridPosition -= CheckHasEnemyOnFieldOfView;
+        LevelGrid.Instance.OnGameModeChanged -= StopSniper;
         sniperAction.SetFiewdOfViewNull();
         Destroy(gameObject);
     }

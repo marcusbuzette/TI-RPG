@@ -44,9 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0e0e246b77204f9a805b6c419dd07dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionImage: {fileID: 0}
+  actionImage: {fileID: 21300000, guid: 54dbbbd2d9f43c241a3ccbc9b214bd47, type: 3}
+  actionImageBlocked: {fileID: 21300000, guid: c217de782d070d844af0bd6e0ed5acd3, type: 3}
   animator: {fileID: 0}
   speed: 0
+  rotSpeed: 180
   nome: Contra ataque
   descricao: Revida um ataque quando atacado
   custo: 10
@@ -56,3 +58,4 @@ MonoBehaviour:
   currentCoolDown: 0
   MAX_SPIN: 360
   counterStrikeSFX: ContraAtaque
+  attackToPerform: {fileID: 0}

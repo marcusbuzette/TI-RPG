@@ -8,8 +8,8 @@ public class TestClass : IClasses
     [SerializeField] private List<BaseAction> baseActions;
 
     public override void SetActions() {
-        baseActions.Add(this.AddComponent<HitAction>());
+        /*baseActions.Add(this.AddComponent<HitAction>());
         baseActions.Add(this.AddComponent<MoveAction>());
-        baseActions.Add(this.AddComponent<ItemAction>());
+        baseActions.Add(this.AddComponent<>());*/
     }
 }

@@ -1,18 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using static GridSystemVisual;
-using UnityEngine.SocialPlatforms;
-using System.Runtime.InteropServices.WindowsRuntime;
+
 
 public class FireAttack : BaseSkills {
     [SerializeField] private LayerMask obstaclesLayerMask;
     private GameObject fireAttackObject;
     [SerializeField] private GameObject particleFire;
     [SerializeField] private int maxShootDistance = 1;
-    [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private int shootDamage = 100;
     [SerializeField] private int areaDamage = 3;
     [SerializeField] private int damage = 3;
@@ -137,7 +134,6 @@ public class FireAttack : BaseSkills {
             };
         }
         else {
-            Debug.Log(targetUnit);
             return new EnemyAIAction {
                 gridPosition = gridPosition,
                 actionValue = 1000 + Mathf.RoundToInt((1 - targetUnit.GetHealthNormalized()) * 100f),

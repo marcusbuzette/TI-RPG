@@ -27,7 +27,12 @@ public class FireAttackObject : MonoBehaviour
 
         obstaclesLayerMask = LayerMask.GetMask("Obstacles");
         TurnSystem.Instance.onTurnChange += TurnSystem_onTurnChange;
+        LevelGrid.Instance.OnGameModeChanged += DestroyObj;
         ViewDamageArea();
+    }
+
+    public void DestroyObj(object sender, EventArgs e) {
+        Destroy(gameObject);
     }
 
     private void TurnSystem_onTurnChange(object sender, EventArgs e) {
@@ -46,6 +51,7 @@ public class FireAttackObject : MonoBehaviour
 
     private void OnDestroy() {
         TurnSystem.Instance.onTurnChange -= TurnSystem_onTurnChange;
+        LevelGrid.Instance.OnGameModeChanged -= DestroyObj;
     }
 
     private void DamageOnArea(int _damage) {

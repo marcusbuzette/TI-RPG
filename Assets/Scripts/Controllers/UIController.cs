@@ -77,8 +77,8 @@ public class UIController : MonoBehaviour
                 break;*/
         }
         
-        AudioManager.instance.PlayMusic(musicToPlay);
-        AudioManager.instance.PlayAmbient(ambientToPlay);
+        AudioManager.instance?.PlayMusic(musicToPlay);
+        AudioManager.instance?.PlayAmbient(ambientToPlay);
         SceneManager.LoadScene(scene);
 
     } 

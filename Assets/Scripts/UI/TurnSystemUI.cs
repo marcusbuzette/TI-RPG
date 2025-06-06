@@ -53,8 +53,6 @@ public class TurnSystemUI : MonoBehaviour {
             Transform unitOrderTransform = Instantiate(unitOrderUIPrefab, unitsOrderContainer);
             unitOrderTransform.GetComponent<UnitOrderUI>().SetUnitOrderUI(TurnSystem.Instance.GetTurnOrder()[i], i == 0);
         }
-
-
     }
 
     private void UpdateEndTurnButton() {

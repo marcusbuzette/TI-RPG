@@ -1,15 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class DialogueController : MonoBehaviour
 {
     public static DialogueController dialogueController;
-    private Queue<string> sentences;
-    public Text NameTXT;
-    public Text DialogueTXT;
+    private Queue<Dialogue.DialogueStruct> dialogueQueue;
+    public TMP_Text NameTXT;
+    public TMP_Text DialogueTXT;
     public Animator animator;
+    public bool isDialogueOpened = false;
+
+    public EventHandler onEndDialogue;
 
     private void Awake() {
         if (dialogueController == null) {
@@ -22,30 +28,31 @@ public class DialogueController : MonoBehaviour
     }
     void Start()
     {
-        sentences = new Queue<string>();
+        dialogueQueue = new Queue<Dialogue.DialogueStruct>();
     }
 
     public void StartDialogue(Dialogue dialogue){
-        animator?.SetBool("IsOpen", true);
-        NameTXT.text = dialogue.name;
-        sentences.Clear();
+        isDialogueOpened = true;
+        animator?.SetBool("IsOpen", isDialogueOpened);
+        dialogueQueue.Clear();
 
-        foreach (string sentence in dialogue.sentences){
-            sentences.Enqueue(sentence);
+        foreach (Dialogue.DialogueStruct d in dialogue.dialogue){
+            dialogueQueue.Enqueue(d);
         }
 
         DisplayNextSentence();
     }
 
     public void DisplayNextSentence(){
-        if(sentences.Count == 0){
+        if(dialogueQueue.Count == 0){
             EndDialogue();
             return;
         }
-        string sentence = sentences.Dequeue();
+        Dialogue.DialogueStruct d = dialogueQueue.Dequeue();
         StopAllCoroutines();
-        StopCoroutine(TypeSentence(sentence));
-        StartCoroutine(TypeSentence(sentence));
+        StopCoroutine(TypeSentence(d.sentences));
+        NameTXT.text = d.name;
+        StartCoroutine(TypeSentence(d.sentences));
     }
 
     IEnumerator TypeSentence(string sentence){
@@ -57,6 +64,8 @@ public class DialogueController : MonoBehaviour
     }
 
     public void EndDialogue(){
-        animator?.SetBool("IsOpen", false);
+        isDialogueOpened = false;
+        animator?.SetBool("IsOpen", isDialogueOpened);
+        onEndDialogue?.Invoke(this, EventArgs.Empty);
     }
 }

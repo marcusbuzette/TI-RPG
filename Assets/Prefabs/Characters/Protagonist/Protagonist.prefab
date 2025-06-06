@@ -551,7 +551,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0b3338ac2914f4ba75c869397aca3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xp: 36
+  xp: 10
+  levelXp: 0
 --- !u!114 &5148555958529166082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -568,9 +569,8 @@ MonoBehaviour:
   actionImageBlocked: {fileID: 21300000, guid: d5b839f9656be884ca143487fb358ccd, type: 3}
   animator: {fileID: 0}
   speed: 0
-  rotateSpeed: 4
+  rotSpeed: 180
   moveSpeed: 4
-  rotateSpeed: 4
   stopDistance: 0.1
   maxMoveDistance: 4
 --- !u!114 &8345496573422874549
@@ -585,10 +585,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5f1e064203584e4781e4f11b8511645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthState: 0
   healthPoints: 100
   maxHealthPoints: 100
   animator: {fileID: 0}
+  faintText: {fileID: 0}
   damageSFX: ProtagDano
+  deathSFX: 
+  missSFX: Esquiva
+  damagedBy: []
 --- !u!114 &1220537054330633468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -605,7 +610,7 @@ MonoBehaviour:
   actionImageBlocked: {fileID: 21300000, guid: efaa1fec437761e48b59a5e2b5d1225c, type: 3}
   animator: {fileID: 0}
   speed: 0
-  rotateSpeed: 10
+  rotSpeed: 180
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -629,7 +634,7 @@ MonoBehaviour:
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
-  rotateSpeed: 180
+  rotSpeed: 180
 --- !u!95 &3177319531651322102
 Animator:
   serializedVersion: 5
@@ -667,12 +672,13 @@ MonoBehaviour:
   actionImageBlocked: {fileID: 21300000, guid: e8aaa4b822f9d38489c29a1715a6ab19, type: 3}
   animator: {fileID: 0}
   speed: 0
-  rotateSpeed: 180
+  rotSpeed: 180
   targetsList: []
   maxAttackDistance: 1
   attackAttenuation: 2
   hitDamage: 30
   MAX_SPIN: 360
+  tornadoSFX: AtaqueAOE
 --- !u!65 &1104661637224546848
 BoxCollider:
   m_ObjectHideFlags: 0

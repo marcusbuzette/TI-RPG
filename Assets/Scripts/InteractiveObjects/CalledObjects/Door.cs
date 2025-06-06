@@ -13,6 +13,8 @@ public class Door : MonoBehaviour, ICalledObject {
 
     private GameObject m_Camera;
 
+    public string ponteSFX;
+
     public void Action(GameObject m_Camera) {
         m_Camera.SetActive(true);
         this.m_Camera = m_Camera;
@@ -20,6 +22,14 @@ public class Door : MonoBehaviour, ICalledObject {
         StartCoroutine(GoToPosition(transformTime));
         
         SetIsWalkableNodes(true);
+
+        if (!string.IsNullOrEmpty(ponteSFX)) {
+            AudioManager.instance?.PlaySFX(ponteSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
+        }
+    }
+
+    public void Start() {
+        SetIsWalkableNodes(false);
     }
 
     private void SetIsWalkableNodes(bool isWalkable) {

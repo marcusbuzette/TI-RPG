@@ -85,6 +85,8 @@ MonoBehaviour:
   hasPerformedSkill: 0
   modifiedBy: []
   isUnitTurn: 0
+  projectilePrefab: {fileID: 0}
+  projectilePoint: {fileID: 0}
   enemyFocus: 0
 --- !u!114 &6321738193073905294
 MonoBehaviour:
@@ -102,8 +104,8 @@ MonoBehaviour:
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  rotSpeed: 180
   moveSpeed: 8
-  rotateSpeed: 4
   stopDistance: 0.1
   maxMoveDistance: 6
 --- !u!65 &5364656213574811173
@@ -139,10 +141,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5f1e064203584e4781e4f11b8511645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthState: 0
   healthPoints: 100
   maxHealthPoints: 100
   animator: {fileID: 0}
-  damageSFX: 
+  faintText: {fileID: 0}
+  damageSFX: BoarHurt
+  deathSFX: 
+  missSFX: Esquiva
+  damagedBy: []
 --- !u!114 &984923278628091388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,13 +166,13 @@ MonoBehaviour:
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  rotSpeed: 180
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 0
   maxHitDistance: 1
   hitDamage: 40
-  rotateSpeed: 10
-  meleeSFX: 
+  meleeSFX: BoarBatendo
   Attack: 1
 --- !u!95 &7808786601691350061
 Animator:

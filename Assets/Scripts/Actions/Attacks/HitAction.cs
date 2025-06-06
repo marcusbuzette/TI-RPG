@@ -15,7 +15,7 @@ public class HitAction : BaseAction {
     private Unit targetUnit;
 
     private void Start() {
-        obstaclesLayerMask = LayerMask.GetMask("Obstacles"); //add layer mask to don't shoot through obstacles
+        obstaclesLayerMask = LayerMask.GetMask("Obstacles"); 
     }
 
     public override string GetActionName() {
@@ -39,7 +39,6 @@ public class HitAction : BaseAction {
     protected void Damage() {
         // animator?.SetTrigger("Attack");
         unit.PlayAnimation("Attack");
-
         targetUnit?.Damage(hitDamage, false, this.GetComponent<Unit>());
     }
 
@@ -73,6 +72,10 @@ public class HitAction : BaseAction {
                 Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition);
 
                 if (targetUnit.IsEnemy() == unit.IsEnemy()) {
+                    continue;
+                }
+
+                if (targetUnit.GetHealthSystem().GetHealthState() == HealthSystem.HealthState.FAINT) {
                     continue;
                 }
 

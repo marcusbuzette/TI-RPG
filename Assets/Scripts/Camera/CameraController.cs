@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using System;
 using static UnityEngine.EventSystems.EventTrigger;
 using TMPro;
+using Unity.Mathematics;
 
 public class CameraController : MonoBehaviour
 {
@@ -25,16 +26,31 @@ public class CameraController : MonoBehaviour
 
     private Vector3 targetFollowOffset;
     private CinemachineTransposer cinemachineTransposer;
+    private CinemachineImpulseSource cinemachineImpulseSource;
 
-    [Header("Limitador de movimento"), SerializeField]
+    [Space, Header("Limitador de movimento"), SerializeField]
     private Transform topLimit, bottomLimit, rightLimit, leftLimit;
 
+    [Space, Header("Zoom em combate"), SerializeField]
+    private float zoomDuration = 0.3f;
+
+    [Space, Header("Camera Vibração"), SerializeField]
+    public float
+        shakeDuration = 0.3f,
+        shakeAmplitude = 2f,
+        shakeFrequency = 2f;
+
+    private CinemachineBasicMultiChannelPerlin noise;
+    private Coroutine shakeCoroutine;
+
     private bool exploreMoviment;
-    [SerializeField] private bool lockMoviment = false, stopMove = true;
-    [SerializeField] private Transform playerUnit;
+    private bool lockMoviment = false, stopMove = true;
+    [Space, SerializeField] private Transform playerUnit;
     public int movimentArroundPlayerArea = 2;
 
     float distanceBeforeMoving, distanceAfterMoving;
+
+    private Coroutine zoomCoroutine;
 
     Vector3 unitTurnPos;
 
@@ -43,10 +59,17 @@ public class CameraController : MonoBehaviour
         LevelGrid.Instance.OnGameModeChanged += ChangeMovimentMode;
         SetGameMode();
 
+        if (LevelGrid.Instance.IsInBattleMode()) FOV(50);
+        else FOV(60);
+
+        TurnSystem.Instance.onTurnChange += CheckIsPlayerTurn;
         UnitActionSystem.Instance.OnUnitMovedInExploreMode += GoToPositionUnitPos;
         UnitActionSystem.Instance.OnSelectedUnitChanged += SetSelectedUnit;
+        UnitActionSystem.Instance.OnActionStarted += FollowPlayerOnAction;
+        BaseAction.OnAnyActionCompleted += PlayerStopAction;
 
         cinemachineTransposer = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineTransposer>();
+        noise = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         targetFollowOffset = cinemachineTransposer.m_FollowOffset;
         TurnSystem.Instance.SetCameraController(this);
     }
@@ -56,12 +79,11 @@ public class CameraController : MonoBehaviour
             lockMoviment = MoveTo(playerUnit.position);
         }
         else if (TurnSystem.Instance.IsPlayerTurn() && !lockMoviment && !stopMove) {
-            transform.position = playerUnit.position;
+            if (playerUnit != null) transform.position = playerUnit.position;
+            else playerUnit = UnitActionSystem.Instance.GetSelectedUnit().transform;
         }
 
-        if (TurnSystem.Instance.IsPlayerTurn()) {
-            Zoom();
-            Rotation();
+        if (TurnSystem.Instance.IsPlayerTurn() && !lockMoviment) {
             if (stopMove) Movement();
             if (exploreMoviment) FollowPlayerUnit();
         }
@@ -71,6 +93,9 @@ public class CameraController : MonoBehaviour
         else if (!TurnSystem.Instance.IsPlayerTurn() && !lockMoviment) {
             transform.position = TurnSystem.Instance.GetTurnUnit().GetWorldPosition();
         }
+
+        Zoom();
+        Rotation();
     }
 
     void Movement()
@@ -160,6 +185,10 @@ public class CameraController : MonoBehaviour
 
     public void ChangeMovimentMode(object sender, EventArgs e) {
         exploreMoviment = !exploreMoviment;
+
+        if (LevelGrid.Instance.IsInBattleMode()) FOV(50);
+        else FOV(60);
+
         playerUnit = null;
 
         var battleZone = LevelGrid.Instance.GetCurrentBattleZone();
@@ -180,6 +209,7 @@ public class CameraController : MonoBehaviour
     }
 
     private void FollowPlayerUnit() {
+
         if (playerUnit == null) { playerUnit = UnitActionSystem.Instance.GetSelectedUnit().transform; }
 
         topLimit.position = new Vector3(
@@ -201,7 +231,7 @@ public class CameraController : MonoBehaviour
     }
 
     private void UnitStopMove(object sender, EventArgs e) {
-        if ((sender as BaseAction).GetUnit() == playerUnit) { 
+        if ((sender as BaseAction).GetUnit().transform == playerUnit) {
             stopMove = true;
         }
     }
@@ -227,6 +257,75 @@ public class CameraController : MonoBehaviour
     }
 
     public void SetSelectedUnit(object sender, EventArgs e) {
-        playerUnit = UnitActionSystem.Instance.GetSelectedUnit().transform;
+        playerUnit = UnitActionSystem.Instance.GetSelectedUnit()?.transform;
+    }
+
+    public void FollowPlayerOnAction(object sender, EventArgs e) {
+        if (TurnSystem.Instance.IsPlayerTurn() && LevelGrid.Instance.IsInBattleMode()) {
+            FOV(40);
+            lockMoviment = true;
+            stopMove = false;
+        }
+    }
+
+    public void PlayerStopAction(object sender, EventArgs e) {
+        if (TurnSystem.Instance.IsPlayerTurn() && LevelGrid.Instance.IsInBattleMode()) {
+            FOV(50);
+            lockMoviment = false;
+            stopMove = true;
+        }
+    }
+    
+    public void CheckIsPlayerTurn(object sender, EventArgs e) {
+        if (!TurnSystem.Instance.IsPlayerTurn() && LevelGrid.Instance.IsInBattleMode()) {
+            FOV(50);
+            lockMoviment = false;
+            stopMove = true;
+        }
+    }
+
+    public void FOV(float _fov) {
+        StartZoom(_fov);
+    }
+
+    private void StartZoom(float targetFOV) {
+        if (zoomCoroutine != null)
+            StopCoroutine(zoomCoroutine);
+
+        zoomCoroutine = StartCoroutine(ZoomRoutine(targetFOV));
+    }
+
+    private IEnumerator ZoomRoutine(float targetFOV) {
+        float startFOV = cinemachineVirtualCamera.m_Lens.FieldOfView;
+        float elapsed = 0f;
+
+        while (elapsed < zoomDuration) {
+            elapsed += Time.deltaTime;
+            float t = elapsed / zoomDuration;
+            cinemachineVirtualCamera.m_Lens.FieldOfView = Mathf.Lerp(startFOV, targetFOV, t);
+            yield return null;
+        }
+
+        cinemachineVirtualCamera.m_Lens.FieldOfView = targetFOV;
+    }
+
+    public void Shake() {
+        Debug.Log(noise);
+        if (shakeCoroutine != null)
+            StopCoroutine(shakeCoroutine);
+
+        shakeCoroutine = StartCoroutine(ShakeRoutine());
+    }
+
+    private IEnumerator ShakeRoutine() {
+        if (noise == null) yield break;
+
+        noise.m_AmplitudeGain = shakeAmplitude;
+        noise.m_FrequencyGain = shakeFrequency;
+
+        yield return new WaitForSeconds(shakeDuration);
+
+        noise.m_AmplitudeGain = 0;
+        noise.m_FrequencyGain = 0;
     }
 }

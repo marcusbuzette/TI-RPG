@@ -9,20 +9,12 @@ public class SpinAction : BaseAction {
     [SerializeField] private int maxAttackDistance = 1;
     [SerializeField] private int attackAttenuation = 2;
     [SerializeField] private int hitDamage = 30;
-    private float totalSpinAmmount = 0;
-    [SerializeField] private float MAX_SPIN = 360f;
-
+    public string tornadoSFX;
 
     public override void Action() {
-        float spinAddAmmount = 360f * Time.deltaTime;
-        transform.eulerAngles += new Vector3(0, spinAddAmmount, 0);
-        totalSpinAmmount += spinAddAmmount;
-        if (totalSpinAmmount > MAX_SPIN) {
-            Debug.Log(GetComponent<Unit>().GetUnitStats().GetAttack() - attackAttenuation);
-            foreach (Unit target in targetsList) {
+         unit.PlayAnimation("SpinAttack");
+        foreach (Unit target in targetsList) {
             target.Damage(this.hitDamage, false, this.GetComponent<Unit>());
-        }
-            totalSpinAmmount = 0;
             ActionFinish();
         }
     }
@@ -62,6 +54,9 @@ public class SpinAction : BaseAction {
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         ActionStart(onActionComplete);
+        if (!string.IsNullOrEmpty(tornadoSFX)) {
+            AudioManager.instance?.PlaySFX(tornadoSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
+        }
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {

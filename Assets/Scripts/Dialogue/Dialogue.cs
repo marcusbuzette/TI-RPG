@@ -1,11 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Dialogue : MonoBehaviour
-{
-    [TextArea(1,3)]
-    public string[] sentences;
-    public string name;
+[CreateAssetMenu(menuName = "Dialogue")]
+public class Dialogue : ScriptableObject {
+
+    [Serializable] public struct DialogueStruct {
+        [TextArea(1, 3)]
+        public string sentences;
+        public string name;
+        public Sprite image;
+    }
+
+    public DialogueStruct[] dialogue;
+
+
+    
+    
 }

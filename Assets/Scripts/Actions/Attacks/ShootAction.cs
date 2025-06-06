@@ -72,7 +72,12 @@ public class ShootAction : BaseAction
                     continue;
                 }
 
+
                 Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition);
+
+                if (targetUnit.GetHealthSystem().GetHealthState() == HealthSystem.HealthState.FAINT) {
+                    continue;
+                }
 
                 if (targetUnit.IsEnemy() == unit.IsEnemy())
                 {
@@ -128,7 +133,6 @@ public class ShootAction : BaseAction
 
     private void Shoot()
     {
-        Debug.Log("SHOOT");
         targetUnit.Damage(shootDamage, true, this.GetComponent<Unit>());
         // animator?.SetTrigger("Attack");
         unit.PlayAnimation("Attack");
