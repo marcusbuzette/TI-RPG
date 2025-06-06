@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,10 +28,12 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
     }
 
     void Start() {
-        this.StartTutorial();
+        StartCoroutine(StartTutorial());
+
     }
 
-    public void StartTutorial() {
+    public IEnumerator StartTutorial() {
+        yield return new WaitForSeconds(1.7f);
         this.ChangeLevelQuestState(QuestState.IN_PROGRESS);
         this.tutorialQuest.InstantiateCurrentQuestStep(this.transform);
         this.onTutorialStarted?.Invoke(this, EventArgs.Empty);
