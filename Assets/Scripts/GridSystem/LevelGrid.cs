@@ -36,8 +36,16 @@ public class LevelGrid : MonoBehaviour {
         else { Instance = this; }
 
         foreach (AddSquaredZone item in squaredZoneList) {
-            for (int x = item.startX; x <= item.endX; x++) {
-                for (int z = item.startZ; z <= item.endZ; z++) {
+            Debug.Log(squaredZoneList.Count);
+            for (int x = item.startX; x <= item.endX; x++)
+            {
+                for (int z = item.startZ; z <= item.endZ; z++)
+                {
+                    Debug.Log(item.zoneNumber);
+                    if (item.zoneNumber == 4)
+                    {
+                        Debug.Log("Zona do Lobisomem reconhecida");
+                    }
                     zoneList.Add(new GridPosition(x, z, item.floor, item.zoneNumber));
                 }
             }

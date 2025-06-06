@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1150092, g: 0.3315062, b: 0.7165732, a: 1}
+  m_IndirectSpecularColor: {r: 0.11503965, g: 0.33133066, b: 0.71608543, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2064,8 +2064,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 128644033}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.42415538, y: 0.000000015581922, z: -0.0000000072981816, w: 0.90558946}
-  m_LocalPosition: {x: 3.54, y: 12, z: -3.4000003}
+  m_LocalRotation: {x: 0.40455356, y: 0.00000002225333, z: -0.000000009844203, w: 0.9145143}
+  m_LocalPosition: {x: 3.54, y: 11, z: -3.4000003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5783,7 +5783,7 @@ MonoBehaviour:
   width: 27
   height: 25
   cellSize: 2
-  floorAmount: 1
+  floorAmount: 2
   levelQuest:
     info: {fileID: 11400000, guid: 57dcf3d3707424972893521e23cee2bc, type: 2}
     state: 0
@@ -5791,6 +5791,7 @@ MonoBehaviour:
   squaredZoneList:
   - {fileID: 11400000, guid: af022b46cdd074b5c8c759cd447643ef, type: 2}
   - {fileID: 11400000, guid: deb3382d7c0e8474680da64ed284dc3d, type: 2}
+  - {fileID: 11400000, guid: f5edbfd0b856943d995a15a6c7fe957d, type: 2}
   zoneList: []
 --- !u!4 &479836685
 Transform:
@@ -5892,7 +5893,7 @@ MonoBehaviour:
   uicontroller: {fileID: 0}
   dinheiro: 0
   currentLevel: 0
-  debugMode: 0
+  debugMode: 1
   debugPathFindingMode: 0
 --- !u!4 &491520919
 Transform:
@@ -12776,8 +12777,10 @@ MonoBehaviour:
   bottomLimit: {fileID: 1297124526}
   rightLimit: {fileID: 1297124526}
   leftLimit: {fileID: 501912728}
-  lockMoviment: 0
-  stopMove: 1
+  zoomDuration: 0.3
+  shakeDuration: 0.3
+  shakeAmplitude: 2
+  shakeFrequency: 2
   playerUnit: {fileID: 0}
   movimentArroundPlayerArea: 5
 --- !u!4 &1115740123
@@ -13211,10 +13214,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1898941973}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: -15}
-  m_SizeDelta: {x: 280, y: 30}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1156067440
 MonoBehaviour:
@@ -16764,8 +16767,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1618477024}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.42415538, y: 0.000000015581922, z: -0.0000000072981816, w: 0.90558946}
-  m_LocalPosition: {x: 3.54, y: 12, z: -3.4000003}
+  m_LocalRotation: {x: 0.40455356, y: 0.00000002225333, z: -0.000000009844203, w: 0.9145143}
+  m_LocalPosition: {x: 3.54, y: 11, z: -3.4000003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20904,6 +20907,7 @@ MonoBehaviour:
   - {fileID: 571105440}
   - {fileID: 498868531}
   transformTime: 2
+  ponteSFX: 
 --- !u!4 &2069836633
 Transform:
   m_ObjectHideFlags: 0

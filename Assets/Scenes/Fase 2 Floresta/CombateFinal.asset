@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoneNumber: 4
   startX: 3
-  startZ: 22
+  startZ: 18
   floor: 0
   endX: 11
-  endZ: 18
+  endZ: 22
   spawnPoints:
   - x: 12
     z: 18

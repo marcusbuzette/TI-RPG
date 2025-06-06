@@ -10,24 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d6e95434bfed844f998734c810b9a052, type: 3}
-  m_Name: Combate 2
+  m_Name: AddSquaredZoneGrid 1
   m_EditorClassIdentifier: 
   zoneNumber: 2
-  startX: 13
-  startZ: 18
+  startX: 1
+  startZ: 1
   floor: 1
-  endX: 19
-  endZ: 22
-  spawnPoints:
-  - x: 14
-    z: 18
-    floor: 1
-  - x: 15
-    z: 18
-    floor: 1
-  - x: 16
-    z: 18
-    floor: 1
-  - x: 17
-    z: 18
-    floor: 1
+  endX: 4
+  endZ: 4
+  spawnPoints: []
