@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class DialogueController : MonoBehaviour
 {
     public static DialogueController dialogueController;
     private Queue<string> sentences;
-    public Text NameTXT;
-    public Text DialogueTXT;
+    public TMP_Text NameTXT;
+    public TMP_Text DialogueTXT;
     public Animator animator;
     public bool isDialogueOpened = false;
 
