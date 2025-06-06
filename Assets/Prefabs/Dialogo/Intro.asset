@@ -10,9 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd39ca780161d084ebf3ffce4e2c7e15, type: 3}
-  m_Name: Hub1
+  m_Name: Intro
   m_EditorClassIdentifier: 
   dialogue:
-  - sentences: 
-    name: 
+  - sentences: "Os javalis est\xE3o logo a frente..."
+    name: Heroi
+    image: {fileID: 0}
+  - sentences: "N\xE3o vamos deixar eles escaparem dessa vez!"
+    name: Heroi
+    image: {fileID: 0}
+  - sentences: Vou flanquea-los pela lateral
+    name: Arqueira
     image: {fileID: 0}

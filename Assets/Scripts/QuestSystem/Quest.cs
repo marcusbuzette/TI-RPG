@@ -44,4 +44,8 @@ public class Quest {
     }
 
     public GameObject GetCurrentStepReference() {return this.currentStepReference;}
+
+    public void SkipQuestsStepToIndex(int index) {
+        this.currentQuestStepIndex = index;
+    }
 }

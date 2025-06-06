@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd39ca780161d084ebf3ffce4e2c7e15, type: 3}
   m_Name: Tutorial
   m_EditorClassIdentifier: 
-  sentences:
-  - "Boa ca\xE7ada pessoal!"
-  - "Ouvi falar que exite um urso reivoso nessa regi\xE3o.... Deve valer muito dinheiro
-    no mercado"
-  name: Lyra
+  dialogue:
+  - sentences: "Boa ca\xE7ada pessoal!"
+    name: Lyra
+    image: {fileID: 0}
+  - sentences: "Ouvi dizer que h\xE1 um Urso Raivoso aqui por perto... Sua recompesa
+      deve valer muito no mercado!"
+    name: Lyra
+    image: {fileID: 0}

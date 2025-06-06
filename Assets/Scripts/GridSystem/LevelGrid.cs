@@ -237,4 +237,10 @@ public class LevelGrid : MonoBehaviour {
         if(gameMode == GameMode.BATTLE) return true;
         return false;
     }
+
+    public GridPosition GetGridPositionFromXZValues(int x, int z, int floor) {
+        GridPosition gpAux = new GridPosition(x, z, floor);
+        return GetGridSystem(floor).GetGridObject(gpAux).GetGridPosition();
+
+    }
 }
