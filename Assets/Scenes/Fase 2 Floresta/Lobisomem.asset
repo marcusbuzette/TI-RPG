@@ -17,17 +17,17 @@ MonoBehaviour:
   startZ: 18
   floor: 0
   endX: 11
-  endZ: 22
+  endZ: 23
   spawnPoints:
-  - x: 12
-    z: 18
+  - x: 9
+    z: 22
     floor: 0
-  - x: 13
-    z: 18
+  - x: 9
+    z: 21
     floor: 0
-  - x: 14
-    z: 18
+  - x: 9
+    z: 20
     floor: 0
-  - x: 15
-    z: 18
+  - x: 9
+    z: 19
     floor: 0

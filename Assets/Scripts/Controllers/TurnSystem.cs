@@ -254,7 +254,10 @@ public class TurnSystem : MonoBehaviour {
 
         onOrderChange?.Invoke(this, EventArgs.Empty);
     }
-
+    public void NotifyOrderChange()
+    {
+        onOrderChange?.Invoke(this, EventArgs.Empty);
+    }
     //test
     public Unit GetPlayerUnitToExplore() {
         Unit tryTofindHero = unitiesOrderList.Find((u) => u.unitId == "hero");
