@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -85,4 +86,6 @@ public class ActionButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
         transform.localScale = targetScale; // Garante que termina exatamente no tamanho certo
     }
+
+    public Button GetButton() { return button; }
 }

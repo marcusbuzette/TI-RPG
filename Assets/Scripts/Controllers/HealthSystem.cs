@@ -66,6 +66,8 @@ public class HealthSystem : MonoBehaviour {
             this.damagedBy.Add(attackedBy);
         }
 
+        if(!GetComponent<Unit>().IsEnemy())TurnSystem.Instance.GetCameraController().Shake();
+
         // animator?.SetTrigger("TookDamage");
         GetComponent<Unit>().PlayAnimation("TookDamage");
 
