@@ -2,10 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using Random = UnityEngine.Random;
-using static System.Collections.Specialized.BitVector32;
 
 public class MoveAction : BaseAction {
 
@@ -25,6 +22,8 @@ public class MoveAction : BaseAction {
     // private bool changedBattleZone = false;
     private int startZone = 0;
     private bool hasStartZone = false;
+
+    public EventHandler OnFinishedWalking;
 
     private bool inMouseEvent = false;
 
@@ -97,6 +96,7 @@ public class MoveAction : BaseAction {
                 ActionFinish();
                 this.hasStartZone = false;
                 unit.EndAnimation("IsWalking", true);
+                OnFinishedWalking?.Invoke(this, EventArgs.Empty);
                 // animator?.SetBool("IsWalking", false);
             }
 
