@@ -9,6 +9,8 @@ using static System.Collections.Specialized.BitVector32;
 
 public class MoveAction : BaseAction {
 
+    public PathArrowMesh currentArrow;
+
     [SerializeField] private float moveSpeed = 4f;
     private float rotateSpeed = 4f;
     [SerializeField] private float stopDistance = .05f;
@@ -24,7 +26,9 @@ public class MoveAction : BaseAction {
     private int startZone = 0;
     private bool hasStartZone = false;
 
+    private bool inMouseEvent = false;
 
+    List<GridPosition> gridList = new List<GridPosition>();
 
     protected override void Awake() {
         base.Awake();
@@ -33,6 +37,35 @@ public class MoveAction : BaseAction {
 
     private void Start() {
         this.maxMoveDistance = GetComponent<Unit>().GetUnitStats().GetMaxMove(unit);
+        if(currentArrow == null) currentArrow = PathFinding.Instance.pathArrow.GetComponent<PathArrowMesh>();
+    }
+
+    private void Update() {
+        if (!unit.IsEnemy() && !unit.GetHasMoved() && !isActive) {
+            if (UnitActionSystem.Instance.GetSelectedAction() == this) {
+                if (TurnSystem.Instance.GetTurnUnit() == unit && LevelGrid.Instance.IsInBattleMode()) {
+                    if (!inMouseEvent) {
+                        inMouseEvent = true;
+                        GridSystemVisual.Instance.OnMouseChangeGridPosition += UpdateArrowPath;
+                    }
+                }
+            }
+            else if (inMouseEvent) {
+                inMouseEvent = false;
+                currentArrow.gameObject.SetActive(false);
+                GridSystemVisual.Instance.OnMouseChangeGridPosition -= UpdateArrowPath;
+            }
+        }
+        else if (inMouseEvent) {
+            inMouseEvent = false;
+            currentArrow.gameObject.SetActive(false);
+            GridSystemVisual.Instance.OnMouseChangeGridPosition -= UpdateArrowPath;
+        }
+
+        if (!isActive) {
+            return;
+        }
+        Action();
     }
 
     public override void Action() {
@@ -78,6 +111,9 @@ public class MoveAction : BaseAction {
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
+
+        if (currentArrow.gameObject.activeSelf) currentArrow.gameObject.SetActive(false);
+
         if (GetComponent<Unit>().GetGridPosition() == mouseGridPosition) return;
         List<GridPosition> pathGridPositionList = PathFinding.Instance.FindPath(unit.GetGridPosition(), mouseGridPosition, out int pathLenght);
 
@@ -236,5 +272,16 @@ public class MoveAction : BaseAction {
 
     public List<Vector3> GetMovePathList() {
         return this.positionList;
+    }
+
+    private void DestroyPathArrow() {
+        Destroy(currentArrow);
+    }
+
+    public void UpdateArrowPath(object sender, EventArgs e) {
+        currentArrow.gameObject.SetActive(true);
+
+        gridList = PathFinding.Instance.FindPath(unit.GetGridPosition(), LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition()), out int pathLenght);
+        currentArrow.DrawPath(gridList);
     }
 }
