@@ -31,36 +31,26 @@ public class LevelGrid : MonoBehaviour {
     private int currentBattleZone = 0;
 
 
-    private void Awake()
-    {
+    private void Awake() {
         if (Instance != null) { Destroy(gameObject); }
         else { Instance = this; }
-        Debug.Log($"LevelGrid Awake: Total de Scriptable Objects de Zona no Inspector: {squaredZoneList.Count}"); // Adicione esta linha
 
-
-        foreach (AddSquaredZone item in squaredZoneList)
-        {
-            Debug.Log($"LevelGrid: Processando zona {item.name} (Zone Number: {item.zoneNumber})"); // Adicione esta linha
-            if (zoneStartPositions.ContainsKey(item.zoneNumber))
-            {
-                Debug.LogWarning($"LevelGrid: Zona com número {item.zoneNumber} já existe. Ignorando a definição duplicada de spawn points para esta zona. Por favor, verifique seus Scriptable Objects AddSquaredZone para garantir que os 'zoneNumber' sejam únicos.");
-                continue;
-            }
-
+        foreach (AddSquaredZone item in squaredZoneList) {
+            Debug.Log(squaredZoneList.Count);
             for (int x = item.startX; x <= item.endX; x++)
             {
                 for (int z = item.startZ; z <= item.endZ; z++)
                 {
-                    GridPosition newGridPos = new GridPosition(x, z, item.floor, item.zoneNumber);
-                    if (!zoneList.Contains(newGridPos))
+                    Debug.Log(item.zoneNumber);
+                    if (item.zoneNumber == 4)
                     {
-                        zoneList.Add(newGridPos);
+                        Debug.Log("Zona do Lobisomem reconhecida");
                     }
+                    zoneList.Add(new GridPosition(x, z, item.floor, item.zoneNumber));
                 }
             }
             List<GridPosition> spListAux = new List<GridPosition>();
-            foreach (ZoneSpawnPoint sp in item.spawnPoints)
-            {
+            foreach (ZoneSpawnPoint sp in item.spawnPoints) {
                 spListAux.Add(new GridPosition(sp.x, sp.z, sp.floor, item.zoneNumber));
             }
             zoneStartPositions.Add(item.zoneNumber, spListAux);
@@ -69,16 +59,13 @@ public class LevelGrid : MonoBehaviour {
 
         gridSystemList = new List<GridSystem<GridObject>>();
 
-        for (int floor = 0; floor < floorAmount; floor++)
-        {
+        for (int floor = 0; floor < floorAmount; floor++) {
             GridSystem<GridObject> gridSystem = new GridSystem<GridObject>(width, height, cellSize, floor, FLOOR_HEIGHT,
             (GridSystem<GridObject> g, GridPosition gridPosition) => new GridObject(g, gridPosition), zoneList);
             if (GameController.controller.GetDebugMode()) gridSystem.CreateDebugObjects(gridDebugObjectPrefab);
 
             gridSystemList.Add(gridSystem);
         }
-            Debug.Log($"LevelGrid Awake: Número final de zonas únicas processadas: {zoneStartPositions.Count}"); // Adicione esta linha
-
     }
 
     private void Start() {
@@ -257,5 +244,11 @@ public class LevelGrid : MonoBehaviour {
     public bool IsInBattleMode() {
         if(gameMode == GameMode.BATTLE) return true;
         return false;
+    }
+
+    public GridPosition GetGridPositionFromXZValues(int x, int z, int floor) {
+        GridPosition gpAux = new GridPosition(x, z, floor);
+        return GetGridSystem(floor).GetGridObject(gpAux).GetGridPosition();
+
     }
 }

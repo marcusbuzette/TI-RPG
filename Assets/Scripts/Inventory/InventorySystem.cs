@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
 
 
 public class InventorySystem : MonoBehaviour, IDataPersistence {
+    public event EventHandler OnInventoryIsEmpty;
+    public event EventHandler OnNewItemOnInventory;
+
     private SerializableDictionary<InventoryItemData, SerializableInventoryItem> m_itemDictionary;
     [SerializeField] public List<SerializableInventoryItem> inventory;
     public static InventorySystem inventorySystem;
-
 
     private void Awake() {
         if (inventorySystem == null) {
@@ -23,6 +26,8 @@ public class InventorySystem : MonoBehaviour, IDataPersistence {
     }
 
     public void Add(InventoryItemData referenceData) {
+        OnNewItemOnInventory.Invoke(this, EventArgs.Empty);
+
         if (m_itemDictionary.TryGetValue(referenceData, out SerializableInventoryItem value)) {
             value.AddToStack();
         }
@@ -45,6 +50,10 @@ public class InventorySystem : MonoBehaviour, IDataPersistence {
                 inventory.Remove(value);
                 m_itemDictionary.Remove(referenceData);
             }
+        }
+
+        if (IsEmpty()) {
+            OnInventoryIsEmpty.Invoke(this, EventArgs.Empty);
         }
     }
 

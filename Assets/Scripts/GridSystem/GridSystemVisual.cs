@@ -8,6 +8,9 @@ public class GridSystemVisual : MonoBehaviour {
     public static GridSystemVisual Instance { get; private set; }
     public LayerMask obstaclesLayerMask;
     public GameObject mouseGridObject;
+    private Vector3 beforeMousePos, afterMousePos;
+
+    public event EventHandler OnMouseChangeGridPosition;
 
     [Serializable]
     public struct GridVisualTypeMaterial {
@@ -234,7 +237,13 @@ public class GridSystemVisual : MonoBehaviour {
 
         if (gridMousePos != null &&
             TurnSystem.Instance.IsPlayerTurn()) {
+            beforeMousePos = mouseGridObject.transform.position;
             mouseGridObject.transform.position = LevelGrid.Instance.GetWorldPosition(gridMousePos);
+            afterMousePos = mouseGridObject.transform.position;
+
+            if(beforeMousePos != afterMousePos) {
+                OnMouseChangeGridPosition?.Invoke(this, EventArgs.Empty);
+            }
         }
     }
 

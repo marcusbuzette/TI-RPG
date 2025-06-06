@@ -13,6 +13,7 @@ TagManager:
   - HUB_Campfire
   - SkillTree
   - UnitActionSystemUI
+  - UICanvas
   layers:
   - Default
   - TransparentFX

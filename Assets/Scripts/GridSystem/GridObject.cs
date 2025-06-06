@@ -45,4 +45,6 @@ public class GridObject {
             return null;
         }
     }
+
+    public GridPosition GetGridPosition() {return this.gridPosition;}
 }

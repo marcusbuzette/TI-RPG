@@ -25,6 +25,8 @@ public class PathFinding : MonoBehaviour {
     private List<GridSystem<PathNode>> gridSystemList;
     private List<PathFindingLink> pathFindingLinkList;
 
+    public Transform pathArrow;
+
     private void Awake() {
         if (Instance != null) { Destroy(gameObject); }
         else { Instance = this; }

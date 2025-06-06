@@ -12,9 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd39ca780161d084ebf3ffce4e2c7e15, type: 3}
   m_Name: Hub1
   m_EditorClassIdentifier: 
-  sentences:
-  - Ha 27 anos o Rei teve dois filhos gemeos.
-  - Um deles herdou suas capacidades magicas, o outro pouco se sabe sobre.
-  - Uns dizem que nao sobreviveu, outros dizem que foi abandodado....
-  - Desde a morte de seu pai, o novo Rei esta fazendo varreduras em todo reino
-  name: Fofoqueiro
+  dialogue:
+  - sentences: Ha 27 anos o Rei teve dois filhos gemeos
+    name: Fofoqueiro
+    image: {fileID: 0}
+  - sentences: Um deles herdou suas capacidades magicas, o outro pouco se sabe sobre.
+    name: Fofoqueiro
+    image: {fileID: 0}
+  - sentences: Uns dizem que nao sobreviveu, outros dizem que foi abandodado....
+    name: Fofoqueiro
+    image: {fileID: 0}
+  - sentences: Desde a morte de seu pai, o novo Rei esta fazendo varreduras em todo
+      reino
+    name: Fofoqueiro
+    image: {fileID: 0}

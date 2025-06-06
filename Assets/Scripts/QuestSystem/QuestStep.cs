@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class QuestStep : MonoBehaviour {
 
-    private bool isFinished = false;
+    protected bool isFinished = false;
     [SerializeField] protected bool hasDinamicText = false;
     [SerializeField] protected string stepInstruction;
 
-    protected void FinishQuestStep() {
+    virtual protected void FinishQuestStep() {
         if (!this.isFinished) isFinished = true;
         QuestManager.Instance.AdvanceQuest();
         Destroy(this.gameObject);

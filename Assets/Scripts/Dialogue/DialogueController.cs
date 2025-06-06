@@ -9,7 +9,7 @@ using TMPro;
 public class DialogueController : MonoBehaviour
 {
     public static DialogueController dialogueController;
-    private Queue<string> sentences;
+    private Queue<Dialogue.DialogueStruct> dialogueQueue;
     public TMP_Text NameTXT;
     public TMP_Text DialogueTXT;
     public Animator animator;
@@ -28,31 +28,31 @@ public class DialogueController : MonoBehaviour
     }
     void Start()
     {
-        sentences = new Queue<string>();
+        dialogueQueue = new Queue<Dialogue.DialogueStruct>();
     }
 
     public void StartDialogue(Dialogue dialogue){
         isDialogueOpened = true;
         animator?.SetBool("IsOpen", isDialogueOpened);
-        NameTXT.text = dialogue.name;
-        sentences.Clear();
+        dialogueQueue.Clear();
 
-        foreach (string sentence in dialogue.sentences){
-            sentences.Enqueue(sentence);
+        foreach (Dialogue.DialogueStruct d in dialogue.dialogue){
+            dialogueQueue.Enqueue(d);
         }
 
         DisplayNextSentence();
     }
 
     public void DisplayNextSentence(){
-        if(sentences.Count == 0){
+        if(dialogueQueue.Count == 0){
             EndDialogue();
             return;
         }
-        string sentence = sentences.Dequeue();
+        Dialogue.DialogueStruct d = dialogueQueue.Dequeue();
         StopAllCoroutines();
-        StopCoroutine(TypeSentence(sentence));
-        StartCoroutine(TypeSentence(sentence));
+        StopCoroutine(TypeSentence(d.sentences));
+        NameTXT.text = d.name;
+        StartCoroutine(TypeSentence(d.sentences));
     }
 
     IEnumerator TypeSentence(string sentence){
