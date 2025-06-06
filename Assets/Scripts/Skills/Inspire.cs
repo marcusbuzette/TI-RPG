@@ -12,7 +12,7 @@ public class Inspire : BaseSkills {
 
     public override void Action() {
 
-        
+        unit.PlayAnimation("Motivate");
         foreach (Unit target in targetsList) {
             target.GetModifiers().Buff(buffType, buffAttackAmount, target, this);
         }

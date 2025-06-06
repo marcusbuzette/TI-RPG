@@ -9,19 +9,12 @@ public class SpinAction : BaseAction {
     [SerializeField] private int maxAttackDistance = 1;
     [SerializeField] private int attackAttenuation = 2;
     [SerializeField] private int hitDamage = 30;
-    private float totalSpinAmmount = 0;
-    [SerializeField] private float MAX_SPIN = 360f;
     public string tornadoSFX;
 
     public override void Action() {
-        float spinAddAmmount = 360f * Time.deltaTime;
-        transform.eulerAngles += new Vector3(0, spinAddAmmount, 0);
-        totalSpinAmmount += spinAddAmmount;
-        if (totalSpinAmmount > MAX_SPIN) {
-            foreach (Unit target in targetsList) {
+         unit.PlayAnimation("SpinAttack");
+        foreach (Unit target in targetsList) {
             target.Damage(this.hitDamage, false, this.GetComponent<Unit>());
-        }
-            totalSpinAmmount = 0;
             ActionFinish();
         }
     }
