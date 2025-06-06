@@ -23,6 +23,8 @@ public class UnitActionSystemUI : MonoBehaviour {
         Unit.OnAnyActionPerformed += Unit_OnAnyActionPerformed;
         UnitActionSystem.Instance.OnInventoryClicked += UnitActionSystem_OnInventoryClicked;
         LevelGrid.Instance.OnGameModeChanged += LevelGrid_OnGameModeChanged;
+        InventorySystem.inventorySystem.OnInventoryIsEmpty += DisableInventory;
+        InventorySystem.inventorySystem.OnNewItemOnInventory += EnableInventory;
         unitActionUIAnimator = GetComponent<Animator>();
 
         if (!LevelGrid.Instance.IsInBattleMode()) CreateUnitActionButtonsExploreMode(); 
@@ -206,6 +208,18 @@ public class UnitActionSystemUI : MonoBehaviour {
 
         foreach (Transform buttonTransform in skillsButtonsContainer) {
             Destroy(buttonTransform.gameObject);
+        }
+    }
+
+    public void EnableInventory(object sender, EventArgs e) {
+        if (!inventoyButton.GetComponent<ActionButtonUI>().GetButton().interactable) {
+            inventoyButton.GetComponent<ActionButtonUI>().EnableActionButton();
+        }
+    }
+
+    public void DisableInventory(object sender, EventArgs e) {
+        if (!inventoyButton.GetComponent<ActionButtonUI>().GetButton().interactable) {
+            inventoyButton.GetComponent<ActionButtonUI>().EnableActionButton();
         }
     }
 }

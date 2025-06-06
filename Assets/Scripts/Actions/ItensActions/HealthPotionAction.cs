@@ -78,6 +78,7 @@ public class HealthPotionAction : BaseAction {
         this.actionType = ActionType.ITEM;
         this.unit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
         this.healthSystem = unit.GetComponent<HealthSystem>();
+        unit.PlayAnimation("Item");
         ActionStart(onActionComplete);
         AudioManager.instance?.PlaySFX("Potion");
         Action();
