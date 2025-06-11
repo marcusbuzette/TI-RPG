@@ -39,7 +39,8 @@ public class DisplayTutorialInfoStep : TutorialStep {
 
     private void NextMessage() {
         messageIndex++;
-        if (messageIndex > messages.Length) {
+        if (messageIndex >= messages.Length) {
+            if (currentMessage != null) Destroy(currentMessage);
             FinishQuestStep();
         }
         else {

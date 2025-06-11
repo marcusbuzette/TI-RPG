@@ -16,7 +16,10 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
     private bool isTutorialFinished = false;
 
     private bool hasShowComboInfo = false;
+    [SerializeField] private GameObject comboInfoStep;
     private bool hasShowExploreMode = false;
+    private bool hasShownSkillTree = false;
+    [SerializeField] private bool isWaitingStep = false;
 
     void Awake() {
         if (Instance == null) {
@@ -28,8 +31,9 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
     }
 
     void Start() {
+        this.tutorialQuest.GenerateStepList();
         StartCoroutine(StartTutorial());
-
+        Unit.OnAnyUnitDead += Unit_OnAnyUnityDead;
     }
 
     public IEnumerator StartTutorial() {
@@ -65,6 +69,14 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
     }
 
     public bool IsTutorialFinished() {return this.isTutorialFinished; }
+    public bool IsWaitingStep() {return this.isWaitingStep; }
+
+    public void PauseTutorial() {
+        this.isWaitingStep = true;
+        if (this.hasShowComboInfo && this.hasShowExploreMode &&  this.hasShownSkillTree) {
+            AdvanceTutorial();
+        }
+    }
 
     private void ChangeLevelQuestState(QuestState state) {
         this.tutorialQuest.state = state;
@@ -83,8 +95,32 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
     }
 
     public void ResumeTutorial() {
-        // if (tutorialQuest.GetCurrentStepReference().GetType() == PauseTutorialStep)
+        this.isWaitingStep = false;
         tutorialQuest.GetCurrentStepReference().GetComponent<PauseTutorialStep>().ForceFinishStep();
+    }
+
+    public void ShowExploreMode() {
+        this.hasShowExploreMode = true;
+    }
+
+    private void Unit_OnAnyUnityDead(object sender, EventArgs e) {
+        if (this.hasShowComboInfo) return;
+        Unit unit = sender as Unit;
+        if (!unit.IsEnemy()) return;
+        this.hasShowComboInfo = true;
+        GameObject stepAux = tutorialQuest.questStepPrefabs[tutorialQuest.GetCurrentStepIndex()];
+        Debug.Log(stepAux);
+        this.tutorialQuest.InsertStepAtIndex(this.comboInfoStep, this.tutorialQuest.GetCurrentStepIndex() + 1);
+        this.tutorialQuest.InsertStepAtIndex(stepAux, this.tutorialQuest.GetCurrentStepIndex() + 2);
+        if (isWaitingStep) {
+            ResumeTutorial();
+        } else {
+            Destroy(stepAux);
+            AdvanceTutorial();
+        }
+        Unit.OnAnyUnitDead -= Unit_OnAnyUnityDead;
+
+
     }
 
 

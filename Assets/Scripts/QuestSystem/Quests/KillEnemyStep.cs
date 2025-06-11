@@ -10,6 +10,8 @@ public class KillEnemyStep : QuestStep {
     [SerializeField] private int enemiesToComplete = 4;
     [SerializeField] private string enemyId = "boar";
 
+    public EventHandler onFinishQuestStep;
+
 
     private void OnEnable() {
         TurnSystem.Instance.onEnemyKilled += TurnSystem_OnEnemyKilled;
@@ -30,6 +32,7 @@ public class KillEnemyStep : QuestStep {
         }
 
         if (enemiesKilled >= enemiesToComplete) {
+            this.onFinishQuestStep?.Invoke(this, EventArgs.Empty);
             this.FinishQuestStep();
         }
     }
