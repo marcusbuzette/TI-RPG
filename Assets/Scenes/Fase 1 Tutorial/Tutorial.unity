@@ -1243,6 +1243,10 @@ PrefabInstance:
       value: Chest
       objectReference: {fileID: 0}
     - target: {fileID: 6811553638950440956, guid: f321e5a35adc4214ea64504db47c749f, type: 3}
+      propertyPath: gold
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 6811553638950440956, guid: f321e5a35adc4214ea64504db47c749f, type: 3}
       propertyPath: chestItems.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -2084,8 +2088,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 128644033}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3826834, y: -3.0118454e-15, z: 1.8309509e-15, w: 0.92387956}
-  m_LocalPosition: {x: 3.54, y: 9.999999, z: -3.4000003}
+  m_LocalRotation: {x: 0.42415538, y: 0.000000015581923, z: -0.000000007298182, w: 0.90558946}
+  m_LocalPosition: {x: 3.54, y: 12, z: -3.4000003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6005,7 +6009,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4096442209837572, guid: 2bb4b9bd9fb8a4a4bb4ef8f6decc17eb, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4096442209837572, guid: 2bb4b9bd9fb8a4a4bb4ef8f6decc17eb, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -7156,7 +7160,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4096442209837572, guid: 2bb4b9bd9fb8a4a4bb4ef8f6decc17eb, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4096442209837572, guid: 2bb4b9bd9fb8a4a4bb4ef8f6decc17eb, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -7953,7 +7957,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 9.999999, z: -10}
+  m_FollowOffset: {x: 0, y: 12, z: -10}
   m_XDamping: 0.05
   m_YDamping: 0.05
   m_ZDamping: 0.05
@@ -16804,8 +16808,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1618477024}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3826834, y: -3.0118454e-15, z: 1.8309509e-15, w: 0.92387956}
-  m_LocalPosition: {x: 3.54, y: 9.999999, z: -3.4000003}
+  m_LocalRotation: {x: 0.42415538, y: 0.000000015581923, z: -0.000000007298182, w: 0.90558946}
+  m_LocalPosition: {x: 3.54, y: 12, z: -3.4000003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
