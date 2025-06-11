@@ -35,7 +35,7 @@ public class QuestSystemUI : MonoBehaviour {
     private void QuestManager_OnQuestAdvanced(object sender, EventArgs e) {
         currentStep.GetComponent<QuestStepUI>().CompleteStep();
         //verifica se o proximo passo da quest tem uma instrucao. So se houver instrucao, o passo aparecera na lista
-        if (QuestManager.Instance.GetLevelQuest().info.questStepPrefabs[QuestManager.Instance.GetLevelQuest()
+        if (QuestManager.Instance.GetLevelQuest().questStepPrefabs[QuestManager.Instance.GetLevelQuest()
         .GetCurrentStepIndex()].GetComponent<QuestStep>().GetStepInstruction() != "") {
             currentStep = Instantiate(questStepPrefab, questsContainer);
             currentStep.GetComponent<QuestStepUI>().SetQuesSteptInfo(QuestManager.Instance.GetLevelQuest(),

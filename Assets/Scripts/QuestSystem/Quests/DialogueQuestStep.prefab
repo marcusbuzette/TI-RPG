@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5640780447877117650}
   - component: {fileID: 7210089587301011731}
+  - component: {fileID: -3977363191347156362}
   m_Layer: 0
   m_Name: DialogueQuestStep
   m_TagString: Untagged
@@ -44,6 +45,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78850d01e062847bbab61a2caa667d15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasDinamicText: 0
   stepInstruction: 
   dialogues:
   - {fileID: 11400000, guid: 726d7cc79ccb1472a9c3d18d8802ed97, type: 2}
+--- !u!114 &-3977363191347156362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3066800744534698933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8067c046ae5dc4135b1648c663b2ff5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
