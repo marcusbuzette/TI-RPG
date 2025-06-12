@@ -57,7 +57,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -183,11 +183,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fbdfe1e70602bf41b59dc73e88937d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chestItems:
-  - {fileID: 11400000, guid: 110230de560646841bb1f0097e70042a, type: 2}
-  - {fileID: 11400000, guid: 110230de560646841bb1f0097e70042a, type: 2}
-  - {fileID: 11400000, guid: 110230de560646841bb1f0097e70042a, type: 2}
-  - {fileID: 11400000, guid: 110230de560646841bb1f0097e70042a, type: 2}
+  chestItems: []
+  gold: 0
   chestCanvas: {fileID: 1942872426712599779}
   imageTimer: 1.5
   animController: {fileID: 9100000, guid: 4b8c626bb1bc4d143bb9f3e8e5e2c44f, type: 2}
