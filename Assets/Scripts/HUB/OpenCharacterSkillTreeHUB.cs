@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.EventSystems;
+using System;
 
 public class OpenCharacterSkillTreeHUB : MonoBehaviour, IChangeCamera {
 
@@ -10,6 +12,8 @@ public class OpenCharacterSkillTreeHUB : MonoBehaviour, IChangeCamera {
     
     private BoxCollider thisCollider;
     private bool isActive;
+
+    public EventHandler OpenSkillTree;
 
     private CameraHUB cameraHUB;
     [SerializeField] private GameObject skillTree;
@@ -62,6 +66,10 @@ public class OpenCharacterSkillTreeHUB : MonoBehaviour, IChangeCamera {
     public void DoSomething() {
         skillTree.SetActive(true);
         TalentManager.Instance.UpdateSelectedCharButton();
+        if (!TutorialManager.Instance.IsTutorialFinished() 
+        && TutorialManager.Instance.IsWaitingStep() && !TutorialManager.Instance.HasShownSkillTree()) {
+            TutorialManager.Instance.ShowSkillTreeStep();
+        }
     }
 
     public void NextSkillTree() {

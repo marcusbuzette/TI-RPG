@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8324190641323704493}
   - component: {fileID: 6300088520511987575}
   m_Layer: 0
-  m_Name: MessageTreeStep
+  m_Name: Message4Step
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,6 +47,4 @@ MonoBehaviour:
   hasDinamicText: 0
   stepInstruction: 
   messages:
-  - {fileID: 406612324153913162, guid: 56b9d1d3b7309498abd3d68c2166b7cc, type: 3}
-  - {fileID: 1095179203850255234, guid: fd69b5216be87496ca0ef6846b65ad75, type: 3}
-  - {fileID: 7718366072257163816, guid: eb5f0737927d8475f987e6ad6d6e319e, type: 3}
+  - {fileID: 983525424707819613, guid: e3e8215abf38c427bb509c53fd5981aa, type: 3}

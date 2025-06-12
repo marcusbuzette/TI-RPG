@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TutorialManager : MonoBehaviour, IDataPersistence {
 
@@ -17,7 +18,9 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
 
     private bool hasShowComboInfo = false;
     [SerializeField] private GameObject comboInfoStep;
+    [SerializeField] private GameObject treeInfoStep;
     private bool hasShowExploreMode = false;
+    private bool hasShowCamping = false;
     private bool hasShownSkillTree = false;
     [SerializeField] private bool isWaitingStep = false;
 
@@ -25,7 +28,8 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
         if (Instance == null) {
             Instance = this;
             DontDestroyOnLoad(this);
-        } else {
+        }
+        else {
             Destroy(this);
         }
     }
@@ -34,6 +38,7 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
         this.tutorialQuest.GenerateStepList();
         StartCoroutine(StartTutorial());
         Unit.OnAnyUnitDead += Unit_OnAnyUnityDead;
+        SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
     }
 
     public IEnumerator StartTutorial() {
@@ -43,7 +48,7 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
         this.onTutorialStarted?.Invoke(this, EventArgs.Empty);
     }
 
-    public void FinishTutorial () {
+    public void FinishTutorial() {
         this.isTutorialFinished = true;
         this.onTutorialStateChanged?.Invoke(this, EventArgs.Empty);
     }
@@ -51,7 +56,9 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
     public void AdvanceTutorial() {
         if (tutorialQuest == null) return;
         tutorialQuest.MoveToNextStep();
-        if (tutorialQuest.CurrentQuestStepExists()) {
+        if (tutorialQuest.CurrentQuestStepExists() && 
+            ((tutorialQuest.GetCurrentStepIndex() >= tutorialQuest.questStepPrefabs.Count -1) &&
+             !hasShowExploreMode || !hasShowCamping || !hasShownSkillTree)) {
             tutorialQuest.InstantiateCurrentQuestStep(transform);
             onTutorialAdvanced?.Invoke(this, EventArgs.Empty);
         }
@@ -63,17 +70,33 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
     private void dataLoaded() {
         if (isTutorialFinished) {
             Destroy(this);
-        } else {
+        }
+        else {
             StartTutorial();
         }
     }
 
-    public bool IsTutorialFinished() {return this.isTutorialFinished; }
-    public bool IsWaitingStep() {return this.isWaitingStep; }
+    public bool IsTutorialFinished() { return this.isTutorialFinished; }
+    public bool IsWaitingStep() { return this.isWaitingStep; }
+    public bool HasShownSkillTree() { return this.hasShownSkillTree; }
 
     public void PauseTutorial() {
         this.isWaitingStep = true;
-        if (this.hasShowComboInfo && this.hasShowExploreMode &&  this.hasShownSkillTree) {
+        if (this.hasShowComboInfo && this.hasShowExploreMode && this.hasShownSkillTree) {
+            AdvanceTutorial();
+        }
+    }
+
+    public void ShowSkillTreeStep() {
+        this.hasShownSkillTree = true;
+        GameObject stepAux = tutorialQuest.questStepPrefabs[tutorialQuest.GetCurrentStepIndex()];
+        this.tutorialQuest.InsertStepAtIndex(this.treeInfoStep, this.tutorialQuest.GetCurrentStepIndex() + 1);
+        this.tutorialQuest.InsertStepAtIndex(stepAux, this.tutorialQuest.GetCurrentStepIndex() + 2);
+        if (isWaitingStep) {
+            ResumeTutorial();
+        }
+        else {
+            Destroy(stepAux);
             AdvanceTutorial();
         }
     }
@@ -90,7 +113,11 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
 
     public void LoadData(GameData data) {
         isTutorialFinished = data.finishedTutorial;
-        if (data.tutorialIndex > 0) tutorialQuest.SkipQuestsStepToIndex(data.tutorialIndex);
+        if (data.tutorialIndex > 0) {
+            int skipStepsNumber = data.tutorialIndex;
+            if (hasShowComboInfo) skipStepsNumber -=2;
+            tutorialQuest.SkipQuestsStepToIndex(data.tutorialIndex);
+        }
         dataLoaded();
     }
 
@@ -109,18 +136,32 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
         if (!unit.IsEnemy()) return;
         this.hasShowComboInfo = true;
         GameObject stepAux = tutorialQuest.questStepPrefabs[tutorialQuest.GetCurrentStepIndex()];
-        Debug.Log(stepAux);
         this.tutorialQuest.InsertStepAtIndex(this.comboInfoStep, this.tutorialQuest.GetCurrentStepIndex() + 1);
         this.tutorialQuest.InsertStepAtIndex(stepAux, this.tutorialQuest.GetCurrentStepIndex() + 2);
         if (isWaitingStep) {
             ResumeTutorial();
-        } else {
+        }
+        else {
             Destroy(stepAux);
             AdvanceTutorial();
         }
         Unit.OnAnyUnitDead -= Unit_OnAnyUnityDead;
+    }
 
+    private void SceneManager_activeSceneChanged(Scene oldScene, Scene newScene) {
+        if (!this.isTutorialFinished && !this.hasShowCamping && newScene.name == "HUB") {
+            this.hasShowCamping = true;
+            GameObject stepAux = tutorialQuest.questStepPrefabs[tutorialQuest.GetCurrentStepIndex()];
+            if (isWaitingStep) {
+                ResumeTutorial();
+            }
+            else {
+                Destroy(stepAux);
+                AdvanceTutorial();
+            }
+            SceneManager.activeSceneChanged -= SceneManager_activeSceneChanged;
 
+        }
     }
 
 
