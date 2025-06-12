@@ -20,5 +20,10 @@ MonoBehaviour:
   - {fileID: 6036972203162069232, guid: f2d5aecd0717647c5827c808e1bad8c2, type: 3}
   - {fileID: 7319511276634866152, guid: 43db2b35761cc4e45aaaa42bf5853dac, type: 3}
   - {fileID: 3644656093217297317, guid: 4cc2c09f13b6b4aeaba7676dd882a9fb, type: 3}
+  - {fileID: 8209261135972300583, guid: 3f9568bf4c50442938b3bca187c43468, type: 3}
+  - {fileID: 3644656093217297317, guid: 9090e66e5470f4e558fa7e86beca7f15, type: 3}
+  - {fileID: 8209261135972300583, guid: 3f9568bf4c50442938b3bca187c43468, type: 3}
+  - {fileID: 3644656093217297317, guid: 8dc2d8f3f460f40b89f8ab25086a93fd, type: 3}
+  - {fileID: 8209261135972300583, guid: 3f9568bf4c50442938b3bca187c43468, type: 3}
   moneyRewards: 0
   playerXp: 0

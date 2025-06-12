@@ -154,7 +154,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorialQuest:
     info: {fileID: 11400000, guid: 5f8f22a14e9a245ab9944eb9448cd21d, type: 2}
+    questStepPrefabs: []
     state: 0
+  comboInfoStep: {fileID: 3644656093217297317, guid: 35189c3effd4c4d3790fd3c445525356, type: 3}
+  isWaitingStep: 0
 --- !u!4 &10345243
 Transform:
   m_ObjectHideFlags: 0
@@ -1809,7 +1812,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &122019063
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5810,6 +5813,7 @@ MonoBehaviour:
   floorAmount: 1
   levelQuest:
     info: {fileID: 11400000, guid: 57dcf3d3707424972893521e23cee2bc, type: 2}
+    questStepPrefabs: []
     state: 0
   gameMode: 1
   squaredZoneList:

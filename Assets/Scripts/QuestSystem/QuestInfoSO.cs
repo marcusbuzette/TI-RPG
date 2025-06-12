@@ -16,7 +16,7 @@ public class QuestInfoSO : ScriptableObject {
     public QuestInfoSO[] questPrerequisites;
 
     [Header("Steps")]
-    public GameObject[] questStepPrefabs;
+    public List<GameObject> questStepPrefabs;
 
 
     [Header("Rewards")]

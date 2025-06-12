@@ -26,7 +26,10 @@ public class QuestManager : MonoBehaviour {
     }
 
 
-    public void SetLevelQuest(Quest quest) { this.levelQuest = quest; }
+    public void SetLevelQuest(Quest quest) { 
+        this.levelQuest = quest; 
+        this.levelQuest.GenerateStepList();
+        }
 
     public Quest GetLevelQuest() { return this.levelQuest; }
 
