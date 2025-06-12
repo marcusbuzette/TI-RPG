@@ -9,9 +9,9 @@ public class IntimidateSkill : BaseSkills {
     [SerializeField] private int maxIntimidateDistance = 1;
     [SerializeField] private int debufAmount = 2;
     [SerializeField] private BuffType buffType = BuffType.ATTACK;
-
+    public string intimidarSFX;
     public override void Action() {
-        AudioManager.instance?.PlaySFX("Intimidar");
+        
         foreach (Unit target in targetsList) {
             target.GetModifiers().Debuff(buffType, debufAmount);
         }
@@ -57,6 +57,10 @@ public class IntimidateSkill : BaseSkills {
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
+        if (!string.IsNullOrEmpty(intimidarSFX)) 
+        {
+            AudioManager.instance?.PlaySFX(intimidarSFX);
+        }
         ActionStart(onActionComplete);
     }
 

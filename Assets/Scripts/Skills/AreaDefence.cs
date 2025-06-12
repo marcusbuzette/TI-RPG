@@ -148,6 +148,9 @@ public class AreaDefence : BaseSkills {
         isAiming = false;
         this.targetPosition = mouseGridPosition;
         ActionStart(onActionComplete);
+        if (!string.IsNullOrEmpty(shieldSFX)) {
+            AudioManager.instance?.PlaySFX(shieldSFX);
+        }
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {

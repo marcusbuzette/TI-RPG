@@ -47,7 +47,9 @@ public class CounterStike : BaseSkills {
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         this.isCountering = true;
         if (Attack == 1) {
-            AudioManager.instance?.PlaySFX("Melee");
+            if (!string.IsNullOrEmpty(counterStrikeSFX)) {
+                AudioManager.instance?.PlaySFX(counterStrikeSFX);
+            }
             Attack = 0;
         }
         ActionStart(onActionComplete);
