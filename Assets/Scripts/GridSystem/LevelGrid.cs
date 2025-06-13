@@ -163,7 +163,7 @@ public class LevelGrid : MonoBehaviour {
 
     public List<GridPosition> GetZoneList() { return this.zoneList; }
     public AddSquaredZone GetCurrentSquaredZone(int battleZone) {
-        foreach(AddSquaredZone zone in squaredZoneList) {
+        foreach (AddSquaredZone zone in squaredZoneList) {
             if (zone.zoneNumber == battleZone) {
                 return zone;
             }
@@ -238,7 +238,7 @@ public class LevelGrid : MonoBehaviour {
     }
 
     public bool IsInBattleMode() {
-        if(gameMode == GameMode.BATTLE) return true;
+        if (gameMode == GameMode.BATTLE) return true;
         return false;
     }
 
@@ -248,36 +248,42 @@ public class LevelGrid : MonoBehaviour {
     }
 
 
-    void ConvertAllTrees()
-    {
+    void ConvertAllTrees() {
+        if (terrain == null) {
+            Debug.LogWarning("Terreno não atribuído!");
+            return;
+        }
+
+        // Oculta visualmente as árvores do terreno (sem apagar os dados)
+        terrain.drawTreesAndFoliage = false;
+
         TreeInstance[] instances = terrain.terrainData.treeInstances;
         TerrainData data = terrain.terrainData;
         Vector3 terrainPos = terrain.transform.position;
+        TreePrototype[] prototypes = data.treePrototypes;
 
-        for (int i = 0; i < instances.Length; i++)
-        {
+        for (int i = 0; i < instances.Length; i++) {
             TreeInstance tree = instances[i];
             Vector3 worldPos = Vector3.Scale(tree.position, data.size) + terrainPos;
 
             int prototypeIndex = tree.prototypeIndex;
-            if (prototypeIndex >= 0 && prototypeIndex < treePrefabs.Length)
-            {
-                GameObject prefab = treePrefabs[prototypeIndex];
-                if (prefab)
-                {
+            if (prototypeIndex >= 0 && prototypeIndex < prototypes.Length) {
+                GameObject prefab = prototypes[prototypeIndex].prefab;
+
+                if (prefab != null) {
                     GameObject instance = Instantiate(prefab, worldPos, Quaternion.identity);
-                    instance.transform.Rotate(-90,0,0);
-                    instance.transform.localScale = new Vector3(tree.widthScale, tree.heightScale, tree.widthScale) * prefab.transform.localScale.x;
+                    instance.transform.localScale = new Vector3(tree.widthScale, tree.heightScale, tree.widthScale);
                     instance.tag = "Obstruction";
+                    instance.name = $"Tree_{i}";
                 }
             }
         }
 
-        Debug.Log("Todas as árvores convertidas em prefabs.");
+        Debug.Log("Todas as árvores do terreno foram convertidas em prefabs e ocultadas no terreno.");
     }
 
-    void RemoveAllTerrainTrees()
-    {
+
+    void RemoveAllTerrainTrees() {
         terrain.terrainData.treeInstances = new TreeInstance[0];
         terrain.Flush(); // Atualiza o terreno para refletir a remoção
         Debug.Log("Todas as árvores removidas do terreno.");
