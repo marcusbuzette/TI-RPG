@@ -20,6 +20,9 @@ public class LevelGrid : MonoBehaviour {
     [SerializeField] private int floorAmount;
     [SerializeField] private Quest levelQuest;
 
+    public Terrain terrain;
+    public GameObject[] treePrefabs;
+
     [SerializeField] private List<GridSystem<GridObject>> gridSystemList;
 
     public enum GameMode { BATTLE, EXPLORE }
@@ -61,6 +64,7 @@ public class LevelGrid : MonoBehaviour {
     }
 
     private void Start() {
+        ConvertAllTrees();
         this.currentBattleZone = 0;
         PathFinding.Instance.Setup(width, height, cellSize, floorAmount, zoneList);
         QuestManager.Instance.SetLevelQuest(this.levelQuest);
@@ -159,7 +163,7 @@ public class LevelGrid : MonoBehaviour {
 
     public List<GridPosition> GetZoneList() { return this.zoneList; }
     public AddSquaredZone GetCurrentSquaredZone(int battleZone) {
-        foreach(AddSquaredZone zone in squaredZoneList) {
+        foreach (AddSquaredZone zone in squaredZoneList) {
             if (zone.zoneNumber == battleZone) {
                 return zone;
             }
@@ -234,13 +238,54 @@ public class LevelGrid : MonoBehaviour {
     }
 
     public bool IsInBattleMode() {
-        if(gameMode == GameMode.BATTLE) return true;
+        if (gameMode == GameMode.BATTLE) return true;
         return false;
     }
 
     public GridPosition GetGridPositionFromXZValues(int x, int z, int floor) {
         GridPosition gpAux = new GridPosition(x, z, floor);
         return GetGridSystem(floor).GetGridObject(gpAux).GetGridPosition();
+    }
 
+
+    void ConvertAllTrees() {
+        if (terrain == null) {
+            Debug.LogWarning("Terreno não atribuído!");
+            return;
+        }
+
+        // Oculta visualmente as árvores do terreno (sem apagar os dados)
+        terrain.drawTreesAndFoliage = false;
+
+        TreeInstance[] instances = terrain.terrainData.treeInstances;
+        TerrainData data = terrain.terrainData;
+        Vector3 terrainPos = terrain.transform.position;
+        TreePrototype[] prototypes = data.treePrototypes;
+
+        for (int i = 0; i < instances.Length; i++) {
+            TreeInstance tree = instances[i];
+            Vector3 worldPos = Vector3.Scale(tree.position, data.size) + terrainPos;
+
+            int prototypeIndex = tree.prototypeIndex;
+            if (prototypeIndex >= 0 && prototypeIndex < prototypes.Length) {
+                GameObject prefab = prototypes[prototypeIndex].prefab;
+
+                if (prefab != null) {
+                    GameObject instance = Instantiate(prefab, worldPos, Quaternion.identity);
+                    instance.transform.localScale = new Vector3(tree.widthScale, tree.heightScale, tree.widthScale);
+                    instance.tag = "Obstruction";
+                    instance.name = $"Tree_{i}";
+                }
+            }
+        }
+
+        Debug.Log("Todas as árvores do terreno foram convertidas em prefabs e ocultadas no terreno.");
+    }
+
+
+    void RemoveAllTerrainTrees() {
+        terrain.terrainData.treeInstances = new TreeInstance[0];
+        terrain.Flush(); // Atualiza o terreno para refletir a remoção
+        Debug.Log("Todas as árvores removidas do terreno.");
     }
 }
