@@ -20,6 +20,9 @@ public class LevelGrid : MonoBehaviour {
     [SerializeField] private int floorAmount;
     [SerializeField] private Quest levelQuest;
 
+    public Terrain terrain;
+    public GameObject[] treePrefabs;
+
     [SerializeField] private List<GridSystem<GridObject>> gridSystemList;
 
     public enum GameMode { BATTLE, EXPLORE }
@@ -61,6 +64,7 @@ public class LevelGrid : MonoBehaviour {
     }
 
     private void Start() {
+        ConvertAllTrees();
         this.currentBattleZone = 0;
         PathFinding.Instance.Setup(width, height, cellSize, floorAmount, zoneList);
         QuestManager.Instance.SetLevelQuest(this.levelQuest);
@@ -241,6 +245,41 @@ public class LevelGrid : MonoBehaviour {
     public GridPosition GetGridPositionFromXZValues(int x, int z, int floor) {
         GridPosition gpAux = new GridPosition(x, z, floor);
         return GetGridSystem(floor).GetGridObject(gpAux).GetGridPosition();
+    }
 
+
+    void ConvertAllTrees()
+    {
+        TreeInstance[] instances = terrain.terrainData.treeInstances;
+        TerrainData data = terrain.terrainData;
+        Vector3 terrainPos = terrain.transform.position;
+
+        for (int i = 0; i < instances.Length; i++)
+        {
+            TreeInstance tree = instances[i];
+            Vector3 worldPos = Vector3.Scale(tree.position, data.size) + terrainPos;
+
+            int prototypeIndex = tree.prototypeIndex;
+            if (prototypeIndex >= 0 && prototypeIndex < treePrefabs.Length)
+            {
+                GameObject prefab = treePrefabs[prototypeIndex];
+                if (prefab)
+                {
+                    GameObject instance = Instantiate(prefab, worldPos, Quaternion.identity);
+                    instance.transform.Rotate(-90,0,0);
+                    instance.transform.localScale = new Vector3(tree.widthScale, tree.heightScale, tree.widthScale) * prefab.transform.localScale.x;
+                    instance.tag = "Obstruction";
+                }
+            }
+        }
+
+        Debug.Log("Todas as árvores convertidas em prefabs.");
+    }
+
+    void RemoveAllTerrainTrees()
+    {
+        terrain.terrainData.treeInstances = new TreeInstance[0];
+        terrain.Flush(); // Atualiza o terreno para refletir a remoção
+        Debug.Log("Todas as árvores removidas do terreno.");
     }
 }
