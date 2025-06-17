@@ -30,6 +30,7 @@ public class CameraObstruction : MonoBehaviour {
         HashSet<Renderer> obstructingThisFrame = new HashSet<Renderer>();
 
         foreach (var target in targets) {
+            if (target == null) continue;
             Vector3 camPos = transform.position;
             Vector3 dirToTarget = target.position - camPos;
             float distToTarget = dirToTarget.magnitude;

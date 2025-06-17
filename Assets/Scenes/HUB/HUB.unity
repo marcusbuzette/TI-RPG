@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.009063503, g: 0.013170158, b: 0.020601284, a: 1}
+  m_IndirectSpecularColor: {r: 0.009026857, g: 0.01311287, b: 0.020520534, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -851,6 +851,62 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 94141541}
   m_CullTransparentMesh: 1
+--- !u!1 &94727490
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 94727492}
+  - component: {fileID: 94727491}
+  m_Layer: 0
+  m_Name: TutorialManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &94727491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94727490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6931e5f19eb7462e90d77f5225f200a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialQuest:
+    info: {fileID: 11400000, guid: e9be8ff1a962d450396a8932b1f31afb, type: 2}
+    questStepPrefabs: []
+    state: 0
+    currentQuestStepIndex: 0
+  isTutorialFinished: 0
+  hasShowComboInfo: 0
+  comboInfoStep: {fileID: 3644656093217297317, guid: 35189c3effd4c4d3790fd3c445525356, type: 3}
+  treeInfoStep: {fileID: 3644656093217297317, guid: d8fc2c324c28147fbafc643be6918050, type: 3}
+  hasShowCamping: 1
+  hasShownSkillTree: 0
+  isWaitingStep: 0
+--- !u!4 &94727492
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94727490}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &95128630 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f16f47b9daca1b644975831e276835c0, type: 3}
@@ -2712,7 +2768,7 @@ GameObject:
   - component: {fileID: 566769712}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: UICanvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12489,3 +12545,4 @@ SceneRoots:
   - {fileID: 4705665739120844513}
   - {fileID: 1204168416}
   - {fileID: 1489543374}
+  - {fileID: 94727492}

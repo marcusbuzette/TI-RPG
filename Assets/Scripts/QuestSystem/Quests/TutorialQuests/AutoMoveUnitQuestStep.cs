@@ -32,6 +32,8 @@ public class AutoMoveUnitQuestStep : TutorialStep {
     }
 
     private void MoveAction_OnFinishedWalking(object sender, EventArgs e) {
+        Debug.Log("Finish walking");
+        Debug.Log(sender as MoveAction);
         finishedWalk++;
         if (finishedWalk >= unitsToMove.Length) {
             this.FinishQuestStep();

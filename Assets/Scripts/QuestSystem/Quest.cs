@@ -8,7 +8,7 @@ public class Quest {
     public QuestInfoSO info;
     public List<GameObject> questStepPrefabs = new List<GameObject>();
     public QuestState state;
-    private int currentQuestStepIndex;
+    [SerializeField] private int currentQuestStepIndex;
     private GameObject currentStepReference;
 
     public Quest(QuestInfoSO questInfoSO) {

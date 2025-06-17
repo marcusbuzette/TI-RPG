@@ -105,6 +105,7 @@ public class MoveAction : BaseAction {
                 ActionFinish();
                 // animator?.SetBool("IsWalking", false);
                 unit.EndAnimation("IsWalking", true);
+                OnFinishedWalking?.Invoke(this, EventArgs.Empty);
                 LevelGrid.Instance.BattleMode(unit.GetGridPosition().zone);
             }
         }
