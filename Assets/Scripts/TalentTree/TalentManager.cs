@@ -144,6 +144,7 @@ public class TalentManager : MonoBehaviour {
     public int GetXPPoints() { return this.pontosDisponiveis; }
 
     private void UpdatedSkillTree(Unit unitAux) {
+        int indexSkill = 0;
         foreach (Transform item in skillTreeContainer) {
             Destroy(item.gameObject);
         }
@@ -163,8 +164,10 @@ public class TalentManager : MonoBehaviour {
         foreach(BaseSkills bs in skills) {
             Button skillButton = Instantiate(skillButtonPrefab, skillTreeContainer);
             skillButton.GetComponent<SkillUi>().SetBaseSkill(bs);
+            skillButton.gameObject.name += indexSkill;
             skillButton.GetComponent<SkillUi>().SetSkillToolTipPos(TooltipPosition.RIGHT);
             skillButton.onClick.AddListener(() => { TentarDesbloquearskills(bs); });
+            indexSkill++;
         }
 
         upgrades.Sort((a, b) => a.level.CompareTo(b.level));
