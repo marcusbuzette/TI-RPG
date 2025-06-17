@@ -11,15 +11,12 @@ public class MoveAction : BaseAction {
     [SerializeField] private float moveSpeed = 4f;
     private float rotateSpeed = 4f;
     [SerializeField] private float stopDistance = .05f;
-    private float lastDistance = 0;
-    private bool hastLastDistance = false;
-    private Vector3 moveDirControl = Vector3.zero;
 
     [SerializeField] private int maxMoveDistance = 4;
+    [SerializeField] private float exploreSpeed = 5.5f;
 
     private List<Vector3> positionList;
     private int currentPositionIndex;
-    // private bool changedBattleZone = false;
     private int startZone = 0;
     private bool hasStartZone = false;
 
@@ -36,7 +33,7 @@ public class MoveAction : BaseAction {
 
     private void Start() {
         this.maxMoveDistance = GetComponent<Unit>().GetUnitStats().GetMaxMove(unit);
-        if(currentArrow == null) currentArrow = PathFinding.Instance.pathArrow.GetComponent<PathArrowMesh>();
+        if (currentArrow == null) currentArrow = PathFinding.Instance.pathArrow.GetComponent<PathArrowMesh>();
     }
 
     private void Update() {
@@ -64,58 +61,65 @@ public class MoveAction : BaseAction {
         if (!isActive) {
             return;
         }
+
         Action();
     }
 
     public override void Action() {
-        if (currentPositionIndex > positionList.Count - 1) return;
+        if (!isActive || positionList == null || positionList.Count == 0) return;
+
         Vector3 targetPosition = positionList[currentPositionIndex];
-        if (Vector3.Distance(targetPosition, transform.position) > stopDistance &&
-            (hastLastDistance == false || Vector3.Distance(targetPosition, transform.position) < lastDistance)) {
-            this.hastLastDistance = true;
-            this.lastDistance = Vector3.Distance(targetPosition, transform.position);
-            Vector3 moveDirection = (targetPosition - transform.position).normalized;
+        Vector3 moveDirection = (targetPosition - transform.position).normalized;
 
+        float currentSpeed = moveSpeed;
 
-            if (currentPositionIndex <= positionList.Count - 1) {
-                moveDirControl = moveDirection;
-                transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
-                transform.position += moveDirection * moveSpeed * Time.deltaTime;
-                // animator?.SetBool("IsWalking", true);
-                // unit.PlayAnimation("IsWalking", true);
-            }
-
+        if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE) {
+            currentSpeed = this.exploreSpeed; // exemplo: velocidade normalizada fixa para exploração
+            if (this.unit.unitId == "hero") {
+                currentSpeed += 0.5f;
+            } 
         }
-        else {
-            currentPositionIndex++;
-            this.hastLastDistance = false;
-            lastDistance = 0;
-            moveDirControl = Vector3.zero;
-            if (currentPositionIndex >= positionList.Count) {
-                transform.position = positionList[currentPositionIndex - 1];
-                ActionFinish();
-                this.hasStartZone = false;
-                unit.EndAnimation("IsWalking", true);
-                OnFinishedWalking?.Invoke(this, EventArgs.Empty);
-                // animator?.SetBool("IsWalking", false);
-            }
 
-            if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE &&
-                 startZone != unit.GetGridPosition().zone) {
-                ActionFinish();
-                // animator?.SetBool("IsWalking", false);
+        // Move suavemente
+        transform.position = Vector3.MoveTowards(
+            transform.position,
+            targetPosition,
+            currentSpeed * Time.deltaTime
+        );
+
+        // Rotaciona suavemente em direção ao alvo
+        if (moveDirection != Vector3.zero) {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                targetRotation,
+                rotateSpeed * Time.deltaTime
+            );
+        }
+
+        // Verifica se chegou no ponto atual
+        float reachedDistance = 0.05f;
+        if (Vector3.Distance(transform.position, targetPosition) < reachedDistance) {
+            currentPositionIndex++;
+
+            if (currentPositionIndex >= positionList.Count) {
+                transform.position = targetPosition; // Garante precisão
                 unit.EndAnimation("IsWalking", true);
+                ActionFinish();
                 OnFinishedWalking?.Invoke(this, EventArgs.Empty);
-                LevelGrid.Instance.BattleMode(unit.GetGridPosition().zone);
+
+                if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE &&
+                    startZone != unit.GetGridPosition().zone) {
+                    LevelGrid.Instance.BattleMode(unit.GetGridPosition().zone);
+                }
             }
         }
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
-
         if (currentArrow.gameObject.activeSelf) currentArrow.gameObject.SetActive(false);
-
         if (GetComponent<Unit>().GetGridPosition() == mouseGridPosition) return;
+
         List<GridPosition> pathGridPositionList = PathFinding.Instance.FindPath(unit.GetGridPosition(), mouseGridPosition, out int pathLenght);
 
         if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE) {
@@ -127,6 +131,7 @@ public class MoveAction : BaseAction {
                 foreach (GridPosition pathGridPosition in pathGridPositionList) {
                     positionList.Add(LevelGrid.Instance.GetWorldPosition(pathGridPosition));
                 }
+
                 unit.PlayAnimation("IsWalking", true);
                 ActionStart(onActionComplete);
             }
@@ -137,6 +142,7 @@ public class MoveAction : BaseAction {
                     this.startZone = unit.GetGridPosition().zone;
                     this.hasStartZone = true;
                 }
+
                 if (pathGridPositionList.Count > 2) {
                     pathGridPositionList.RemoveAt(0);
                 }
@@ -144,6 +150,7 @@ public class MoveAction : BaseAction {
                 foreach (GridPosition pathGridPosition in pathGridPositionList) {
                     positionList.Add(LevelGrid.Instance.GetWorldPosition(pathGridPosition));
                 }
+
                 unit.PlayAnimation("IsWalking", true);
                 ActionStart(onActionComplete);
             }
@@ -152,13 +159,14 @@ public class MoveAction : BaseAction {
             positionList = new List<Vector3>();
             currentPositionIndex = 0;
             this.startZone = unit.GetGridPosition().zone;
+
             foreach (GridPosition pathGridPosition in pathGridPositionList) {
                 positionList.Add(LevelGrid.Instance.GetWorldPosition(pathGridPosition));
             }
+
             unit.PlayAnimation("IsWalking", true);
             ActionStart(onActionComplete);
         }
-        // ActionStart(onActionComplete);
     }
 
     public override string GetActionName() {
@@ -167,7 +175,6 @@ public class MoveAction : BaseAction {
 
     public override List<GridPosition> GetValidGridPositionList() {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
-
         GridPosition unitGridPosition = unit.GetGridPosition();
 
         for (int x = -maxMoveDistance; x <= maxMoveDistance; x++) {
@@ -176,29 +183,14 @@ public class MoveAction : BaseAction {
                     GridPosition offsetGridPosition = new GridPosition(x, z, floor);
                     GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
-                    if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) {
-                        continue;
-                    }
-
-                    if (unitGridPosition == testGridPosition) {
-                        continue;
-                    }
-
-                    if (LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition)) {
-                        continue;
-                    }
-
-                    if (!PathFinding.Instance.IsWalkableGridPosition(testGridPosition)) {
-                        continue;
-                    }
-
-                    if (!PathFinding.Instance.HasPath(unitGridPosition, testGridPosition)) {
-                        continue;
-                    }
+                    if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) continue;
+                    if (unitGridPosition == testGridPosition) continue;
+                    if (LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition)) continue;
+                    if (!PathFinding.Instance.IsWalkableGridPosition(testGridPosition)) continue;
+                    if (!PathFinding.Instance.HasPath(unitGridPosition, testGridPosition)) continue;
 
                     int pathFindingDistanceMultiplier = 10;
                     if (PathFinding.Instance.GetPathLenght(unitGridPosition, testGridPosition) > maxMoveDistance * pathFindingDistanceMultiplier) {
-                        //Path Lenght is to low
                         continue;
                     }
 
@@ -213,7 +205,6 @@ public class MoveAction : BaseAction {
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {
         int valueGridPosition = 0;
 
-        //Verifica se o inimigo est� com pouca vida e se ele consegue se curar
         if ((unit.GetHealthPoints() * 100) / unit.GetHealthSystem().maxHealthPoints < 15 &&
             unit.GetComponent<HealAction>()) {
             valueGridPosition = unit.GetComponent<HealAction>().GetEnemyAIAction(gridPosition).actionValue;
@@ -223,12 +214,10 @@ public class MoveAction : BaseAction {
             };
         }
 
-        //Pega as a��es do inimigo
         List<BaseAction> actions = unit.GetActionsArray().ToList();
         List<BaseAction> attackActions = new List<BaseAction>();
 
-        //Tira a a��o de mover e de se curar da escolha de a��es
-        for(int i = 0; i < actions.Count; i++) {
+        for (int i = 0; i < actions.Count; i++) {
             if (actions[i].GetActionType() != ActionType.MOVE) {
                 if (!unit.GetComponent<HealAction>() || actions[i] != unit.GetComponent<HealAction>()) {
                     attackActions.Add(actions[i]);
@@ -236,44 +225,33 @@ public class MoveAction : BaseAction {
             }
         }
 
-        //Escolhe uma a��o aleat�ria para performar
-        if(attackActions.Count > 0) {
-            //valueGridPosition = attackActions[Random.Range(0, attackActions.Count)].GetEnemyAIAction(gridPosition).actionValue;
+        if (attackActions.Count > 0) {
             valueGridPosition = attackActions[0].GetEnemyAIAction(gridPosition).actionValue;
         }
 
-        //Retorna a melhor a��o possivel do inimigo
         return new EnemyAIAction {
             gridPosition = gridPosition,
             actionValue = valueGridPosition * 10,
         };
     }
 
-    public void SetMaxMoveDistance(int maxDistance) { this.maxMoveDistance = maxDistance; }
+    public void SetMaxMoveDistance(int maxDistance) {
+        this.maxMoveDistance = maxDistance;
+    }
 
     public override bool GetOnCooldown() { return false; }
 
     public override void IsAnotherRound() { }
 
-    public float GetMovementSpeed() {
-        return moveSpeed;
-    }
+    public float GetMovementSpeed() => moveSpeed;
 
-    public int GetMaxDistanceMovement() {
-        return maxMoveDistance;
-    }
+    public int GetMaxDistanceMovement() => maxMoveDistance;
 
-    public void SetMovementSpeed(float moveSpeed) {
-        this.moveSpeed = moveSpeed;
-    }
+    public void SetMovementSpeed(float moveSpeed) => this.moveSpeed = moveSpeed;
 
-    public void SetMaxDistanceMovement(int maxDistanceMovement) {
-        this.maxMoveDistance = maxDistanceMovement;
-    }
+    public void SetMaxDistanceMovement(int maxDistanceMovement) => this.maxMoveDistance = maxDistanceMovement;
 
-    public List<Vector3> GetMovePathList() {
-        return this.positionList;
-    }
+    public List<Vector3> GetMovePathList() => this.positionList;
 
     private void DestroyPathArrow() {
         Destroy(currentArrow);
@@ -281,7 +259,6 @@ public class MoveAction : BaseAction {
 
     public void UpdateArrowPath(object sender, EventArgs e) {
         currentArrow.gameObject.SetActive(true);
-
         gridList = PathFinding.Instance.FindPath(unit.GetGridPosition(), LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition()), out int pathLenght);
         currentArrow.DrawPath(gridList);
     }
