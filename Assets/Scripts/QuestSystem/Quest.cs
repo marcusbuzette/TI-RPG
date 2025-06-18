@@ -6,8 +6,9 @@ using UnityEngine;
 [System.Serializable]
 public class Quest {
     public QuestInfoSO info;
+    public List<GameObject> questStepPrefabs = new List<GameObject>();
     public QuestState state;
-    private int currentQuestStepIndex;
+    [SerializeField] private int currentQuestStepIndex;
     private GameObject currentStepReference;
 
     public Quest(QuestInfoSO questInfoSO) {
@@ -23,7 +24,7 @@ public class Quest {
     public int GetCurrentStepIndex() {return this.currentQuestStepIndex;}
 
     public bool CurrentQuestStepExists() {
-        return (currentQuestStepIndex < info.questStepPrefabs.Length);
+        return (currentQuestStepIndex < questStepPrefabs.Count);
     }
 
     public void InstantiateCurrentQuestStep(Transform parentTransform) {
@@ -36,7 +37,7 @@ public class Quest {
     private GameObject GetCurrentStepPrefab() {
         GameObject questStepPrefab = null;
         if (CurrentQuestStepExists()) {
-            questStepPrefab = info.questStepPrefabs[currentQuestStepIndex];
+            questStepPrefab = this.questStepPrefabs[currentQuestStepIndex];
         } else {
             Debug.LogWarning("Tentou acessar uma passo de quest nulo ou inexistente");
         }
@@ -47,5 +48,13 @@ public class Quest {
 
     public void SkipQuestsStepToIndex(int index) {
         this.currentQuestStepIndex = index;
+    }
+
+    public void InsertStepAtIndex(GameObject step, int index) {
+        this.questStepPrefabs.Insert(index, step);
+    }
+
+    public void GenerateStepList() {
+        this.questStepPrefabs = new List<GameObject>(info.questStepPrefabs);
     }
 }

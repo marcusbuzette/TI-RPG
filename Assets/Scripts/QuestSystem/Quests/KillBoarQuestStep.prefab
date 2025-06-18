@@ -47,5 +47,5 @@ MonoBehaviour:
   hasDinamicText: 1
   stepInstruction: Cace os javalis
   enemiesKilled: 0
-  enemiesToComplete: 3
+  enemiesToComplete: 2
   enemyId: boar

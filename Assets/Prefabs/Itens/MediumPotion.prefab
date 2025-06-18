@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 959054419738605825}
   - component: {fileID: -62570395204061435}
   m_Layer: 0
-  m_Name: Potion
+  m_Name: MediumPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -122,5 +122,5 @@ MonoBehaviour:
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
-  rotateSpeed: 180
-  potionHealAmount: 20
+  rotSpeed: 180
+  potionHealAmount: 100

@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PauseTutorialStep : TutorialStep {
 
-    public bool isPaused;
+    private void Start() {
+        TutorialManager.Instance.PauseTutorial();
+    }
 
     public void ForceFinishStep() {
         FinishQuestStep();
