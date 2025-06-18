@@ -12,4 +12,5 @@ public class InventoryItemData : ScriptableObject
     public string displayName;
     public GameObject prefab;
     public Sprite image;
+    public int price;
 }

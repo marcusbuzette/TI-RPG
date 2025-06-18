@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Unity.VisualScripting;
-
+using UnityEngine.SceneManagement;
 
 public class InventorySystem : MonoBehaviour, IDataPersistence {
     public event EventHandler OnInventoryIsEmpty;
@@ -25,8 +25,8 @@ public class InventorySystem : MonoBehaviour, IDataPersistence {
         m_itemDictionary = new SerializableDictionary<InventoryItemData, SerializableInventoryItem>();
     }
 
-    public void Add(InventoryItemData referenceData) {
-        OnNewItemOnInventory.Invoke(this, EventArgs.Empty);
+    public void Add(InventoryItemData referenceData, bool isShopItem = false) {
+        if(!isShopItem) OnNewItemOnInventory.Invoke(this, EventArgs.Empty);
 
         if (m_itemDictionary.TryGetValue(referenceData, out SerializableInventoryItem value)) {
             value.AddToStack();

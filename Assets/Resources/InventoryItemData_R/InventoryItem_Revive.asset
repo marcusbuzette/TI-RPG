@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: InventoryItem_Revive
   m_EditorClassIdentifier: 
   id: 2
-  displayName: Revive
+  displayName: Estimulante
   prefab: {fileID: 959054419738605824, guid: e8b2810737e06574f992bd36205d0c8a, type: 3}
   image: {fileID: 21300000, guid: 476318e8ba151b8468262104bc28a524, type: 3}
+  price: 50
