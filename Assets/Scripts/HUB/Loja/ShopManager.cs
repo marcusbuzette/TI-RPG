@@ -62,8 +62,8 @@ public class ShopManager : MonoBehaviour {
 
     public void BuyItem() {
         if (selectedItemindex == -1) return;
-        if (GameController.controller.dinheiro < (ItemOnSale[selectedItemindex].price * itemQuantity)) return;
 
+        Debug.Log(itemQuantity);
         for (int i = 0; i < itemQuantity; i++) {
             InventorySystem.inventorySystem.Add(ItemOnSale[selectedItemindex], true);
         }
@@ -125,7 +125,6 @@ public class ShopManager : MonoBehaviour {
         }
 
         int index = 0;
-        Debug.Log(InventorySystem.inventorySystem.GetInventoryItems());
 
         foreach (InventoryItemData item in InventorySystem.inventorySystem.GetInventoryItems()) {
             inventoryItems[index].ActiveItemSale();
