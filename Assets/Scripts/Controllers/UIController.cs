@@ -98,4 +98,8 @@ public class UIController : MonoBehaviour
     #endif
     }
 
+    public string GetCurrentSceneName() {
+        return SceneManager.GetActiveScene().name;
+    }
+
 }
