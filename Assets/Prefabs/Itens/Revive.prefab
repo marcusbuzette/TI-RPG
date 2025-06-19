@@ -123,4 +123,4 @@ MonoBehaviour:
   animator: {fileID: 0}
   speed: 0
   rotSpeed: 180
-  healAmount: 50
+  healAmount: 35

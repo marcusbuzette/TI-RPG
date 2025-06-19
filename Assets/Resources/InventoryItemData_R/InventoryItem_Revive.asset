@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: InventoryItem_Revive
   m_EditorClassIdentifier: 
   id: 2
-  displayName: Estimulante
+  displayName: "Orbe da Ressurrei\xE7\xE3o"
   prefab: {fileID: 959054419738605824, guid: e8b2810737e06574f992bd36205d0c8a, type: 3}
   image: {fileID: 21300000, guid: 476318e8ba151b8468262104bc28a524, type: 3}
   price: 50
+  description: "Um orbe misterioso que pulsa ao toque.\r\n\r\nEfeito: Revive um aliado
+    com vida completa.\r\nUso: Extremamente raro. S\xF3 pode ser usado uma vez por
+    batalha.\r\nDescri\xE7\xE3o: Seus criadores s\xE3o desconhecidos, mas seu poder
+    \xE9 ineg\xE1vel.\r\n"

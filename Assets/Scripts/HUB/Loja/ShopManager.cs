@@ -1,20 +1,21 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using Unity.VisualScripting;
-using System.Runtime.CompilerServices;
 using TMPro;
 
 public class ShopManager : MonoBehaviour {
 
-    [SerializeField] private List<InventoryItemData> ItemOnSale;
+    [SerializeField] private TextMeshProUGUI playerMoney;
+
+    [Space, SerializeField] private List<InventoryItemData> ItemOnSale;
     [SerializeField] private List<ShopItemOnSaleButton> shopItemButton;
+    [SerializeField] private List<ShopItemOnSaleButton> inventoryItems;
+    [SerializeField] private Transform inventoryTab;
 
     [Space, SerializeField] private Image selectedItemImage;
     [SerializeField] private TextMeshProUGUI selectedItemName;
     [SerializeField] private TextMeshProUGUI selectedItemPrice;
+    [SerializeField] private TextMeshProUGUI selectedItemDescription;
 
     [SerializeField] private TextMeshProUGUI buyItemQuantity;
     [SerializeField] private Button buyButton;
@@ -26,6 +27,11 @@ public class ShopManager : MonoBehaviour {
     }
 
     public void SelectShopItem(int index) {
+        if(index == selectedItemindex) {
+            PlusItemQuantity();
+            return;
+        }
+
         selectedItemindex = index;
         buyButton.interactable = true;
 
@@ -39,6 +45,7 @@ public class ShopManager : MonoBehaviour {
         selectedItemImage.sprite = shopItemButton[index].GetImage();
         selectedItemName.text = shopItemButton[index].GetName();
         selectedItemPrice.text = shopItemButton[index].GetPrice() + "$";
+        selectedItemDescription.text = ItemOnSale[index].description;
     }
 
     private void DeselectItem() {
@@ -48,19 +55,21 @@ public class ShopManager : MonoBehaviour {
         selectedItemName.gameObject.SetActive(false);
         selectedItemPrice.gameObject.SetActive(false);
 
+        selectedItemDescription.text = "";
+
         selectedItemindex = -1;
     }
 
     public void BuyItem() {
-
         if (selectedItemindex == -1) return;
-        if(GameController.controller.dinheiro < (ItemOnSale[selectedItemindex].price * itemQuantity))
+        if (GameController.controller.dinheiro < (ItemOnSale[selectedItemindex].price * itemQuantity)) return;
 
         for (int i = 0; i < itemQuantity; i++) {
             InventorySystem.inventorySystem.Add(ItemOnSale[selectedItemindex], true);
         }
 
         GameController.controller.dinheiro -= (ItemOnSale[selectedItemindex].price * itemQuantity);
+        UpdateGold();
 
         itemQuantity = 0;
         buyItemQuantity.text = itemQuantity.ToString();
@@ -102,5 +111,30 @@ public class ShopManager : MonoBehaviour {
         foreach (var item in shopItemButton) {
             item.InactiveItemSale();
         }
+    }
+
+    public void UpdateGold() {
+        playerMoney.text = "Ouro: " + GameController.controller.dinheiro + "$";
+    }
+
+    public void OpenInventory() {
+        inventoryTab.gameObject.SetActive(true);
+
+        foreach (var item in inventoryItems) {
+            item.InactiveItemSale();
+        }
+
+        int index = 0;
+        Debug.Log(InventorySystem.inventorySystem.GetInventoryItems());
+
+        foreach (InventoryItemData item in InventorySystem.inventorySystem.GetInventoryItems()) {
+            inventoryItems[index].ActiveItemSale();
+            inventoryItems[index].SetItem(item.image, item.displayName, -1, InventorySystem.inventorySystem.GetItemCount(item));
+            index++;
+        }
+    }
+
+    public void CloseInventory() {
+        inventoryTab.gameObject.SetActive(false);
     }
 }
