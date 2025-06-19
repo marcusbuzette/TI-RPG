@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Unity.VisualScripting;
-
+using UnityEngine.SceneManagement;
+using UnityEditorInternal.VersionControl;
 
 public class InventorySystem : MonoBehaviour, IDataPersistence {
     public event EventHandler OnInventoryIsEmpty;
@@ -25,8 +26,8 @@ public class InventorySystem : MonoBehaviour, IDataPersistence {
         m_itemDictionary = new SerializableDictionary<InventoryItemData, SerializableInventoryItem>();
     }
 
-    public void Add(InventoryItemData referenceData) {
-        OnNewItemOnInventory.Invoke(this, EventArgs.Empty);
+    public void Add(InventoryItemData referenceData, bool isShopItem = false) {
+        if(!isShopItem) OnNewItemOnInventory.Invoke(this, EventArgs.Empty);
 
         if (m_itemDictionary.TryGetValue(referenceData, out SerializableInventoryItem value)) {
             value.AddToStack();
@@ -85,5 +86,25 @@ public class InventorySystem : MonoBehaviour, IDataPersistence {
     public void SaveData(ref GameData data) {
         data.inventory = this.inventory;
         data.m_inventory = this.m_itemDictionary;
+    }
+
+    public List<InventoryItemData> GetInventoryItems() {
+        List<InventoryItemData> listItem = new List<InventoryItemData>();
+
+        foreach(var item in inventory) {
+            listItem.Add(item.GetScriptableObj());
+        }
+
+        return listItem;
+    }
+
+    public int GetItemCount(InventoryItemData itemData) {
+        foreach (var item in inventory) {
+            if(itemData == item.GetScriptableObj()) {
+                return item.GetItemAmount();
+            };
+        }
+
+        return 0;
     }
 }

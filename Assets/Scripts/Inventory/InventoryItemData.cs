@@ -12,4 +12,7 @@ public class InventoryItemData : ScriptableObject
     public string displayName;
     public GameObject prefab;
     public Sprite image;
+    public int price;
+    [TextArea(3, 10)]
+    public string description;
 }

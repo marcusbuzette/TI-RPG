@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: InventoryItem_BasicPotion
   m_EditorClassIdentifier: 
   id: 1
-  displayName: Potion
+  displayName: "Po\xE7\xE3o Basica"
   prefab: {fileID: 959054419738605824, guid: 3938934a894c14343b69e125355950d7, type: 3}
   image: {fileID: 21300000, guid: 3aa683589d3872648ab6fe8df9892d7c, type: 3}
+  price: 20
+  description: "Uma pequena po\xE7\xE3o de cura comum.\r\n\r\nEfeito: Restaura 25
+    pontos de vida.\r\nUso: Pode ser usada dentro ou fora de combate.\r\nDescri\xE7\xE3o:
+    Um item essencial carregado por todo aventureiro prudente.\r"

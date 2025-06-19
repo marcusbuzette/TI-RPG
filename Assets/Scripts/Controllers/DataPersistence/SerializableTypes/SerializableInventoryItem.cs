@@ -38,4 +38,6 @@ public class SerializableInventoryItem : InventoryItem, ISerializationCallbackRe
     public int GetItemAmount() {
         return this.qtd;
     }
+
+    public InventoryItemData GetScriptableObj() { return scriptableObj; }
 }

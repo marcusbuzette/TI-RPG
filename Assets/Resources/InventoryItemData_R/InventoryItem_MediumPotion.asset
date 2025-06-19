@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: InventoryItem_MediumPotion
   m_EditorClassIdentifier: 
   id: 1
-  displayName: Potion
+  displayName: "Po\xE7\xE3o M\xE9dia"
   prefab: {fileID: 959054419738605824, guid: d9f7a3e83cfa8e849a1cacd7802ef379, type: 3}
   image: {fileID: 21300000, guid: 3aa683589d3872648ab6fe8df9892d7c, type: 3}
+  price: 35
+  description: "Uma po\xE7\xE3o de cura mais potente.\r\n\r\nEfeito: Restaura 50
+    pontos de vida.\r\nPode ser usada dentro ou fora de combate.\r\r\r\nDescri\xE7\xE3o:
+    Seu sabor amargo \xE9 compensado pela recupera\xE7\xE3o r\xE1pida.\r\n"
