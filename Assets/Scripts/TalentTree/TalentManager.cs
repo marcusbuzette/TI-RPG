@@ -19,6 +19,8 @@ public class TalentManager : MonoBehaviour {
 
     [SerializeField] private List<GameObject> playerUnitList = new List<GameObject>();
 
+    [SerializeField] private GameObject updateAvailable;
+
     public EventHandler onSkillUpdate;
 
     private List<BaseSkills> skills;
@@ -57,11 +59,21 @@ public class TalentManager : MonoBehaviour {
 
 
             Button unitButton = Instantiate(unitButtonPrefab, charactersContainer);
-            unitButton.gameObject.AddComponent<SkillTreeUnitButtonUI>();
+            SkillTreeUnitButtonUI skillUI = unitButton.gameObject.GetComponent<SkillTreeUnitButtonUI>();
             unitButton.gameObject.GetComponent<SkillTreeUnitButtonUI>().SetUnitData(unitId, playerUnit.GetUnitName());
-            unitButton.onClick.AddListener(() => OnSelectedUnitChanged(unitId));
+            unitButton.onClick.AddListener(() => {
+                OnSelectedUnitChanged(unitId);
+                SetSelectedButton(unitButton.GetComponent<SkillTreeUnitButtonUI>());
+            });
 
-            if (!selectedButton) selectedButton = unitButton;
+            // Verifica se há upgrade ou skill disponível
+            bool hasAvailable = HasAvailableUpgradesOrSkills(playerUnit);
+            Debug.Log("hasavailable - " + hasAvailable);
+            skillUI.ShowUpgradeAvailable(hasAvailable);
+
+            if (selectedButton == null) {
+                SetSelectedButton(unitButton.GetComponent<SkillTreeUnitButtonUI>());
+            }
 
         }
         this.OnSelectedUnitChanged(this.SelectedUnit);
@@ -161,9 +173,9 @@ public class TalentManager : MonoBehaviour {
             this.selectedLevelSkill.Add(unitSkills.custo, unitSkills);
         }
 
-        foreach(BaseSkills bs in skills) {
+        foreach (BaseSkills bs in skills) {
             Button skillButton = Instantiate(skillButtonPrefab, skillTreeContainer);
-            skillButton.GetComponent<SkillUi>().SetBaseSkill(bs);
+            skillButton.GetComponent<SkillUi>().SetBaseSkill(bs, indexSkill);
             skillButton.gameObject.name += indexSkill;
             skillButton.GetComponent<SkillUi>().SetSkillToolTipPos(TooltipPosition.RIGHT);
             skillButton.onClick.AddListener(() => { TentarDesbloquearskills(bs); });
@@ -251,7 +263,54 @@ public class TalentManager : MonoBehaviour {
     }
 
     public void UpdateSelectedCharButton() {
-        EventSystem.current.SetSelectedGameObject(selectedButton.gameObject);
+        if (selectedButton != null) {
+            EventSystem.current.SetSelectedGameObject(selectedButton.gameObject);
+        }
+        else {
+            Debug.LogWarning("selectedButton está nulo ao tentar definir como selecionado.");
+        }
     }
+
+
+    public void SetSelectedButton(SkillTreeUnitButtonUI newSelected) {
+        if (selectedButton != null) {
+            selectedButton.GetComponent<SkillTreeUnitButtonUI>().ResetSelected();
+        }
+
+        selectedButton = newSelected.GetComponent<Button>();
+        newSelected.SetSelected();
+    }
+
+    private bool HasAvailableUpgradesOrSkills(Unit unit) {
+    int xp = unit.GetUnitXpSystem().getXpAmount();
+    var skills = unit.GetPossibleSkills();
+    var upgrades = unit.GetPossibelUpgrades();
+
+    Debug.Log(unit.unitId);
+
+
+    foreach (var skill in skills) {
+        if (!AlreadySelected(skill) &&
+            xp >= skill.custo &&
+            PodeSerDesbloqueado(skill) &&
+            !CheckSelectedSkillOnLevel(skill.custo)) {
+                Debug.Log("true - skill");
+            return true;
+        }
+    }
+
+    foreach (var upgrade in upgrades) {
+        if (!AlreadyChoseUpgradeFromLevel(upgrade) &&
+            xp >= upgrade.level &&
+            CheckPreviousUpgradesSelected(upgrade)) {
+                Debug.Log("true - upgrade");
+            return true;
+        }
+    }
+    Debug.Log("false");
+    return false;
+}
+
+
 
 }
