@@ -135,6 +135,7 @@ public class UnitActionSystemUI : MonoBehaviour {
 
     private void UnitActionSystem_OnSelectedUnitChanged(object sender, EventArgs e) {
         Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
+        if (selectedUnit == null) return;
         CloseInventory();
 
         if (LevelGrid.Instance.IsInBattleMode()) {

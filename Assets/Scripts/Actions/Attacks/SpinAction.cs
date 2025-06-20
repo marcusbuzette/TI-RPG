@@ -15,8 +15,8 @@ public class SpinAction : BaseAction {
          unit.PlayAnimation("SpinAttack");
         foreach (Unit target in targetsList) {
             target.Damage(this.hitDamage, false, this.GetComponent<Unit>());
-            ActionFinish();
         }
+        ActionFinish();
     }
 
     public override string GetActionName() {

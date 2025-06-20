@@ -3279,6 +3279,7 @@ MonoBehaviour:
   currentLevel: 0
   debugMode: 0
   debugPathFindingMode: 0
+  pauseMenuUI: {fileID: 0}
 --- !u!4 &660586791
 Transform:
   m_ObjectHideFlags: 0

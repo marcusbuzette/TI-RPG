@@ -8,7 +8,6 @@ using static GridSystemVisual;
 public class FireAttack : BaseSkills {
     [SerializeField] private LayerMask obstaclesLayerMask;
     private GameObject fireAttackObject;
-    [SerializeField] private GameObject particleFire;
     [SerializeField] private int maxShootDistance = 1;
     [SerializeField] private int shootDamage = 100;
     [SerializeField] private int areaDamage = 3;
@@ -121,7 +120,7 @@ public class FireAttack : BaseSkills {
 
         VfxController.CastEnd();
         fireAttackObject = Instantiate(new GameObject(), selectedGrid, Quaternion.identity);
-        fireAttackObject.AddComponent<FireAttackObject>().SetFireAttackObject(this, particleFire, damage, areaDamage, coolDown);
+        fireAttackObject.AddComponent<FireAttackObject>().SetFireAttackObject(this, damage, areaDamage, coolDown);
         ActionFinish();
     }
 

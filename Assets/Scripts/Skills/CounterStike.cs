@@ -76,6 +76,7 @@ public class CounterStike : BaseSkills {
     }
 
     private void HealthSystem_OnDamage(object sender, EventArgs e) {
+        if(e == null) { return; }
         if (this.isCountering) this.PerformCounterStrike((e as HealthSystemEvent).attacker);
     }
 
