@@ -86,6 +86,7 @@ public class TalentManager : MonoBehaviour {
             Unit unitAux = playerUnitList.Find(unit => unit.GetComponent<Unit>().GetUnitId() == this.SelectedUnit).GetComponent<Unit>();
             this.UpdateLevelBar();
             DesbloquearSkills(skills);
+            UpdateAllUpgradeIndicators();
         }
         else {
             Debug.Log("skills não pode ser desbloqueado!");
@@ -97,6 +98,7 @@ public class TalentManager : MonoBehaviour {
             Unit unitAux = playerUnitList.Find(unit => unit.GetComponent<Unit>().GetUnitId() == this.SelectedUnit).GetComponent<Unit>();
             this.UpdateLevelBar();
             DesbloquearUpgrade(upgrade, index);
+            UpdateAllUpgradeIndicators();
         }
         else {
             Debug.Log("upgrade não pode ser desbloqueado!");
@@ -282,34 +284,50 @@ public class TalentManager : MonoBehaviour {
     }
 
     private bool HasAvailableUpgradesOrSkills(Unit unit) {
-    int xp = unit.GetUnitXpSystem().getXpAmount();
-    var skills = unit.GetPossibleSkills();
-    var upgrades = unit.GetPossibelUpgrades();
+        int xp = unit.GetUnitXpSystem().getXpAmount();
+        var skills = unit.GetPossibleSkills();
+        var upgrades = unit.GetPossibelUpgrades();
 
-    Debug.Log(unit.unitId);
+        Debug.Log(unit.unitId);
 
 
-    foreach (var skill in skills) {
-        if (!AlreadySelected(skill) &&
-            xp >= skill.custo &&
-            PodeSerDesbloqueado(skill) &&
-            !CheckSelectedSkillOnLevel(skill.custo)) {
+        foreach (var skill in skills) {
+            if (!AlreadySelected(skill) &&
+                xp >= skill.custo &&
+                PodeSerDesbloqueado(skill) &&
+                !CheckSelectedSkillOnLevel(skill.custo)) {
                 Debug.Log("true - skill");
-            return true;
+                return true;
+            }
+        }
+
+        foreach (var upgrade in upgrades) {
+            if (!AlreadyChoseUpgradeFromLevel(upgrade) &&
+                xp >= upgrade.level &&
+                CheckPreviousUpgradesSelected(upgrade)) {
+                Debug.Log("true - upgrade");
+                return true;
+            }
+        }
+        Debug.Log("false");
+        return false;
+    }
+
+    private void UpdateAllUpgradeIndicators() {
+        SkillTreeUnitButtonUI[] allButtons = charactersContainer.GetComponentsInChildren<SkillTreeUnitButtonUI>();
+
+        foreach (SkillTreeUnitButtonUI buttonUI in allButtons) {
+            Unit unit = playerUnitList
+                .Find(u => u.GetComponent<Unit>().GetUnitId() == buttonUI.GetUnitId())
+                .GetComponent<Unit>();
+
+            bool show = HasAvailableUpgradesOrSkills(unit);
+            buttonUI.ShowUpgradeAvailable(show);
         }
     }
 
-    foreach (var upgrade in upgrades) {
-        if (!AlreadyChoseUpgradeFromLevel(upgrade) &&
-            xp >= upgrade.level &&
-            CheckPreviousUpgradesSelected(upgrade)) {
-                Debug.Log("true - upgrade");
-            return true;
-        }
-    }
-    Debug.Log("false");
-    return false;
-}
+
+
 
 
 
