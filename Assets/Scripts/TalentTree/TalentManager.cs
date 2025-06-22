@@ -66,10 +66,6 @@ public class TalentManager : MonoBehaviour {
                 SetSelectedButton(unitButton.GetComponent<SkillTreeUnitButtonUI>());
             });
 
-            // Verifica se há upgrade ou skill disponível
-            bool hasAvailable = HasAvailableUpgradesOrSkills(playerUnit);
-            Debug.Log("hasavailable - " + hasAvailable);
-            skillUI.ShowUpgradeAvailable(hasAvailable);
 
             if (selectedButton == null) {
                 SetSelectedButton(unitButton.GetComponent<SkillTreeUnitButtonUI>());
@@ -86,7 +82,6 @@ public class TalentManager : MonoBehaviour {
             Unit unitAux = playerUnitList.Find(unit => unit.GetComponent<Unit>().GetUnitId() == this.SelectedUnit).GetComponent<Unit>();
             this.UpdateLevelBar();
             DesbloquearSkills(skills);
-            UpdateAllUpgradeIndicators();
         }
         else {
             Debug.Log("skills não pode ser desbloqueado!");
@@ -98,7 +93,6 @@ public class TalentManager : MonoBehaviour {
             Unit unitAux = playerUnitList.Find(unit => unit.GetComponent<Unit>().GetUnitId() == this.SelectedUnit).GetComponent<Unit>();
             this.UpdateLevelBar();
             DesbloquearUpgrade(upgrade, index);
-            UpdateAllUpgradeIndicators();
         }
         else {
             Debug.Log("upgrade não pode ser desbloqueado!");
@@ -283,50 +277,52 @@ public class TalentManager : MonoBehaviour {
         newSelected.SetSelected();
     }
 
-    private bool HasAvailableUpgradesOrSkills(Unit unit) {
+    public bool HasAvailableUpgradesOrSkills(string unitId) {
+        Unit unit = playerUnitList
+            .Find(u => u.GetComponent<Unit>().GetUnitId() == unitId)
+            ?.GetComponent<Unit>();
+
+        if (unit == null) return false;
+
         int xp = unit.GetUnitXpSystem().getXpAmount();
         var skills = unit.GetPossibleSkills();
         var upgrades = unit.GetPossibelUpgrades();
-
-        Debug.Log(unit.unitId);
-
+        UnitRecords records = GameController.controller.GetUnitRecords(unitId);
 
         foreach (var skill in skills) {
-            if (!AlreadySelected(skill) &&
-                xp >= skill.custo &&
-                PodeSerDesbloqueado(skill) &&
-                !CheckSelectedSkillOnLevel(skill.custo)) {
-                Debug.Log("true - skill");
+            bool alreadySelected = records.GetUnitSKills().Contains(skill);
+            bool hasPoints = xp >= skill.custo;
+            bool canBeUnlocked = !alreadySelected && (!SkillHasRequirements(skill) || skill.preRequisitos.Any(p => records.GetUnitSKills().Contains(p)));
+            bool alreadyChoseOnThisLevel = records.GetUnitSKills().Any(s => s.custo == skill.custo);
+
+            if (!alreadySelected && hasPoints && canBeUnlocked && !alreadyChoseOnThisLevel) {
                 return true;
             }
         }
 
         foreach (var upgrade in upgrades) {
-            if (!AlreadyChoseUpgradeFromLevel(upgrade) &&
-                xp >= upgrade.level &&
-                CheckPreviousUpgradesSelected(upgrade)) {
-                Debug.Log("true - upgrade");
+            bool alreadyChoseUpgrade = records.GetLevelUpgrades().ContainsKey(upgrade.level);
+            bool hasPoints = xp >= upgrade.level;
+
+            bool previousLevelsMet = true;
+            foreach (var u in upgrades.Where(u => u.level < upgrade.level)) {
+                if (!records.GetLevelUpgrades().ContainsKey(u.level)) {
+                    previousLevelsMet = false;
+                    break;
+                }
+            }
+
+            if (!alreadyChoseUpgrade && hasPoints && previousLevelsMet) {
                 return true;
             }
         }
-        Debug.Log("false");
+
         return false;
     }
 
-    private void UpdateAllUpgradeIndicators() {
-        SkillTreeUnitButtonUI[] allButtons = charactersContainer.GetComponentsInChildren<SkillTreeUnitButtonUI>();
-
-        foreach (SkillTreeUnitButtonUI buttonUI in allButtons) {
-            Unit unit = playerUnitList
-                .Find(u => u.GetComponent<Unit>().GetUnitId() == buttonUI.GetUnitId())
-                .GetComponent<Unit>();
-
-            bool show = HasAvailableUpgradesOrSkills(unit);
-            buttonUI.ShowUpgradeAvailable(show);
-        }
-    }
 
 
+    public List<GameObject> GetUnitList() { return this.playerUnitList; }
 
 
 

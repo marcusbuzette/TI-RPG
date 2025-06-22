@@ -211,9 +211,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonText: {fileID: 1560746298562375506}
-  upgardeAvailave: {fileID: 3954892115223301605}
+  upgradeAvailableIcon: {fileID: 3954892115223301605}
   selectedImage: {fileID: 21300000, guid: e0d3bcafd0f43c94383ba17983d55eda, type: 3}
-  selecteColor: {r: 1, g: 0.7607843, b: 0.5411765, a: 1}
+  selectedColor: {r: 1, g: 0.75, b: 0.75, a: 1}
 --- !u!1 &6484376784980960435
 GameObject:
   m_ObjectHideFlags: 0

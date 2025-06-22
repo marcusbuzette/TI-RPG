@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -7,65 +7,78 @@ public class SkillTreeUnitButtonUI : MonoBehaviour {
 
     private string unitId;
     private string unitName;
+
     [SerializeField] private TMP_Text buttonText;
-    [SerializeField] private GameObject upgardeAvailave;
+    [SerializeField] private GameObject upgradeAvailableIcon;
     [SerializeField] private Sprite selectedImage;
-    [SerializeField] private Color selecteColor;
+    [SerializeField] private Color selectedColor;
+
     private Sprite originalSprite;
     private Color originalColor;
     private Button buttonRef;
     private Vector3 originalScale;
     private Coroutine currentAnimation;
 
+    private void OnEnable() {
+        TalentManager.Instance.onSkillUpdate += TalentManager_OnSkillUpdate;
+        UpdateUpgradeAvailableIcon();
+    }
+
+    private void OnDisable() {
+        if (TalentManager.Instance != null)
+            TalentManager.Instance.onSkillUpdate -= TalentManager_OnSkillUpdate;
+    }
+
+    private void TalentManager_OnSkillUpdate(object sender, EventArgs e) {
+        UpdateUpgradeAvailableIcon();
+    }
+
     public void SetUnitData(string unitId, string unitName) {
         this.unitId = unitId;
         this.unitName = unitName;
-        this.buttonText.text = unitName;
+
         buttonRef = GetComponent<Button>();
         originalSprite = buttonRef.image.sprite;
         originalColor = buttonRef.image.color;
         originalScale = transform.localScale;
+
+        buttonText.text = unitName;
+
+        UpdateUpgradeAvailableIcon();
     }
 
     public void SetSelected() {
-        buttonRef.image.color = this.selecteColor;
+        buttonRef.image.color = selectedColor;
         buttonRef.image.sprite = selectedImage;
 
-        // Cancela animação anterior se estiver rolando
         if (currentAnimation != null) StopCoroutine(currentAnimation);
-        currentAnimation = StartCoroutine(AnimateSelection());
+            currentAnimation = StartCoroutine(AnimateSelection());
     }
 
     public void ResetSelected() {
-        buttonRef.image.sprite = this.originalSprite;
+        buttonRef.image.sprite = originalSprite;
         buttonRef.image.color = originalColor;
 
-        // Cancela animação anterior e reseta escala
         if (currentAnimation != null) StopCoroutine(currentAnimation);
         transform.localScale = originalScale;
     }
 
-    private IEnumerator AnimateSelection() {
+    private System.Collections.IEnumerator AnimateSelection() {
         float duration = 0.2f;
         float time = 0f;
         Vector3 targetScale = originalScale * 1.1f;
 
         while (time < duration) {
             time += Time.deltaTime;
-            float t = time / duration;
-            t = Mathf.Sin(t * Mathf.PI * 0.5f); // EaseOutSine
-
+            float t = Mathf.Sin((time / duration) * Mathf.PI * 0.5f);
             transform.localScale = Vector3.Lerp(originalScale, targetScale, t);
             yield return null;
         }
 
-        // Retorna ao normal suavemente
         time = 0f;
         while (time < duration) {
             time += Time.deltaTime;
-            float t = time / duration;
-            t = 1f - Mathf.Cos(t * Mathf.PI * 0.5f); // EaseInSine
-
+            float t = 1f - Mathf.Cos((time / duration) * Mathf.PI * 0.5f);
             transform.localScale = Vector3.Lerp(targetScale, originalScale, t);
             yield return null;
         }
@@ -74,12 +87,25 @@ public class SkillTreeUnitButtonUI : MonoBehaviour {
         currentAnimation = null;
     }
 
-    public string GetUnitId() { return unitId; }
-    public string GetUnitName() { return unitName; }
+    public string GetUnitId() => unitId;
+    public string GetUnitName() => unitName;
 
-    public void ShowUpgradeAvailable(bool show) {
-        if (upgardeAvailave != null) {
-            upgardeAvailave.SetActive(show);
+    private void UpdateUpgradeAvailableIcon() {
+        if (TalentManager.Instance == null || string.IsNullOrEmpty(unitId) || upgradeAvailableIcon == null) {
+            if (upgradeAvailableIcon != null) upgradeAvailableIcon.SetActive(false);
+            return;
         }
+
+        Unit unit = TalentManager.Instance.GetUnitList()
+            .Find(u => u.GetComponent<Unit>().GetUnitId() == unitId)
+            ?.GetComponent<Unit>();
+
+        if (unit == null) {
+            upgradeAvailableIcon.SetActive(false);
+            return;
+        }
+
+        bool hasAvailable = TalentManager.Instance.HasAvailableUpgradesOrSkills(unitId);
+        upgradeAvailableIcon.SetActive(hasAvailable);
     }
 }
