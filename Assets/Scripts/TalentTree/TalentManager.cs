@@ -19,6 +19,8 @@ public class TalentManager : MonoBehaviour {
 
     [SerializeField] private List<GameObject> playerUnitList = new List<GameObject>();
 
+    [SerializeField] private GameObject updateAvailable;
+
     public EventHandler onSkillUpdate;
 
     private List<BaseSkills> skills;
@@ -57,11 +59,17 @@ public class TalentManager : MonoBehaviour {
 
 
             Button unitButton = Instantiate(unitButtonPrefab, charactersContainer);
-            unitButton.gameObject.AddComponent<SkillTreeUnitButtonUI>();
+            SkillTreeUnitButtonUI skillUI = unitButton.gameObject.GetComponent<SkillTreeUnitButtonUI>();
             unitButton.gameObject.GetComponent<SkillTreeUnitButtonUI>().SetUnitData(unitId, playerUnit.GetUnitName());
-            unitButton.onClick.AddListener(() => OnSelectedUnitChanged(unitId));
+            unitButton.onClick.AddListener(() => {
+                OnSelectedUnitChanged(unitId);
+                SetSelectedButton(unitButton.GetComponent<SkillTreeUnitButtonUI>());
+            });
 
-            if (!selectedButton) selectedButton = unitButton;
+
+            if (selectedButton == null) {
+                SetSelectedButton(unitButton.GetComponent<SkillTreeUnitButtonUI>());
+            }
 
         }
         this.OnSelectedUnitChanged(this.SelectedUnit);
@@ -161,9 +169,9 @@ public class TalentManager : MonoBehaviour {
             this.selectedLevelSkill.Add(unitSkills.custo, unitSkills);
         }
 
-        foreach(BaseSkills bs in skills) {
+        foreach (BaseSkills bs in skills) {
             Button skillButton = Instantiate(skillButtonPrefab, skillTreeContainer);
-            skillButton.GetComponent<SkillUi>().SetBaseSkill(bs);
+            skillButton.GetComponent<SkillUi>().SetBaseSkill(bs, indexSkill);
             skillButton.gameObject.name += indexSkill;
             skillButton.GetComponent<SkillUi>().SetSkillToolTipPos(TooltipPosition.RIGHT);
             skillButton.onClick.AddListener(() => { TentarDesbloquearskills(bs); });
@@ -251,7 +259,72 @@ public class TalentManager : MonoBehaviour {
     }
 
     public void UpdateSelectedCharButton() {
-        EventSystem.current.SetSelectedGameObject(selectedButton.gameObject);
+        if (selectedButton != null) {
+            EventSystem.current.SetSelectedGameObject(selectedButton.gameObject);
+        }
+        else {
+            Debug.LogWarning("selectedButton está nulo ao tentar definir como selecionado.");
+        }
     }
+
+
+    public void SetSelectedButton(SkillTreeUnitButtonUI newSelected) {
+        if (selectedButton != null) {
+            selectedButton.GetComponent<SkillTreeUnitButtonUI>().ResetSelected();
+        }
+
+        selectedButton = newSelected.GetComponent<Button>();
+        newSelected.SetSelected();
+    }
+
+    public bool HasAvailableUpgradesOrSkills(string unitId) {
+        Unit unit = playerUnitList
+            .Find(u => u.GetComponent<Unit>().GetUnitId() == unitId)
+            ?.GetComponent<Unit>();
+
+        if (unit == null) return false;
+
+        int xp = unit.GetUnitXpSystem().getXpAmount();
+        var skills = unit.GetPossibleSkills();
+        var upgrades = unit.GetPossibelUpgrades();
+        UnitRecords records = GameController.controller.GetUnitRecords(unitId);
+
+        foreach (var skill in skills) {
+            bool alreadySelected = records.GetUnitSKills().Contains(skill);
+            bool hasPoints = xp >= skill.custo;
+            bool canBeUnlocked = !alreadySelected && (!SkillHasRequirements(skill) || skill.preRequisitos.Any(p => records.GetUnitSKills().Contains(p)));
+            bool alreadyChoseOnThisLevel = records.GetUnitSKills().Any(s => s.custo == skill.custo);
+
+            if (!alreadySelected && hasPoints && canBeUnlocked && !alreadyChoseOnThisLevel) {
+                return true;
+            }
+        }
+
+        foreach (var upgrade in upgrades) {
+            bool alreadyChoseUpgrade = records.GetLevelUpgrades().ContainsKey(upgrade.level);
+            bool hasPoints = xp >= upgrade.level;
+
+            bool previousLevelsMet = true;
+            foreach (var u in upgrades.Where(u => u.level < upgrade.level)) {
+                if (!records.GetLevelUpgrades().ContainsKey(u.level)) {
+                    previousLevelsMet = false;
+                    break;
+                }
+            }
+
+            if (!alreadyChoseUpgrade && hasPoints && previousLevelsMet) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+
+    public List<GameObject> GetUnitList() { return this.playerUnitList; }
+
+
+
 
 }

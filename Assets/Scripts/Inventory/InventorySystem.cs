@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
-using UnityEditorInternal.VersionControl;
+
 
 public class InventorySystem : MonoBehaviour, IDataPersistence {
     public event EventHandler OnInventoryIsEmpty;
