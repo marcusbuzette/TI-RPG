@@ -66,12 +66,20 @@ public class Unit : MonoBehaviour {
             UnitRecords unitRecords = GameController.controller.GetUnitRecords(unitId);
             this.xpSystem.SetXp(unitRecords.xp);
             this.unitStats = unitRecords.unitStats;
-            foreach (BaseSkills skill in unitRecords.baseSkills) {
-                BaseSkills aux = possibleSkillsPrefabs.Find((s) => s.GetComponent<BaseSkills>().nome == skill.nome);
-                BaseSkills bs = gameObject.AddComponent(skill.GetType()) as BaseSkills;
-                bs.SetSkill();
-                if (aux != null) {
-                    bs.SetSkillImage(aux.GetActionImage());
+            foreach (string skillName in unitRecords.GetUnitSKillsIDs()) {
+                Type skillType = Type.GetType(skillName);
+                if (skillType == null) {
+                    Debug.LogError($"Tipo da skill '{skillName}' não encontrado.");
+                    continue;
+                }
+
+                BaseSkills skillInstance = gameObject.AddComponent(skillType) as BaseSkills;
+                skillInstance.SetSkill();
+
+                // (Opcional) Pegar imagem da prefab original
+                BaseSkills prefab = possibleSkillsPrefabs.Find(s => s.GetType().Name == skillName);
+                if (prefab != null) {
+                    skillInstance.SetSkillImage(prefab.GetActionImage());
                 }
             }
             OnAnyActionPerformed?.Invoke(this, EventArgs.Empty);
