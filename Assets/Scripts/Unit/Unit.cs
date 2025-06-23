@@ -51,8 +51,6 @@ public class Unit : MonoBehaviour {
     [SerializeField] private Transform projectilePrefab;
     [SerializeField] private Transform projectilePoint;
 
-
-    private int intimidateCoolDown = 0;
     [SerializeField] private int enemyFocus = 0;
 
     private void Awake() {
@@ -245,13 +243,6 @@ public class Unit : MonoBehaviour {
             return;
         }
 
-        if (intimidateCoolDown != 0) {
-            hasMoved = true;
-            hasPerformedAction = true;
-            hasPerformedSkill = true;
-            intimidateCoolDown--;
-        }
-
         if (enemyFocus != 0) {
             enemyFocus--;
         }
@@ -278,10 +269,6 @@ public class Unit : MonoBehaviour {
         if (!isEnemy && GameController.controller.HasUnitRecords(unitId)) {
             GameController.controller.UpdateUnitRecords(this);
         }
-    }
-
-    public void BeIntimidate() {
-        intimidateCoolDown = 1;
     }
 
     public void FocusOnMe(int focusTime) {
