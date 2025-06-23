@@ -15,12 +15,12 @@ public class HealAreaObject : MonoBehaviour {
 
     private HealArea healArea;
 
-    public void SetHealAreaObject(HealArea healArea, GameObject particleHeal, int healPoints, int areaHeal, int coolDown) {
+    public void SetHealAreaObject(HealArea healArea, int healPoints, int areaHeal, int coolDown = 3) {
         this.healArea = healArea;
         this.coolDown = coolDown;
         this.healPoints = healPoints;
         this.areaHeal = areaHeal;
-        this.particleHeal = particleHeal;
+        particleHeal = Resources.Load<GameObject>("Particles_R/SkillParticles/HealGridVFX");
 
         obstaclesLayerMask = LayerMask.GetMask("Obstacles");
         TurnSystem.Instance.onTurnChange += TurnSystem_onTurnChange;

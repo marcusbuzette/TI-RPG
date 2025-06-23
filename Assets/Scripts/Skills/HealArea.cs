@@ -7,7 +7,6 @@ using static GridSystemVisual;
 public class HealArea : BaseSkills {
     [SerializeField] private LayerMask obstaclesLayerMask;
     private GameObject healAreaObject;
-    [SerializeField] private GameObject particleHeal;
     [SerializeField] private int maxShootDistance = 1;
     [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private int areaHeal = 3;
@@ -105,7 +104,7 @@ public class HealArea : BaseSkills {
         unit.SpawnProjectile(selectedGrid, Color.green);
 
         healAreaObject = Instantiate(new GameObject(), selectedGrid, Quaternion.identity);
-        healAreaObject.AddComponent<HealAreaObject>().SetHealAreaObject(this, particleHeal, healPoints, areaHeal, coolDown);
+        healAreaObject.AddComponent<HealAreaObject>().SetHealAreaObject(this, healPoints, areaHeal, coolDown);
         ActionFinish();
     }
 

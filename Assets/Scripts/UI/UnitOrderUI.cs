@@ -24,7 +24,6 @@ public class UnitOrderUI : MonoBehaviour {
     }
 
     private void HealthSystem_OnDamage(object sender, EventArgs e) {
-        // Debug.Log(this.healthBar);
         if (unitHealthSystem != null) {
             this.healthBar.fillAmount = unitHealthSystem.GetHealthPointsNormalized();
         }
