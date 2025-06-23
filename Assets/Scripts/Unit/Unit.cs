@@ -64,33 +64,55 @@ public class Unit : MonoBehaviour {
     private void Start() {
         if (!isEnemy && GameController.controller.HasUnitRecords(unitId)) {
             UnitRecords unitRecords = GameController.controller.GetUnitRecords(unitId);
+
+            // Seta XP e stats básicos do Unit
             this.xpSystem.SetXp(unitRecords.xp);
             this.unitStats = unitRecords.unitStats;
-            foreach (BaseSkills skill in unitRecords.baseSkills) {
-                BaseSkills aux = possibleSkillsPrefabs.Find((s) => s.GetComponent<BaseSkills>().nome == skill.nome);
-                BaseSkills bs = gameObject.AddComponent(skill.GetType()) as BaseSkills;
-                bs.SetSkill();
-                if (aux != null) {
-                    bs.SetSkillImage(aux.GetActionImage());
-                }
-            }
-            OnAnyActionPerformed?.Invoke(this, EventArgs.Empty);
 
+            List<BaseSkills> instantiatedSkills = new List<BaseSkills>();
+
+            foreach (string skillId in unitRecords.GetUnitSKillsIDs()) {
+                // Carrega só o prefab da skill específica pelo nome no Resources/Skills_R
+                BaseSkills prefab = Resources.Load<BaseSkills>($"Skills_R/{skillId}");
+                if (prefab == null) {
+                    Debug.LogWarning($"Prefab da skill '{skillId}' não encontrado em Resources/Skills_R!");
+                    continue;
+                }
+
+                // Adiciona o componente da skill no GameObject da unidade usando o tipo do prefab
+                BaseSkills skillInstance = (BaseSkills)gameObject.AddComponent(prefab.GetType());
+                skillInstance.SetSkill();
+                skillInstance.CopyFrom(prefab);
+                skillInstance.SetSkillImage(prefab.GetActionImage());
+
+                instantiatedSkills.Add(skillInstance);
+            }
+
+            // (Opcional) atualiza a lista de skills atuais da unidade em runtime, se precisar
+            // Exemplo: unitRecords.SetUnitSkills(instantiatedSkills);
+
+            OnAnyActionPerformed?.Invoke(this, EventArgs.Empty);
         }
         else {
             this.unitStats = baseUnitStats;
         }
+
         actionsArray = GetComponents<BaseAction>();
         this.healthSystem.SetMaxHP(this.unitStats.GetMaxHP());
+
         gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
+
         TurnSystem.Instance.onTurnChange += TurnSystem_OnTurnChange;
 
         healthSystem.OnDead += HealthSystem_OnDie;
         healthSystem.OnRevive += HealthSystem_OnRevive;
+
         OnAnyUnitSpawn?.Invoke(this, EventArgs.Empty);
+
         statsModifiers = new UnitStatsModifiers();
     }
+
 
     private void Update() {
         if (transform.position != lastPosition) {
@@ -339,7 +361,6 @@ public class Unit : MonoBehaviour {
 
     public void SpawnProjectile(HealthSystem enemy, int projectileDemage, bool miss = false) {
         if (projectilePoint == null) {
-            Debug.LogWarning(transform.name + " <- this unit do not have ProjectilePoint on Unit");
             projectilePoint = transform;
         }
 

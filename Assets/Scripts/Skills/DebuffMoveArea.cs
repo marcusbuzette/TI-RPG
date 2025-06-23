@@ -75,7 +75,7 @@ public class DebuffMoveArea : BaseSkills {
             currentCoolDown--;
         }
         if (currentCoolDown == 0) {
-            onEndEffect.Invoke(this, EventArgs.Empty);
+            onEndEffect?.Invoke(this, EventArgs.Empty);
             onCoolDown = false;
         }
     }

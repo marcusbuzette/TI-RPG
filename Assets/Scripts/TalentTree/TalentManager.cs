@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 
 public class TalentManager : MonoBehaviour {
     public static TalentManager Instance;
+    private SkillCache skillCache;
     [SerializeField] private Transform charactersContainer;
     [SerializeField] private Transform skillTreeContainer;
     [SerializeField] private Transform upgradesTreeContainer;
@@ -40,9 +41,11 @@ public class TalentManager : MonoBehaviour {
         else {
             Destroy(this);
         }
+        skillCache = new SkillCache();
     }
 
     private void OnEnable() {
+        skillCache.Initialize();
         foreach (GameObject playerObj in playerUnitList) {
             Unit playerUnit = playerObj.GetComponent<Unit>();
             string unitId = playerUnit.GetUnitId();
@@ -161,12 +164,28 @@ public class TalentManager : MonoBehaviour {
             Destroy(item.gameObject);
         }
         UnitRecords unitRecordsAux = GameController.controller.GetUnitRecords(this.SelectedUnit);
-        skills = unitAux.GetPossibleSkills();
         upgrades = unitAux.GetPossibelUpgrades();
-
+        skills = new List<BaseSkills>();
+        foreach (BaseSkills skill in unitAux.GetPossibleSkills()) {
+            string skillId = skill.GetType().Name;
+            BaseSkills prefab = skillCache.GetSkillPrefab(skillId);
+            if (prefab != null) {
+                skills.Add(prefab);
+            }
+            else {
+                Debug.LogWarning($"Prefab de skill '{skillId}' não encontrado no SkillCache.");
+            }
+        }
         this.selectedLevelSkill.Clear();
-        foreach (BaseSkills unitSkills in unitRecordsAux.GetUnitSKills()) {
-            this.selectedLevelSkill.Add(unitSkills.custo, unitSkills);
+
+        foreach (string skillId in unitRecordsAux.GetUnitSKillsIDs()) {
+            BaseSkills skillPrefab = skillCache.GetSkillPrefab(skillId);
+            if (skillPrefab != null) {
+                this.selectedLevelSkill.Add(skillPrefab.custo, skillPrefab);
+            }
+            else {
+                Debug.LogWarning($"Prefab da skill '{skillId}' não encontrado em Resources/Skills/");
+            }
         }
 
         foreach (BaseSkills bs in skills) {
@@ -190,8 +209,8 @@ public class TalentManager : MonoBehaviour {
     }
 
     private bool IsSkillUnlocked(BaseSkills skill) {
-        List<BaseSkills> unitSkills = GameController.controller.GetUnitRecords(this.SelectedUnit).GetUnitSKills();
-        return unitSkills.Contains(skill);
+        List<string> unitSkills = GameController.controller.GetUnitRecords(this.SelectedUnit).GetUnitSKillsIDs();
+        return unitSkills.Contains(skill.GetType().Name);
     }
 
     private bool IsUpgradeLevelSelected(PossibleUpgrade upgrade) {
@@ -226,7 +245,11 @@ public class TalentManager : MonoBehaviour {
     }
 
     public bool AlreadySelected(BaseSkills skill) {
-        return GameController.controller.GetUnitRecords(this.SelectedUnit).baseSkills.Contains(skill);
+        string skillId = skill.GetType().Name; // ou skill.skillId, se você estiver usando uma propriedade dedicada
+        return GameController.controller
+            .GetUnitRecords(this.SelectedUnit)
+            .GetUnitSKillsIDs()
+            .Contains(skillId);
     }
 
     public bool AlreadyUpgraded(PossibleUpgrade upgrade, int index) {
@@ -285,17 +308,22 @@ public class TalentManager : MonoBehaviour {
         if (unit == null) return false;
 
         int xp = unit.GetUnitXpSystem().getXpAmount();
-        var skills = unit.GetPossibleSkills();
+        var possibleSkills = unit.GetPossibleSkills();
         var upgrades = unit.GetPossibelUpgrades();
         UnitRecords records = GameController.controller.GetUnitRecords(unitId);
+        List<string> selectedSkillIds = records.GetUnitSKillsIDs();
 
-        foreach (var skill in skills) {
-            bool alreadySelected = records.GetUnitSKills().Contains(skill);
+        foreach (var skill in possibleSkills) {
+            string skillId = skill.GetType().Name;
+            bool alreadySelected = selectedSkillIds.Contains(skillId);
             bool hasPoints = xp >= skill.custo;
-            bool canBeUnlocked = !alreadySelected && (!SkillHasRequirements(skill) || skill.preRequisitos.Any(p => records.GetUnitSKills().Contains(p)));
-            bool alreadyChoseOnThisLevel = records.GetUnitSKills().Any(s => s.custo == skill.custo);
+            bool hasRequirements = !SkillHasRequirements(skill) || skill.preRequisitos.Any(p => selectedSkillIds.Contains(p.GetType().Name));
+            bool alreadyChoseOnThisLevel = selectedSkillIds.Any(id => {
+                BaseSkills other = skillCache.GetSkillPrefab(id);
+                return other != null && other.custo == skill.custo;
+            });
 
-            if (!alreadySelected && hasPoints && canBeUnlocked && !alreadyChoseOnThisLevel) {
+            if (!alreadySelected && hasPoints && hasRequirements && !alreadyChoseOnThisLevel) {
                 return true;
             }
         }
@@ -322,9 +350,32 @@ public class TalentManager : MonoBehaviour {
 
 
 
+
     public List<GameObject> GetUnitList() { return this.playerUnitList; }
 
 
 
 
+}
+
+
+public class SkillCache {
+    public Dictionary<string, BaseSkills> skillPrefabs;
+
+    public void Initialize() {
+        if (skillPrefabs == null) {
+            skillPrefabs = new Dictionary<string, BaseSkills>();
+            BaseSkills[] loadedSkills = Resources.LoadAll<BaseSkills>("Skills_R");
+            foreach (var skill in loadedSkills) {
+                skillPrefabs[skill.GetType().Name] = skill;
+            }
+        }
+    }
+
+    public BaseSkills GetSkillPrefab(string skillName) {
+        if (skillPrefabs == null) Initialize();
+
+        skillPrefabs.TryGetValue(skillName, out BaseSkills skill);
+        return skill;
+    }
 }
