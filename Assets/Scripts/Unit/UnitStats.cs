@@ -33,8 +33,11 @@ public class UnitStats {
     public int GetAttack() { return this.attack; }
     public int GetDefence() { return this.defence; }
     public int GetMaxHP() { return this.maxHealthPoints; }
-    public int GetMaxMove(Unit unit) { return (unit.GetModifiers().GetMove() +  this.maxMove) > 0 ? 
-    (unit.GetModifiers().GetMove() +  this.maxMove) : 0; }
+    public int GetMaxMove(Unit unit) {
+        Debug.Log(unit.GetModifiers().GetMove());
+        Debug.Log(unit.GetModifiers().GetMove() + this.maxMove);
+        return (unit.GetModifiers().GetMove() +  this.maxMove) > 0 ? 
+        (unit.GetModifiers().GetMove() +  this.maxMove) : 0; }
     public int GetXpSpoil() { return this.xpSpoil; }
     public int GetRange() { return this.range; }
     public BaseUnitStats GetBaseUnitStats() {return this.baseUnitStats;}
