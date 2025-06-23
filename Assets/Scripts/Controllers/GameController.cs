@@ -57,9 +57,9 @@ public class GameController : MonoBehaviour, IDataPersistence {
         return playerUnits[unitId];
     }
     public void UpdateUnitRecords(Unit unit) {
-        List<BaseSkills> skillsAux = playerUnits[unit.GetUnitId()].GetUnitSKills().Count > 0 ? playerUnits[unit.GetUnitId()].GetUnitSKills() : null;
+        List<string> skillsIdsAux = playerUnits[unit.GetUnitId()].GetUnitSKillsIDs().Count > 0 ? playerUnits[unit.GetUnitId()].GetUnitSKillsIDs() : null;
         UnitRecords unitRecordsAux = new UnitRecords(unit.GetUnitXpSystem().getXpAmount(), unit.GetUnitStats(),
-                                                        skillsAux);
+                                                        skillsIdsAux);
         playerUnits[unit.GetUnitId()] = unitRecordsAux;
     }
 

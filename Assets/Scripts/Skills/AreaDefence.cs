@@ -220,4 +220,11 @@ public class AreaDefence : BaseSkills {
 
         GridSystemVisual.Instance.ShowGridPositionList(shieldPositionList, GridVisualType.BlueSoft);
     }
+
+
+    public override void CopyFrom(BaseSkills other) {
+        base.CopyFrom(other);
+
+        obstaclePrefab = (other as AreaDefence).obstaclePrefab;
+    }
 }

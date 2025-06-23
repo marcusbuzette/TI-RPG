@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class DEbuffDefArea : BaseSkills {
+public class DebuffDefArea : BaseSkills {
     [SerializeField] private List<Unit> targetsList = new List<Unit>();
     [SerializeField] private int maxIntimidateDistance = 1;
     [SerializeField] private int debufDefenceAmount = 1;
@@ -76,7 +76,7 @@ public class DEbuffDefArea : BaseSkills {
             currentCoolDown--;
         }
         if (currentCoolDown == 0) {
-            onEndEffect.Invoke(this, EventArgs.Empty);
+            onEndEffect?.Invoke(this, EventArgs.Empty);
             onCoolDown = false;
         }
     }

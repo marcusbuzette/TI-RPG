@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public abstract class BaseSkills : BaseAction
-{
+public abstract class BaseSkills : BaseAction {
     public string nome;
     public string descricao;
     public int custo;
@@ -38,11 +37,32 @@ public abstract class BaseSkills : BaseAction
         this.actionImage = image;
     }
 
-    public virtual BuffType? GetBuffType() {return null;}
+    public virtual BuffType? GetBuffType() { return null; }
 
     public void SetSkill() {
         this.actionType = ActionType.SKILL;
         unit = GetComponent<Unit>();
         animator = GetComponentInChildren<Animator>();
     }
+
+    public virtual void CopyFrom(BaseSkills other) {
+        this.nome = other.nome;
+        this.descricao = other.descricao;
+        this.custo = other.custo;
+
+        // Cria nova lista para evitar referência compartilhada
+        this.preRequisitos = other.preRequisitos != null
+            ? new List<BaseSkills>(other.preRequisitos)
+            : new List<BaseSkills>();
+
+        this.onCoolDown = other.onCoolDown;
+        this.coolDown = other.coolDown;
+        this.currentCoolDown = other.currentCoolDown;
+
+        // Eventos não são normalmente copiados diretamente, pois eles mantêm referências de objetos.
+        // Se necessário, pode ser feito manualmente, mas normalmente omitido:
+        // this.onEndEffect = other.onEndEffect;
+    }
+
+
 }
