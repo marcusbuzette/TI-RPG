@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,26 +7,26 @@ using UnityEngine;
 public class UnitRecords {
     public int xp;
     public UnitStats unitStats;
+
+    [NonSerialized] // <--- Isso impede que Unity tente salvar objetos UnityEngine
     public List<BaseSkills> baseSkills;
     public List<string> baseSkillsId;
     public SerializableDictionary<int, int> levelUpgrades;
 
 
-    public UnitRecords(int xp, UnitStats unitStats, List<BaseSkills> baseSkills = null, List<string> baseSkillsId = null,
+    public UnitRecords(int xp, UnitStats unitStats, List<string> baseSkillsId = null,
          SerializableDictionary<int, int> levelUpgrades = null) {
         this.xp = xp;
         this.unitStats = unitStats;
-        // this.baseSkills = baseSkills != null ? baseSkills : new List<BaseSkills>();
+        this.baseSkills = baseSkills != null ? baseSkills : new List<BaseSkills>();
         this.baseSkillsId = baseSkillsId != null ? baseSkillsId : new List<string>();
         this.levelUpgrades = levelUpgrades != null ? levelUpgrades : new SerializableDictionary<int, int>();
     }
 
     public void AddSkill(BaseSkills skill) {
-        if (!baseSkillsId.Contains(skill.nome)) {
-            // baseSkills.Add(skill);
-            baseSkillsId.Add(skill.nome);
+        if (!baseSkillsId.Contains(skill.GetType().Name)) {
+            baseSkillsId.Add(skill.GetType().Name);
         }
-
     }
 
     public List<BaseSkills> GetUnitSKills() {
