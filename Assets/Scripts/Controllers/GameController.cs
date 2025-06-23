@@ -145,6 +145,13 @@ public class GameController : MonoBehaviour, IDataPersistence {
         // Cursor.visible = false;
     }
 
+    public void ResetVariables() {
+        dinheiro = 0;
+        currentLevel = 0;
+        playerUnits = new SerializableDictionary<string, UnitRecords>();
+        // isPaused = false;
+    }
+
     public bool IsPaused() => isPaused;
 
 }
