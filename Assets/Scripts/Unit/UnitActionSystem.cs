@@ -41,7 +41,6 @@ public class UnitActionSystem : MonoBehaviour {
         }
 
         if (Input.GetMouseButtonDown(0)) {
-            if (TryHandleUnitSelection()) return;
             HandleSelectedAction();
         }
     }
