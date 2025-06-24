@@ -62,7 +62,7 @@ public class HealthSystem : MonoBehaviour {
             return;
         }
 
-        if (GetComponent<Unit>().IsEnemy() && !this.damagedBy.Find((u) => u.unitId == attackedBy.unitId)) {
+        if (attackedBy != null && GetComponent<Unit>().IsEnemy() && !this.damagedBy.Find((u) => u.unitId == attackedBy.unitId)) {
             this.damagedBy.Add(attackedBy);
         }
 

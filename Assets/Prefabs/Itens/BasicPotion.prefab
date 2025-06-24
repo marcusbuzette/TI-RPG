@@ -122,5 +122,5 @@ MonoBehaviour:
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
-  rotateSpeed: 180
-  potionHealAmount: 20
+  rotSpeed: 180
+  potionHealAmount: 25

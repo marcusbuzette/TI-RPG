@@ -14,6 +14,9 @@ public class GameController : MonoBehaviour, IDataPersistence {
     [SerializeField] private bool debugMode = false;
     [SerializeField] private bool debugPathFindingMode = false;
 
+    [SerializeField] private GameObject pauseMenuUI;
+    private bool isPaused = false;
+
 
     private void Awake() {
         if (controller == null) {
@@ -35,6 +38,9 @@ public class GameController : MonoBehaviour, IDataPersistence {
 
 
     void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            TogglePause();
+        }
     }
 
     public bool GetDebugMode() { return this.debugMode; }
@@ -51,9 +57,9 @@ public class GameController : MonoBehaviour, IDataPersistence {
         return playerUnits[unitId];
     }
     public void UpdateUnitRecords(Unit unit) {
-        List<BaseSkills> skillsAux = playerUnits[unit.GetUnitId()].GetUnitSKills().Count > 0 ? playerUnits[unit.GetUnitId()].GetUnitSKills() : null;
+        List<string> skillsIdsAux = playerUnits[unit.GetUnitId()].GetUnitSKillsIDs().Count > 0 ? playerUnits[unit.GetUnitId()].GetUnitSKillsIDs() : null;
         UnitRecords unitRecordsAux = new UnitRecords(unit.GetUnitXpSystem().getXpAmount(), unit.GetUnitStats(),
-                                                        skillsAux);
+                                                        skillsIdsAux);
         playerUnits[unit.GetUnitId()] = unitRecordsAux;
     }
 
@@ -62,7 +68,7 @@ public class GameController : MonoBehaviour, IDataPersistence {
     }
 
     public void AddUpgradeToRecordsById(string unitId, PossibleUpgrade upgrade, int index) {
-         playerUnits[unitId].AddLevelUpgrade(upgrade.level, index, upgrade.upgrade[index]);
+        playerUnits[unitId].AddLevelUpgrade(upgrade.level, index, upgrade.upgrade[index]);
     }
 
     public Dictionary<string, UnitRecords>.KeyCollection playerUnitsIds() {
@@ -74,7 +80,7 @@ public class GameController : MonoBehaviour, IDataPersistence {
         uicontroller.ChangeScene("GameOver");
     }
 
-    public int GetCurrentLevel() {return this.currentLevel;}
+    public int GetCurrentLevel() { return this.currentLevel; }
 
     public void NextLevel() {
         this.currentLevel++;
@@ -91,7 +97,7 @@ public class GameController : MonoBehaviour, IDataPersistence {
         if (data.playerUnits.Count > 0) {
             this.playerUnits = data.playerUnits;
             //foreach (KeyValuePair<string, UnitRecords> item in this.playerUnits) {
-                //TalentManager.Instance.UpdateLocalUnitValues(item.Key, item.Value);
+            //TalentManager.Instance.UpdateLocalUnitValues(item.Key, item.Value);
             //}
         }
     }
@@ -102,5 +108,50 @@ public class GameController : MonoBehaviour, IDataPersistence {
         data.playerUnits = this.playerUnits;
 
     }
+
+    public void TogglePause() {
+        if (isPaused) {
+            ResumeGame();
+        }
+        else {
+            PauseGame();
+        }
+    }
+
+    public void PauseGame() {
+        Time.timeScale = 0f;
+        isPaused = true;
+
+        if (pauseMenuUI == null) {
+            GameObject pausePrefab = Resources.Load<GameObject>("UIPrefabs_R/PauseMenu");
+            GameObject canvasAux = GameObject.FindGameObjectWithTag("UICanvas"); 
+            if (pausePrefab != null && canvasAux != null) {
+                pauseMenuUI = Instantiate(pausePrefab, canvasAux.transform);
+            } else {
+                Debug.Log("Erro ao instanciar o menu de pausa");
+            }
+        } else {
+            pauseMenuUI?.SetActive(true);
+        }
+        // Cursor.lockState = CursorLockMode.None;
+        // Cursor.visible = true;
+    }
+
+    public void ResumeGame() {
+        Time.timeScale = 1f;
+        isPaused = false;
+        pauseMenuUI?.SetActive(false);
+        // Cursor.lockState = CursorLockMode.Locked;
+        // Cursor.visible = false;
+    }
+
+    public void ResetVariables() {
+        dinheiro = 0;
+        currentLevel = 0;
+        playerUnits = new SerializableDictionary<string, UnitRecords>();
+        // isPaused = false;
+    }
+
+    public bool IsPaused() => isPaused;
 
 }
