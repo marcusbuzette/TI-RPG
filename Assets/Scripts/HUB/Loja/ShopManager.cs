@@ -63,7 +63,6 @@ public class ShopManager : MonoBehaviour {
     public void BuyItem() {
         if (selectedItemindex == -1) return;
 
-        Debug.Log(itemQuantity);
         for (int i = 0; i < itemQuantity; i++) {
             InventorySystem.inventorySystem.Add(ItemOnSale[selectedItemindex], true);
         }

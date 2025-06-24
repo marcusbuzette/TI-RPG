@@ -15,8 +15,8 @@ public class ShopItemOnSaleButton : MonoBehaviour
     public void SetItem(Sprite image, string name, int price = -1, int quant = 0) {
         itemImage.sprite = image;
         itemName.text = name;
-        if(price >= 0)itemPrice.text = price + "$";
-        if(quant != 0) itemQuant.text = quant.ToString();
+        if(itemPrice != null) itemPrice.text = price + "$";
+        if(itemQuant != null) itemQuant.text = quant.ToString();
     }
 
     public void InactiveItemSale() {
