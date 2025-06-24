@@ -357,7 +357,7 @@ public class Unit : MonoBehaviour {
         projectile.Setup(this, enemy.transform.position, enemy, projectileDemage, miss);
     }
 
-    public void SpawnProjectile(Vector3 target, Color color) {
+    public Projectile SpawnProjectile(Vector3 target, Color color, bool useParabola) {
         if (projectilePoint == null) {
             Debug.LogWarning(transform.name + " <- this unit do not have ProjectilePoint on Unit");
             projectilePoint = transform;
@@ -366,7 +366,9 @@ public class Unit : MonoBehaviour {
         Transform projectileTransform = Instantiate(projectilePrefab, projectilePoint.position, Quaternion.identity);
 
         Projectile projectile = projectileTransform.GetComponent<Projectile>();
-        projectile.Setup(target, color);
+        projectile.Setup(target, color, useParabola);
+
+        return projectile;
     }
 
     public bool CanFinishRound() {

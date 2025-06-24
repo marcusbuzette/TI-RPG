@@ -21,6 +21,7 @@ public class FireAttack : BaseSkills {
     public string fireArrowSFX;
 
     GridPosition mouseGridPosition;
+    Projectile projectile;
 
     private void Awake() 
     {
@@ -116,11 +117,18 @@ public class FireAttack : BaseSkills {
     }
 
     private void Shoot() {
-        unit.SpawnProjectile(selectedGrid, Color.red);
+        projectile = unit.SpawnProjectile(selectedGrid, Color.red, true);
 
+        projectile.onDestory += ProjectileDestroyed;
+    }
+
+    public void ProjectileDestroyed(object sender, EventArgs e) {
         VfxController.CastEnd();
         fireAttackObject = Instantiate(new GameObject(), selectedGrid, Quaternion.identity);
         fireAttackObject.AddComponent<FireAttackObject>().SetFireAttackObject(this, damage, areaDamage, coolDown);
+
+        projectile.onDestory -= ProjectileDestroyed;
+
         ActionFinish();
     }
 

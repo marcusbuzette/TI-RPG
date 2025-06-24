@@ -34,8 +34,6 @@ public class UnitStats {
     public int GetDefence() { return this.defence; }
     public int GetMaxHP() { return this.maxHealthPoints; }
     public int GetMaxMove(Unit unit) {
-        Debug.Log(unit.GetModifiers().GetMove());
-        Debug.Log(unit.GetModifiers().GetMove() + this.maxMove);
         return (unit.GetModifiers().GetMove() +  this.maxMove) > 0 ? 
         (unit.GetModifiers().GetMove() +  this.maxMove) : 0; }
     public int GetXpSpoil() { return this.xpSpoil; }

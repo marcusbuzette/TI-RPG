@@ -61,7 +61,7 @@ MonoBehaviour:
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 0
-  maxShootDistance: 1
+  maxShootDistance: 5
   rotateSpeed: 10
   areaHeal: 3
   healPoints: 3
