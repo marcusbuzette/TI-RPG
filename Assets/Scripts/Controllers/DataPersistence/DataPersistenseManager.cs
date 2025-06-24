@@ -24,8 +24,9 @@ public class DataPersistenseManager : MonoBehaviour {
             Debug.LogError("Mais de um DataPersistenseManager foi encontrado na cena");
             return;
         }
+        else{
         instance = this;
-        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(this.gameObject);}
     }
 
     void Start() {
