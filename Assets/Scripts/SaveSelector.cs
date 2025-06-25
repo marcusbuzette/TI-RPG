@@ -4,20 +4,36 @@ using UnityEngine;
 
 public class SaveSelector : MonoBehaviour
 {
-public GameObject pauseMenuUI;
+public GameObject loadMenuUI;
 public GameObject mainMenuUI;
 public GameObject startMenuUI;
 
+
+void Start()
+{
+
+loadMenuUI = GameObject.Find("LoadMenu");
+mainMenuUI = GameObject.Find("MainMenu");
+startMenuUI = GameObject.Find("StartMenu");
+loadMenuUI.SetActive(false);
+startMenuUI.SetActive(false);
+
+}
+
+
+
+
+
 public void Open()
 {
-pauseMenuUI.SetActive(true);
+loadMenuUI.SetActive(true);
 mainMenuUI.SetActive(false);
 }
 
 public void Close()
 {
 mainMenuUI.SetActive(true);
-pauseMenuUI.SetActive(false);
+loadMenuUI.SetActive(false);
 startMenuUI.SetActive(false);
 
 }

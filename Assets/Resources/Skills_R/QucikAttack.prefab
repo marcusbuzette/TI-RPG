@@ -50,11 +50,11 @@ MonoBehaviour:
   speed: 0
   rotSpeed: 180
   nome: Ataque rapido
-  descricao: 
+  descricao: "Um ataque que t\xE3o r\xE1pido que possibilita atacar novamente"
   custo: 10
   preRequisitos: []
   onCoolDown: 0
-  coolDown: 0
+  coolDown: 2
   currentCoolDown: 0
   quickAttackSFX: AtaqueRapido
   Attack: 1

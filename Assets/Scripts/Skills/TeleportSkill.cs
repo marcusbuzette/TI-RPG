@@ -39,26 +39,18 @@ public class TeleportSkill : BaseSkills
 
         for (int x = -maxTeleportDistance; x <= maxTeleportDistance; x++) {
             for (int z = -maxTeleportDistance; z <= maxTeleportDistance; z++) {
-                GridPosition offsetGridPosition = new GridPosition(x, z, 0);
-                GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
+                for (int floor = -maxTeleportDistance; floor <= maxTeleportDistance; floor++) {
+                    GridPosition offsetGridPosition = new GridPosition(x, z, floor);
+                    GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
-                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) {
-                    continue;
+                    if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) continue;
+                    if (unitGridPosition == testGridPosition) continue;
+                    if (LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition)) continue;
+                    if (!PathFinding.Instance.IsWalkableGridPosition(testGridPosition)) continue;
+                    if (!PathFinding.Instance.HasPath(unitGridPosition, testGridPosition)) continue;
+
+                    validGridPositionList.Add(testGridPosition);
                 }
-
-                if (unitGridPosition == testGridPosition) {
-                    continue;
-                }
-
-                if (LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition)) {
-                    continue;
-                }
-
-                if (!PathFinding.Instance.IsWalkableGridPosition(testGridPosition)) {
-                    continue;
-                }
-
-                validGridPositionList.Add(testGridPosition);
             }
         }
 

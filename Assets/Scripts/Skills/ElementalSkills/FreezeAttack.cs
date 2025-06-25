@@ -14,7 +14,7 @@ public class FreezeAttack : BaseSkills {
     private Unit targetUnit;
     private bool canShoot;
 
-
+    Projectile projectile;
 
     private void Start() {
         obstaclesLayerMask = LayerMask.GetMask("Obstacles"); //add layer mask to don't shoot through obstacles
@@ -107,16 +107,28 @@ public class FreezeAttack : BaseSkills {
     }
 
     private void Shoot() {
-        unit.SpawnProjectile(targetUnit.transform.position, Color.blue);
+        projectile = unit.SpawnProjectile(targetUnit.transform.position, Color.blue, false);
+
+        projectile.onDestory += ProjectileDestroyed;
+        
+        // animator?.SetTrigger("Attack");
+        unit.PlayAnimation("Attack");
+        //AudioManager.instance?.PlaySFX("Arrows");
+
+        if (IceFbx != null) {
+            IceFbx.SetActive(false);
+        }
+    }
+
+    public void ProjectileDestroyed(object sender, EventArgs e) {
 
         if (targetUnit.gameObject.GetComponent<FreezeEffect>() != null) {
             targetUnit.gameObject.GetComponent<FreezeEffect>().CureFreeze();
             targetUnit.gameObject.AddComponent<FreezeEffect>().SetFreezeEffect(targetUnit, coolDown);
         }
         else targetUnit.gameObject.AddComponent<FreezeEffect>().SetFreezeEffect(targetUnit, coolDown);
-        // animator?.SetTrigger("Attack");
-        unit.PlayAnimation("Attack");
-        //AudioManager.instance?.PlaySFX("Arrows");
+
+        projectile.onDestory -= ProjectileDestroyed;
 
         ActionFinish();
     }

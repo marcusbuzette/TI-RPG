@@ -51,8 +51,6 @@ public class Unit : MonoBehaviour {
     [SerializeField] private Transform projectilePrefab;
     [SerializeField] private Transform projectilePoint;
 
-
-    private int intimidateCoolDown = 0;
     [SerializeField] private int enemyFocus = 0;
 
     private void Awake() {
@@ -245,13 +243,6 @@ public class Unit : MonoBehaviour {
             return;
         }
 
-        if (intimidateCoolDown != 0) {
-            hasMoved = true;
-            hasPerformedAction = true;
-            hasPerformedSkill = true;
-            intimidateCoolDown--;
-        }
-
         if (enemyFocus != 0) {
             enemyFocus--;
         }
@@ -278,10 +269,6 @@ public class Unit : MonoBehaviour {
         if (!isEnemy && GameController.controller.HasUnitRecords(unitId)) {
             GameController.controller.UpdateUnitRecords(this);
         }
-    }
-
-    public void BeIntimidate() {
-        intimidateCoolDown = 1;
     }
 
     public void FocusOnMe(int focusTime) {
@@ -370,7 +357,7 @@ public class Unit : MonoBehaviour {
         projectile.Setup(this, enemy.transform.position, enemy, projectileDemage, miss);
     }
 
-    public void SpawnProjectile(Vector3 target, Color color) {
+    public Projectile SpawnProjectile(Vector3 target, Color color, bool useParabola) {
         if (projectilePoint == null) {
             Debug.LogWarning(transform.name + " <- this unit do not have ProjectilePoint on Unit");
             projectilePoint = transform;
@@ -379,7 +366,9 @@ public class Unit : MonoBehaviour {
         Transform projectileTransform = Instantiate(projectilePrefab, projectilePoint.position, Quaternion.identity);
 
         Projectile projectile = projectileTransform.GetComponent<Projectile>();
-        projectile.Setup(target, color);
+        projectile.Setup(target, color, useParabola);
+
+        return projectile;
     }
 
     public bool CanFinishRound() {
