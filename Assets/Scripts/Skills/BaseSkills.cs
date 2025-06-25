@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 public abstract class BaseSkills : BaseAction {
+
+    [Header("Base Parameters")]
     public string nome;
     public string descricao;
     public int custo;

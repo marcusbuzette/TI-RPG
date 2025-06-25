@@ -62,5 +62,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   maxShootDistance: 2
-  shootDamage: 75
+  shootDamage: 50
   arrowSFX: 

@@ -46,7 +46,7 @@ public class TurnSystemUI : MonoBehaviour {
         UpdatedTurnText();
         CreateUnitActionButtons();
         UpdateEndTurnButton();
-        if(TurnSystem.Instance.GetTurnUnit() != null) {
+        if(LevelGrid.Instance.IsInBattleMode() && TurnSystem.Instance.GetTurnUnit() != null) {
             if(TurnSystem.Instance.GetTurnUnit().IsEnemy()) {
                 HideEndTurnButton();
             }
