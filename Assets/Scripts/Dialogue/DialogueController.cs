@@ -32,8 +32,9 @@ public class DialogueController : MonoBehaviour
     }
 
     public void StartDialogue(Dialogue dialogue){
+        Debug.Log("Start dialogue");
         isDialogueOpened = true;
-        //animator?.SetBool("IsOpen", isDialogueOpened);
+        animator?.SetBool("IsOpen", isDialogueOpened);
         dialogueQueue.Clear();
 
         foreach (Dialogue.DialogueStruct d in dialogue.dialogue){
@@ -44,13 +45,14 @@ public class DialogueController : MonoBehaviour
     }
 
     public void DisplayNextSentence(){
+        Debug.Log("Display next sentence");
         if(dialogueQueue.Count == 0){
             EndDialogue();
             return;
         }
         Dialogue.DialogueStruct d = dialogueQueue.Dequeue();
         StopAllCoroutines();
-        //StopCoroutine(TypeSentence(d.sentences));
+        StopCoroutine(TypeSentence(d.sentences));
         NameTXT.text = d.name;
         StartCoroutine(TypeSentence(d.sentences));
     }
@@ -65,7 +67,7 @@ public class DialogueController : MonoBehaviour
 
     public void EndDialogue(){
         isDialogueOpened = false;
-        //animator?.SetBool("IsOpen", isDialogueOpened);
+        animator?.SetBool("IsOpen", isDialogueOpened);
         onEndDialogue?.Invoke(this, EventArgs.Empty);
     }
 }

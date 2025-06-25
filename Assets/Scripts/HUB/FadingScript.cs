@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class FadingScript : MonoBehaviour {
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private float fadeDuration = 1.5f;
-    [SerializeField] private Slider loadingBar; //Barra de carregamento, mas não colocamos ainda
+    [SerializeField] private Slider loadingBar; //Barra de carregamento, mas nï¿½o colocamos ainda
 
     public void FadeOut() {
         StartCoroutine(FadeCanvasGroup(canvasGroup, canvasGroup.alpha, 0, fadeDuration));
@@ -24,6 +24,7 @@ public class FadingScript : MonoBehaviour {
             yield return null;
         }
         cg.alpha = end;
+        GetComponent<Canvas>().sortingOrder = 0;
     }
 
     private IEnumerator FadeAndLoad(string nextScene) {
