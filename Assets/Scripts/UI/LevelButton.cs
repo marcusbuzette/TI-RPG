@@ -25,7 +25,7 @@ public class LevelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         originalScale = transform.localScale;
         levelButton = GetComponent<Button>();
         levelButton.onClick.AddListener(() => {
-            fadingScript.FadeIn(sceneToLoad);
+            fadingScript.FadeAndLoadScene(sceneToLoad);
             AudioManager.instance.PlayMusic("Combat");
             AudioManager.instance.PlayAmbient("AmbientFloresta");
        

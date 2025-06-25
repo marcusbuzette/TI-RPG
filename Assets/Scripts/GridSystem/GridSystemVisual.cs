@@ -214,6 +214,9 @@ public class GridSystemVisual : MonoBehaviour {
     }
 
     private void UnitActionSystem_OnSelectedUnitChanged(object sender, EventArgs e) {
+        if (UnitActionSystem.Instance.GetSelectedAction() == null) {
+            HideAllGridPosition();
+        }
         UpdateGridVisual();
     }
 
