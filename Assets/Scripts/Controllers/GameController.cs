@@ -181,6 +181,7 @@ public class GameController : MonoBehaviour, IDataPersistence {
     }
 
     public void CloseCharsPanel() {
+        Time.timeScale = 1f;
         charsOpened = false;
         charsPanelUI?.SetActive(false);
 

@@ -57,6 +57,11 @@ public class CharacterDetailsPanel : MonoBehaviour {
     void OnEnable() {
         StartCoroutine(AnimateCharsPanel());
 
+        // Remove entradas anteriores
+        foreach (Transform child in characterSelectionContainer) {
+            Destroy(child.gameObject);
+        }
+
         foreach (string unitId in GameController.controller.playerUnitsIds()) {
             Button unitButton = Instantiate(characterButtonPrefab, characterSelectionContainer).GetComponent<Button>();
             SkillTreeUnitButtonUI skillUI = unitButton.gameObject.GetComponent<SkillTreeUnitButtonUI>();
@@ -73,6 +78,7 @@ public class CharacterDetailsPanel : MonoBehaviour {
                 this.selectedUnit = unitId;
             }
         }
+        
 
         if (closeUpCharCam == null) {
             GameObject closecamPrefab = Resources.Load<GameObject>("RenderImage_R/CharCloseup");
@@ -89,13 +95,14 @@ public class CharacterDetailsPanel : MonoBehaviour {
 
     private void CloseCharPanel() {
         closeUpCharCam.gameObject.SetActive(false);
-        gameObject.SetActive(false);
+        GameController.controller.ToggleCharsPanel();
     }
 
     public void Show() {
         gameObject.SetActive(true);
 
         UnitRecords unit = GameController.controller.GetUnitRecords(this.selectedUnit);
+
 
         // Dados básicos
         // unitNameText.text = unit.unitName;
@@ -207,7 +214,6 @@ public class UnitsCache {
         if (unitPrefabs == null) {
             unitPrefabs = new Dictionary<string, GameObject>();
             GameObject[] loadedUnits = Resources.LoadAll<GameObject>("Units_R");
-            Debug.Log(loadedUnits.Length);
             foreach (var unit in loadedUnits) {
                 unitPrefabs[unit.GetComponent<Unit>().unitId] = unit;
             }
