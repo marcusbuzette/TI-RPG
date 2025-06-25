@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class GameController : MonoBehaviour, IDataPersistence {
 
@@ -18,16 +20,26 @@ public class GameController : MonoBehaviour, IDataPersistence {
     private bool isPaused = false;
 
 
-    private void Awake() {
-        if (controller == null) {
-            controller = this;
-            DontDestroyOnLoad(this);
-        }
-        else {
-            DestroyImmediate(gameObject);
-        }
-        dinheiro = 1000;
+   private void Awake() {
+    if (controller == null) {
+        controller = this;
+        DontDestroyOnLoad(this);
+        SceneManager.sceneLoaded += OnSceneLoaded; // <- AQUI
+         Time.timeScale = 1f;
+    } else {
+        DestroyImmediate(gameObject);
     }
+
+    dinheiro = 1000;
+}
+
+
+private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+    pauseMenuUI = GameObject.Find("Configs");
+
+    if (pauseMenuUI != null)
+        pauseMenuUI.SetActive(false);
+}
 
     void Start() {
         // UnitStats statsAux = new UnitStats(0,0,0,0,0);
