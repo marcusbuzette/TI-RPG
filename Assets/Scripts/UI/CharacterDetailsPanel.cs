@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class CharacterDetailsPanel : MonoBehaviour {
 
@@ -20,34 +21,37 @@ public class CharacterDetailsPanel : MonoBehaviour {
     [SerializeField] private TMP_Text hpText;
     [SerializeField] private TMP_Text attackText;
     [SerializeField] private TMP_Text defenseText;
+    [SerializeField] private TMP_Text moveText;
+    [SerializeField] private TMP_Text accuracyText;
     [SerializeField] private TMP_Text speedText;
 
     [Header("Habilidades Básicas (BaseActions)")]
     [SerializeField] private Transform actionsContainer;
     [SerializeField] private GameObject skillEntryPrefab;
 
-    [Header("Habilidades Especiais (BaseSkills)")]
-    [SerializeField] private Transform skillsContainer;
-
     [Header("Botão de Fechar")]
     [SerializeField] private Button closeButton;
 
 
     private UnitsCache unitsCache;
+    private SkillCache skillCache;
     private string selectedUnit;
     private Button selectedButton;
 
-    private void Awake()
-    {
+    private CloseUpCharCam closeUpCharCam;
+
+    private void Awake() {
         // Garante que o botão fecha a janela
-        if (closeButton != null){
-            closeButton.onClick.AddListener(() => gameObject.SetActive(false));
+        if (closeButton != null) {
+            closeButton.onClick.AddListener(() => this.CloseCharPanel());
         }
         unitsCache = new UnitsCache();
+        skillCache = new SkillCache();
     }
 
     void Start() {
         unitsCache.Initialize();
+        skillCache.Initialize();
     }
 
     void OnEnable() {
@@ -57,57 +61,90 @@ public class CharacterDetailsPanel : MonoBehaviour {
             Button unitButton = Instantiate(characterButtonPrefab, characterSelectionContainer).GetComponent<Button>();
             SkillTreeUnitButtonUI skillUI = unitButton.gameObject.GetComponent<SkillTreeUnitButtonUI>();
             Unit unitTest = unitsCache.GetUnitPrefab(unitId).GetComponent<Unit>();
-            Debug.Log("Unittest - " + unitId);
             if (unitTest == null) continue;
             unitButton.gameObject.GetComponent<SkillTreeUnitButtonUI>().SetUnitData(unitId, unitTest.GetUnitName());
             unitButton.onClick.AddListener(() => {
                 OnSelectedUnitChanged(unitId);
                 SetSelectedButton(unitButton.GetComponent<SkillTreeUnitButtonUI>());
             });
+
+            if (selectedButton == null) {
+                SetSelectedButton(unitButton.GetComponent<SkillTreeUnitButtonUI>());
+                this.selectedUnit = unitId;
+            }
         }
+
+        if (closeUpCharCam == null) {
+            GameObject closecamPrefab = Resources.Load<GameObject>("RenderImage_R/CharCloseup");
+            if (closecamPrefab == null) return;
+            closeUpCharCam = Instantiate(closecamPrefab).GetComponent<CloseUpCharCam>();
+            closeUpCharCam.ShowUnit(selectedUnit);
+        }
+        else {
+            closeUpCharCam.gameObject.SetActive(true);
+        }
+
+        Show();
     }
 
-    public void Show(Unit unit)
-    {
+    private void CloseCharPanel() {
+        closeUpCharCam.gameObject.SetActive(false);
+        gameObject.SetActive(false);
+    }
+
+    public void Show() {
         gameObject.SetActive(true);
 
+        UnitRecords unit = GameController.controller.GetUnitRecords(this.selectedUnit);
+
         // Dados básicos
-        unitNameText.text = unit.unitName;
+        // unitNameText.text = unit.unitName;
 
         // unitImage.sprite = unit.unitSprite; // Ative se tiver sprite
 
         // Status
-        // var status = unit.GetUnitStatus();
-        // hpText.text = $"HP: {status.maxHealth}";
-        // attackText.text = $"Ataque: {status.attack}";
-        // defenseText.text = $"Defesa: {status.defense}";
-        // speedText.text = $"Velocidade: {status.speed}";
+        Unit unitAux = unitsCache.GetUnitPrefab(this.selectedUnit).GetComponent<Unit>();
+        UnitStats status = unitAux.GetUnitStats();
+        hpText.text = status.GetMaxHP().ToString();
+        attackText.text = status.GetAttack().ToString();
+        defenseText.text = status.GetDefence().ToString();
+        accuracyText.text = status.GetAccuracy().ToString();
+        speedText.text = status.GetSpeed().ToString();
+        moveText.text = status.GetMaxMoveStats().ToString();
+
+        List<BaseAction> baseActionList = new List<BaseAction>();
+
+        List<BaseAction> baseActionAux = unitAux.GetComponents<BaseAction>().ToList();
+
+        int bolsaIndex = baseActionAux.FindIndex((ba) => ba.GetType().Name == "InventoryAction");
+        if(bolsaIndex >= 0) {
+            baseActionAux.RemoveAt(bolsaIndex);
+        }
+
+        baseActionList.AddRange(baseActionAux);
+        foreach (string skillId in GameController.controller.GetUnitRecords(this.selectedUnit).GetUnitSKillsIDs()) {
+            bool hasSkillOnList = baseActionList.Find((ba) => {
+                return ba.GetType().Name == skillId;
+            });
+            if (!hasSkillOnList) {
+                baseActionList.Add(skillCache.GetSkillPrefab(skillId));
+            }
+        }
 
         // // Habilidades básicas
-        // PreencherLista(actionsContainer, unit.GetBaseActions());
-
-        // // Habilidades especiais
-        // PreencherLista(skillsContainer, unit.GetBaseSkills());
+        PreencherLista(actionsContainer, baseActionList);
     }
 
-    private void PreencherLista(Transform container, List<BaseSkills> lista)
-    {
+    private void PreencherLista(Transform container, List<BaseAction> lista) {
         // Remove entradas anteriores
-        foreach (Transform child in container)
-        {
+        foreach (Transform child in container) {
             Destroy(child.gameObject);
         }
 
         // Cria nova entrada para cada skill
-        foreach (var skill in lista)
-        {
-            var entry = Instantiate(skillEntryPrefab, container);
-            var texts = entry.GetComponentsInChildren<TMP_Text>();
-            if (texts.Length >= 2)
-            {
-                // texts[0].text = skill.skillName;
-                // texts[1].text = skill.skillDescription;
-            }
+        foreach (BaseAction action in lista) {
+            ActionDetailsUI actionDetails = Instantiate(skillEntryPrefab, container).GetComponent<ActionDetailsUI>();
+            actionDetails.SetActionDetails(action);
         }
     }
 
@@ -148,7 +185,8 @@ public class CharacterDetailsPanel : MonoBehaviour {
     public void OnSelectedUnitChanged(string unitId) {
         this.selectedUnit = unitId;
         Unit unitAux = unitsCache.GetUnitPrefab(unitId).GetComponent<Unit>();
-        // this.UpdatedSkillTree(unitAux);
+        closeUpCharCam.ShowUnit(unitId);
+        Show();
 
     }
 

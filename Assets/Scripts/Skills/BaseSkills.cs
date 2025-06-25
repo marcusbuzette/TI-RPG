@@ -6,7 +6,6 @@ using UnityEngine.Rendering;
 
 public abstract class BaseSkills : BaseAction {
     public string nome;
-    public string descricao;
     public int custo;
     public List<BaseSkills> preRequisitos;
     public EventHandler onEndEffect;

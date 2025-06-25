@@ -35,8 +35,10 @@ public class UnitStats {
     public int GetMaxHP() { return this.maxHealthPoints; }
     public int GetMaxMove(Unit unit) { return (unit.GetModifiers().GetMove() +  this.maxMove) > 0 ? 
     (unit.GetModifiers().GetMove() +  this.maxMove) : 0; }
+    public int GetMaxMoveStats() { return this.maxMove; }
     public int GetXpSpoil() { return this.xpSpoil; }
     public int GetRange() { return this.range; }
+    public int GetAccuracy() { return this.accuracy; }
     public BaseUnitStats GetBaseUnitStats() {return this.baseUnitStats;}
 
     public void UpgradeSpeed(int speed) { this.speed += speed; }
