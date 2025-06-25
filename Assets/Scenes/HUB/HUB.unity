@@ -3238,13 +3238,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 566769708}
     m_Modifications:
+    - target: {fileID: 1439892094855106840, guid: 1b28e24ed24b1ff4ea136bfcc5168fce, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1539441621332631354, guid: 1b28e24ed24b1ff4ea136bfcc5168fce, type: 3}
       propertyPath: m_Name
       value: CaixaDeDialogo
       objectReference: {fileID: 0}
     - target: {fileID: 1539441621332631354, guid: 1b28e24ed24b1ff4ea136bfcc5168fce, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2422132853154693593, guid: 1b28e24ed24b1ff4ea136bfcc5168fce, type: 3}
       propertyPath: m_Colors.m_HighlightedColor.a
