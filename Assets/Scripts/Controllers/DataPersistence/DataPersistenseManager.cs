@@ -43,6 +43,7 @@ public class DataPersistenseManager : MonoBehaviour {
 
     public void NewGame() {
         gameData = new GameData();
+        GameController.controller.ResetVariables();
     }
 
     public void LoadGame() {
@@ -71,6 +72,6 @@ public class DataPersistenseManager : MonoBehaviour {
     }
 
     void OnApplicationQuit() {
-        SaveGame();
+        // SaveGame();
     }
 }
