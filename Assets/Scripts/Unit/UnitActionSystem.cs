@@ -41,7 +41,6 @@ public class UnitActionSystem : MonoBehaviour {
         }
 
         if (Input.GetMouseButtonDown(0)) {
-            if (TryHandleUnitSelection()) return;
             HandleSelectedAction();
         }
     }
@@ -149,7 +148,7 @@ public class UnitActionSystem : MonoBehaviour {
                 break;
         }
         selectedAction = action;
-        if (action.GetActionType() != ActionType.INVENTORY) {
+        if (action == null || action.GetActionType() != ActionType.INVENTORY) {
             OnSelectedActionChanged?.Invoke(this, EventArgs.Empty);
         }
         else {

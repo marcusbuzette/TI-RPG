@@ -54,7 +54,7 @@ MonoBehaviour:
   custo: 10
   preRequisitos: []
   onCoolDown: 0
-  coolDown: 0
+  coolDown: 2
   currentCoolDown: 0
   targetsList: []
   maxIntimidateDistance: 1

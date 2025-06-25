@@ -18,6 +18,8 @@ public class HealArea : BaseSkills {
     public string healArrowSFX;
     GridPosition mouseGridPosition;
 
+    Projectile projectile;
+
     private void Start() {
         obstaclesLayerMask = LayerMask.GetMask("Obstacles"); //add layer mask to don't shoot through obstacles
     }
@@ -101,10 +103,17 @@ public class HealArea : BaseSkills {
     }
 
     private void Shoot() {
-        unit.SpawnProjectile(selectedGrid, Color.green);
+        projectile = unit.SpawnProjectile(selectedGrid, Color.green, true);
 
+        projectile.onDestory += ProjectileDestroyed;
+    }
+
+    public void ProjectileDestroyed(object sender, EventArgs e) {
         healAreaObject = Instantiate(new GameObject(), selectedGrid, Quaternion.identity);
         healAreaObject.AddComponent<HealAreaObject>().SetHealAreaObject(this, healPoints, areaHeal, coolDown);
+
+        projectile.onDestory -= ProjectileDestroyed;
+
         ActionFinish();
     }
 

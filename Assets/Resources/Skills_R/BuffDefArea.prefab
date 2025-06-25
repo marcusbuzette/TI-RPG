@@ -56,7 +56,7 @@ MonoBehaviour:
   - {fileID: -4319678459245685355, guid: 1d8f2dd94f3e2402ba696b17e5840433, type: 3}
   - {fileID: 5647303888008814838, guid: 2c7835928b6cd8045917bffe59d5e936, type: 3}
   onCoolDown: 0
-  coolDown: 0
+  coolDown: 2
   currentCoolDown: 0
   targetsList: []
   maxInspireDistance: 1
