@@ -304,7 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c51fdeedc79e5b428788df816ec756f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unit: {fileID: 0}
+  unit: {fileID: 7688743498665845133}
 --- !u!1 &6127860158144343598
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,7 +354,6 @@ GameObject:
   - component: {fileID: 7688743498665845133}
   - component: {fileID: 4672303196470729123}
   - component: {fileID: 6969255785910076469}
-  - component: {fileID: 8403847412745573325}
   - component: {fileID: 3490794028784684166}
   m_Layer: 7
   m_Name: RangedGuard
@@ -471,19 +470,6 @@ MonoBehaviour:
   maxShootDistance: 5
   shootDamage: 100
   arrowSFX: 
---- !u!114 &8403847412745573325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7619976472730547318}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e6117f571c064574ab72089585cade8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  invert: 1
 --- !u!114 &3490794028784684166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -501,9 +487,9 @@ MonoBehaviour:
   maxHealthPoints: 100
   animator: {fileID: 0}
   faintText: {fileID: 0}
-  damageSFX: 
+  damageSFX: BoarHurt
   deathSFX: 
-  missSFX: 
+  missSFX: Esquiva
   damagedBy: []
 --- !u!1 &8582577577489102598
 GameObject:
