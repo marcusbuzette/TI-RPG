@@ -21,7 +21,7 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
     [SerializeField] private GameObject treeInfoStep;
     [SerializeField] private bool hasShowCamping = false;
     [SerializeField] private bool hasFinishedTutorialLevel = false;
-     [SerializeField]private bool hasShownSkillTree = false;
+    [SerializeField] private bool hasShownSkillTree = false;
     [SerializeField] private bool isWaitingStep = false;
 
     void Awake() {
@@ -63,7 +63,7 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
         tutorialQuest.MoveToNextStep();
         if (tutorialQuest.CurrentQuestStepExists() &&
             (
-                (tutorialQuest.GetCurrentStepIndex() < tutorialQuest.questStepPrefabs.Count) 
+                (tutorialQuest.GetCurrentStepIndex() < tutorialQuest.questStepPrefabs.Count)
                 &&
                 (!hasShowCamping || !hasShownSkillTree || !hasFinishedTutorialLevel)
              )
@@ -128,7 +128,7 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
         //     if (hasShowComboInfo) skipStepsNumber -= 2;
         //     tutorialQuest.SkipQuestsStepToIndex(data.tutorialIndex);
         // }
-        // dataLoaded();
+        dataLoaded();
     }
 
     public void ResumeTutorial() {
@@ -176,10 +176,15 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
         yield return new WaitForSeconds(.5f);
         this.hasFinishedTutorialLevel = true;
         this.hasShowCamping = true;
-        // this.ha
-        this.ChangeLevelQuestState(QuestState.IN_PROGRESS);
-        this.tutorialQuest.InstantiateCurrentQuestStep(this.transform);
-        this.onTutorialStarted?.Invoke(this, EventArgs.Empty);
+
+        if (!this.isTutorialFinished) {
+            this.ChangeLevelQuestState(QuestState.IN_PROGRESS);
+            this.tutorialQuest.InstantiateCurrentQuestStep(this.transform);
+            this.onTutorialStarted?.Invoke(this, EventArgs.Empty);
+        } else {
+            FinishTutorial();
+        }
+
     }
 
 
