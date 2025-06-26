@@ -59,7 +59,7 @@ public class TeleportSkill : BaseSkills
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         targetGrid = mouseGridPosition;
-
+        PlaySkillSFX();
         ActionStart(onActionComplete);
 
     }

@@ -20,6 +20,7 @@ public class PoisonAttack : BaseSkills
     private void Start() {
         GameObject PoisonFbx = GameObject.Find("Poison Arrow Cast");
         // Garantir que o VFX comece desativado
+        sfxName = "FlechaVeneno";
         if (PoisonFbx != null) {
             PoisonFbx.SetActive(false);
         }
@@ -102,9 +103,7 @@ public class PoisonAttack : BaseSkills
             PoisonFbx.SetActive(true);
         }
 
-        if (!string.IsNullOrEmpty(poisonArrowSFX)) {
-            AudioManager.instance?.PlaySFX(poisonArrowSFX);
-        }
+        PlaySkillSFX();
         ActionStart(onActionComplete);
     }
 

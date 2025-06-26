@@ -23,6 +23,7 @@ public abstract class BaseAction : MonoBehaviour {
     [SerializeField] private float rotSpeed = 180f;
 
 
+
     protected virtual void Awake() {
         unit = GetComponent<Unit>();
         actionType = ActionType.ACTION;

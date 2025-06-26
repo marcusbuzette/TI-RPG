@@ -59,9 +59,7 @@ public class BuffDefArea : BaseSkills {
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         ActionStart(onActionComplete);
-        if (!string.IsNullOrEmpty(buffDefSFX)) {
-            AudioManager.instance?.PlaySFX(buffDefSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
-        }
+        PlaySkillSFX();
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {

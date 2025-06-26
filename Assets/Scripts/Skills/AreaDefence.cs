@@ -148,6 +148,7 @@ public class AreaDefence : BaseSkills {
         isAiming = false;
         this.targetPosition = mouseGridPosition;
         ActionStart(onActionComplete);
+        PlaySkillSFX();
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {

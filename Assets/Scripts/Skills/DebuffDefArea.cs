@@ -58,9 +58,7 @@ public class DebuffDefArea : BaseSkills {
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
-        if (!string.IsNullOrEmpty(debuffDefSFX)) {
-            AudioManager.instance?.PlaySFX(debuffDefSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
-        }
+        PlaySkillSFX();
         ActionStart(onActionComplete);
     }
 
