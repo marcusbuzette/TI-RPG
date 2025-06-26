@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 
@@ -17,7 +18,9 @@ public class GameController : MonoBehaviour, IDataPersistence {
     [SerializeField] private bool debugPathFindingMode = false;
 
     [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private GameObject charsPanelUI;
     private bool isPaused = false;
+    private bool charsOpened = false;
 
 
    private void Awake() {
@@ -53,6 +56,11 @@ private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             TogglePause();
         }
+
+        if (Input.GetKeyDown(KeyCode.P)) {
+            ToggleCharsPanel();
+        }
+        
     }
 
     public bool GetDebugMode() { return this.debugMode; }
@@ -130,6 +138,15 @@ private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
         }
     }
 
+    public void ToggleCharsPanel() {
+        if (charsOpened) {
+            CloseCharsPanel();
+        }
+        else {
+            OpenCharsPanel();
+        }
+    }
+
     public void PauseGame() {
         Time.timeScale = 0f;
         isPaused = true;
@@ -149,12 +166,38 @@ private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
         // Cursor.visible = true;
     }
 
+    public void OpenCharsPanel() {
+        charsOpened = true;
+
+         if (charsPanelUI == null) {
+            GameObject charsPanelPrefab = Resources.Load<GameObject>("UIPrefabs_R/CharsPanel");
+            GameObject canvasAux = GameObject.FindGameObjectWithTag("UICanvas"); 
+            if (charsPanelPrefab != null && canvasAux != null) {
+                charsPanelUI = Instantiate(charsPanelPrefab, canvasAux.transform);
+            } else {
+                Debug.Log("Erro ao instanciar o painel de personagens");
+            }
+        } else {
+            charsPanelUI?.SetActive(true);
+        }
+
+
+    }
+
     public void ResumeGame() {
         Time.timeScale = 1f;
         isPaused = false;
         pauseMenuUI?.SetActive(false);
         // Cursor.lockState = CursorLockMode.Locked;
         // Cursor.visible = false;
+    }
+
+    public void CloseCharsPanel() {
+        Time.timeScale = 1f;
+        charsOpened = false;
+        charsPanelUI?.SetActive(false);
+
+
     }
 
     public void ResetVariables() {

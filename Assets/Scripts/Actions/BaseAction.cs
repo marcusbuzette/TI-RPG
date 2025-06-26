@@ -13,6 +13,7 @@ public abstract class BaseAction : MonoBehaviour {
 
     protected Unit unit;
     protected bool isActive;
+    public string descricao;
     protected Action onActionComplete;
     protected ActionType actionType;
     [SerializeField] protected Sprite actionImage;

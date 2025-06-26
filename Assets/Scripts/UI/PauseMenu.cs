@@ -21,7 +21,8 @@ public class PauseMenu : MonoBehaviour {
     }
 
     public void OpenCharsScreen() {
-        // ...
+        ResumeGame();
+        GameController.controller.ToggleCharsPanel();
     }
 
     public void ExitGame() {

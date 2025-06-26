@@ -8,7 +8,6 @@ public abstract class BaseSkills : BaseAction {
 
     [Header("Base Parameters")]
     public string nome;
-    public string descricao;
     public int custo;
     public List<BaseSkills> preRequisitos;
     public EventHandler onEndEffect;
