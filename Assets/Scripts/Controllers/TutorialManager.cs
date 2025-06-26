@@ -54,8 +54,11 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
     }
 
     public void FinishTutorial() {
+        Debug.Log("FInish tutorial");
         this.isTutorialFinished = true;
         this.onTutorialStateChanged?.Invoke(this, EventArgs.Empty);
+        Debug.Log(DataPersistenseManager.instance);
+        DataPersistenseManager.instance.SaveGame();
     }
 
     public void AdvanceTutorial() {
@@ -117,6 +120,7 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
     }
 
     public void SaveData(ref GameData data) {
+        Debug.Log("SavedataTutorial");
         data.finishedTutorial = isTutorialFinished;
         data.tutorialIndex = tutorialQuest.GetCurrentStepIndex();
     }

@@ -107,7 +107,7 @@ public class GameController : MonoBehaviour, IDataPersistence {
         if (levelBeaten >= this.currentLevel) {
             this.currentLevel++;
         }
-        DataPersistenseManager.instace?.SaveGame();
+        DataPersistenseManager.instance?.SaveGame();
     }
 
     public void AddMoney(int money) {
