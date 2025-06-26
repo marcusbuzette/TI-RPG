@@ -2253,7 +2253,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1188621131}
         m_TargetAssemblyTypeName: OpenCharacterSkillTreeHUB, Assembly-CSharp
         m_MethodName: BackToMainCameraHUB
         m_Mode: 1
@@ -2513,7 +2513,7 @@ PrefabInstance:
     - target: {fileID: 5866666021909216657, guid: 399a4ccd0f012864a8bdc2ece9496fd9, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 7521e7224ca12e54c878723007594954, type: 2}
+      objectReference: {fileID: 9100000, guid: e02dcbe6bf5784847a556ebfa01542bb, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -2552,8 +2552,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1830364957}
   thisCamera: {fileID: 827587983}
-  skillTree: {fileID: 1396217310}
-  index: 3
+  skillTree: {fileID: 0}
+  index: 2
 --- !u!1 &362475805
 GameObject:
   m_ObjectHideFlags: 0
@@ -6350,8 +6350,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1830364957}
   thisCamera: {fileID: 1863553880}
-  skillTree: {fileID: 1396217310}
-  index: 2
+  skillTree: {fileID: 0}
+  index: 1
 --- !u!1001 &1073775795
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6550,6 +6550,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MacacoTreinando
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 242f4f156a1556f4e8948b1fbd6b7993, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: b15001c93ba35d446893927982648252, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -7084,6 +7088,7 @@ MonoBehaviour:
   - {fileID: 3343077423336064248, guid: e4cdb5a43fe194cbbb93ec86261f60ac, type: 3}
   - {fileID: 7923891495559024178, guid: 4f6a3905a8e5438439d4f86e67c0d767, type: 3}
   - {fileID: 3812234490696718666, guid: f97b08b429ca7425a92ff38bfdc51692, type: 3}
+  cameraHUB: {fileID: 20805570}
   updateAvailable: {fileID: 0}
   pontos: {fileID: 0}
 --- !u!4 &1178768438
@@ -11032,7 +11037,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 0, w: 0.0011196136}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -11677,7 +11682,7 @@ PrefabInstance:
     - target: {fileID: 5866666021909216657, guid: 83533ef5187f906459b88bb94ef30a02, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 9c94f915e5502cb449a70cf7d3c55019, type: 2}
+      objectReference: {fileID: 9100000, guid: 1eda5bf19c0d33c4db1044729a5962b0, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -11716,7 +11721,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1830364957}
   thisCamera: {fileID: 529933745}
-  skillTree: {fileID: 1396217310}
+  skillTree: {fileID: 0}
   index: 1
 --- !u!1001 &1741716068
 PrefabInstance:
@@ -12272,6 +12277,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MacacoAnim1
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 242f4f156a1556f4e8948b1fbd6b7993, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 82366ed1204e24b41b11b984bfda4f0d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13464,7 +13473,7 @@ PrefabInstance:
     - target: {fileID: 5866666021909216657, guid: 83533ef5187f906459b88bb94ef30a02, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 9c94f915e5502cb449a70cf7d3c55019, type: 2}
+      objectReference: {fileID: 9100000, guid: 4e90ca1887ad1b04b95ad38f1d0aea07, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

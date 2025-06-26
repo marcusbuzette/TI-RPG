@@ -5,7 +5,8 @@ using System;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using UnityEngine.EventSystems;
-
+using Cinemachine;
+using UnityEditor.Rendering;
 
 public class TalentManager : MonoBehaviour {
     public static TalentManager Instance;
@@ -20,6 +21,7 @@ public class TalentManager : MonoBehaviour {
 
     [SerializeField] private List<GameObject> playerUnitList = new List<GameObject>();
 
+    [SerializeField] private CameraHUB cameraHUB;
     [SerializeField] private GameObject updateAvailable;
 
     public EventHandler onSkillUpdate;
@@ -30,7 +32,7 @@ public class TalentManager : MonoBehaviour {
     private int pontosDisponiveis = 0;
     public Text pontos;
 
-
+    private int unitId;
     private String SelectedUnit;
     private Button selectedButton;
 
@@ -66,6 +68,7 @@ public class TalentManager : MonoBehaviour {
             unitButton.gameObject.GetComponent<SkillTreeUnitButtonUI>().SetUnitData(unitId, playerUnit.GetUnitName());
             unitButton.onClick.AddListener(() => {
                 OnSelectedUnitChanged(unitId);
+                ChangeCharacterCamera(unitButton.transform.GetSiblingIndex());
                 SetSelectedButton(unitButton.GetComponent<SkillTreeUnitButtonUI>());
             });
 
@@ -149,7 +152,6 @@ public class TalentManager : MonoBehaviour {
         this.pontosDisponiveis = unitAux.GetUnitXpSystem().getXpAmount();
         this.UpdateLevelBar();
         this.UpdatedSkillTree(unitAux);
-
     }
 
     public int GetXPPoints() { return this.pontosDisponiveis; }
@@ -349,13 +351,16 @@ public class TalentManager : MonoBehaviour {
     }
 
 
-
+    public CameraHUB GetCameraHUB() { return cameraHUB; }
 
     public List<GameObject> GetUnitList() { return this.playerUnitList; }
 
+    public void ChangeCharacterCamera(int unitId) {
+        cameraHUB.GetSkillTreeCharacter(this.unitId).CloseCamera();
+        cameraHUB.GetSkillTreeCharacter(unitId).EnterOnThisCamera(cameraHUB);
 
-
-
+        this.unitId = unitId;
+    }
 }
 
 
