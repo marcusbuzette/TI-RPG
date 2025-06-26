@@ -26,3 +26,7 @@ MonoBehaviour:
       reino
     name: Fofoqueiro
     image: {fileID: 0}
+  - sentences: "Isso n\xE3o passam de hist\xF3rias... V\xE3o dormir, amanha temos
+      uma ca\xE7cada dif\xEDcil"
+    name: Lucian
+    image: {fileID: 0}

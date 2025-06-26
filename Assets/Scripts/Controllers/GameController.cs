@@ -23,26 +23,27 @@ public class GameController : MonoBehaviour, IDataPersistence {
     private bool charsOpened = false;
 
 
-   private void Awake() {
-    if (controller == null) {
-        controller = this;
-        DontDestroyOnLoad(this);
-        SceneManager.sceneLoaded += OnSceneLoaded; // <- AQUI
-         Time.timeScale = 1f;
-    } else {
-        DestroyImmediate(gameObject);
+    private void Awake() {
+        if (controller == null) {
+            controller = this;
+            DontDestroyOnLoad(this);
+            SceneManager.sceneLoaded += OnSceneLoaded; // <- AQUI
+            Time.timeScale = 1f;
+        }
+        else {
+            DestroyImmediate(gameObject);
+        }
+
+        dinheiro = 1000;
     }
 
-    dinheiro = 1000;
-}
 
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        pauseMenuUI = GameObject.Find("Configs");
 
-private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-    pauseMenuUI = GameObject.Find("Configs");
-
-    if (pauseMenuUI != null)
-        pauseMenuUI.SetActive(false);
-}
+        if (pauseMenuUI != null)
+            pauseMenuUI.SetActive(false);
+    }
 
     void Start() {
         // UnitStats statsAux = new UnitStats(0,0,0,0,0);
@@ -60,7 +61,7 @@ private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
         if (Input.GetKeyDown(KeyCode.P)) {
             ToggleCharsPanel();
         }
-        
+
     }
 
     public bool GetDebugMode() { return this.debugMode; }
@@ -102,9 +103,11 @@ private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
 
     public int GetCurrentLevel() { return this.currentLevel; }
 
-    public void NextLevel() {
-        this.currentLevel++;
-        DataPersistenseManager.instace?.SaveGame();
+    public void NextLevel(int levelBeaten) {
+        if (levelBeaten >= this.currentLevel) {
+            this.currentLevel++;
+        }
+        DataPersistenseManager.instance?.SaveGame();
     }
 
     public void AddMoney(int money) {
@@ -153,13 +156,15 @@ private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
 
         if (pauseMenuUI == null) {
             GameObject pausePrefab = Resources.Load<GameObject>("UIPrefabs_R/PauseMenu");
-            GameObject canvasAux = GameObject.FindGameObjectWithTag("UICanvas"); 
+            GameObject canvasAux = GameObject.FindGameObjectWithTag("UICanvas");
             if (pausePrefab != null && canvasAux != null) {
                 pauseMenuUI = Instantiate(pausePrefab, canvasAux.transform);
-            } else {
+            }
+            else {
                 Debug.Log("Erro ao instanciar o menu de pausa");
             }
-        } else {
+        }
+        else {
             pauseMenuUI?.SetActive(true);
         }
         // Cursor.lockState = CursorLockMode.None;
@@ -169,15 +174,17 @@ private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
     public void OpenCharsPanel() {
         charsOpened = true;
 
-         if (charsPanelUI == null) {
+        if (charsPanelUI == null) {
             GameObject charsPanelPrefab = Resources.Load<GameObject>("UIPrefabs_R/CharsPanel");
-            GameObject canvasAux = GameObject.FindGameObjectWithTag("UICanvas"); 
+            GameObject canvasAux = GameObject.FindGameObjectWithTag("UICanvas");
             if (charsPanelPrefab != null && canvasAux != null) {
                 charsPanelUI = Instantiate(charsPanelPrefab, canvasAux.transform);
-            } else {
+            }
+            else {
                 Debug.Log("Erro ao instanciar o painel de personagens");
             }
-        } else {
+        }
+        else {
             charsPanelUI?.SetActive(true);
         }
 
