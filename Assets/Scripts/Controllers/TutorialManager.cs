@@ -54,10 +54,8 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
     }
 
     public void FinishTutorial() {
-        Debug.Log("FInish tutorial");
         this.isTutorialFinished = true;
         this.onTutorialStateChanged?.Invoke(this, EventArgs.Empty);
-        Debug.Log(DataPersistenseManager.instance);
         DataPersistenseManager.instance.SaveGame();
     }
 
@@ -95,7 +93,6 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
     public void PauseTutorial() {
         this.isWaitingStep = true;
         if (this.hasShowComboInfo && this.hasShownSkillTree) {
-            Debug.Log("Ultimo pause step");
             AdvanceTutorial();
         }
     }
@@ -120,7 +117,6 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
     }
 
     public void SaveData(ref GameData data) {
-        Debug.Log("SavedataTutorial");
         data.finishedTutorial = isTutorialFinished;
         data.tutorialIndex = tutorialQuest.GetCurrentStepIndex();
     }

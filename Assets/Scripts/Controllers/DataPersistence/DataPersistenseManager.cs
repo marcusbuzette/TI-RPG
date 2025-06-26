@@ -65,8 +65,6 @@ public class DataPersistenseManager : MonoBehaviour {
             obj.SaveData(ref gameData);
         }
 
-        Debug.Log(gameData.finishedTutorial);
-
         dataHandler.Save(gameData);
     }
 
