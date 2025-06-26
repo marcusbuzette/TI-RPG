@@ -4,12 +4,13 @@ using UnityEngine;
 using System;
 
 public class QucikAttack : BaseSkills {
+
     public string quickAttackSFX;
 
     public int Attack = 1;
     private Unit targetUnit;
     [SerializeField] private int hitDamage = 50;
-    [SerializeField] private LayerMask obstaclesLayerMask;
+    private LayerMask obstaclesLayerMask;
     [SerializeField] private int maxHitDistance = 1;
 
     private void Start() {
@@ -133,5 +134,15 @@ public class QucikAttack : BaseSkills {
 
     public int GetMaxHitDistance() {
         return maxHitDistance;
+    }
+    public int GetHitDamage() {
+        return hitDamage;
+    }
+
+    public override void CopyFrom(BaseSkills other) {
+        base.CopyFrom(other);
+
+        maxHitDistance = (other as QucikAttack).GetMaxHitDistance();
+        hitDamage = (other as QucikAttack).GetHitDamage();
     }
 }

@@ -7,6 +7,7 @@ using UnityEngine.SocialPlatforms;
 
 public class EnemyFocusSkill : BaseSkills
 {
+
     [SerializeField] private int skillRounds;
     public string provokeSFX;
     public override void Action() {

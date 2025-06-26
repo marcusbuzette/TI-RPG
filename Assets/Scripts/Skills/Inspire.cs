@@ -4,10 +4,10 @@ using UnityEngine;
 using System;
 
 public class Inspire : BaseSkills {
-    [SerializeField] private List<Unit> targetsList = new List<Unit>();
+    private List<Unit> targetsList = new List<Unit>();
     [SerializeField] private int maxInspireDistance = 1;
     [SerializeField] private int buffAttackAmount = 2;
-    [SerializeField] private BuffType buffType = BuffType.ATTACK;
+    private BuffType buffType = BuffType.ATTACK;
     public string inspireSFX;
 
     public override void Action() {
@@ -86,9 +86,16 @@ public class Inspire : BaseSkills {
     public override bool GetOnCooldown() { return onCoolDown; }
 
     public int GetMaxInspireDistance() { return maxInspireDistance; }
+    public int GetBuffAttackAmount() { return buffAttackAmount; }
 
     public List<Unit> GetTargetList() { return targetsList; }
 
     public override BuffType? GetBuffType() { return this.buffType; }
 
+    public override void CopyFrom(BaseSkills other) {
+        base.CopyFrom(other);
+
+        maxInspireDistance = (other as Inspire).GetMaxInspireDistance();
+        buffAttackAmount = (other as Inspire).GetBuffAttackAmount();
+    }
 }

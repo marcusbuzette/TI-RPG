@@ -105,9 +105,11 @@ MonoBehaviour:
   animator: {fileID: 0}
   speed: 0
   rotSpeed: 180
+  currentArrow: {fileID: 0}
   moveSpeed: 8
   stopDistance: 0.1
   maxMoveDistance: 6
+  exploreSpeed: 5.5
 --- !u!65 &5364656213574811173
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -654,7 +656,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f8fbfc8bbabd09c4289d3cd7ec3e481b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.05
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f8fbfc8bbabd09c4289d3cd7ec3e481b, type: 3}
       propertyPath: m_LocalPosition.z

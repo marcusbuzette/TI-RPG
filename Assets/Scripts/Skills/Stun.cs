@@ -6,11 +6,11 @@ using System;
 public class Stun : BaseSkills {
     public string quickAttackSFX;
 
-    public int Attack = 1;
+    [HideInInspector] public int Attack = 1;
     private Unit targetUnit;
-    [SerializeField] private int hitDamage = 15;
-    [SerializeField] private LayerMask obstaclesLayerMask;
     [SerializeField] private int maxHitDistance = 1;
+    [SerializeField] private int hitDamage = 15;
+    private LayerMask obstaclesLayerMask;
 
     private void Start() {
         obstaclesLayerMask = LayerMask.GetMask("Obstacles");
@@ -136,5 +136,15 @@ public class Stun : BaseSkills {
 
     public int GetMaxHitDistance() {
         return maxHitDistance;
+    }
+    public int GetHitDamage() {
+        return hitDamage;
+    }
+
+    public override void CopyFrom(BaseSkills other) {
+        base.CopyFrom(other);
+
+        maxHitDistance = (other as Stun).GetMaxHitDistance();
+        hitDamage = (other as Stun).GetHitDamage();
     }
 }

@@ -6,17 +6,13 @@ using UnityEngine;
 
 public class ShootAction : BaseAction
 {
-    private enum State
-    {
-        Aiming, Shooting, Cooloff
-    }
+
     [SerializeField] private LayerMask obstaclesLayerMask;
     [SerializeField] private int maxShootDistance = 1;
     [SerializeField] private int shootDamage = 100;
 
     public string arrowSFX;
 
-    private State currentState;
     private Unit targetUnit;
     private bool canShoot;
 
@@ -112,23 +108,6 @@ public class ShootAction : BaseAction
             AudioManager.instance?.PlaySFX(arrowSFX);
         }
         ActionStart(onActionComplete);
-    }
-
-    protected void NextState()
-    {
-        switch (currentState)
-        {
-            case State.Aiming:
-                currentState = State.Shooting;
-                break;
-            case State.Shooting:
-                currentState = State.Cooloff;
-                break;
-            case State.Cooloff:
-                ActionFinish();
-                break;
-
-        }
     }
 
     private void Shoot()
