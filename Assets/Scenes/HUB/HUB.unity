@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0090638, g: 0.013170442, b: 0.020601679, a: 1}
+  m_IndirectSpecularColor: {r: 0.009026857, g: 0.01311287, b: 0.020520534, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3539,6 +3539,7 @@ MonoBehaviour:
   debugMode: 0
   debugPathFindingMode: 0
   pauseMenuUI: {fileID: 0}
+  charsPanelUI: {fileID: 0}
 --- !u!4 &660586791
 Transform:
   m_ObjectHideFlags: 0
@@ -7981,6 +7982,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 1489543375}
   fadeDuration: 1
+  loadingBar: {fileID: 0}
 --- !u!114 &1489543377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9284,7 +9286,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac59a11504afd3d488880254701951de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: {fileID: 11400000, guid: 869ce8ef27b924dd4b6ec52ca988d94d, type: 2}
+  historia_dialogues:
+  - {fileID: 11400000, guid: 869ce8ef27b924dd4b6ec52ca988d94d, type: 2}
+  - {fileID: 11400000, guid: 863d925ae958f437b83fe71518a065da, type: 2}
 --- !u!1 &1685974459 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7926350481557503192, guid: 2c985b2dacaadc7419eee18992ca2c6c, type: 3}
