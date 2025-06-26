@@ -122,7 +122,7 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
     }
 
     public void LoadData(GameData data) {
-        // isTutorialFinished = data.finishedTutorial;
+        isTutorialFinished = data.finishedTutorial;
         // if (data.tutorialIndex > 0) {
         //     int skipStepsNumber = data.tutorialIndex;
         //     if (hasShowComboInfo) skipStepsNumber -= 2;
@@ -176,6 +176,7 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
         yield return new WaitForSeconds(.5f);
         this.hasFinishedTutorialLevel = true;
         this.hasShowCamping = true;
+        // this.ha
         this.ChangeLevelQuestState(QuestState.IN_PROGRESS);
         this.tutorialQuest.InstantiateCurrentQuestStep(this.transform);
         this.onTutorialStarted?.Invoke(this, EventArgs.Empty);
