@@ -15,8 +15,8 @@ public class FileDataHandler : MonoBehaviour {
         this.dataFileName = fileName;
     }
 
-    public GameData Load () {
-        string fullPath = Path.Combine(this.dataDirPath, dataFileName);
+    public GameData Load (string profileId) {
+        string fullPath = Path.Combine(this.dataDirPath,profileId ,dataFileName);
         GameData loadedData = null;
         if (File.Exists(fullPath)) {
             try {
@@ -37,8 +37,8 @@ public class FileDataHandler : MonoBehaviour {
     }
 
 
-    public void Save(GameData data) {
-        string fullPath = Path.Combine(this.dataDirPath, dataFileName);
+    public void Save(GameData data, string profileId) {
+        string fullPath = Path.Combine(this.dataDirPath,profileId ,dataFileName);
 
         try {
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
@@ -54,6 +54,37 @@ public class FileDataHandler : MonoBehaviour {
         catch (Exception e) {
             Debug.LogError("Erro ao salvar jogo: " + e);
         }
+    }
+
+    public Dictionary<string,GameData> LoadAllProfiles()
+    {
+        Dictionary<string, GameData> profileDictionary = new Dictionary<string, GameData>();
+
+        IEnumerable<DirectoryInfo> dirInfos = new DirectoryInfo(dataDirPath).EnumerateDirectories();
+        foreach (DirectoryInfo dirInfo in dirInfos)
+        {
+            string profileId = dirInfo.Name;
+            string fullPath = Path.Combine(dataDirPath,profileId,dataFileName);
+            if(!File.Exists(fullPath))
+            {
+                Debug.LogWarning("Save não tem dados:"+profileId);
+                continue;
+            }
+
+            GameData profileData = Load(profileId);
+
+            if(profileData != null)
+            {
+                profileDictionary.Add(profileId, profileData);
+            }
+
+            else 
+            {
+                Debug.LogError("Load deu errado:"+profileId);
+            }
+        }
+
+        return profileDictionary;
     }
 
 }

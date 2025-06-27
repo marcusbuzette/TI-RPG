@@ -10,12 +10,14 @@ public class CameraHUB : MonoBehaviour
     [SerializeField] private OpenCharacterSkillTreeHUB[] charactersSkillTrees;
     [SerializeField] private BoxCollider[] colliders;
     [SerializeField] private GameObject[] texts;
+    public static bool isMenuOpen = false;
 
     private void Start() {
         mainCamera = Camera.main;
     }
 
     private void Update() {
+        if (isMenuOpen) return;
         if (Input.GetKeyDown(KeyCode.Mouse0)) {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

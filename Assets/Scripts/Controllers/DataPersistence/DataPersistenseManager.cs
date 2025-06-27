@@ -13,6 +13,7 @@ public class DataPersistenseManager : MonoBehaviour {
     private GameData gameData;
     private List<IDataPersistence> dataPersistenceObjects;
     private FileDataHandler dataHandler;
+    private string selectedProfileId = "test";
 
     public static DataPersistenseManager instace { get; private set; }
 
@@ -48,7 +49,7 @@ public class DataPersistenseManager : MonoBehaviour {
     }
 
     public void LoadGame() {
-        gameData = dataHandler.Load();
+        gameData = dataHandler.Load(selectedProfileId);
 
         if (gameData == null) {
             Debug.Log("Nenhum save encontrado, criando novo...");
@@ -65,7 +66,7 @@ public class DataPersistenseManager : MonoBehaviour {
             obj.SaveData(ref gameData);
         }
 
-        dataHandler.Save(gameData);
+        dataHandler.Save(gameData, selectedProfileId);
     }
 
     private List<IDataPersistence> FindAllDataPersistenceObjects() {
