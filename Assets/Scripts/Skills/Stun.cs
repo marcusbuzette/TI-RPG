@@ -14,6 +14,7 @@ public class Stun : BaseSkills {
 
     private void Start() {
         obstaclesLayerMask = LayerMask.GetMask("Obstacles");
+        sfxName = "Stun";
     }
 
     public override void Action() {
@@ -109,9 +110,7 @@ public class Stun : BaseSkills {
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
-        if (!string.IsNullOrEmpty(quickAttackSFX)) {
-            AudioManager.instance?.PlaySFX(quickAttackSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
-        }
+        PlaySkillSFX();
         ActionStart(onActionComplete);
 
     }

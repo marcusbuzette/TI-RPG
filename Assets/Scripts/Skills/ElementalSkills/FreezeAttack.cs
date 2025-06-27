@@ -22,6 +22,7 @@ public class FreezeAttack : BaseSkills {
         if (IceFbx != null) {
             IceFbx.SetActive(false);
         }
+        sfxName = "FlechaGelo";
     }
     public override string GetActionName() {
         return "Congelar";
@@ -99,9 +100,7 @@ public class FreezeAttack : BaseSkills {
             IceFbx.SetActive(true);
         }
 
-        if (!string.IsNullOrEmpty(freezeArrowSFX)) {
-            AudioManager.instance?.PlaySFX(freezeArrowSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
-        }
+        PlaySkillSFX();
         ActionStart(onActionComplete);
     }
 

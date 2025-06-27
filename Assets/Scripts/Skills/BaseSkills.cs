@@ -14,6 +14,10 @@ public abstract class BaseSkills : BaseAction {
     [SerializeField] protected bool onCoolDown;
     [SerializeField] protected int coolDown;
     [SerializeField] protected int currentCoolDown = 0;
+    [SerializeField] protected string sfxName;
+
+    //public string GetSFXName() => sfxName;
+
 
     protected override void Update() {
         if (onCoolDown || !isActive) { return; }
@@ -29,6 +33,14 @@ public abstract class BaseSkills : BaseAction {
         currentCoolDown = coolDown;
         onCoolDown = true;
     }
+
+    protected void PlaySkillSFX() {
+        Debug.Log($"[SFX] Tentando tocar: {sfxName}");
+        if (!string.IsNullOrEmpty(sfxName)) {
+            AudioManager.instance?.PlaySFX(sfxName);
+        }
+    }
+
 
     public int GetCoolDown() {
         return coolDown;
@@ -59,6 +71,11 @@ public abstract class BaseSkills : BaseAction {
         this.onCoolDown = other.onCoolDown;
         this.coolDown = other.coolDown;
         this.currentCoolDown = other.currentCoolDown;
+
+        //this.sfxName = other.sfxName;
+        //this.sfxName = other.GetSFXName();
+
+        Debug.Log($"Copiando skill: {other.nome} | SFX: {other.sfxName}");
 
         // Eventos não são normalmente copiados diretamente, pois eles mantêm referências de objetos.
         // Se necessário, pode ser feito manualmente, mas normalmente omitido:

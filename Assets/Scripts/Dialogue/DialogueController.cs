@@ -15,6 +15,7 @@ public class DialogueController : MonoBehaviour
     public Animator animator;
     public bool isDialogueOpened = false;
 
+
     public EventHandler onEndDialogue;
 
     private void Awake() {
@@ -25,6 +26,7 @@ public class DialogueController : MonoBehaviour
         else {
             DestroyImmediate(gameObject);
         }
+
     }
     void Start()
     {
@@ -33,6 +35,7 @@ public class DialogueController : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue){
         Debug.Log("Start dialogue");
+        CameraHUB.isMenuOpen = true;
         isDialogueOpened = true;
         animator?.SetBool("IsOpen", isDialogueOpened);
         dialogueQueue.Clear();
@@ -67,7 +70,10 @@ public class DialogueController : MonoBehaviour
 
     public void EndDialogue(){
         isDialogueOpened = false;
+        CameraHUB.isMenuOpen = false;
         animator?.SetBool("IsOpen", isDialogueOpened);
         onEndDialogue?.Invoke(this, EventArgs.Empty);
+
+    
     }
 }

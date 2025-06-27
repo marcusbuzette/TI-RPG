@@ -59,6 +59,7 @@ public class IntimidateSkill : BaseSkills {
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         ActionStart(onActionComplete);
+        PlaySkillSFX();
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {
