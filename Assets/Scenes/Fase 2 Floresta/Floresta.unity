@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.008947474, g: 0.013111375, b: 0.0204459, a: 1}
+  m_IndirectSpecularColor: {r: 0.008916955, g: 0.013043514, b: 0.020362426, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8351,9 +8351,6 @@ MonoBehaviour:
   mousePlaneLayer:
     serializedVersion: 2
     m_Bits: 64
-  unitLayer:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!1001 &773331038
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8884,6 +8881,8 @@ MonoBehaviour:
   currentLevel: 0
   debugMode: 0
   debugPathFindingMode: 0
+  pauseMenuUI: {fileID: 0}
+  charsPanelUI: {fileID: 0}
 --- !u!4 &835172791
 Transform:
   m_ObjectHideFlags: 0
@@ -9662,12 +9661,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c65cd61b091884c78b1555b33a94ca7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endTurnButton: {fileID: 431010876}
   turnSpeedButton: {fileID: 1885247303}
   turnSpeedText: {fileID: 667850460}
   turnNumberText: {fileID: 1325124395}
+  turnUnitImage: {fileID: 0}
   unitsOrderContainer: {fileID: 1112389451}
   unitOrderUIPrefab: {fileID: 7060775410297624860, guid: 07c5d27b85a5a453eb5ff6e50dc6be26, type: 3}
+  endTurnButton: {fileID: 431010876}
+  originalPosition: {x: 0, y: 0}
+  hiddenPosition: {x: 0, y: 0}
+  moveDuration: 0.5
 --- !u!1001 &921045591
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14663,6 +14666,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 1330343866}
   fadeDuration: 1
+  loadingBar: {fileID: 0}
 --- !u!114 &1330343864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21841,6 +21845,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebbed6dc9b5bc844ba7ae4de58ea26e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_itemDictionary:
+    keys: []
+    values: []
   inventory:
   - id: 1
     displayName: Potion

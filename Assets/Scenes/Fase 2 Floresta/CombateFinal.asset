@@ -19,15 +19,15 @@ MonoBehaviour:
   endX: 11
   endZ: 22
   spawnPoints:
-  - x: 12
-    z: 18
+  - x: 10
+    z: 15
     floor: 0
-  - x: 13
-    z: 18
+  - x: 10
+    z: 16
     floor: 0
-  - x: 14
-    z: 18
+  - x: 10
+    z: 17
     floor: 0
-  - x: 15
+  - x: 10
     z: 18
     floor: 0
