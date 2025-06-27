@@ -29,6 +29,7 @@ public class Unit : MonoBehaviour {
     [SerializeField] private XpSystem xpSystem;
     [SerializeField] public string unitId = "";
     [SerializeField] public string unitName = "";
+    [SerializeField] public Sprite unitImage;
     [SerializeField] private UnitStats baseUnitStats;
     private UnitStats unitStats;
     [SerializeField] private UnitStatsModifiers statsModifiers;
@@ -409,5 +410,9 @@ public class Unit : MonoBehaviour {
         yield return new WaitForSeconds(1f); // Delay visual do stun
         ClearStun();
         TurnSystem.Instance.NextTurn(); // Passa o turno
+    }
+
+    public Sprite GetImage() {
+        return this.unitImage;
     }
 }
