@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571337, b: 0.3069219, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1568,8 +1568,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1604721494106105803, guid: 22b8417b694cbe94a9870ef8affad435, type: 3}
   m_PrefabInstance: {fileID: 198309509}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &199943043 stripped
-Transform:
+--- !u!224 &199943043 stripped
+RectTransform:
   m_CorrespondingSourceObject: {fileID: 7127351732651728574, guid: 1b28e24ed24b1ff4ea136bfcc5168fce, type: 3}
   m_PrefabInstance: {fileID: 1106830426}
   m_PrefabAsset: {fileID: 0}
@@ -8222,9 +8222,6 @@ MonoBehaviour:
   mousePlaneLayer:
     serializedVersion: 2
     m_Bits: 64
-  unitLayer:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!1001 &773331038
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8415,9 +8412,14 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7587622855204947147, guid: f97b08b429ca7425a92ff38bfdc51692, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 8e116304a5f429a4bacced6c6e515c50, type: 3}
     m_RemovedComponents:
     - {fileID: 1749195940751758055, guid: f97b08b429ca7425a92ff38bfdc51692, type: 3}
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3256202638011733784, guid: f97b08b429ca7425a92ff38bfdc51692, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1067041010278198756, guid: f97b08b429ca7425a92ff38bfdc51692, type: 3}
       insertIndex: -1
@@ -8604,7 +8606,11 @@ MonoBehaviour:
   floorAmount: 2
   levelQuest:
     info: {fileID: 11400000, guid: 863acd37b30c94060a0160bd4d92048f, type: 2}
+    questStepPrefabs: []
     state: 0
+    currentQuestStepIndex: 0
+  terrain: {fileID: 0}
+  treePrefabs: []
   gameMode: 1
   squaredZoneList:
   - {fileID: 11400000, guid: 2771b095b885f42768e588c26c5d44cb, type: 2}
@@ -8750,6 +8756,8 @@ MonoBehaviour:
   currentLevel: 0
   debugMode: 0
   debugPathFindingMode: 0
+  pauseMenuUI: {fileID: 0}
+  charsPanelUI: {fileID: 0}
 --- !u!4 &835172791
 Transform:
   m_ObjectHideFlags: 0
@@ -14529,6 +14537,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 1330343866}
   fadeDuration: 1
+  loadingBar: {fileID: 0}
 --- !u!114 &1330343864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20970,8 +20979,10 @@ MonoBehaviour:
   bottomLimit: {fileID: 511468304}
   rightLimit: {fileID: 511468304}
   leftLimit: {fileID: 971333100}
-  lockMoviment: 0
-  stopMove: 1
+  zoomDuration: 0.3
+  shakeDuration: 0.3
+  shakeAmplitude: 2
+  shakeFrequency: 2
   playerUnit: {fileID: 0}
   movimentArroundPlayerArea: 5
 --- !u!1001 &1927135248
@@ -21730,6 +21741,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebbed6dc9b5bc844ba7ae4de58ea26e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_itemDictionary:
+    keys: []
+    values: []
   inventory:
   - id: 1
     displayName: Potion
@@ -21788,6 +21802,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   pathFindingLinkContainer: {fileID: 1110246663}
+  pathArrow: {fileID: 0}
 --- !u!1001 &1997067424
 PrefabInstance:
   m_ObjectHideFlags: 0
