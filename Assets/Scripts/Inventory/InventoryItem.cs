@@ -17,9 +17,13 @@ public class InventoryItem {
 
     public void AddToStack() {
         stackSize++;
+        UpdateOnQuant();
     }
 
     public void RemoveFromStack() {
         stackSize--;
+        UpdateOnQuant();
     }
+
+    public virtual void UpdateOnQuant() { }
 }

@@ -117,7 +117,6 @@ public class ShopManager : MonoBehaviour {
     }
 
     public void OpenInventory() {
-        inventoryTab.gameObject.SetActive(true);
 
         foreach (var item in inventoryItems) {
             item.InactiveItemSale();
@@ -127,9 +126,12 @@ public class ShopManager : MonoBehaviour {
 
         foreach (InventoryItemData item in InventorySystem.inventorySystem.GetInventoryItems()) {
             inventoryItems[index].ActiveItemSale();
-            inventoryItems[index].SetItem(item.image, item.displayName, -1, InventorySystem.inventorySystem.GetItemCount(item));
+            Debug.Log(InventorySystem.inventorySystem.GetItemAmountByIndex(index));
+            inventoryItems[index].SetItem(item.image, item.displayName, -1, InventorySystem.inventorySystem.GetItemAmountByIndex(index));
             index++;
         }
+
+        inventoryTab.gameObject.SetActive(true);
     }
 
     public void CloseInventory() {
