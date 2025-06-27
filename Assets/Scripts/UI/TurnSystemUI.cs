@@ -9,6 +9,7 @@ public class TurnSystemUI : MonoBehaviour {
     [SerializeField] private Button turnSpeedButton;
     [SerializeField] private TextMeshProUGUI turnSpeedText;
     [SerializeField] private TextMeshProUGUI turnNumberText;
+    [SerializeField] private Image turnUnitImage;
     [SerializeField] private Transform unitsOrderContainer;
     [SerializeField] private Transform unitOrderUIPrefab;
 
@@ -39,7 +40,8 @@ public class TurnSystemUI : MonoBehaviour {
     }
 
     private void UpdatedTurnText() {
-        turnNumberText.text = "TURNO: " + TurnSystem.Instance.GetTurnNumber();
+        // turnNumberText.text = "TURNO: " + TurnSystem.Instance.GetTurnNumber();
+        turnUnitImage.sprite = TurnSystem.Instance.GetTurnUnit().GetImage();
     }
 
     private void TurnSystem_OnTurnChange(object sender, EventArgs e) {
@@ -65,8 +67,9 @@ public class TurnSystemUI : MonoBehaviour {
         }
 
         for (int i = 0; i < TurnSystem.Instance.GetTurnOrder().Count; i++) {
+            if(i == 0) continue;
             Transform unitOrderTransform = Instantiate(unitOrderUIPrefab, unitsOrderContainer);
-            unitOrderTransform.GetComponent<UnitOrderUI>().SetUnitOrderUI(TurnSystem.Instance.GetTurnOrder()[i], i == 0);
+            unitOrderTransform.GetComponent<UnitOrderUI>().SetUnitOrderUI(TurnSystem.Instance.GetTurnOrder()[i], i == 0, i);
         }
     }
 
@@ -108,7 +111,7 @@ public class TurnSystemUI : MonoBehaviour {
             StopCoroutine(moveCoroutine);
         }
 
-        // Começa a nova animação
+        // Comeï¿½a a nova animaï¿½ï¿½o
         moveCoroutine = StartCoroutine(MoveToPosition(targetPosition));
     }
 
