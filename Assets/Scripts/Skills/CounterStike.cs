@@ -4,11 +4,12 @@ using UnityEngine;
 using System;
 
 public class CounterStike : BaseSkills {
+
     private float totalSpinAmmount = 0;
     [SerializeField] private float MAX_SPIN = 360f;
     public string counterStrikeSFX;
 
-    [SerializeField] private BaseAction attackToPerform;
+    private BaseAction attackToPerform;
 
     private bool isCountering = false;
     private int Attack = 1;

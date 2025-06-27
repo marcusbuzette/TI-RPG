@@ -60,7 +60,7 @@ public class QuestManager : MonoBehaviour {
         }
         GameController.controller.AddMoney(levelQuest.info.moneyRewards);
         onQuestFinished?.Invoke(this, EventArgs.Empty);
-        GameController.controller.NextLevel();
+        GameController.controller.NextLevel(levelQuest.info.levelIndex);
         // GameController.controller.uicontroller.ChangeScene("HUB");
     }
 

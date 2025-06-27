@@ -5,10 +5,11 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms;
 
 public class IntimidateSkill : BaseSkills {
-    [SerializeField] private List<Unit> targetsList = new List<Unit>();
+    
+    private List<Unit> targetsList = new List<Unit>();
     [SerializeField] private int maxIntimidateDistance = 1;
     [SerializeField] private int debufAmount = 2;
-    [SerializeField] private BuffType buffType = BuffType.ATTACK;
+    private BuffType buffType = BuffType.ATTACK;
 
     public override void Action() {
         AudioManager.instance?.PlaySFX("Intimidar");
@@ -81,8 +82,16 @@ public class IntimidateSkill : BaseSkills {
     public override bool GetOnCooldown() { return onCoolDown; }
 
     public int GetMaxIntimidateDistance() { return maxIntimidateDistance; }
+    public int GetDebufAmount() { return debufAmount; }
 
     public List<Unit> GetTargetList() { return targetsList; }
 
     public override BuffType? GetBuffType() {return this.buffType;}
+
+    public override void CopyFrom(BaseSkills other) {
+        base.CopyFrom(other);
+
+        maxIntimidateDistance = (other as IntimidateSkill).GetMaxIntimidateDistance();
+        debufAmount = (other as IntimidateSkill).GetDebufAmount();
+    }
 }

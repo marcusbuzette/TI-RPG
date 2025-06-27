@@ -54,6 +54,7 @@ public class SkillTreeUnitButtonUI : MonoBehaviour {
         buttonRef.image.sprite = selectedImage;
 
         if (currentAnimation != null) StopCoroutine(currentAnimation);
+
         currentAnimation = StartCoroutine(AnimateSelection());
     }
 

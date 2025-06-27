@@ -58,11 +58,7 @@ MonoBehaviour:
   onCoolDown: 0
   coolDown: 2
   currentCoolDown: 0
-  obstaclesLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
   maxShootDistance: 5
-  rotateSpeed: 10
-  damage: 100
+  damage: 20
   PoisonFbx: {fileID: 0}
   poisonArrowSFX: FlechaVeneno

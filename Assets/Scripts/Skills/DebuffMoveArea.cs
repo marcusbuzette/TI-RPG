@@ -4,15 +4,16 @@ using UnityEngine;
 using System;
 
 public class DebuffMoveArea : BaseSkills {
-    [SerializeField] private List<Unit> targetsList = new List<Unit>();
+    
+    private List<Unit> targetsList = new List<Unit>();
     [SerializeField] private int maxSlowDistance = 1;
-    [SerializeField] private int debufDefenceAmount = 1;
-    [SerializeField] private BuffType buffType = BuffType.MOVE;
+    [SerializeField] private int debufSlownesAmount = 1;
+    private BuffType buffType = BuffType.MOVE;
     public string debuffSpeedSFX;
 
     public override void Action() {
         foreach (Unit target in targetsList) {
-            target.GetModifiers().Debuff(buffType, debufDefenceAmount);
+            target.GetModifiers().Debuff(buffType, debufSlownesAmount);
         }
         ActionFinish();
         ActiveCoolDown();
@@ -79,9 +80,17 @@ public class DebuffMoveArea : BaseSkills {
 
     public override bool GetOnCooldown() { return onCoolDown; }
 
-    public int GetmaxSlowDistance() { return maxSlowDistance; }
+    public int GetMaxSlowDistance() { return maxSlowDistance; }
+    public int GetDebufSlownesAmount() { return debufSlownesAmount; }
 
     public List<Unit> GetTargetList() { return targetsList; }
 
     public override BuffType? GetBuffType() {return this.buffType;}
+
+    public override void CopyFrom(BaseSkills other) {
+        base.CopyFrom(other);
+
+        maxSlowDistance = (other as DebuffMoveArea).GetMaxSlowDistance();
+        debufSlownesAmount = (other as DebuffMoveArea).GetDebufSlownesAmount();
+    }
 }
