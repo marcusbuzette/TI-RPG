@@ -10,7 +10,6 @@ public class InventoryItem {
     [SerializeField] public int stackSize { get; protected set; } 
 
     public InventoryItem(InventoryItemData source) {
-        Debug.Log(source.id);
         data = source;
         AddToStack();
     }
@@ -18,9 +17,13 @@ public class InventoryItem {
 
     public void AddToStack() {
         stackSize++;
+        UpdateOnQuant();
     }
 
     public void RemoveFromStack() {
         stackSize--;
+        UpdateOnQuant();
     }
+
+    public virtual void UpdateOnQuant() { }
 }

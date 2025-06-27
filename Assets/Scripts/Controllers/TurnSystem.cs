@@ -147,7 +147,6 @@ public class TurnSystem : MonoBehaviour {
 
             InstantiateRewardChest(unitDead.transform);
 
-            ResetTurnSpeed();
             LevelGrid.Instance.ExploreMode();
         }
         else if (!isPlayerTurn && !CheckPlayerCharsLeft()) {

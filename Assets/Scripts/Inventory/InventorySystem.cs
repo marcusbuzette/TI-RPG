@@ -84,20 +84,19 @@ public class InventorySystem : MonoBehaviour, IDataPersistence {
     public List<InventoryItemData> GetInventoryItems() {
         List<InventoryItemData> listItem = new List<InventoryItemData>();
 
-        foreach(var item in m_itemDictionary.Values) {
-            listItem.Add(item.GetScriptableObj());
+        foreach(var item in m_itemDictionary.Keys) {
+            listItem.Add(item);
         }
 
         return listItem;
     }
 
-    public int GetItemCount(InventoryItemData itemData) {
-        foreach (var item in m_itemDictionary.Values) {
-            if(itemData == item.GetScriptableObj()) {
-                return item.GetItemAmount();
-            };
+    public int GetItemAmountByIndex(int index) {
+        if (index < 0 || index >= m_itemDictionary.Count) {
+            return 0;
         }
 
-        return 0;
+        var itemsList = new List<KeyValuePair<InventoryItemData, SerializableInventoryItem>>(m_itemDictionary);
+        return itemsList[index].Value.GetItemAmount();
     }
 }
