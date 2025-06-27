@@ -4,7 +4,9 @@ using UnityEngine;
 using System;
 
 public class BuffDefArea : BaseSkills {
-    [SerializeField] private List<Unit> targetsList = new List<Unit>();
+
+    [Space, Header("Skill Parameters")]
+    private List<Unit> targetsList = new List<Unit>();
     [SerializeField] private int maxInspireDistance = 1;
     [SerializeField] private int buffAmount = 2;
     [SerializeField] private BuffType buffType = BuffType.DEFENCE;
@@ -59,9 +61,7 @@ public class BuffDefArea : BaseSkills {
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         ActionStart(onActionComplete);
-        if (!string.IsNullOrEmpty(buffDefSFX)) {
-            AudioManager.instance?.PlaySFX(buffDefSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
-        }
+        PlaySkillSFX();
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {
@@ -87,5 +87,13 @@ public class BuffDefArea : BaseSkills {
 
     public List<Unit> GetTargetList() { return targetsList; }
 
+    public int GetBuffAmount() { return this.buffAmount; }
     public override BuffType? GetBuffType() { return this.buffType; }
+
+    public override void CopyFrom(BaseSkills other) {
+        base.CopyFrom(other);
+
+        maxInspireDistance = (other as BuffDefArea).GetMaxInspireDistance();
+        buffAmount = (other as BuffDefArea).GetBuffAmount();
+    }
 }

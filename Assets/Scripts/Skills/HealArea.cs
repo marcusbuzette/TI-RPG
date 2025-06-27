@@ -8,7 +8,6 @@ public class HealArea : BaseSkills {
     [SerializeField] private LayerMask obstaclesLayerMask;
     private GameObject healAreaObject;
     [SerializeField] private int maxShootDistance = 1;
-    [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private int areaHeal = 3;
     [SerializeField] private int healPoints = 3;
 
@@ -17,6 +16,8 @@ public class HealArea : BaseSkills {
     public bool isAiming = false;
     public string healArrowSFX;
     GridPosition mouseGridPosition;
+
+    Projectile projectile;
 
     private void Start() {
         obstaclesLayerMask = LayerMask.GetMask("Obstacles"); //add layer mask to don't shoot through obstacles
@@ -101,10 +102,17 @@ public class HealArea : BaseSkills {
     }
 
     private void Shoot() {
-        unit.SpawnProjectile(selectedGrid, Color.green);
+        projectile = unit.SpawnProjectile(selectedGrid, Color.green, true);
 
+        projectile.onDestory += ProjectileDestroyed;
+    }
+
+    public void ProjectileDestroyed(object sender, EventArgs e) {
         healAreaObject = Instantiate(new GameObject(), selectedGrid, Quaternion.identity);
         healAreaObject.AddComponent<HealAreaObject>().SetHealAreaObject(this, healPoints, areaHeal, coolDown);
+
+        projectile.onDestory -= ProjectileDestroyed;
+
         ActionFinish();
     }
 
@@ -130,6 +138,14 @@ public class HealArea : BaseSkills {
 
     public int GetMaxShootDistance() {
         return maxShootDistance;
+    }
+
+    public int GetAreaheal() {
+        return areaHeal;
+    }
+
+    public int GetHealPoints() {
+        return healPoints;
     }
 
     public override bool GetOnCooldown() { return false; }
@@ -182,5 +198,13 @@ public class HealArea : BaseSkills {
         }
 
         GridSystemVisual.Instance.ShowGridPositionList(attackGridPositionList, GridVisualType.Green);
+    }
+
+    public override void CopyFrom(BaseSkills other) {
+        base.CopyFrom(other);
+
+        maxShootDistance = (other as HealArea).GetMaxShootDistance();
+        areaHeal = (other as HealArea).GetAreaheal();
+        healPoints = (other as HealArea).GetHealPoints();
     }
 }

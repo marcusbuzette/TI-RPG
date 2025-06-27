@@ -174,6 +174,8 @@ public class MoveAction : BaseAction {
     }
 
     public override List<GridPosition> GetValidGridPositionList() {
+        this.maxMoveDistance = GetComponent<Unit>().GetUnitStats().GetMaxMove(unit);
+
         List<GridPosition> validGridPositionList = new List<GridPosition>();
         GridPosition unitGridPosition = unit.GetGridPosition();
 

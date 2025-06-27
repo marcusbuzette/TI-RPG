@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd39ca780161d084ebf3ffce4e2c7e15, type: 3}
+  m_Name: Hub2
+  m_EditorClassIdentifier: 
+  dialogue:
+  - sentences: Encontrei esse folheto quando fui na vila...
+    name: Fofoqueiro
+    image: {fileID: 0}
+  - sentences: "Eles est\xE3o procurando voc\xEA, Lucian!"
+    name: Fofoqueiro
+    image: {fileID: 0}
+  - sentences: "O QUE!? VOC\xCA \xC9 O PR\xCDNCEPE PERDIDO!?"
+    name: Gibbon
+    image: {fileID: 0}
+  - sentences: "N\xE3o sou pr\xEDncipe nenhum! Eu n\xE3o fa\xE7o parte daquela fam\xEDlia..."
+    name: Lucian
+    image: {fileID: 0}
+  - sentences: Voce era muito pequeno Lucian. Esse foi o motivo pelo qual larguei
+      a Guarda Real
+    name: Lyra
+    image: {fileID: 0}
+  - sentences: "Eu j\xE1 desconfiava h\xE1 algum tempo.... Se um dia se vingar, me
+      inclua nisso."
+    name: Lyra
+    image: {fileID: 0}
+  - sentences: Tem mais... Ele expandiram as buscas e invadiram Ilha da Caveira.
+      SInto muito Gibbon
+    name: Fofoqueiro
+    image: {fileID: 0}

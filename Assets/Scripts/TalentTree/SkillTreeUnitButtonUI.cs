@@ -20,7 +20,9 @@ public class SkillTreeUnitButtonUI : MonoBehaviour {
     private Coroutine currentAnimation;
 
     private void OnEnable() {
-        TalentManager.Instance.onSkillUpdate += TalentManager_OnSkillUpdate;
+        if (TalentManager.Instance != null) {
+            TalentManager.Instance.onSkillUpdate += TalentManager_OnSkillUpdate;
+        }
         UpdateUpgradeAvailableIcon();
     }
 
@@ -52,7 +54,8 @@ public class SkillTreeUnitButtonUI : MonoBehaviour {
         buttonRef.image.sprite = selectedImage;
 
         if (currentAnimation != null) StopCoroutine(currentAnimation);
-            currentAnimation = StartCoroutine(AnimateSelection());
+
+        currentAnimation = StartCoroutine(AnimateSelection());
     }
 
     public void ResetSelected() {

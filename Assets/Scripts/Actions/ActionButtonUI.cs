@@ -39,6 +39,11 @@ public class ActionButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
 
         button.onClick.AddListener(() => {
+            if(UnitActionSystem.Instance.GetSelectedAction() == baseAction) {
+                UnselectAction();
+                UnitActionSystem.Instance.SetSelectedAction(null);
+                return;
+            }
             SelectAction();
             UnitActionSystem.Instance.SetSelectedAction(baseAction);
         });

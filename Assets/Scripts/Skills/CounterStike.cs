@@ -4,11 +4,12 @@ using UnityEngine;
 using System;
 
 public class CounterStike : BaseSkills {
+
     private float totalSpinAmmount = 0;
     [SerializeField] private float MAX_SPIN = 360f;
     public string counterStrikeSFX;
 
-    [SerializeField] private BaseAction attackToPerform;
+    private BaseAction attackToPerform;
 
     private bool isCountering = false;
     private int Attack = 1;
@@ -19,6 +20,7 @@ public class CounterStike : BaseSkills {
         hs = GetComponent<Unit>().GetHealthSystem();
         hs.OnDamage += HealthSystem_OnDamage;
         if (attackToPerform == null) attackToPerform = GetComponent<HitAction>();
+        sfxName = "ContraAtaque";
     }
 
     public override void Action() {
@@ -47,9 +49,10 @@ public class CounterStike : BaseSkills {
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         this.isCountering = true;
         if (Attack == 1) {
-            AudioManager.instance?.PlaySFX("Melee");
+            
             Attack = 0;
         }
+        PlaySkillSFX();
         ActionStart(onActionComplete);
     }
 

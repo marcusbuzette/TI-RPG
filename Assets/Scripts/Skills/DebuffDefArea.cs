@@ -4,10 +4,11 @@ using UnityEngine;
 using System;
 
 public class DebuffDefArea : BaseSkills {
-    [SerializeField] private List<Unit> targetsList = new List<Unit>();
+
+    private List<Unit> targetsList = new List<Unit>();
     [SerializeField] private int maxIntimidateDistance = 1;
     [SerializeField] private int debufDefenceAmount = 1;
-    [SerializeField] private BuffType buffType = BuffType.DEFENCE;
+    private BuffType buffType = BuffType.DEFENCE;
     public string debuffDefSFX;
 
 
@@ -58,9 +59,7 @@ public class DebuffDefArea : BaseSkills {
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
-        if (!string.IsNullOrEmpty(debuffDefSFX)) {
-            AudioManager.instance?.PlaySFX(debuffDefSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
-        }
+        PlaySkillSFX();
         ActionStart(onActionComplete);
     }
 
@@ -84,8 +83,16 @@ public class DebuffDefArea : BaseSkills {
     public override bool GetOnCooldown() { return onCoolDown; }
 
     public int GetMaxIntimidateDistance() { return maxIntimidateDistance; }
+    public int GetDebufDefenceAmounte() { return debufDefenceAmount; }
 
     public List<Unit> GetTargetList() { return targetsList; }
 
     public override BuffType? GetBuffType() {return this.buffType;}
+
+    public override void CopyFrom(BaseSkills other) {
+        base.CopyFrom(other);
+
+        maxIntimidateDistance = (other as DebuffDefArea).GetMaxIntimidateDistance();
+        debufDefenceAmount = (other as DebuffDefArea).GetDebufDefenceAmounte();
+    }
 }

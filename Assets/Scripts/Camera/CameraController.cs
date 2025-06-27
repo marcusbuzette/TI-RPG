@@ -310,7 +310,6 @@ public class CameraController : MonoBehaviour
     }
 
     public void Shake() {
-        Debug.Log(noise);
         if (shakeCoroutine != null)
             StopCoroutine(shakeCoroutine);
 

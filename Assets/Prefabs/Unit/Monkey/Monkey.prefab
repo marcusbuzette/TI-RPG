@@ -887,8 +887,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.48381, y: 0.48381, z: 0.48381}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.49999997, y: 0.49999997, z: 0.49999997}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2114467710837137476}
   - {fileID: 4476113393999136988}
@@ -2123,6 +2123,7 @@ GameObject:
   - component: {fileID: -1861747851849192615}
   - component: {fileID: 9134479801138775507}
   - component: {fileID: 1702000940489070525}
+  - component: {fileID: 9113792291304497894}
   m_Layer: 7
   m_Name: Monkey
   m_TagString: Player
@@ -2228,7 +2229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImage: {fileID: 21300000, guid: d24172bb5601f90449d5233c70318796, type: 3}
   actionImageBlocked: {fileID: 0}
-  animator: {fileID: 8495947539863050223}
+  animator: {fileID: 9113792291304497894}
   speed: 0
   rotSpeed: 180
   currentArrow: {fileID: 0}
@@ -2272,7 +2273,7 @@ MonoBehaviour:
   healthState: 0
   healthPoints: 100
   maxHealthPoints: 100
-  animator: {fileID: 8495947539863050223}
+  animator: {fileID: 9113792291304497894}
   faintText: {fileID: 0}
   damageSFX: MonkeyDano
   deathSFX: 
@@ -2306,7 +2307,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImage: {fileID: 21300000, guid: 39195be798b6f544b952277c45599e40, type: 3}
   actionImageBlocked: {fileID: 0}
-  animator: {fileID: 8495947539863050223}
+  animator: {fileID: 9113792291304497894}
   speed: 0
   rotSpeed: 180
   obstaclesLayerMask:
@@ -2330,7 +2331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImage: {fileID: 21300000, guid: 2c26a45bf5cd6d141806fb703779d405, type: 3}
   actionImageBlocked: {fileID: 0}
-  animator: {fileID: 0}
+  animator: {fileID: 9113792291304497894}
   speed: 0
   rotSpeed: 180
   targetsList: []
@@ -2351,9 +2352,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImage: {fileID: 0}
   actionImageBlocked: {fileID: 0}
-  animator: {fileID: 8495947539863050223}
+  animator: {fileID: 9113792291304497894}
   speed: 0
   rotSpeed: 180
+--- !u!95 &9113792291304497894
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5183917217429670950}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 242f4f156a1556f4e8948b1fbd6b7993, type: 3}
+  m_Controller: {fileID: 9100000, guid: 82366ed1204e24b41b11b984bfda4f0d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5431596724203149550
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ public class InventorySystem : MonoBehaviour, IDataPersistence {
     public event EventHandler OnInventoryIsEmpty;
     public event EventHandler OnNewItemOnInventory;
 
-    private SerializableDictionary<InventoryItemData, SerializableInventoryItem> m_itemDictionary;
+    [SerializeField] private SerializableDictionary<InventoryItemData, SerializableInventoryItem> m_itemDictionary;
     [SerializeField] public List<SerializableInventoryItem> inventory;
     public static InventorySystem inventorySystem;
 

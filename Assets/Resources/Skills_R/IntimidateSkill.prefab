@@ -56,7 +56,7 @@ MonoBehaviour:
   - {fileID: -5082339525479280377, guid: 2ef816fd4c3644127bdcf3005f3a4f25, type: 3}
   - {fileID: -1049602389130312739, guid: c9e233f267fdd4a0abe93a6bd02b3a5a, type: 3}
   onCoolDown: 0
-  coolDown: 0
+  coolDown: 2
   currentCoolDown: 0
   targetsList: []
   maxIntimidateDistance: 1
