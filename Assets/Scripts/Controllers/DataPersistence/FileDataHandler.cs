@@ -17,7 +17,9 @@ public class FileDataHandler : MonoBehaviour {
 
     public GameData Load (string profileId) {
         string fullPath = Path.Combine(this.dataDirPath,profileId ,dataFileName);
+        Debug.Log(fullPath);
         GameData loadedData = null;
+        Debug.Log(File.Exists(fullPath));
         if (File.Exists(fullPath)) {
             try {
                 string dataToLoad = "";
@@ -26,6 +28,7 @@ public class FileDataHandler : MonoBehaviour {
                         dataToLoad = reader.ReadToEnd();
                     }
                 }
+                Debug.Log(dataToLoad);
 
                 loadedData = JsonUtility.FromJson<GameData>(dataToLoad);
             }

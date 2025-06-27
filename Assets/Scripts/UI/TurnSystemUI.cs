@@ -41,15 +41,19 @@ public class TurnSystemUI : MonoBehaviour {
 
     private void UpdatedTurnText() {
         // turnNumberText.text = "TURNO: " + TurnSystem.Instance.GetTurnNumber();
-        turnUnitImage.sprite = TurnSystem.Instance.GetTurnUnit().GetImage();
+        Debug.Log(TurnSystem.Instance.GetTurnUnit());
+        Debug.Log(TurnSystem.Instance.GetTurnUnit().GetImage());
+        if (TurnSystem.Instance.GetTurnUnit().GetImage() != null) {
+            turnUnitImage.sprite = TurnSystem.Instance.GetTurnUnit().GetImage();
+        }
     }
 
     private void TurnSystem_OnTurnChange(object sender, EventArgs e) {
         UpdatedTurnText();
         CreateUnitActionButtons();
         UpdateEndTurnButton();
-        if(LevelGrid.Instance.IsInBattleMode() && TurnSystem.Instance.GetTurnUnit() != null) {
-            if(TurnSystem.Instance.GetTurnUnit().IsEnemy()) {
+        if (LevelGrid.Instance.IsInBattleMode() && TurnSystem.Instance.GetTurnUnit() != null) {
+            if (TurnSystem.Instance.GetTurnUnit().IsEnemy()) {
                 HideEndTurnButton();
             }
             else {
@@ -67,7 +71,7 @@ public class TurnSystemUI : MonoBehaviour {
         }
 
         for (int i = 0; i < TurnSystem.Instance.GetTurnOrder().Count; i++) {
-            if(i == 0) continue;
+            if (i == 0) continue;
             Transform unitOrderTransform = Instantiate(unitOrderUIPrefab, unitsOrderContainer);
             unitOrderTransform.GetComponent<UnitOrderUI>().SetUnitOrderUI(TurnSystem.Instance.GetTurnOrder()[i], i == 0, i);
         }

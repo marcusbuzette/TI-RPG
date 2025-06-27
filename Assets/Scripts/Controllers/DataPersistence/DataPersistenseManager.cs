@@ -39,6 +39,7 @@ public class DataPersistenseManager : MonoBehaviour {
         string fileName = $"{baseFileName}_{slotName}.json";
         dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
         Debug.Log(Application.persistentDataPath);
+        Debug.Log(fileName);
         LoadGame(); // Carrega automaticamente o slot ao trocar
     }
 
@@ -48,7 +49,7 @@ public class DataPersistenseManager : MonoBehaviour {
     }
 
     public void LoadGame() {
-        gameData = dataHandler.Load(selectedProfileId);
+        gameData = dataHandler.Load(currentSaveSlot);
 
         if (gameData == null) {
             Debug.Log("Nenhum save encontrado, criando novo...");
