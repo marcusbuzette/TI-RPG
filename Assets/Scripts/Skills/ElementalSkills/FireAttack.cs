@@ -19,8 +19,6 @@ public class FireAttack : BaseSkills {
     public Vector3 selectedGrid;
     public bool isAiming = false;
 
-    public string fireArrowSFX;
-
     GridPosition mouseGridPosition;
     Projectile projectile;
 
@@ -29,6 +27,8 @@ public class FireAttack : BaseSkills {
         base.Awake();
         VfxController = GetComponent<ArcherVFXController>();
         VfxController?.CastEnd();
+
+        sfxName = "FlechaFogo";
     }
 
     private void Start() {
@@ -111,9 +111,8 @@ public class FireAttack : BaseSkills {
         // Ativa o VFX quando começa a ação
         VfxController.FireCast();
 
-        if (!string.IsNullOrEmpty(fireArrowSFX)) {
-            AudioManager.instance?.PlaySFX(fireArrowSFX);
-        }
+        PlaySkillSFX();
+
         ActionStart(onActionComplete);
     }
 

@@ -61,9 +61,7 @@ public class Inspire : BaseSkills {
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         ActionStart(onActionComplete);
-        if (!string.IsNullOrEmpty(inspireSFX)) {
-            AudioManager.instance?.PlaySFX(inspireSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
-        }
+        PlaySkillSFX();
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {
