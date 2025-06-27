@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Unity.VisualScripting.Member;
 
 [System.Serializable]
 public class SerializableInventoryItem : InventoryItem, ISerializationCallbackReceiver {
@@ -21,7 +22,6 @@ public class SerializableInventoryItem : InventoryItem, ISerializationCallbackRe
         // this.data.prefab = this.prefab;
         this.data = this.scriptableObj;
         this.stackSize = this.qtd;
-
     }
 
     public void OnBeforeSerialize() {

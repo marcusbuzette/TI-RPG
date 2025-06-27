@@ -10,6 +10,7 @@ public class InventoryItem {
     [SerializeField] public int stackSize { get; protected set; } 
 
     public InventoryItem(InventoryItemData source) {
+        Debug.Log(source.id);
         data = source;
         AddToStack();
     }
