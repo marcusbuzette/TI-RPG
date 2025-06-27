@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class PoisonAttack : BaseSkills 
 {
-    [SerializeField] private LayerMask obstaclesLayerMask;
+
+    private LayerMask obstaclesLayerMask;
     [SerializeField] private int maxShootDistance = 1;
-    [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private int damage = 100;
     [SerializeField] private GameObject PoisonFbx;
 
@@ -20,6 +20,7 @@ public class PoisonAttack : BaseSkills
     private void Start() {
         GameObject PoisonFbx = GameObject.Find("Poison Arrow Cast");
         // Garantir que o VFX comece desativado
+        sfxName = "FlechaVeneno";
         if (PoisonFbx != null) {
             PoisonFbx.SetActive(false);
         }
@@ -102,9 +103,7 @@ public class PoisonAttack : BaseSkills
             PoisonFbx.SetActive(true);
         }
 
-        if (!string.IsNullOrEmpty(poisonArrowSFX)) {
-            AudioManager.instance?.PlaySFX(poisonArrowSFX);
-        }
+        PlaySkillSFX();
         ActionStart(onActionComplete);
     }
 
@@ -161,8 +160,18 @@ public class PoisonAttack : BaseSkills
     public int GetMaxShootDistance() {
         return maxShootDistance;
     }
+    public int GetDamage() {
+        return damage;
+    }
 
     public override bool GetOnCooldown() { return false; }
 
     public override void IsAnotherRound() { }
+
+    public override void CopyFrom(BaseSkills other) {
+        base.CopyFrom(other);
+
+        maxShootDistance = (other as PoisonAttack).GetMaxShootDistance();
+        damage = (other as PoisonAttack).GetDamage();
+    }
 }

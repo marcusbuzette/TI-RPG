@@ -5,6 +5,7 @@ using System;
 using static GridSystemVisual;
 
 public class AreaDefence : BaseSkills {
+
     public string shieldSFX;
     public GameObject obstaclePrefab;
 
@@ -148,6 +149,7 @@ public class AreaDefence : BaseSkills {
         isAiming = false;
         this.targetPosition = mouseGridPosition;
         ActionStart(onActionComplete);
+        PlaySkillSFX();
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {

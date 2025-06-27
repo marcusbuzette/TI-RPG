@@ -44,13 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f8a0397a143e4de591276e080d26611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: "Arreme\xE7a um machado para acertar inimigos distantes"
   actionImage: {fileID: 21300000, guid: 9fc6c4ffd52a8a240b1a6e54cc8f6963, type: 3}
   actionImageBlocked: {fileID: 21300000, guid: 72ce626dd1a0b5c4297a96cecf09055c, type: 3}
   animator: {fileID: 0}
   speed: 0
   rotSpeed: 180
   nome: "Arreme\xE7o de Machado"
-  descricao: "Arreme\xE7a um machado para acertar inimigos distantes"
   custo: 20
   preRequisitos:
   - {fileID: 5647303888008814838, guid: 2c7835928b6cd8045917bffe59d5e936, type: 3}
@@ -63,4 +63,4 @@ MonoBehaviour:
     m_Bits: 256
   maxShootDistance: 2
   shootDamage: 75
-  arrowSFX: 
+  arrowSFX: Arrows

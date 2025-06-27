@@ -6,12 +6,20 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class TurnSystemUI : MonoBehaviour {
-    [SerializeField] private Button endTurnButton;
     [SerializeField] private Button turnSpeedButton;
     [SerializeField] private TextMeshProUGUI turnSpeedText;
     [SerializeField] private TextMeshProUGUI turnNumberText;
+    [SerializeField] private Image turnUnitImage;
     [SerializeField] private Transform unitsOrderContainer;
     [SerializeField] private Transform unitOrderUIPrefab;
+
+    [Header("Finalizar turno")]
+    [SerializeField] private Button endTurnButton;
+    [SerializeField] private Vector2 originalPosition;
+    [SerializeField] private Vector2 hiddenPosition;
+    [SerializeField] private float moveDuration = 0.5f;
+
+    private Coroutine moveCoroutine;
 
     private void Start() {
         endTurnButton.onClick.AddListener(() => {
@@ -32,13 +40,26 @@ public class TurnSystemUI : MonoBehaviour {
     }
 
     private void UpdatedTurnText() {
-        turnNumberText.text = "TURNO: " + TurnSystem.Instance.GetTurnNumber();
+        // turnNumberText.text = "TURNO: " + TurnSystem.Instance.GetTurnNumber();
+        Debug.Log(TurnSystem.Instance.GetTurnUnit());
+        Debug.Log(TurnSystem.Instance.GetTurnUnit().GetImage());
+        if (TurnSystem.Instance.GetTurnUnit().GetImage() != null) {
+            turnUnitImage.sprite = TurnSystem.Instance.GetTurnUnit().GetImage();
+        }
     }
 
     private void TurnSystem_OnTurnChange(object sender, EventArgs e) {
         UpdatedTurnText();
         CreateUnitActionButtons();
         UpdateEndTurnButton();
+        if (LevelGrid.Instance.IsInBattleMode() && TurnSystem.Instance.GetTurnUnit() != null) {
+            if (TurnSystem.Instance.GetTurnUnit().IsEnemy()) {
+                HideEndTurnButton();
+            }
+            else {
+                ShowEndTurnButton();
+            }
+        }
     }
     private void TurnSystem_OnOrderChange(object sender, EventArgs e) {
         CreateUnitActionButtons();
@@ -50,8 +71,9 @@ public class TurnSystemUI : MonoBehaviour {
         }
 
         for (int i = 0; i < TurnSystem.Instance.GetTurnOrder().Count; i++) {
+            if (i == 0) continue;
             Transform unitOrderTransform = Instantiate(unitOrderUIPrefab, unitsOrderContainer);
-            unitOrderTransform.GetComponent<UnitOrderUI>().SetUnitOrderUI(TurnSystem.Instance.GetTurnOrder()[i], i == 0);
+            unitOrderTransform.GetComponent<UnitOrderUI>().SetUnitOrderUI(TurnSystem.Instance.GetTurnOrder()[i], i == 0, i);
         }
     }
 
@@ -77,5 +99,38 @@ public class TurnSystemUI : MonoBehaviour {
         for (int i = 0; i < transform.childCount; i++) {
             transform.GetChild(i).gameObject.SetActive(LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE ? true : false);
         }
+    }
+
+    private void ShowEndTurnButton() {
+        StartMovingTo(originalPosition);
+    }
+
+    private void HideEndTurnButton() {
+        StartMovingTo(hiddenPosition);
+    }
+
+    private void StartMovingTo(Vector2 targetPosition) {
+        // Para qualquer movimento anterior
+        if (moveCoroutine != null) {
+            StopCoroutine(moveCoroutine);
+        }
+
+        // Come�a a nova anima��o
+        moveCoroutine = StartCoroutine(MoveToPosition(targetPosition));
+    }
+
+    private IEnumerator MoveToPosition(Vector2 target) {
+        Vector2 start = endTurnButton.GetComponent<RectTransform>().anchoredPosition;
+        float elapsed = 0f;
+
+        while (elapsed < moveDuration) {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / moveDuration);
+            endTurnButton.GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(start, target, t);
+            yield return null;
+        }
+
+        endTurnButton.GetComponent<RectTransform>().anchoredPosition = target;
+        moveCoroutine = null;
     }
 }

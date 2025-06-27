@@ -20,8 +20,13 @@ public class Chest : MonoBehaviour, IInteractiveObjects
     private GameObject chestCanvas;
 
     private InventoryItemData _item;
-    public float imageTimer;
-    public RuntimeAnimatorController animController;
+    [SerializeField] private float imageTimer;
+    [SerializeField] private RuntimeAnimatorController animController;
+
+    [Header("Configurações do Efeito")]
+    [SerializeField] private float scaleUpTime = 0.1f;
+    [SerializeField] private float scaleDownTime = 0.1f;
+    [SerializeField] private float maxScaleMultiplier = 1.5f;
 
     bool used = false;
 
@@ -130,5 +135,36 @@ public class Chest : MonoBehaviour, IInteractiveObjects
 
         yield return new WaitForSeconds(imageTimer);
         Destroy(_obj);
+        PlayAndDestroy();
+    }
+
+    public void PlayAndDestroy() {
+        StartCoroutine(BubbleAndDestroy());
+    }
+
+    private IEnumerator BubbleAndDestroy() {
+        Vector3 originalScale = transform.localScale;
+        Vector3 maxScale = originalScale * maxScaleMultiplier;
+
+        // Aumenta
+        float elapsed = 0f;
+        while (elapsed < scaleUpTime) {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / scaleUpTime);
+            transform.localScale = Vector3.Lerp(originalScale, maxScale, t);
+            yield return null;
+        }
+
+        // Diminui
+        elapsed = 0f;
+        while (elapsed < scaleDownTime) {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / scaleDownTime);
+            transform.localScale = Vector3.Lerp(maxScale, Vector3.zero, t);
+            yield return null;
+        }
+
+        // Destroi o objeto
+        Destroy(gameObject);
     }
 }

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <id>k__BackingField: Level0Quest
   displayName: Tutorial
+  levelIndex: 0
   levelRequirement: 0
   questPrerequisites: []
   questStepPrefabs:

@@ -72,9 +72,9 @@ public class UIController : MonoBehaviour
             case "MenuPrincipal":
                 musicToPlay = "Menu"; // M�sica do menu
                 break;
-            /*case "Tutorial":
+            case "Tutorial":
                 musicToPlay = "Combat"; // M�sica padr�o, se necess�rio
-                break;*/
+                break;
         }
         
         AudioManager.instance?.PlayMusic(musicToPlay);

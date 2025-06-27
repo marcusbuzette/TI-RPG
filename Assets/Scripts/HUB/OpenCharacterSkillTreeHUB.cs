@@ -52,6 +52,10 @@ public class OpenCharacterSkillTreeHUB : MonoBehaviour, IChangeCamera {
         DoSomething();
     }
     public void BackToMainCameraHUB() {
+        if(this.cameraHUB == null) {
+            cameraHUB = TalentManager.Instance.GetCameraHUB();
+        }
+
         cameraHUB.TurnOnAllColliders();
 
         if (thisCollider != null) {
@@ -60,11 +64,14 @@ public class OpenCharacterSkillTreeHUB : MonoBehaviour, IChangeCamera {
         thisCamera.gameObject.SetActive(false);
         mainCamera.gameObject.SetActive(true);
 
-        skillTree.SetActive(false);
+        skillTree?.SetActive(false);
+    }
+
+    public void CloseCamera() {
+        thisCamera.gameObject.SetActive(false);
     }
 
     public void DoSomething() {
-        skillTree.SetActive(true);
         TalentManager.Instance.UpdateSelectedCharButton();
         if (!TutorialManager.Instance.IsTutorialFinished() 
         && TutorialManager.Instance.IsWaitingStep() && !TutorialManager.Instance.HasShownSkillTree()) {
@@ -72,25 +79,7 @@ public class OpenCharacterSkillTreeHUB : MonoBehaviour, IChangeCamera {
         }
     }
 
-    public void NextSkillTree() {
-        int nextIndex = index;
-        nextIndex = nextIndex + 1;
-        if (nextIndex > 3) {
-            nextIndex = 0;
-        }
-
-        BackToMainCameraHUB();
-        cameraHUB.GetSkillTreeCharacter(nextIndex).EnterOnThisCamera(cameraHUB);
-    }
-
-    public void BackSkillTree() {
-        int nextIndex = index;
-        nextIndex = nextIndex - 1;
-        if (nextIndex < 0) {
-            nextIndex = 3;
-        }
-
-        BackToMainCameraHUB();
-        cameraHUB.GetSkillTreeCharacter(nextIndex).EnterOnThisCamera(cameraHUB);
+    public void SkillTreeOpen() {
+        skillTree?.SetActive(true);
     }
 }

@@ -8,7 +8,6 @@ public class HealArea : BaseSkills {
     [SerializeField] private LayerMask obstaclesLayerMask;
     private GameObject healAreaObject;
     [SerializeField] private int maxShootDistance = 1;
-    [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private int areaHeal = 3;
     [SerializeField] private int healPoints = 3;
 
@@ -141,6 +140,14 @@ public class HealArea : BaseSkills {
         return maxShootDistance;
     }
 
+    public int GetAreaheal() {
+        return areaHeal;
+    }
+
+    public int GetHealPoints() {
+        return healPoints;
+    }
+
     public override bool GetOnCooldown() { return false; }
 
     public override void IsAnotherRound() {
@@ -191,5 +198,13 @@ public class HealArea : BaseSkills {
         }
 
         GridSystemVisual.Instance.ShowGridPositionList(attackGridPositionList, GridVisualType.Green);
+    }
+
+    public override void CopyFrom(BaseSkills other) {
+        base.CopyFrom(other);
+
+        maxShootDistance = (other as HealArea).GetMaxShootDistance();
+        areaHeal = (other as HealArea).GetAreaheal();
+        healPoints = (other as HealArea).GetHealPoints();
     }
 }
