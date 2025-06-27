@@ -9,23 +9,21 @@ public class TeleportSkill : BaseSkills
     [SerializeField] private int maxTeleportDistance = 4;
     private GridPosition targetGrid;
 
-    private float totalSpinAmmount = 0;
-    [SerializeField] private float MAX_SPIN = 360f;
+    private float teleportDelay = 0.55f;
 
     public override void Action() {
-        float spinAddAmmount = 360f * Time.deltaTime;
-        transform.eulerAngles += new Vector3(0, spinAddAmmount, 0);
-        totalSpinAmmount += spinAddAmmount;
-        bool teleported = false;
-        AudioManager.instance?.PlaySFX("Teleport");
-        if (totalSpinAmmount > MAX_SPIN / 2 && !teleported) {
-            Teleport();
-        }
+        StartCoroutine(DelayedTeleport());
+    }
 
-        if (totalSpinAmmount > MAX_SPIN) {
-            ActiveCoolDown();
-            ActionFinish();
-        }
+    private IEnumerator DelayedTeleport() {
+        unit.PlayAnimation("Teleport");
+
+        yield return new WaitForSeconds(teleportDelay);
+        AudioManager.instance?.PlaySFX("Teleport");
+
+        Teleport();
+        ActiveCoolDown();
+        ActionFinish();
     }
 
     public override string GetActionName() {
@@ -87,4 +85,11 @@ public class TeleportSkill : BaseSkills
     }
 
     public override bool GetOnCooldown() { return onCoolDown; }
+    public int GetMaxTeleportDistance() { return maxTeleportDistance; }
+
+    public override void CopyFrom(BaseSkills other) {
+        base.CopyFrom(other);
+
+        maxTeleportDistance = (other as TeleportSkill).GetMaxTeleportDistance();
+    }
 }

@@ -26,6 +26,7 @@ public class CameraHUB : MonoBehaviour
                 switch (hit.transform.tag) {
                     case "HUB_Character":
                         hit.transform.gameObject.GetComponent<OpenCharacterSkillTreeHUB>().EnterOnThisCamera(this);
+                        hit.transform.gameObject.GetComponent<OpenCharacterSkillTreeHUB>().SkillTreeOpen();
                         break;
                     case "HUB_Map":
                         hit.transform.gameObject.GetComponent<OpenMapHUB>().EnterOnThisCamera(this);

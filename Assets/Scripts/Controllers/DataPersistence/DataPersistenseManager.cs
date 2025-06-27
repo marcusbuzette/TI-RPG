@@ -15,19 +15,18 @@ public class DataPersistenseManager : MonoBehaviour {
     private FileDataHandler dataHandler;
     private string selectedProfileId = "test";
 
-    public static DataPersistenseManager instace { get; private set; }
-
     private string currentSaveSlot = "slot1"; // slot padrão
 
     void Awake() {
-        if (instance != null && instance != this) {
-            Destroy(this.gameObject);
+        if (instance == null) {
+            instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else {
+            Destroy(this);
             Debug.LogError("Mais de um DataPersistenseManager foi encontrado na cena");
             return;
         }
-        else{
-        instance = this;
-        DontDestroyOnLoad(this.gameObject);}
     }
 
     void Start() {
@@ -55,13 +54,14 @@ public class DataPersistenseManager : MonoBehaviour {
             Debug.Log("Nenhum save encontrado, criando novo...");
             NewGame();
         }
-
+        dataPersistenceObjects = FindAllDataPersistenceObjects();
         foreach (IDataPersistence obj in dataPersistenceObjects) {
             obj.LoadData(gameData);
         }
     }
 
     public void SaveGame() {
+        dataPersistenceObjects = FindAllDataPersistenceObjects();
         foreach (IDataPersistence obj in dataPersistenceObjects) {
             obj.SaveData(ref gameData);
         }

@@ -6,6 +6,7 @@ using static GridSystemVisual;
 
 
 public class FireAttack : BaseSkills {
+
     [SerializeField] private LayerMask obstaclesLayerMask;
     private GameObject fireAttackObject;
     [SerializeField] private int maxShootDistance = 1;
@@ -148,13 +149,12 @@ public class FireAttack : BaseSkills {
         }
     }
 
-    public int GetTargetCountAtPosition(GridPosition gridPosition) {
-        return GetValidGridPositionList(gridPosition).Count;
-    }
+    public int GetTargetCountAtPosition(GridPosition gridPosition) { return GetValidGridPositionList(gridPosition).Count; }
 
-    public int GetMaxShootDistance() {
-        return maxShootDistance;
-    }
+    public int GetMaxShootDistance() { return maxShootDistance; }
+    public int GetShootDamage() { return shootDamage; }
+    public int GetAreaDamage() { return areaDamage; }
+    public int GetFireDamage() { return damage; }
 
     public override bool GetOnCooldown() { return false; }
 
@@ -208,4 +208,12 @@ public class FireAttack : BaseSkills {
         GridSystemVisual.Instance.ShowGridPositionList(attackGridPositionList, GridVisualType.Red);
     }
 
+    public override void CopyFrom(BaseSkills other) {
+        base.CopyFrom(other);
+
+        maxShootDistance = (other as FireAttack).GetMaxShootDistance();
+        shootDamage = (other as FireAttack).GetShootDamage();
+        areaDamage = (other as FireAttack).GetAreaDamage();
+        damage = (other as FireAttack).GetFireDamage();
+    }
 }
