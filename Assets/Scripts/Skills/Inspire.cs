@@ -10,6 +10,13 @@ public class Inspire : BaseSkills {
     private BuffType buffType = BuffType.ATTACK;
     public string inspireSFX;
 
+
+    private void Awake() {
+        base.Awake();
+
+        sfxName = "Inspirar";
+    }
+
     public override void Action() {
 
         unit.PlayAnimation("Motivate");

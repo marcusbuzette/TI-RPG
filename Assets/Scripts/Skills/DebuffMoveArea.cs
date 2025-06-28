@@ -9,7 +9,12 @@ public class DebuffMoveArea : BaseSkills {
     [SerializeField] private int maxSlowDistance = 1;
     [SerializeField] private int debufSlownesAmount = 1;
     private BuffType buffType = BuffType.MOVE;
-    public string debuffSpeedSFX;
+
+    private void Awake() {
+        base.Awake();
+
+        sfxName = "DebuffSpeed";
+    }
 
     public override void Action() {
         foreach (Unit target in targetsList) {
