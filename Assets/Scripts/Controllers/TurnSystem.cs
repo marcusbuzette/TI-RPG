@@ -33,16 +33,32 @@ public class TurnSystem : MonoBehaviour {
     }
 
     private void Start() {
+        if (!LevelGrid.Instance.IsInBattleMode()) return;
+
         turnNumber = 0;
-        BaseAction.OnAnyActionCompleted += FinishTurnAuto;
+
         unitiesOrderList = FindObjectsOfType<Unit>(false)
-            .Where(unit => unit.GetGridPosition().zone == LevelGrid.Instance.GetCurrentBattleZone()).
-            Where(unit => unit.GetHealthSystem().GetHealthState() == HealthSystem.HealthState.ALIVE).ToList<Unit>();
-        allEnemies = FindObjectsOfType<Unit>(false).Where(unit => unit.IsEnemy()).ToList<Unit>();
-        if (LevelGrid.Instance.IsInBattleMode()) unitiesOrderList.Sort((x, y) => y.GetUnitSpeed().CompareTo(x.GetUnitSpeed()));
+            .Where(unit => unit.GetGridPosition().zone == LevelGrid.Instance.GetCurrentBattleZone())
+            .Where(unit => unit.GetHealthSystem().GetHealthState() == HealthSystem.HealthState.ALIVE)
+            .ToList();
+
+        allEnemies = FindObjectsOfType<Unit>(false).Where(unit => unit.IsEnemy()).ToList();
+
+        if (unitiesOrderList.Count == 0) return;
+
+        unitiesOrderList.Sort((x, y) => y.GetUnitSpeed().CompareTo(x.GetUnitSpeed()));
         isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
-        if (LevelGrid.Instance.IsInBattleMode()) unitiesOrderList[turnNumber].StartUnitTurn();
+        unitiesOrderList[turnNumber].StartUnitTurn();
+
         onOrderChange?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void OnEnable() {
+        BaseAction.OnAnyActionCompleted += FinishTurnAuto;
+    }
+
+    private void OnDisable() {
+        BaseAction.OnAnyActionCompleted -= FinishTurnAuto;
     }
 
     public void SetUpBattleNewZone() {
@@ -68,9 +84,7 @@ public class TurnSystem : MonoBehaviour {
     }
 
     public void FinishTurnAuto(object sender, EventArgs e) {
-
         var unitAction = (sender as BaseAction)?.GetUnit();
-
         if (unitAction != null) {
             if (unitAction.isUnitTurn) {
                 if (!unitAction.IsEnemy() && unitAction.CanFinishRound()) {
@@ -94,6 +108,8 @@ public class TurnSystem : MonoBehaviour {
         isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
         onTurnChange.Invoke(this, EventArgs.Empty);
         //Place the camera in the unit position of the turn
+        // Debug.Log(unitiesOrderList.Count);
+        // Debug.Log(turnNumber);
         Vector3 unitTurnTransform = unitiesOrderList[turnNumber].transform.position;
         if (isPlayerTurn) { cameraController.LockCameraOnSelectedUnit(unitiesOrderList[turnNumber]); }
         else cameraController.GoToPosition(unitTurnTransform);
@@ -101,52 +117,73 @@ public class TurnSystem : MonoBehaviour {
         unitiesOrderList[turnNumber].StartUnitTurn();
     }
 
-    IEnumerator ComboKill() {
-
+    IEnumerator ComboKill(Unit killerUnit) {
         yield return new WaitForSeconds(0.5f);
 
-        if (turnNumber == 0) turnNumber = unitiesOrderList.Count - 1;
-        else turnNumber--;
+        int killerIndex = unitiesOrderList.IndexOf(killerUnit);
+        if (killerIndex == -1) {
+            yield break; // killer foi removido ou algo deu errado
+        }
 
-        Debug.Log(turnNumber);
-        
+        turnNumber = killerIndex;
         isPlayerTurn = !unitiesOrderList[turnNumber].IsEnemy();
-        onTurnChange.Invoke(this, EventArgs.Empty);
+
+        // Notifica sistema de turnos e inicia o turno novamente
+        onTurnChange?.Invoke(this, EventArgs.Empty);
         unitiesOrderList[turnNumber].StartUnitTurn();
 
         Vector3 unitTurnTransform = unitiesOrderList[turnNumber].transform.position;
-        if (isPlayerTurn) { cameraController.LockCameraOnSelectedUnit(unitiesOrderList[turnNumber]); }
-        else cameraController.GoToPosition(unitTurnTransform);
+        if (isPlayerTurn) {
+            cameraController.LockCameraOnSelectedUnit(unitiesOrderList[turnNumber]);
+        }
+        else {
+            cameraController.GoToPosition(unitTurnTransform);
+        }
 
         yield return null;
     }
 
+
     public int GetTurnNumber() { return turnNumber; }
 
     public void RemoveUnitFromList(Unit unitDead) {
+        // Salva quem matou o inimigo ANTES de remover
+        Unit killerUnit = GetTurnUnit();
 
         int unitDeadIndex = unitiesOrderList.FindIndex((u) => u.transform == unitDead.transform);
         if (unitDead.IsEnemy()) {
-            // this.unitiesOrderList[this.turnNumber]
-            //     .AddXp(this.unitiesOrderList[unitDeadIndex].GetUnitStats().GetXpSpoil());
             onEnemyKilled.Invoke(unitDead, EventArgs.Empty);
             allEnemies.Remove(unitDead);
         }
         unitiesOrderList.Remove(unitDead);
-        if (turnNumber > unitDeadIndex) { turnNumber--; }
-        if (isPlayerTurn && CheckEnemiesLeftInTheBattleZone()) {
-            StartCoroutine(ComboKill());
+
+        // Corrige turnNumber se necessário
+        if (turnNumber > unitDeadIndex) {
+            turnNumber--;
         }
+
+        // ==========================
+        // COMBO KILL
+        // ==========================
+        if (isPlayerTurn && CheckEnemiesLeftInTheBattleZone() && unitiesOrderList.Count > 1) {
+            StartCoroutine(ComboKill(killerUnit));
+        }
+        // ==========================
+
         else if (isPlayerTurn && !CheckEnemiesLeftInTheBattleZone() && CheckEnemiesLeft()) {
             LevelGrid.Instance.RemoveZoneFromGrid(LevelGrid.Instance.GetCurrentBattleZone());
-            List<Unit> playerUnits = FindObjectsOfType<Unit>(false).Where(unit => unit.IsEnemy() == false).
-                Where(unit => unit.GetHealthSystem().GetHealthState() == HealthSystem.HealthState.ALIVE).ToList<Unit>();
+
+            List<Unit> playerUnits = FindObjectsOfType<Unit>(false)
+                .Where(unit => !unit.IsEnemy())
+                .Where(unit => unit.GetHealthSystem().GetHealthState() == HealthSystem.HealthState.ALIVE)
+                .ToList();
+
             foreach (Unit unit in playerUnits) {
                 unit.UpdateGridPositionZone(0);
             }
 
             InstantiateRewardChest(unitDead.transform);
-
+            ResetTurnSpeed();
             LevelGrid.Instance.ExploreMode();
         }
         else if (!isPlayerTurn && !CheckPlayerCharsLeft()) {
@@ -154,16 +191,12 @@ public class TurnSystem : MonoBehaviour {
             GameController.controller.GameOver();
         }
         else if (isPlayerTurn && !CheckEnemiesLeft()) {
+            LevelGrid.Instance.RemoveZoneFromGrid(LevelGrid.Instance.GetCurrentBattleZone()); // <-- ADICIONE ISTO
             ResetTurnSpeed();
             LevelGrid.Instance.ExploreMode();
-            // foreach (Unit u in unitiesOrderList) {
-            //     if (!u.IsEnemy()) u.AddXp(2);
-            // }
-
-            // GameController.controller.NextLevel();
-            // SceneManager.LoadScene("HUB");
         }
     }
+
 
     public bool IsPlayerTurn() {
         return isPlayerTurn;
@@ -282,7 +315,7 @@ public class TurnSystem : MonoBehaviour {
         switch (quality) {
             case 1:
                 //Revive
-                if(dice <= 30) {
+                if (dice <= 30) {
                     if (dice <= 10) listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_Revive"));
                     listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_Revive"));
                 }
@@ -301,7 +334,7 @@ public class TurnSystem : MonoBehaviour {
                     if (dice <= 50) {
                         listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_MediumPotion"));
                     }
-                    if(dice <= 20) {
+                    if (dice <= 20) {
                         listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_MediumPotion"));
                         listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_MediumPotion"));
                     }

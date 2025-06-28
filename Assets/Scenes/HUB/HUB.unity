@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0090638, g: 0.013170442, b: 0.020601679, a: 1}
+  m_IndirectSpecularColor: {r: 0.009051782, g: 0.013159561, b: 0.020596296, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -389,6 +389,7 @@ MonoBehaviour:
   m_itemDictionary:
     keys: []
     values: []
+  inventory: []
 --- !u!4 &51240045
 Transform:
   m_ObjectHideFlags: 0
@@ -1387,7 +1388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 1
-  sceneToLoad: Floresta
+  sceneToLoad: Floresta_ParaMerge
   levelName: Floresta
   scaleMultiplier: 1.2
   speed: 10

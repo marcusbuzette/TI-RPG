@@ -37,6 +37,7 @@ public class Unit : MonoBehaviour {
     [SerializeField] private bool hasMoved = false;
     [SerializeField] private bool hasPerformedAction = false;
     [SerializeField] private bool hasPerformedSkill = false;
+    [SerializeField] private bool hasUnlockedAnySkill = false;
     [SerializeField] private List<Unit> modifiedBy = new List<Unit>();
     public bool isUnitTurn = false;
     private bool hasUsedQuickAttack = false;
@@ -83,7 +84,7 @@ public class Unit : MonoBehaviour {
                 skillInstance.SetSkill();
                 skillInstance.CopyFrom(prefab);
                 skillInstance.SetSkillImage(prefab.GetActionImage());
-
+                this.hasUnlockedAnySkill = true;
                 instantiatedSkills.Add(skillInstance);
             }
 
@@ -373,7 +374,8 @@ public class Unit : MonoBehaviour {
     }
 
     public bool CanFinishRound() {
-        if (hasMoved && hasPerformedAction && hasPerformedSkill) {
+        if (hasMoved && hasPerformedAction &&
+        (!hasUnlockedAnySkill || (hasUnlockedAnySkill && hasPerformedSkill )) ) {
             return true;
         }
 
