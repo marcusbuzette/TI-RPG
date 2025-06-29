@@ -82,5 +82,8 @@ public abstract class BaseSkills : BaseAction {
         // this.onEndEffect = other.onEndEffect;
     }
 
+    public bool IsOnCooldown() {return this.onCoolDown;}
+    public int GetCooldownNumber() {return this.coolDown;}
+
 
 }

@@ -65,6 +65,7 @@ public class OpenCharacterSkillTreeHUB : MonoBehaviour, IChangeCamera {
         mainCamera.gameObject.SetActive(true);
 
         skillTree?.SetActive(false);
+        DataPersistenseManager.instance?.SaveGame();
     }
 
     public void CloseCamera() {

@@ -3246,6 +3246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NameTXT: {fileID: 1105847977}
   DialogueTXT: {fileID: 1105847978}
+  imageChar: {fileID: 2023555143}
   animator: {fileID: 1105847979}
   isDialogueOpened: 0
 --- !u!1 &247682175
@@ -9703,6 +9704,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1028521823}
   - {fileID: 1914822199}
   m_Father: {fileID: 1121128879}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10961,6 +10963,81 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.1920092, y: 2.3346105, z: 1.1920092}
   m_Center: {x: 0.000000029802322, y: 1.1673052, z: -0.000000029802322}
+--- !u!1 &1028521822
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1028521823}
+  - component: {fileID: 1028521825}
+  - component: {fileID: 1028521824}
+  m_Layer: 0
+  m_Name: TurnUnitImage-Char
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1028521823
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028521822}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 814346373}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 25, y: 0}
+  m_SizeDelta: {x: 125, y: 125}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1028521824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028521822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1028521825
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028521822}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1029705253
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12256,7 +12333,7 @@ MonoBehaviour:
   turnSpeedButton: {fileID: 1970485590}
   turnSpeedText: {fileID: 1226455691}
   turnNumberText: {fileID: 814346374}
-  turnUnitImage: {fileID: 0}
+  turnUnitImage: {fileID: 1028521824}
   unitsOrderContainer: {fileID: 150097736}
   unitOrderUIPrefab: {fileID: 7060775410297624860, guid: 07c5d27b85a5a453eb5ff6e50dc6be26, type: 3}
   endTurnButton: {fileID: 1480717720}
@@ -19813,17 +19890,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1914822198}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 814346373}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 25, y: 0}
-  m_SizeDelta: {x: 125, y: 125}
+  m_SizeDelta: {x: 225, y: 225}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1914822200
 MonoBehaviour:
@@ -19845,7 +19922,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 90a80c18f6f8cb6439b1e5dab6185891, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -20728,6 +20805,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3029148455161553800, guid: 9744e47adebbab3449ad44de1fbd8c77, type: 3}
   m_PrefabInstance: {fileID: 2023443836}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2023555143 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8556961179306333705, guid: 1b28e24ed24b1ff4ea136bfcc5168fce, type: 3}
+  m_PrefabInstance: {fileID: 1105847975}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2026009726
 GameObject:
   m_ObjectHideFlags: 0
@@ -21280,20 +21368,20 @@ SceneRoots:
   m_Roots:
   - {fileID: 1876575196}
   - {fileID: 1652257632}
-  - {fileID: 1960313721}
   - {fileID: 491520919}
   - {fileID: 661953489}
   - {fileID: 1417940214}
   - {fileID: 924601395}
   - {fileID: 820425725}
-  - {fileID: 287745316}
-  - {fileID: 613554418}
-  - {fileID: 515280858}
-  - {fileID: 1047018915}
   - {fileID: 1804985354}
   - {fileID: 85054666}
   - {fileID: 26093822}
   - {fileID: 811251407}
+  - {fileID: 1960313721}
+  - {fileID: 287745316}
+  - {fileID: 613554418}
+  - {fileID: 515280858}
+  - {fileID: 1047018915}
   - {fileID: 391582203}
   - {fileID: 1049023296}
   - {fileID: 1490284540}
