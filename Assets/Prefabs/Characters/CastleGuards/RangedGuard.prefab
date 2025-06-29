@@ -399,6 +399,7 @@ MonoBehaviour:
   xpSystem: {fileID: 0}
   unitId: RangedGuard
   unitName: Guarda Ranged
+  unitImage: {fileID: 0}
   baseUnitStats:
     speed: 2
     attack: 10
@@ -420,6 +421,7 @@ MonoBehaviour:
   hasMoved: 0
   hasPerformedAction: 0
   hasPerformedSkill: 0
+  hasUnlockedAnySkill: 0
   modifiedBy: []
   isUnitTurn: 0
   projectilePrefab: {fileID: 0}
@@ -437,6 +439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a98aa284f9b23428a071063490ad6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 0}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
@@ -459,6 +462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4c588a935c0a4f56b855794c3e7145d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 0}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
@@ -469,7 +473,7 @@ MonoBehaviour:
     m_Bits: 0
   maxShootDistance: 5
   shootDamage: 100
-  arrowSFX: 
+  arrowSFX: ArqueiroInimigoHit
 --- !u!114 &3490794028784684166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,7 +491,7 @@ MonoBehaviour:
   maxHealthPoints: 100
   animator: {fileID: 0}
   faintText: {fileID: 0}
-  damageSFX: BoarHurt
+  damageSFX: ArqueiroInimigoDano
   deathSFX: 
   missSFX: Esquiva
   damagedBy: []

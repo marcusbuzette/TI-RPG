@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.008947474, g: 0.013111375, b: 0.0204459, a: 1}
+  m_IndirectSpecularColor: {r: 0.008958812, g: 0.013101446, b: 0.02045097, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9033,6 +9033,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4908714323277675324, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
+      propertyPath: missSFX
+      value: Esquiva
+      objectReference: {fileID: 0}
+    - target: {fileID: 4908714323277675324, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
+      propertyPath: damageSFX
+      value: LobisomemDamage
+      objectReference: {fileID: 0}
     - target: {fileID: 5248424051689086498, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
       propertyPath: m_Name
       value: WereWolf
@@ -9080,6 +9088,10 @@ PrefabInstance:
     - target: {fileID: 8156640269489831220, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8428029982322859060, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
+      propertyPath: meleeSFX
+      value: LobisomemHit
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8160531672424211794, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
@@ -22021,12 +22033,6 @@ MonoBehaviour:
   m_itemDictionary:
     keys: []
     values: []
-  inventory:
-  - id: 1
-    displayName: Potion
-    prefab: {fileID: 959054419738605824, guid: 3938934a894c14343b69e125355950d7, type: 3}
-    qtd: 2
-    scriptableObj: {fileID: 11400000, guid: 110230de560646841bb1f0097e70042a, type: 2}
 --- !u!1 &1985149338
 GameObject:
   m_ObjectHideFlags: 0

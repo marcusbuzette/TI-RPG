@@ -400,6 +400,7 @@ MonoBehaviour:
   xpSystem: {fileID: 0}
   unitId: MeleeGuard
   unitName: Guarda Melee
+  unitImage: {fileID: 0}
   baseUnitStats:
     speed: 2
     attack: 6
@@ -422,6 +423,7 @@ MonoBehaviour:
   hasMoved: 0
   hasPerformedAction: 0
   hasPerformedSkill: 0
+  hasUnlockedAnySkill: 0
   modifiedBy: []
   isUnitTurn: 0
   projectilePrefab: {fileID: 0}
@@ -439,6 +441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a98aa284f9b23428a071063490ad6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 0}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
@@ -461,6 +464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8a40b60fda1ef4f8c9d0f466e29e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 0}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
@@ -471,7 +475,7 @@ MonoBehaviour:
     m_Bits: 256
   maxHitDistance: 1
   hitDamage: 30
-  meleeSFX: 
+  meleeSFX: GuerreiroInimigoHit
   Attack: 1
 --- !u!114 &5398904882741617123
 MonoBehaviour:
@@ -485,6 +489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b6385d0c60b4827aaab7b864fdef3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 0}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
@@ -509,7 +514,7 @@ MonoBehaviour:
   maxHealthPoints: 160
   animator: {fileID: 0}
   faintText: {fileID: 0}
-  damageSFX: BoarHurt
+  damageSFX: GuerreiroInimigoDano
   deathSFX: 
   missSFX: Esquiva
   damagedBy: []
