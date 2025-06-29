@@ -79,8 +79,9 @@ public class GameController : MonoBehaviour, IDataPersistence {
     }
     public void UpdateUnitRecords(Unit unit) {
         List<string> skillsIdsAux = playerUnits[unit.GetUnitId()].GetUnitSKillsIDs().Count > 0 ? playerUnits[unit.GetUnitId()].GetUnitSKillsIDs() : null;
+        SerializableDictionary<int, int> upgradesAux = unit.GetChosenUpgrades(); // agora upgrades corretos!
         UnitRecords unitRecordsAux = new UnitRecords(unit.GetUnitXpSystem().getXpAmount(), unit.GetUnitStats(),
-                                                        skillsIdsAux);
+                                                        skillsIdsAux, upgradesAux);
         playerUnits[unit.GetUnitId()] = unitRecordsAux;
     }
 

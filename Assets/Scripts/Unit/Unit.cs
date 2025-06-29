@@ -128,6 +128,14 @@ public class Unit : MonoBehaviour {
         }
     }
 
+    public SerializableDictionary<int, int> GetChosenUpgrades() {
+    if (GameController.controller.HasUnitRecords(unitId)) {
+        return GameController.controller.GetUnitRecords(unitId).GetLevelUpgrades();
+    }
+    return new SerializableDictionary<int, int>();
+}
+
+
     public T GetAction<T>() where T : BaseAction {
         foreach (BaseAction baseAction in actionsArray) {
             if (baseAction is T) {
@@ -417,4 +425,5 @@ public class Unit : MonoBehaviour {
     public Sprite GetImage() {
         return this.unitImage;
     }
+    
 }
