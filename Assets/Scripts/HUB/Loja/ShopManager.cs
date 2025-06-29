@@ -72,6 +72,7 @@ public class ShopManager : MonoBehaviour {
 
         itemQuantity = 0;
         buyItemQuantity.text = itemQuantity.ToString();
+        DataPersistenseManager.instance.SaveGame();
         DeselectItem();
     }
 
