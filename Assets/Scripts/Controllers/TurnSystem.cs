@@ -147,6 +147,7 @@ public class TurnSystem : MonoBehaviour {
     public int GetTurnNumber() { return turnNumber; }
 
     public void RemoveUnitFromList(Unit unitDead) {
+        Debug.Log("RemoveUnitFromList chamado para " + unitDead.name);
         // Salva quem matou o inimigo ANTES de remover
         Unit killerUnit = GetTurnUnit();
 
@@ -166,11 +167,13 @@ public class TurnSystem : MonoBehaviour {
         // COMBO KILL
         // ==========================
         if (isPlayerTurn && CheckEnemiesLeftInTheBattleZone() && unitiesOrderList.Count > 1) {
+            Debug.Log("Combo Kill sendo executado");
             StartCoroutine(ComboKill(killerUnit));
         }
         // ==========================
 
         else if (isPlayerTurn && !CheckEnemiesLeftInTheBattleZone() && CheckEnemiesLeft()) {
+            Debug.Log("Chamando InstantiateRewardChest");
             LevelGrid.Instance.RemoveZoneFromGrid(LevelGrid.Instance.GetCurrentBattleZone());
 
             List<Unit> playerUnits = FindObjectsOfType<Unit>(false)
@@ -187,10 +190,12 @@ public class TurnSystem : MonoBehaviour {
             LevelGrid.Instance.ExploreMode();
         }
         else if (!isPlayerTurn && !CheckPlayerCharsLeft()) {
+            Debug.Log("Game Over - todos os jogadores mortos");
             ResetTurnSpeed();
             GameController.controller.GameOver();
         }
         else if (isPlayerTurn && !CheckEnemiesLeft()) {
+            Debug.Log("Todos os inimigos mortos em todas as zonas, fim de batalha");
             LevelGrid.Instance.RemoveZoneFromGrid(LevelGrid.Instance.GetCurrentBattleZone()); // <-- ADICIONE ISTO
             ResetTurnSpeed();
             LevelGrid.Instance.ExploreMode();
@@ -218,8 +223,17 @@ public class TurnSystem : MonoBehaviour {
     }
 
     private bool CheckEnemiesLeft() {
-        return allEnemies.Count > 0;
-    }
+    // Atualiza a lista allEnemies com os inimigos vivos atuais na cena
+    allEnemies = FindObjectsOfType<Unit>(false)
+        .Where(u => u.IsEnemy() && u.GetHealthSystem().GetHealthState() == HealthSystem.HealthState.ALIVE)
+        .ToList();
+
+    // Retorna se ainda tem inimigos vivos
+    return allEnemies.Count > 0;
+}
+
+
+
     private bool CheckEnemiesLeftInTheBattleZone() {
         foreach (Unit unit in unitiesOrderList) {
             if (unit.IsEnemy() && unit.GetGridPosition().zone == LevelGrid.Instance.GetCurrentBattleZone()) return true;
@@ -303,9 +317,17 @@ public class TurnSystem : MonoBehaviour {
 
     private void InstantiateRewardChest(Transform chestTransform) {
         var chest = Instantiate(Resources.Load<GameObject>("Prefabs_R/Chest"), chestTransform.position, chestTransform.rotation);
-        chest.GetComponent<Chest>().AddItens(GetRewardChestItems(), (100 * unitiesOrderList.Count));
+
+        var rewardItems = GetRewardChestItems();
+        Debug.Log($"Itens gerados: {rewardItems.Count}");
+        foreach (var item in rewardItems) {
+            Debug.Log("Item: " + item.name);
+        }
+
+        chest.GetComponent<Chest>().AddItens(rewardItems, (100 * unitiesOrderList.Count));
         PathFinding.Instance.SetNodeIsWalkable(chest.transform.position, false);
     }
+
 
     private List<InventoryItemData> GetRewardChestItems() {
         List<InventoryItemData> listItems = new List<InventoryItemData>();
@@ -464,7 +486,7 @@ public class TurnSystem : MonoBehaviour {
 
                 break;
         }
-        return new List<InventoryItemData>();
+        return listItems;
     }
 
     public void SetCameraController(CameraController controller) { cameraController = controller; }
