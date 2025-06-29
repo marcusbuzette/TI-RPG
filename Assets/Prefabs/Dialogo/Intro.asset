@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
   - sentences: "Os javalis est\xE3o logo a frente..."
-    name: Heroi
-    image: {fileID: 0}
+    name: Lucian
+    image: {fileID: 21300000, guid: 12541066e3ccf064bb6b499c1479c950, type: 3}
   - sentences: "N\xE3o vamos deixar eles escaparem dessa vez!"
-    name: Heroi
-    image: {fileID: 0}
+    name: Lucian
+    image: {fileID: 21300000, guid: 12541066e3ccf064bb6b499c1479c950, type: 3}
   - sentences: Vou flanquea-los pela lateral
-    name: Arqueira
-    image: {fileID: 0}
+    name: Lyra
+    image: {fileID: 21300000, guid: 65646911570743a478b74cafbffb30b1, type: 3}
