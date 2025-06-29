@@ -141,6 +141,7 @@ public class LevelGrid : MonoBehaviour {
 
     public void ExploreMode() {
         this.gameMode = GameMode.EXPLORE;
+        UnitActionSystem.Instance.SetSelectedUnit(TurnSystem.Instance.GetPlayerUnitToExplore());
         OnGameModeChanged?.Invoke(this, EventArgs.Empty);
         GridSystemVisual.Instance.UpdateGridVisual();
     }

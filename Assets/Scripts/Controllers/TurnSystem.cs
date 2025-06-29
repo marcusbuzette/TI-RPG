@@ -166,13 +166,13 @@ public class TurnSystem : MonoBehaviour {
         // ==========================
         // COMBO KILL
         // ==========================
-        if (isPlayerTurn && CheckEnemiesLeftInTheBattleZone() && unitiesOrderList.Count > 1) {
+        if (CheckEnemiesLeftInTheBattleZone() && unitiesOrderList.Count > 1 && unitDead.GetHealthSystem().GetAttackedBy() != null && unitDead != GetTurnUnit()) {
             Debug.Log("Combo Kill sendo executado");
             StartCoroutine(ComboKill(killerUnit));
         }
         // ==========================
 
-        else if (isPlayerTurn && !CheckEnemiesLeftInTheBattleZone() && CheckEnemiesLeft()) {
+        else if (!CheckEnemiesLeftInTheBattleZone() && CheckEnemiesLeft()) {
             Debug.Log("Chamando InstantiateRewardChest");
             LevelGrid.Instance.RemoveZoneFromGrid(LevelGrid.Instance.GetCurrentBattleZone());
 
@@ -189,12 +189,12 @@ public class TurnSystem : MonoBehaviour {
             ResetTurnSpeed();
             LevelGrid.Instance.ExploreMode();
         }
-        else if (!isPlayerTurn && !CheckPlayerCharsLeft()) {
+        else if (!CheckPlayerCharsLeft()) {
             Debug.Log("Game Over - todos os jogadores mortos");
             ResetTurnSpeed();
             GameController.controller.GameOver();
         }
-        else if (isPlayerTurn && !CheckEnemiesLeft()) {
+        else if (!CheckEnemiesLeft()) {
             Debug.Log("Todos os inimigos mortos em todas as zonas, fim de batalha");
             LevelGrid.Instance.RemoveZoneFromGrid(LevelGrid.Instance.GetCurrentBattleZone()); // <-- ADICIONE ISTO
             ResetTurnSpeed();
@@ -493,4 +493,6 @@ public class TurnSystem : MonoBehaviour {
     public CameraController GetCameraController() { return cameraController; }
 
     public List<Unit> GetUnitsOrderList() { return this.unitiesOrderList; }
+
+    
 }

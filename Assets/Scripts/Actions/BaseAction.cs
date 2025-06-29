@@ -136,4 +136,8 @@ public abstract class BaseAction : MonoBehaviour {
     public abstract bool GetOnCooldown();
 
     public abstract void IsAnotherRound();
+
+    private void OnDestroy() {
+        ActionFinish();
+    }
 }

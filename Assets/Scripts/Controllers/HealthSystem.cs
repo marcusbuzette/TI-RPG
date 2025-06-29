@@ -20,6 +20,7 @@ public class HealthSystem : MonoBehaviour {
     public int maxHealthPoints = 100;
     public Animator animator;
     private bool isDefending = false;
+    private Unit attackedBy;
 
     public Transform faintText; //TEMPORARIO <----- (ATEN��O)
 
@@ -52,15 +53,15 @@ public class HealthSystem : MonoBehaviour {
                 return;
             }
         }
-        Debug.Log(attackedBy);
-        Debug.Log(this);
-        Debug.Log(damage);
 
-        if (haveProjectile) attackedBy.SpawnProjectile(this, damage);
+        if (haveProjectile && attackedBy != null) attackedBy.SpawnProjectile(this, damage);
         else Damage(damage, attackedBy);
     }
 
     public void Damage(int damage, Unit attackedBy) {
+
+        this.attackedBy = attackedBy;
+
         if (isDefending) {
             worldUI.ShowUIValue(0, "Defending");
             return;
@@ -153,4 +154,6 @@ public class HealthSystem : MonoBehaviour {
     public HealthState GetHealthState() { return healthState; }
 
     public List<Unit> GetDamagedByList() {return this.damagedBy;}
+
+    public Unit GetAttackedBy() { return this.attackedBy;}
 }
