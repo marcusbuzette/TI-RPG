@@ -109,7 +109,7 @@ public class MoveAction : BaseAction {
                 OnFinishedWalking?.Invoke(this, EventArgs.Empty);
 
                 if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE &&
-                    startZone != unit.GetGridPosition().zone) {
+                    startZone != unit.GetGridPosition().zone && !unit.IsEnemy()) {
                     LevelGrid.Instance.BattleMode(unit.GetGridPosition().zone);
                 }
             }

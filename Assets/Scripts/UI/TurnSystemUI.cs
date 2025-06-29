@@ -33,16 +33,15 @@ public class TurnSystemUI : MonoBehaviour {
         TurnSystem.Instance.onTurnChange += TurnSystem_OnTurnChange;
         TurnSystem.Instance.onOrderChange += TurnSystem_OnOrderChange;
         LevelGrid.Instance.OnGameModeChanged += LevelGrid_OnGameModeChanged;
+        this.UpdateStatus();
+        if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE) return;
         UpdatedTurnText();
         CreateUnitActionButtons();
         UpdateEndTurnButton();
-        this.UpdateStatus();
     }
 
     private void UpdatedTurnText() {
         // turnNumberText.text = "TURNO: " + TurnSystem.Instance.GetTurnNumber();
-        Debug.Log(TurnSystem.Instance.GetTurnUnit());
-        Debug.Log(TurnSystem.Instance.GetTurnUnit().GetImage());
         if (TurnSystem.Instance.GetTurnUnit().GetImage() != null) {
             turnUnitImage.sprite = TurnSystem.Instance.GetTurnUnit().GetImage();
         }
