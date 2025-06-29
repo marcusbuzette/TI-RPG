@@ -442,10 +442,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemy: 1
   possibleSkills: []
+  possibleSkillsPrefabs: []
   possibleUpgrades: []
   xpSystem: {fileID: 0}
   unitId: 
   unitName: Lobisomem
+  unitImage: {fileID: 21300000, guid: 34f92d971bf85e84f9bbeab6ecfa9517, type: 3}
   baseUnitStats:
     speed: 2
     attack: 30
@@ -465,8 +467,11 @@ MonoBehaviour:
   hasMoved: 0
   hasPerformedAction: 0
   hasPerformedSkill: 0
+  hasUnlockedAnySkill: 0
   modifiedBy: []
   isUnitTurn: 0
+  projectilePrefab: {fileID: 0}
+  projectilePoint: {fileID: 0}
   enemyFocus: 0
 --- !u!114 &8096173683310641798
 MonoBehaviour:
@@ -480,14 +485,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a98aa284f9b23428a071063490ad6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 0}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  rotSpeed: 180
+  currentArrow: {fileID: 0}
   moveSpeed: 4
-  rotateSpeed: 4
   stopDistance: 0.1
   maxMoveDistance: 4
+  exploreSpeed: 5.5
 --- !u!65 &2667406634700221940
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -521,10 +529,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5f1e064203584e4781e4f11b8511645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthState: 0
   healthPoints: 500
   maxHealthPoints: 500
   animator: {fileID: 0}
+  faintText: {fileID: 0}
   damageSFX: 
+  deathSFX: 
+  missSFX: 
+  damagedBy: []
 --- !u!114 &8428029982322859060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,16 +550,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8a40b60fda1ef4f8c9d0f466e29e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 0}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  rotSpeed: 180
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 2304
   maxHitDistance: 1
   hitDamage: 50
-  rotateSpeed: 10
   meleeSFX: 
   Attack: 1
 --- !u!114 &8160531672424211794
@@ -561,10 +575,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca8109a6c61647b98b7a6017a3ded5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 0}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  rotSpeed: 180
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 2304
