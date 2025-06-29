@@ -132,7 +132,7 @@ public class UnitActionSystem : MonoBehaviour {
         }
     }
 
-    private void SetSelectedUnit(Unit unit) {
+    public void SetSelectedUnit(Unit unit) {
         if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE) {
             selectedUnit = unit;
             selectedAction = null;
@@ -153,6 +153,7 @@ public class UnitActionSystem : MonoBehaviour {
         }
         else {
             OnInventoryClicked.Invoke(action, EventArgs.Empty);
+            Debug.Log("Inventário");
         }
     }
 

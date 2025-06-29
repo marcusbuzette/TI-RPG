@@ -32,6 +32,7 @@ public class DialogueController : MonoBehaviour {
         dialogueQueue = new Queue<Dialogue.DialogueStruct>();
     }
 
+
     public void StartDialogue(Dialogue dialogue) {
         CameraHUB.isMenuOpen = true;
         isDialogueOpened = true;
@@ -47,6 +48,7 @@ public class DialogueController : MonoBehaviour {
 
     public void DisplayNextSentence() {
         if (dialogueQueue.Count == 0) {
+
             EndDialogue();
             return;
         }
