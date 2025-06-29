@@ -49,7 +49,8 @@ public class ActionButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             UnitActionSystem.Instance.SetSelectedAction(baseAction);
         });
 
-        if (baseAction.GetType() == typeof(BaseSkills)) {
+
+        if ((baseAction as BaseSkills) != null) {
             coolDownUI.SetActive((baseAction as BaseSkills).IsOnCooldown());
             coolDownUI.GetComponentInChildren<TMP_Text>().text = "Disponível em " + (baseAction as BaseSkills).GetCooldownNumber().ToString() + ((baseAction as BaseSkills).GetCooldownNumber() > 1 ? " turnos" : " turno");
 
