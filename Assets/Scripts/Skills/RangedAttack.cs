@@ -4,16 +4,13 @@ using UnityEngine;
 using System;
 
 public class RangedAttack : BaseSkills {
-    private enum State {
-        Aiming, Shooting, Cooloff
-    }
-    [SerializeField] private LayerMask obstaclesLayerMask;
+
+    private LayerMask obstaclesLayerMask;
     [SerializeField] private int maxShootDistance = 1;
     [SerializeField] private int shootDamage = 100;
 
     public string arrowSFX;
 
-    private State currentState;
     private Unit targetUnit;
     private bool canShoot;
 
@@ -103,23 +100,6 @@ public class RangedAttack : BaseSkills {
         ActionStart(onActionComplete);
     }
 
-    protected void NextState()
-    {
-        switch (currentState)
-        {
-            case State.Aiming:
-                currentState = State.Shooting;
-                break;
-            case State.Shooting:
-                currentState = State.Cooloff;
-                break;
-            case State.Cooloff:
-                ActionFinish();
-                break;
-
-        }
-    }
-
     private void Shoot()
     {
         targetUnit.Damage(shootDamage, true, this.GetComponent<Unit>());
@@ -150,5 +130,15 @@ public class RangedAttack : BaseSkills {
         }
     }
 
+    public int GetMaxShootDistance() { return maxShootDistance; }
+    public int GetShootDamage() { return shootDamage; }
+
     public override bool GetOnCooldown() { return onCoolDown; }
+
+    public override void CopyFrom(BaseSkills other) {
+        base.CopyFrom(other);
+
+        maxShootDistance = (other as RangedAttack).GetMaxShootDistance();
+        shootDamage = (other as RangedAttack).GetShootDamage();
+    }
 }

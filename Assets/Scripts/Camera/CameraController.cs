@@ -34,7 +34,7 @@ public class CameraController : MonoBehaviour
     [Space, Header("Zoom em combate"), SerializeField]
     private float zoomDuration = 0.3f;
 
-    [Space, Header("Camera Vibração"), SerializeField]
+    [Space, Header("Camera Vibraï¿½ï¿½o"), SerializeField]
     public float
         shakeDuration = 0.3f,
         shakeAmplitude = 2f,
@@ -310,7 +310,6 @@ public class CameraController : MonoBehaviour
     }
 
     public void Shake() {
-        Debug.Log(noise);
         if (shakeCoroutine != null)
             StopCoroutine(shakeCoroutine);
 
@@ -328,4 +327,13 @@ public class CameraController : MonoBehaviour
         noise.m_AmplitudeGain = 0;
         noise.m_FrequencyGain = 0;
     }
+     private void OnDestroy() {
+        TurnSystem.Instance.onTurnChange -= CheckIsPlayerTurn;
+        UnitActionSystem.Instance.OnUnitMovedInExploreMode -= GoToPositionUnitPos;
+        UnitActionSystem.Instance.OnSelectedUnitChanged -= SetSelectedUnit;
+        UnitActionSystem.Instance.OnActionStarted -= FollowPlayerOnAction;
+        BaseAction.OnAnyActionCompleted -= PlayerStopAction;
+        BaseAction.OnAnyActionCompleted -= UnitStopMove;
+        LevelGrid.Instance.OnGameModeChanged -= ChangeMovimentMode;
+     }
 }

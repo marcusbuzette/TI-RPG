@@ -27,7 +27,7 @@ public class LevelGrid : MonoBehaviour {
 
     public enum GameMode { BATTLE, EXPLORE }
 
-    [SerializeField] private GameMode gameMode = GameMode.BATTLE;
+    [SerializeField] private GameMode gameMode = GameMode.EXPLORE;
     [SerializeField] private List<AddSquaredZone> squaredZoneList = new List<AddSquaredZone>();
     [SerializeField] private List<GridPosition> zoneList = new List<GridPosition>();
     private Dictionary<int, List<GridPosition>> zoneStartPositions = new Dictionary<int, List<GridPosition>>();
@@ -77,13 +77,13 @@ public class LevelGrid : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.N)) {
-            this.ExploreMode();
-        }
+        // if (Input.GetKeyDown(KeyCode.N)) {
+        //     this.ExploreMode();
+        // }
 
-        if (Input.GetKeyDown(KeyCode.B)) {
-            this.BattleMode();
-        }
+        // if (Input.GetKeyDown(KeyCode.B)) {
+        //     this.BattleMode();
+        // }
     }
 
     public void AddUnitAtGridPosition(GridPosition gridPosition, Unit unit) {

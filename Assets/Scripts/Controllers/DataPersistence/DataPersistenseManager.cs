@@ -3,74 +3,96 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class DataPersistenseManager : MonoBehaviour {
-
-    [Header("Nome base do arquivo")]
-    [SerializeField] private string baseFileName = "save";
+public class DataPersistenseManager : MonoBehaviour
+{
+    [Header("Nome do arquivo de save")]
+    [SerializeField] private string saveFileName = "saveData.json";
 
     public static DataPersistenseManager instance { get; private set; }
 
     private GameData gameData;
     private List<IDataPersistence> dataPersistenceObjects;
     private FileDataHandler dataHandler;
+    private string currentProfileId = "slot1"; // Pasta padrão
 
-    public static DataPersistenseManager instace { get; private set; }
+    public int currentLevel;
 
-    private string currentSaveSlot = "slot1"; // slot padrão
-
-    void Awake() {
-        if (instance != null && instance != this) {
-            Destroy(this.gameObject);
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this);
             Debug.LogError("Mais de um DataPersistenseManager foi encontrado na cena");
             return;
         }
-        instance = this;
-        DontDestroyOnLoad(this.gameObject);
     }
 
-    void Start() {
+    void Start()
+    {
         dataPersistenceObjects = FindAllDataPersistenceObjects();
-        SetSlot(currentSaveSlot); // Carrega o slot inicial
+        SetSlot(currentProfileId); // Carrega o slot inicial
     }
 
-    public void SetSlot(string slotName) {
-        currentSaveSlot = slotName;
-        string fileName = $"{baseFileName}_{slotName}.json";
-        dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
-        Debug.Log(Application.persistentDataPath);
-        LoadGame(); // Carrega automaticamente o slot ao trocar
+    public void SetSlot(string slotName)
+    {
+        currentProfileId = slotName;
+        dataHandler = new FileDataHandler(Application.persistentDataPath, saveFileName);
+        Debug.Log("Save path: " + Application.persistentDataPath);
+        Debug.Log("Slot: " + slotName);
+        LoadGame();
     }
 
-    public void NewGame() {
+    public void NewGame()
+    {
         gameData = new GameData();
+        GameController.controller.ResetVariables();
     }
 
-    public void LoadGame() {
-        gameData = dataHandler.Load();
+    public void LoadGame()
+    {
+        gameData = dataHandler.Load(currentProfileId);
 
-        if (gameData == null) {
+        if (gameData == null)
+        {
             Debug.Log("Nenhum save encontrado, criando novo...");
             NewGame();
         }
 
-        foreach (IDataPersistence obj in dataPersistenceObjects) {
+        dataPersistenceObjects = FindAllDataPersistenceObjects();
+        foreach (IDataPersistence obj in dataPersistenceObjects)
+        {
             obj.LoadData(gameData);
+            Debug.Log("Dados carregados nos objetos.");
         }
     }
 
-    public void SaveGame() {
-        foreach (IDataPersistence obj in dataPersistenceObjects) {
+    public void SaveGame()
+    {
+        dataPersistenceObjects = FindAllDataPersistenceObjects();
+        foreach (IDataPersistence obj in dataPersistenceObjects)
+        {
             obj.SaveData(ref gameData);
+            currentLevel = gameData.currentLevel;
         }
 
-        dataHandler.Save(gameData);
+        dataHandler.Save(gameData, currentProfileId);
+        Debug.Log("Jogo salvo no slot: " + currentProfileId);
     }
 
-    private List<IDataPersistence> FindAllDataPersistenceObjects() {
+    private List<IDataPersistence> FindAllDataPersistenceObjects()
+    {
         return FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistence>().ToList();
     }
 
-    void OnApplicationQuit() {
-        SaveGame();
+    void OnApplicationQuit()
+    {
+        // SaveGame();
     }
+
+    public GameData GetGameData() {return this.gameData;}
 }

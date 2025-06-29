@@ -53,6 +53,7 @@ public class OpenShopHUB : MonoBehaviour
     }
 
     public void DoSomething() {
+        store.GetComponent<ShopManager>().UpdateGold();
         store.SetActive(true);
     }
 }

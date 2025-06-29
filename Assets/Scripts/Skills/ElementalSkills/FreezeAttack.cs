@@ -6,7 +6,6 @@ using UnityEngine;
 public class FreezeAttack : BaseSkills {
     [SerializeField] private LayerMask obstaclesLayerMask;
     [SerializeField] private int maxShootDistance = 1;
-    [SerializeField] private float rotateSpeed = 10f;
      [SerializeField] private GameObject IceFbx;
 
     public string freezeArrowSFX;
@@ -14,7 +13,7 @@ public class FreezeAttack : BaseSkills {
     private Unit targetUnit;
     private bool canShoot;
 
-
+    Projectile projectile;
 
     private void Start() {
         obstaclesLayerMask = LayerMask.GetMask("Obstacles"); //add layer mask to don't shoot through obstacles
@@ -23,6 +22,7 @@ public class FreezeAttack : BaseSkills {
         if (IceFbx != null) {
             IceFbx.SetActive(false);
         }
+        sfxName = "FlechaGelo";
     }
     public override string GetActionName() {
         return "Congelar";
@@ -100,23 +100,33 @@ public class FreezeAttack : BaseSkills {
             IceFbx.SetActive(true);
         }
 
-        if (!string.IsNullOrEmpty(freezeArrowSFX)) {
-            AudioManager.instance?.PlaySFX(freezeArrowSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
-        }
+        PlaySkillSFX();
         ActionStart(onActionComplete);
     }
 
     private void Shoot() {
-        unit.SpawnProjectile(targetUnit.transform.position, Color.blue);
+        projectile = unit.SpawnProjectile(targetUnit.transform.position, Color.blue, false);
+
+        projectile.onDestory += ProjectileDestroyed;
+        
+        // animator?.SetTrigger("Attack");
+        unit.PlayAnimation("Attack");
+        //AudioManager.instance?.PlaySFX("Arrows");
+
+        if (IceFbx != null) {
+            IceFbx.SetActive(false);
+        }
+    }
+
+    public void ProjectileDestroyed(object sender, EventArgs e) {
 
         if (targetUnit.gameObject.GetComponent<FreezeEffect>() != null) {
             targetUnit.gameObject.GetComponent<FreezeEffect>().CureFreeze();
             targetUnit.gameObject.AddComponent<FreezeEffect>().SetFreezeEffect(targetUnit, coolDown);
         }
         else targetUnit.gameObject.AddComponent<FreezeEffect>().SetFreezeEffect(targetUnit, coolDown);
-        // animator?.SetTrigger("Attack");
-        unit.PlayAnimation("Attack");
-        //AudioManager.instance?.PlaySFX("Arrows");
+
+        projectile.onDestory -= ProjectileDestroyed;
 
         ActionFinish();
     }
@@ -152,4 +162,10 @@ public class FreezeAttack : BaseSkills {
     public override bool GetOnCooldown() { return false; }
 
     public override void IsAnotherRound() { }
+
+    public override void CopyFrom(BaseSkills other) {
+        base.CopyFrom(other);
+
+        maxShootDistance = (other as FreezeAttack).GetMaxShootDistance();
+    }
 }

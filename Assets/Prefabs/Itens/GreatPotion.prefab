@@ -118,9 +118,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb847fb76b75f9746b5bce5dd83026fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 0}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
   rotSpeed: 180
-  potionHealAmount: 50
+  potionHealAmount: 100
+  itemName: "Po\xE7\xE3o \xD3tima"

@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fce4ce57972f8c34ab528abcec13cf80, type: 3}
   m_Name: InventoryItem_GreatPotion
   m_EditorClassIdentifier: 
-  id: 1
-  displayName: Potion
+  id: 3
+  displayName: "Po\xE7\xE3o \xD3tima"
   prefab: {fileID: 959054419738605824, guid: 6fb23e7ff55369d43acd00d62199e3b4, type: 3}
   image: {fileID: 21300000, guid: 3aa683589d3872648ab6fe8df9892d7c, type: 3}
+  price: 50
+  description: "Uma poderosa po\xE7\xE3o de cura concentrada.\r\n\r\nEfeito: Restaura
+    100 pontos de vida.\r\nUso: Pode ser usada dentro ou fora de combate.\r\r\r\nDescri\xE7\xE3o:
+    Rara e valiosa, diz-se que \xE9 feita com ervas das montanhas sagradas.\r\n"

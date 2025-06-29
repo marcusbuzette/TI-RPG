@@ -9,23 +9,27 @@ public class TeleportSkill : BaseSkills
     [SerializeField] private int maxTeleportDistance = 4;
     private GridPosition targetGrid;
 
-    private float totalSpinAmmount = 0;
-    [SerializeField] private float MAX_SPIN = 360f;
+    private float teleportDelay = 0.55f;
+
+    private void Awake()
+    {
+        base.Awake();
+        sfxName = "Teleport";
+    }
 
     public override void Action() {
-        float spinAddAmmount = 360f * Time.deltaTime;
-        transform.eulerAngles += new Vector3(0, spinAddAmmount, 0);
-        totalSpinAmmount += spinAddAmmount;
-        bool teleported = false;
-        AudioManager.instance?.PlaySFX("Teleport");
-        if (totalSpinAmmount > MAX_SPIN / 2 && !teleported) {
-            Teleport();
-        }
+        StartCoroutine(DelayedTeleport());
+    }
 
-        if (totalSpinAmmount > MAX_SPIN) {
-            ActiveCoolDown();
-            ActionFinish();
-        }
+    private IEnumerator DelayedTeleport() {
+        unit.PlayAnimation("Teleport");
+
+        yield return new WaitForSeconds(teleportDelay);
+        AudioManager.instance?.PlaySFX("Teleport");
+
+        Teleport();
+        ActiveCoolDown();
+        ActionFinish();
     }
 
     public override string GetActionName() {
@@ -39,26 +43,18 @@ public class TeleportSkill : BaseSkills
 
         for (int x = -maxTeleportDistance; x <= maxTeleportDistance; x++) {
             for (int z = -maxTeleportDistance; z <= maxTeleportDistance; z++) {
-                GridPosition offsetGridPosition = new GridPosition(x, z, 0);
-                GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
+                for (int floor = -maxTeleportDistance; floor <= maxTeleportDistance; floor++) {
+                    GridPosition offsetGridPosition = new GridPosition(x, z, floor);
+                    GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
-                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) {
-                    continue;
+                    if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) continue;
+                    if (unitGridPosition == testGridPosition) continue;
+                    if (LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition)) continue;
+                    if (!PathFinding.Instance.IsWalkableGridPosition(testGridPosition)) continue;
+                    if (!PathFinding.Instance.HasPath(unitGridPosition, testGridPosition)) continue;
+
+                    validGridPositionList.Add(testGridPosition);
                 }
-
-                if (unitGridPosition == testGridPosition) {
-                    continue;
-                }
-
-                if (LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition)) {
-                    continue;
-                }
-
-                if (!PathFinding.Instance.IsWalkableGridPosition(testGridPosition)) {
-                    continue;
-                }
-
-                validGridPositionList.Add(testGridPosition);
             }
         }
 
@@ -67,7 +63,7 @@ public class TeleportSkill : BaseSkills
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         targetGrid = mouseGridPosition;
-
+        PlaySkillSFX();
         ActionStart(onActionComplete);
 
     }
@@ -95,4 +91,11 @@ public class TeleportSkill : BaseSkills
     }
 
     public override bool GetOnCooldown() { return onCoolDown; }
+    public int GetMaxTeleportDistance() { return maxTeleportDistance; }
+
+    public override void CopyFrom(BaseSkills other) {
+        base.CopyFrom(other);
+
+        maxTeleportDistance = (other as TeleportSkill).GetMaxTeleportDistance();
+    }
 }

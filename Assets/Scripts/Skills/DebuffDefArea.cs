@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class DEbuffDefArea : BaseSkills {
-    [SerializeField] private List<Unit> targetsList = new List<Unit>();
+public class DebuffDefArea : BaseSkills {
+
+    private List<Unit> targetsList = new List<Unit>();
     [SerializeField] private int maxIntimidateDistance = 1;
     [SerializeField] private int debufDefenceAmount = 1;
-    [SerializeField] private BuffType buffType = BuffType.DEFENCE;
-    public string debuffDefSFX;
+    private BuffType buffType = BuffType.DEFENCE;
 
+
+    private void Awake() {
+        base.Awake();
+
+        sfxName = "DebuffDefense";
+    }
 
     public override void Action() {
         // AudioManager.instance?.PlaySFX("Intimidar");
@@ -58,9 +64,7 @@ public class DEbuffDefArea : BaseSkills {
     }
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
-        if (!string.IsNullOrEmpty(debuffDefSFX)) {
-            AudioManager.instance?.PlaySFX(debuffDefSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
-        }
+        PlaySkillSFX();
         ActionStart(onActionComplete);
     }
 
@@ -76,7 +80,7 @@ public class DEbuffDefArea : BaseSkills {
             currentCoolDown--;
         }
         if (currentCoolDown == 0) {
-            onEndEffect.Invoke(this, EventArgs.Empty);
+            onEndEffect?.Invoke(this, EventArgs.Empty);
             onCoolDown = false;
         }
     }
@@ -84,8 +88,16 @@ public class DEbuffDefArea : BaseSkills {
     public override bool GetOnCooldown() { return onCoolDown; }
 
     public int GetMaxIntimidateDistance() { return maxIntimidateDistance; }
+    public int GetDebufDefenceAmounte() { return debufDefenceAmount; }
 
     public List<Unit> GetTargetList() { return targetsList; }
 
     public override BuffType? GetBuffType() {return this.buffType;}
+
+    public override void CopyFrom(BaseSkills other) {
+        base.CopyFrom(other);
+
+        maxIntimidateDistance = (other as DebuffDefArea).GetMaxIntimidateDistance();
+        debufDefenceAmount = (other as DebuffDefArea).GetDebufDefenceAmounte();
+    }
 }
