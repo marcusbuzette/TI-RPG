@@ -8044,6 +8044,22 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 54ac065c7cb16594e9cd4640967b891a, type: 3}
   - name: Rio
     clip: {fileID: 8300000, guid: 1fd404f0598746c479399d0308a2b7f2, type: 3}
+  - name: Bau
+    clip: {fileID: 8300000, guid: 5d1a34d41d0d54d44bdd48d222e4a9fa, type: 3}
+  - name: InvocarLobo
+    clip: {fileID: 8300000, guid: 4946115d38e45004fb9752b52db29d71, type: 3}
+  - name: LobisomemHit
+    clip: {fileID: 8300000, guid: ec0a502c1efd04b49880ebabc753d299, type: 3}
+  - name: LobisomemDamage
+    clip: {fileID: 8300000, guid: 9bdfbdc82dc435044b09a6bd3da7aa33, type: 3}
+  - name: GuerreiroInimigoHit
+    clip: {fileID: 8300000, guid: 1a43dab04a6e6f64b92fa0256851fa1a, type: 3}
+  - name: GuerreiroInimigoDano
+    clip: {fileID: 8300000, guid: a46116a31c1697b40ad09ce20d7dca08, type: 3}
+  - name: ArqueiroInimigoDano
+    clip: {fileID: 8300000, guid: a46116a31c1697b40ad09ce20d7dca08, type: 3}
+  - name: ArqueiroInimigoHit
+    clip: {fileID: 8300000, guid: 4dffef02b4ca67940a0e41c84ac0fe66, type: 3}
   ArqueiraSFX:
   - name: ArcherHit
     clip: {fileID: 8300000, guid: 4dffef02b4ca67940a0e41c84ac0fe66, type: 3}

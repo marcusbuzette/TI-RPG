@@ -188,6 +188,11 @@ MonoBehaviour:
   chestCanvas: {fileID: 1942872426712599779}
   imageTimer: 1.5
   animController: {fileID: 9100000, guid: 4b8c626bb1bc4d143bb9f3e8e5e2c44f, type: 2}
+  scaleUpTime: 0.1
+  scaleDownTime: 0.1
+  maxScaleMultiplier: 1.5
+  bauSFX: Bau
+  itemGetSFX: Cura
 --- !u!1001 &5917442974503699818
 PrefabInstance:
   m_ObjectHideFlags: 0

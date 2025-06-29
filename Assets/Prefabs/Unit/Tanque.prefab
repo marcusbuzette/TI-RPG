@@ -231,6 +231,10 @@ PrefabInstance:
       value: Tanque
       objectReference: {fileID: 0}
     - target: {fileID: 5740676890434492411, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: missSFX
+      value: Esquiva
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740676890434492411, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: deathSFX
       value: LeonardDeath
       objectReference: {fileID: 0}

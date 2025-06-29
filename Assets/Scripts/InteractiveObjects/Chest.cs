@@ -30,6 +30,9 @@ public class Chest : MonoBehaviour, IInteractiveObjects
 
     bool used = false;
 
+    public string bauSFX;
+    public string itemGetSFX;
+
     private void Start() {
         inventory = InventorySystem.inventorySystem;
 
@@ -81,6 +84,10 @@ public class Chest : MonoBehaviour, IInteractiveObjects
 
         goingTo = false;
         currentUnit = null;
+
+        if (!string.IsNullOrEmpty(bauSFX)) {
+            AudioManager.instance?.PlaySFX(bauSFX);
+        }
     }
 
     public void AddItens(List<InventoryItemData> items, int gold = 0) {
@@ -103,6 +110,10 @@ public class Chest : MonoBehaviour, IInteractiveObjects
         chestItems.Remove(_item);
 
         StartCoroutine(CreateItemImage());
+
+        if (!string.IsNullOrEmpty(itemGetSFX)) {
+            AudioManager.instance?.PlaySFX(itemGetSFX);
+        }
     }
 
     private IEnumerator CreateItemImage() {

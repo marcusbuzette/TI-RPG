@@ -45,10 +45,11 @@ public class HealthSystem : MonoBehaviour {
             if (dice <= 1) {
                 attackedBy.GetHealthSystem().GetUnitWorldUI().ShowUIValue(0, "Miss");
                 GetComponent<Unit>().PlayAnimation("Dodge");
-                /*if(haveProjectile) attackedBy.SpawnProjectile(this, 0, true);
                 if (!string.IsNullOrEmpty(missSFX)) {
                     AudioManager.instance?.PlaySFX(missSFX);  // vai tocar o sfx q ta no inspector do healthSystem de cada boneco
-                }*/
+                }
+                /*if(haveProjectile) attackedBy.SpawnProjectile(this, 0, true);
+                */
                 return;
             }
         }
