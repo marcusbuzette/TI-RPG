@@ -9,8 +9,13 @@ public class DebuffDefArea : BaseSkills {
     [SerializeField] private int maxIntimidateDistance = 1;
     [SerializeField] private int debufDefenceAmount = 1;
     private BuffType buffType = BuffType.DEFENCE;
-    public string debuffDefSFX;
 
+
+    private void Awake() {
+        base.Awake();
+
+        sfxName = "DebuffDefense";
+    }
 
     public override void Action() {
         // AudioManager.instance?.PlaySFX("Intimidar");

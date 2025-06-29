@@ -10,6 +10,14 @@ public class EnemyFocusSkill : BaseSkills
 
     [SerializeField] private int skillRounds;
     public string provokeSFX;
+
+
+    private void Awake() {
+        base.Awake();
+
+        sfxName = "Provocar";
+    }
+
     public override void Action() {
         unit.FocusOnMe(skillRounds);
         ActionFinish();

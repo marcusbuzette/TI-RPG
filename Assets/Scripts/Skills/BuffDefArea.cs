@@ -10,7 +10,12 @@ public class BuffDefArea : BaseSkills {
     [SerializeField] private int maxInspireDistance = 1;
     [SerializeField] private int buffAmount = 2;
     [SerializeField] private BuffType buffType = BuffType.DEFENCE;
-    public string buffDefSFX;
+
+    private void Awake() {
+        base.Awake();
+
+        sfxName = "BuffDefesa";
+    }
 
     public override void Action() {
         
