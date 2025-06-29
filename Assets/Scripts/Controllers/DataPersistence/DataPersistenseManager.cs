@@ -93,4 +93,6 @@ public class DataPersistenseManager : MonoBehaviour
     {
         // SaveGame();
     }
+
+    public GameData GetGameData() {return this.gameData;}
 }
