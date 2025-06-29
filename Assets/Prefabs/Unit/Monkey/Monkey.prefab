@@ -2188,8 +2188,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: d834c0a093d5840ba9f5c0a06bea1324, type: 2}
   xpSystem: {fileID: 1913271140186555034}
   unitId: monkey
-  unitName: Macapoera
-  unitImage: {fileID: 0}
+  unitName: Gibbon
+  unitImage: {fileID: 21300000, guid: a6c0908ccdcce43bdb08340d202e9e0a, type: 3}
   baseUnitStats:
     speed: 6
     attack: 3
@@ -2356,8 +2356,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   descricao: 
-  actionImage: {fileID: 0}
-  actionImageBlocked: {fileID: 0}
+  actionImage: {fileID: 21300000, guid: f08c21dcd837f87469fa565c6bbeb156, type: 3}
+  actionImageBlocked: {fileID: 21300000, guid: f08c21dcd837f87469fa565c6bbeb156, type: 3}
   animator: {fileID: 9113792291304497894}
   speed: 0
   rotSpeed: 180

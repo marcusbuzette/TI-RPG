@@ -37,9 +37,9 @@ public class HealthSystem : MonoBehaviour {
         OnDamage?.Invoke(this, EventArgs.Empty);
     }
 
-    public void TestDamage(int damage, Unit attackedBy, bool haveProjectile) {
+    public void TestDamage(int damage, Unit attackedBy, bool haveProjectile, bool missChance = true) {
         //Verifica se alguma unidade o atacou, se n�o, foi algum efeito que n�o tem chance de errar
-        if (attackedBy != null) {
+        if (missChance && attackedBy != null) {
             int dice = Random.Range(0, 10);
 
             if (dice <= 1) {
@@ -52,6 +52,9 @@ public class HealthSystem : MonoBehaviour {
                 return;
             }
         }
+        Debug.Log(attackedBy);
+        Debug.Log(this);
+        Debug.Log(damage);
 
         if (haveProjectile) attackedBy.SpawnProjectile(this, damage);
         else Damage(damage, attackedBy);

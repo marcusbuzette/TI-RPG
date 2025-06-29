@@ -61,7 +61,7 @@ MonoBehaviour:
   xpSystem: {fileID: 0}
   unitId: Javali
   unitName: Boar
-  unitImage: {fileID: 0}
+  unitImage: {fileID: 21300000, guid: 368ca8b627e5ef347b33e23bba0723fd, type: 3}
   baseUnitStats:
     speed: 4
     attack: 10

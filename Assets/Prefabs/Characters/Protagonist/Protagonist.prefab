@@ -514,7 +514,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: f3e37d9a6755a4f609506d11408e0736, type: 2}
   xpSystem: {fileID: 4904485793414091471}
   unitId: hero
-  unitName: Heroi
+  unitName: Lucian
+  unitImage: {fileID: 21300000, guid: 12541066e3ccf064bb6b499c1479c950, type: 3}
   baseUnitStats:
     speed: 2
     attack: 5
@@ -534,6 +535,7 @@ MonoBehaviour:
   hasMoved: 0
   hasPerformedAction: 0
   hasPerformedSkill: 0
+  hasUnlockedAnySkill: 0
   modifiedBy: []
   isUnitTurn: 0
   projectilePrefab: {fileID: 0}
@@ -565,14 +567,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a98aa284f9b23428a071063490ad6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 21300000, guid: d24172bb5601f90449d5233c70318796, type: 3}
   actionImageBlocked: {fileID: 21300000, guid: d5b839f9656be884ca143487fb358ccd, type: 3}
   animator: {fileID: 0}
   speed: 0
   rotSpeed: 180
+  currentArrow: {fileID: 0}
   moveSpeed: 4
   stopDistance: 0.1
   maxMoveDistance: 4
+  exploreSpeed: 5.5
 --- !u!114 &8345496573422874549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -606,8 +611,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8a40b60fda1ef4f8c9d0f466e29e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 21300000, guid: 39195be798b6f544b952277c45599e40, type: 3}
-  actionImageBlocked: {fileID: 21300000, guid: efaa1fec437761e48b59a5e2b5d1225c, type: 3}
+  actionImageBlocked: {fileID: 21300000, guid: 91152993c48be5647b7f343a634b7b2c, type: 3}
   animator: {fileID: 0}
   speed: 0
   rotSpeed: 180
@@ -630,8 +636,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d080ed6cd128408b82a8d741eeacab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionImage: {fileID: 0}
-  actionImageBlocked: {fileID: 0}
+  descricao: 
+  actionImage: {fileID: 21300000, guid: f08c21dcd837f87469fa565c6bbeb156, type: 3}
+  actionImageBlocked: {fileID: 21300000, guid: f08c21dcd837f87469fa565c6bbeb156, type: 3}
   animator: {fileID: 0}
   speed: 0
   rotSpeed: 180
@@ -668,6 +675,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfbc725d5c76b47b28e3ccd3e66dc849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 21300000, guid: 3ec57346bd4f7734bad8ae1cba400055, type: 3}
   actionImageBlocked: {fileID: 21300000, guid: e8aaa4b822f9d38489c29a1715a6ab19, type: 3}
   animator: {fileID: 0}
@@ -677,7 +685,6 @@ MonoBehaviour:
   maxAttackDistance: 1
   attackAttenuation: 2
   hitDamage: 30
-  MAX_SPIN: 360
   tornadoSFX: AtaqueAOE
 --- !u!65 &1104661637224546848
 BoxCollider:

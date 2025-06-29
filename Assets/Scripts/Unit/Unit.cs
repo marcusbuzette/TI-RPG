@@ -128,6 +128,14 @@ public class Unit : MonoBehaviour {
         }
     }
 
+    public SerializableDictionary<int, int> GetChosenUpgrades() {
+    if (GameController.controller.HasUnitRecords(unitId)) {
+        return GameController.controller.GetUnitRecords(unitId).GetLevelUpgrades();
+    }
+    return new SerializableDictionary<int, int>();
+}
+
+
     public T GetAction<T>() where T : BaseAction {
         foreach (BaseAction baseAction in actionsArray) {
             if (baseAction is T) {
@@ -207,8 +215,8 @@ public class Unit : MonoBehaviour {
         return isEnemy;
     }
 
-    public void Damage(int damage, bool haveProjectile = false, Unit attackedBy = null) {
-        healthSystem.TestDamage(damage, attackedBy, haveProjectile);
+    public void Damage(int damage, bool haveProjectile = false, Unit attackedBy = null, bool missChanece = true) {
+        healthSystem.TestDamage(damage, attackedBy, haveProjectile, missChanece);
     }
 
     public void AddXp(int xpAmount) {
@@ -336,6 +344,10 @@ public class Unit : MonoBehaviour {
         }
     }
 
+    public Animator GetAnimator() {
+        return animator;
+    }
+
     public UnitStatsModifiers GetModifiers() { return this.statsModifiers; }
     public void SubscribeToModifiedEvent(BaseSkills baseSkill) {
         baseSkill.onEndEffect += BaseSkill_onEndEffect;
@@ -417,4 +429,5 @@ public class Unit : MonoBehaviour {
     public Sprite GetImage() {
         return this.unitImage;
     }
+    
 }

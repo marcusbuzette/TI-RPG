@@ -231,7 +231,7 @@ MonoBehaviour:
   xpSystem: {fileID: 0}
   unitId: bear
   unitName: Urso
-  unitImage: {fileID: 0}
+  unitImage: {fileID: 21300000, guid: 54c23180ee71ffe488525c46ac82c50e, type: 3}
   baseUnitStats:
     speed: 4
     attack: 50
