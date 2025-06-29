@@ -11,6 +11,12 @@ public class TeleportSkill : BaseSkills
 
     private float teleportDelay = 0.55f;
 
+    private void Awake()
+    {
+        base.Awake();
+        sfxName = "Teleport";
+    }
+
     public override void Action() {
         StartCoroutine(DelayedTeleport());
     }
