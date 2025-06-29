@@ -14,6 +14,7 @@ public class ActionButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField] private Color NORMAL_COLOR;
     [SerializeField] private Color SELECTED_COLOR;
     [SerializeField] private ActionType actionType;
+    [SerializeField] private GameObject coolDownUI;
 
     private string name;
     private string description;
@@ -39,7 +40,7 @@ public class ActionButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
 
         button.onClick.AddListener(() => {
-            if(UnitActionSystem.Instance.GetSelectedAction() == baseAction) {
+            if (UnitActionSystem.Instance.GetSelectedAction() == baseAction) {
                 UnselectAction();
                 UnitActionSystem.Instance.SetSelectedAction(null);
                 return;
@@ -47,6 +48,14 @@ public class ActionButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             SelectAction();
             UnitActionSystem.Instance.SetSelectedAction(baseAction);
         });
+
+
+        if ((baseAction as BaseSkills) != null) {
+            coolDownUI.SetActive((baseAction as BaseSkills).IsOnCooldown());
+            coolDownUI.GetComponentInChildren<TMP_Text>().text = "Disponível em " + (baseAction as BaseSkills).GetCooldownNumber().ToString() + ((baseAction as BaseSkills).GetCooldownNumber() > 1 ? " turnos" : " turno");
+
+        }
+
     }
 
 
