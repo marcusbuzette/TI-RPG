@@ -11,6 +11,12 @@ public class IntimidateSkill : BaseSkills {
     [SerializeField] private int debufAmount = 2;
     private BuffType buffType = BuffType.ATTACK;
 
+    private void Awake() {
+        base.Awake();
+
+        sfxName = "Intimidar";
+    }
+
     public override void Action() {
         AudioManager.instance?.PlaySFX("Intimidar");
         foreach (Unit target in targetsList) {
