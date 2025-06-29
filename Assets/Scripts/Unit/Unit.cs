@@ -215,8 +215,8 @@ public class Unit : MonoBehaviour {
         return isEnemy;
     }
 
-    public void Damage(int damage, bool haveProjectile = false, Unit attackedBy = null) {
-        healthSystem.TestDamage(damage, attackedBy, haveProjectile);
+    public void Damage(int damage, bool haveProjectile = false, Unit attackedBy = null, bool missChanece = true) {
+        healthSystem.TestDamage(damage, attackedBy, haveProjectile, missChanece);
     }
 
     public void AddXp(int xpAmount) {
@@ -342,6 +342,10 @@ public class Unit : MonoBehaviour {
         if (animationTriggersStack.Count > 0) {
             this.PlayNextAnimation();
         }
+    }
+
+    public Animator GetAnimator() {
+        return animator;
     }
 
     public UnitStatsModifiers GetModifiers() { return this.statsModifiers; }
