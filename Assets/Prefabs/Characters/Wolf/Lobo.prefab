@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 984923278628091388}
   - component: {fileID: 7808786601691350061}
   m_Layer: 7
-  m_Name: Boar
+  m_Name: Lobo
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,7 +35,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8262190970494300239}
+  - {fileID: 3165649453856522265}
   - {fileID: 7318676822534533350}
   - {fileID: 1595476824447462880}
   m_Father: {fileID: 0}
@@ -59,8 +59,8 @@ MonoBehaviour:
   possibleSkillsPrefabs: []
   possibleUpgrades: []
   xpSystem: {fileID: 0}
-  unitId: Javali
-  unitName: Boar
+  unitId: Lobo
+  unitName: Wolf
   unitImage: {fileID: 0}
   baseUnitStats:
     speed: 4
@@ -80,7 +80,6 @@ MonoBehaviour:
   actionsArray:
   - {fileID: 6321738193073905294}
   - {fileID: 984923278628091388}
-  - {fileID: 0}
   hasMoved: 0
   hasPerformedAction: 0
   hasPerformedSkill: 0
@@ -147,8 +146,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthState: 0
-  healthPoints: 100
-  maxHealthPoints: 100
+  healthPoints: 120
+  maxHealthPoints: 120
   animator: {fileID: 0}
   faintText: {fileID: 0}
   damageSFX: BoarHurt
@@ -189,8 +188,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4096442209837572}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: f8fbfc8bbabd09c4289d3cd7ec3e481b, type: 3}
-  m_Controller: {fileID: 9100000, guid: b0120dfdcc66d154496c45fa0f1aa885, type: 2}
+  m_Avatar: {fileID: 9000000, guid: 334963db0c2c9ca45bea8b23c2ec628d, type: 3}
+  m_Controller: {fileID: 9100000, guid: 5dcaf450752fd2549beb8636c3c2c837, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -634,7 +633,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 7551674043583017495}
---- !u!1001 &8440743598025988004
+--- !u!1001 &3198712535787923442
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -642,69 +641,57 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8280494465233947303}
     m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: f8fbfc8bbabd09c4289d3cd7ec3e481b, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.3
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f8fbfc8bbabd09c4289d3cd7ec3e481b, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.3
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f8fbfc8bbabd09c4289d3cd7ec3e481b, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.3
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f8fbfc8bbabd09c4289d3cd7ec3e481b, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 334963db0c2c9ca45bea8b23c2ec628d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f8fbfc8bbabd09c4289d3cd7ec3e481b, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 334963db0c2c9ca45bea8b23c2ec628d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.05
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f8fbfc8bbabd09c4289d3cd7ec3e481b, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 334963db0c2c9ca45bea8b23c2ec628d, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f8fbfc8bbabd09c4289d3cd7ec3e481b, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 334963db0c2c9ca45bea8b23c2ec628d, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f8fbfc8bbabd09c4289d3cd7ec3e481b, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 334963db0c2c9ca45bea8b23c2ec628d, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f8fbfc8bbabd09c4289d3cd7ec3e481b, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 334963db0c2c9ca45bea8b23c2ec628d, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f8fbfc8bbabd09c4289d3cd7ec3e481b, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 334963db0c2c9ca45bea8b23c2ec628d, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f8fbfc8bbabd09c4289d3cd7ec3e481b, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 334963db0c2c9ca45bea8b23c2ec628d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f8fbfc8bbabd09c4289d3cd7ec3e481b, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 334963db0c2c9ca45bea8b23c2ec628d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f8fbfc8bbabd09c4289d3cd7ec3e481b, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 334963db0c2c9ca45bea8b23c2ec628d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: f8fbfc8bbabd09c4289d3cd7ec3e481b, type: 3}
+    - target: {fileID: 919132149155446097, guid: 334963db0c2c9ca45bea8b23c2ec628d, type: 3}
       propertyPath: m_Name
-      value: Boar
+      value: Wolf
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f8fbfc8bbabd09c4289d3cd7ec3e481b, type: 3}
---- !u!4 &8262190970494300239 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: 334963db0c2c9ca45bea8b23c2ec628d, type: 3}
+--- !u!4 &3165649453856522265 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f8fbfc8bbabd09c4289d3cd7ec3e481b, type: 3}
-  m_PrefabInstance: {fileID: 8440743598025988004}
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 334963db0c2c9ca45bea8b23c2ec628d, type: 3}
+  m_PrefabInstance: {fileID: 3198712535787923442}
   m_PrefabAsset: {fileID: 0}
