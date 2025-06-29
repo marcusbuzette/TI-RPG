@@ -73,7 +73,7 @@ public abstract class BaseAction : MonoBehaviour {
     protected void ActionFinish() {
         isActive = false;
         onActionComplete();
-
+        Debug.Log("Action finish");
         OnAnyActionCompleted?.Invoke(this, EventArgs.Empty);
     }
 
