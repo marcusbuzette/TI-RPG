@@ -2188,7 +2188,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: d834c0a093d5840ba9f5c0a06bea1324, type: 2}
   xpSystem: {fileID: 1913271140186555034}
   unitId: monkey
-  unitName: Macapoera
+  unitName: Gibbon
   unitImage: {fileID: 21300000, guid: a6c0908ccdcce43bdb08340d202e9e0a, type: 3}
   baseUnitStats:
     speed: 6
