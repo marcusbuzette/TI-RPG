@@ -41,7 +41,6 @@ public class TurnSystemUI : MonoBehaviour {
     }
 
     private void UpdatedTurnText() {
-        // turnNumberText.text = "TURNO: " + TurnSystem.Instance.GetTurnNumber();
         if (TurnSystem.Instance.GetTurnUnit().GetImage() != null) {
             turnUnitImage.sprite = TurnSystem.Instance.GetTurnUnit().GetImage();
         }
@@ -61,6 +60,7 @@ public class TurnSystemUI : MonoBehaviour {
         }
     }
     private void TurnSystem_OnOrderChange(object sender, EventArgs e) {
+        UpdatedTurnText();
         CreateUnitActionButtons();
     }
 
