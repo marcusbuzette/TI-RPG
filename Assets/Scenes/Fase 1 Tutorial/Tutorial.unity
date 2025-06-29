@@ -3246,6 +3246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NameTXT: {fileID: 1105847977}
   DialogueTXT: {fileID: 1105847978}
+  imageChar: {fileID: 2023555143}
   animator: {fileID: 1105847979}
   isDialogueOpened: 0
 --- !u!1 &247682175
@@ -20803,6 +20804,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3029148455161553800, guid: 9744e47adebbab3449ad44de1fbd8c77, type: 3}
   m_PrefabInstance: {fileID: 2023443836}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2023555143 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8556961179306333705, guid: 1b28e24ed24b1ff4ea136bfcc5168fce, type: 3}
+  m_PrefabInstance: {fileID: 1105847975}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2026009726
 GameObject:
   m_ObjectHideFlags: 0
