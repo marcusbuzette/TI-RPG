@@ -514,7 +514,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: f3e37d9a6755a4f609506d11408e0736, type: 2}
   xpSystem: {fileID: 4904485793414091471}
   unitId: hero
-  unitName: Heroi
+  unitName: Lucian
   unitImage: {fileID: 21300000, guid: 12541066e3ccf064bb6b499c1479c950, type: 3}
   baseUnitStats:
     speed: 2

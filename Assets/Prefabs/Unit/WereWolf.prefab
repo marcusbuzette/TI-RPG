@@ -403,6 +403,7 @@ GameObject:
   - component: {fileID: 4908714323277675324}
   - component: {fileID: 8428029982322859060}
   - component: {fileID: 8160531672424211794}
+  - component: {fileID: 4853130691370365803}
   m_Layer: 7
   m_Name: WereWolf
   m_TagString: Player
@@ -463,7 +464,10 @@ MonoBehaviour:
     move: 0
     accuracy: 0
     speed: 0
-  actionsArray: []
+  actionsArray:
+  - {fileID: 8096173683310641798}
+  - {fileID: 8428029982322859060}
+  - {fileID: 4853130691370365803}
   hasMoved: 0
   hasPerformedAction: 0
   hasPerformedSkill: 0
@@ -585,6 +589,32 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2304
   maxShootDistance: 1
+--- !u!114 &4853130691370365803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5248424051689086498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcee49fea1c094fefada94566c5b7bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  descricao: 
+  actionImage: {fileID: 0}
+  actionImageBlocked: {fileID: 0}
+  animator: {fileID: 0}
+  speed: 0
+  rotSpeed: 180
+  maxSummonDistance: 3
+  maxSummonsPerUse: 2
+  summonableEnemyPrefab: {fileID: 7551674043583017495, guid: 34b819125fbc845b6830c5aa7b0e501b, type: 3}
+  summonCooldownTurns: 4
+  baseAIValue: 120
+  allyBonusValue: 30
+  enemyPenaltyValue: -20
+  Attack: 1
 --- !u!1 &5620274420724757863
 GameObject:
   m_ObjectHideFlags: 0

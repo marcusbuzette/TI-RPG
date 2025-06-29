@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasDinamicText: 0
-  stepInstruction: "Ven\xE7a o Rei"
+  stepInstruction: "Ven\xE7a o Ex\xE9rcito Real"
   enemiesKilled: 0
-  enemiesToComplete: 18
-  enemyId: boar
+  enemiesToComplete: 15
+  enemyId: EnemyKnight
