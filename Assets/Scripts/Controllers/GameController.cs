@@ -117,6 +117,7 @@ public class GameController : MonoBehaviour, IDataPersistence {
     public void LoadData(GameData data) {
         this.currentLevel = data.currentLevel;
         this.dinheiro = data.money;
+        Debug.Log(data.playerUnits.Count);
         if (data.playerUnits.Count > 0) {
             this.playerUnits = data.playerUnits;
             //foreach (KeyValuePair<string, UnitRecords> item in this.playerUnits) {

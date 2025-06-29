@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class SkillUi : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
     public BaseSkills skills;
@@ -13,6 +14,7 @@ public class SkillUi : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
     public Sprite skillUI;
     public Button botaoDesbloquear;
     [SerializeField] private TooltipPosition tooltipPosition = TooltipPosition.NULL;
+    
     private GameObject treeBranch;
     [SerializeField] private GameObject selectedBG;
     [SerializeField] private Color selectedColor;
@@ -33,6 +35,7 @@ public class SkillUi : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
         bool hasPoints = TalentManager.Instance.GetXPPoints() >= skills.custo;
         bool canBeUnlocked = TalentManager.Instance.PodeSerDesbloqueado(skills);
         bool alreadyChoseOnThisLevel = TalentManager.Instance.CheckSelectedSkillOnLevel(skills.custo);
+        bool isOnCooldown = skills.IsOnCooldown();
 
         botaoDesbloquear.interactable = canBeUnlocked && hasPoints && !alreadyChoseOnThisLevel;
 
