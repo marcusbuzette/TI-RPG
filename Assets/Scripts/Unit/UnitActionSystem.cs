@@ -153,6 +153,7 @@ public class UnitActionSystem : MonoBehaviour {
         }
         else {
             OnInventoryClicked.Invoke(action, EventArgs.Empty);
+            Debug.Log("Inventário");
         }
     }
 

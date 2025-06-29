@@ -34,7 +34,6 @@ public class DialogueController : MonoBehaviour
     }
 
     public void StartDialogue(Dialogue dialogue){
-        Debug.Log("Start dialogue");
         CameraHUB.isMenuOpen = true;
         isDialogueOpened = true;
         animator?.SetBool("IsOpen", isDialogueOpened);
@@ -48,7 +47,6 @@ public class DialogueController : MonoBehaviour
     }
 
     public void DisplayNextSentence(){
-        Debug.Log("Display next sentence");
         if(dialogueQueue.Count == 0){
             EndDialogue();
             return;

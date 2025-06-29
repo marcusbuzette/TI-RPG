@@ -175,7 +175,10 @@ public class LevelGrid : MonoBehaviour {
     public void SetCurrentBattleZone(int zone) { this.currentBattleZone = zone; }
 
     public List<GridPosition> GetZoneSpawnList(int zone) {
-        return this.zoneStartPositions[zone];
+        if (!zoneStartPositions.ContainsKey(zone)) {
+            return null;
+        }
+        return zoneStartPositions[zone];
     }
 
     public void RemoveZoneFromGrid(int zone) {

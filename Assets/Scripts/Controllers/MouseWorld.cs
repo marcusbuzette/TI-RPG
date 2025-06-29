@@ -18,7 +18,7 @@ public class MouseWorld : MonoBehaviour {
     }
 
     private void Update() {
-        transform.position = MouseWorld.GetPosition() == null? Vector3.zero : MouseWorld.GetPosition();
+        transform.position = MouseWorld.GetPosition() == null ? Vector3.zero : MouseWorld.GetPosition();
 
         if (transform.position != Vector3.zero) {
             //Se o mouse est� em cima da UI ele esconde o Visual do Mouse

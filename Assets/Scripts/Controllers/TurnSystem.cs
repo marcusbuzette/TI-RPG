@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class TurnSystem : MonoBehaviour {
 
-    private int turnNumber = 0;
+    [SerializeField] private int turnNumber = 0;
     [SerializeField] private bool isPlayerTurn = true;
     [SerializeField] private List<Unit> unitiesOrderList = new List<Unit>();
     private List<Unit> allEnemies = new List<Unit>();

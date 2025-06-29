@@ -68,43 +68,39 @@ public class MoveAction : BaseAction {
     public override void Action() {
         if (!isActive || positionList == null || positionList.Count == 0) return;
 
+        if (currentPositionIndex >= positionList.Count) {
+            // Proteção contra erro de índice inválido
+            ActionFinish();
+            return;
+        }
+
         Vector3 targetPosition = positionList[currentPositionIndex];
         Vector3 moveDirection = (targetPosition - transform.position).normalized;
 
-        float currentSpeed = moveSpeed;
-
-        if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE) {
-            currentSpeed = this.exploreSpeed; // exemplo: velocidade normalizada fixa para exploração
-            if (this.unit.unitId == "hero") {
-                currentSpeed += 0.5f;
-            } 
+        float currentSpeed = LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE ? exploreSpeed : moveSpeed;
+        if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.EXPLORE && unit.unitId == "hero") {
+            currentSpeed += 0.5f;
         }
 
-        // Move suavemente
         transform.position = Vector3.MoveTowards(
             transform.position,
             targetPosition,
             currentSpeed * Time.deltaTime
         );
 
-        // Rotaciona suavemente em direção ao alvo
         if (moveDirection != Vector3.zero) {
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation,
-                targetRotation,
-                rotateSpeed * Time.deltaTime
-            );
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
         }
 
-        // Verifica se chegou no ponto atual
         float reachedDistance = 0.05f;
         if (Vector3.Distance(transform.position, targetPosition) < reachedDistance) {
             currentPositionIndex++;
 
             if (currentPositionIndex >= positionList.Count) {
-                transform.position = targetPosition; // Garante precisão
+                transform.position = targetPosition; // Precisão final
                 unit.EndAnimation("IsWalking", true);
+                positionList = null; // Evita resíduos e erros futuros
                 ActionFinish();
                 OnFinishedWalking?.Invoke(this, EventArgs.Empty);
 
@@ -128,8 +124,10 @@ public class MoveAction : BaseAction {
                 currentPositionIndex = 0;
                 this.startZone = unit.GetGridPosition().zone;
 
-                foreach (GridPosition pathGridPosition in pathGridPositionList) {
-                    positionList.Add(LevelGrid.Instance.GetWorldPosition(pathGridPosition));
+                if (pathGridPositionList != null) {
+                    foreach (GridPosition pathGridPosition in pathGridPositionList) {
+                        positionList.Add(LevelGrid.Instance.GetWorldPosition(pathGridPosition));
+                    }
                 }
 
                 unit.PlayAnimation("IsWalking", true);
