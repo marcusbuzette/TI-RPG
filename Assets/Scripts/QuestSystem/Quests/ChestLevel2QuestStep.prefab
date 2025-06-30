@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5640780447877117650}
   - component: {fileID: 916290266570501777}
   m_Layer: 0
-  m_Name: ChestLevel1QuestStep
+  m_Name: ChestLevel2QuestStep
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,4 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasDinamicText: 0
   stepInstruction: Colete sua recompensa
-  chestId: bearLevel1
+  chestId: wereWolfChest
