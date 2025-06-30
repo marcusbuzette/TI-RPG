@@ -10,8 +10,6 @@ public class HealthPotionAction : BaseAction {
     [SerializeField] private string itemName;
 
     public override void Action() {
-        Debug.Log(itemName);
-
         if (InventorySystem.inventorySystem != null &&
                 InventorySystem.inventorySystem.HasItemNamed(itemName) && healthSystem != null) {
             InventoryItemData healthPotion = InventorySystem.inventorySystem.GetInvontoryItemNamed(itemName);
@@ -22,7 +20,6 @@ public class HealthPotionAction : BaseAction {
             Debug.LogWarning("HealthSystem or InventorySystem missing!");
         }
         ActionFinish();
-
     }
 
     public override string GetActionName() {

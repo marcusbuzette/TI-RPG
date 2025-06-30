@@ -23,6 +23,8 @@ public class TurnSystem : MonoBehaviour
     private int turnSpeedIndex;
     private bool isOnCombo = false;
 
+    private int roundGold;
+
     private void Awake()
     {
         if (Instance != null)
@@ -177,6 +179,7 @@ public class TurnSystem : MonoBehaviour
         if (unitDead.IsEnemy())
         {
             onEnemyKilled.Invoke(unitDead, EventArgs.Empty);
+            roundGold = unitDead.GetUnitStats().GetGoldSpoil();
             allEnemies.Remove(unitDead);
         }
         unitiesOrderList.Remove(unitDead);
@@ -211,6 +214,7 @@ public class TurnSystem : MonoBehaviour
             }
 
             InstantiateRewardChest(unitDead.transform);
+            roundGold = 0;
             ResetTurnSpeed();
             LevelGrid.Instance.ExploreMode();
         }
@@ -364,206 +368,8 @@ public class TurnSystem : MonoBehaviour
     {
         var chest = Instantiate(Resources.Load<GameObject>("Prefabs_R/Chest"), chestTransform.position, chestTransform.rotation);
 
-        var rewardItems = GetRewardChestItems();
-        Debug.Log($"Itens gerados: {rewardItems.Count}");
-        foreach (var item in rewardItems)
-        {
-            Debug.Log("Item: " + item.name);
-        }
-
-        chest.GetComponent<Chest>().AddItens(rewardItems, (100 * unitiesOrderList.Count));
+        chest.GetComponent<Chest>().AddItens(null, roundGold);
         PathFinding.Instance.SetNodeIsWalkable(chest.transform.position, false);
-    }
-
-
-    private List<InventoryItemData> GetRewardChestItems()
-    {
-        List<InventoryItemData> listItems = new List<InventoryItemData>();
-        int quality = unitiesOrderList.Count;
-        int dice = UnityEngine.Random.Range(0, 100);
-
-        switch (quality)
-        {
-            case 1:
-                //Revive
-                if (dice <= 30)
-                {
-                    if (dice <= 10) listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_Revive"));
-                    listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_Revive"));
-                }
-                listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_Revive"));
-
-                //Great Potion
-                if (dice <= 40)
-                {
-                    if (dice <= 20)
-                    {
-                        listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_GreatPotion"));
-                    }
-                    listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_GreatPotion"));
-                }
-
-                //Medium Potion
-                if (dice <= 60)
-                {
-                    if (dice <= 50)
-                    {
-                        listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_MediumPotion"));
-                    }
-                    if (dice <= 20)
-                    {
-                        listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_MediumPotion"));
-                        listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_MediumPotion"));
-                    }
-                }
-                listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_MediumPotion"));
-
-                //Basic Postion
-                if (dice <= 70)
-                {
-                    if (dice <= 40) listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_BasicPotion"));
-                    listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_BasicPotion"));
-                }
-                listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_BasicPotion"));
-                listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_BasicPotion"));
-
-                break;
-
-            case 2:
-                //Revive
-                if (dice <= 40)
-                {
-                    if (dice <= 20) listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_Revive"));
-                    listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_Revive"));
-                }
-                listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_Revive"));
-
-                //Great Potion
-                if (dice <= 50)
-                {
-                    if (dice <= 30)
-                    {
-                        listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_GreatPotion"));
-                    }
-                    listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_GreatPotion"));
-                }
-
-                //Medium Potion
-                if (dice <= 70)
-                {
-                    if (dice <= 60)
-                    {
-                        listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_MediumPotion"));
-                    }
-                    if (dice <= 30)
-                    {
-                        listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_MediumPotion"));
-                        listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_MediumPotion"));
-                    }
-                }
-                listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_MediumPotion"));
-
-                //Basic Postion
-                if (dice <= 80)
-                {
-                    if (dice <= 50) listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_BasicPotion"));
-                    listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_BasicPotion"));
-                }
-                listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_BasicPotion"));
-                listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_BasicPotion"));
-
-                break;
-
-            case 3:
-                //Revive
-                if (dice <= 50)
-                {
-                    if (dice <= 30) listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_Revive"));
-                    listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_Revive"));
-                }
-                listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_Revive"));
-
-                //Great Potion
-                if (dice <= 60)
-                {
-                    if (dice <= 40)
-                    {
-                        listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_GreatPotion"));
-                    }
-                    listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_GreatPotion"));
-                }
-
-                //Medium Potion
-                if (dice <= 80)
-                {
-                    if (dice <= 70)
-                    {
-                        listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_MediumPotion"));
-                    }
-                    if (dice <= 40)
-                    {
-                        listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_MediumPotion"));
-                        listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_MediumPotion"));
-                    }
-                }
-                listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_MediumPotion"));
-
-                //Basic Postion
-                if (dice <= 85)
-                {
-                    if (dice <= 65) listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_BasicPotion"));
-                    listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_BasicPotion"));
-                }
-                listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_BasicPotion"));
-
-                break;
-
-            case 4:
-                //Revive
-                if (dice <= 50)
-                {
-                    if (dice <= 30) listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_Revive"));
-                    listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_Revive"));
-                }
-                listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_Revive"));
-
-                //Great Potion
-                if (dice <= 80)
-                {
-                    if (dice <= 40)
-                    {
-                        listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_GreatPotion"));
-                    }
-                    listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_GreatPotion"));
-                }
-
-                //Medium Potion
-                if (dice <= 85)
-                {
-                    if (dice <= 60)
-                    {
-                        listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_MediumPotion"));
-                    }
-                    if (dice <= 40)
-                    {
-                        listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_MediumPotion"));
-                    }
-                    listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_MediumPotion"));
-                }
-                listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_MediumPotion"));
-
-                //Basic Postion
-                if (dice <= 85)
-                {
-                    if (dice <= 65) listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_BasicPotion"));
-                    listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_BasicPotion"));
-                }
-                listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_BasicPotion"));
-                listItems.Add(Resources.Load<InventoryItemData>("InventoryItemData_R/InventoryItem_BasicPotion"));
-
-                break;
-        }
-        return listItems;
     }
 
     public void SetCameraController(CameraController controller) { cameraController = controller; }
