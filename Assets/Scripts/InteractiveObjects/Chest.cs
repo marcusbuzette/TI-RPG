@@ -13,7 +13,7 @@ public class Chest : MonoBehaviour, IInteractiveObjects
 
     InventorySystem inventory;
 
-    [Space, Header("Chest Items"),SerializeField] private List<InventoryItemData> chestItems;
+    [Space, Header("Chest Items"),SerializeField] private List<InventoryItemData> chestItems = new List<InventoryItemData>();
     [Space, Header("Chest Gold"), SerializeField] private int gold;
 
     [Space, Header("Chest Canvas"),SerializeField]
@@ -92,10 +92,9 @@ public class Chest : MonoBehaviour, IInteractiveObjects
     }
 
     private void RecolherItens() {
-        if (chestItems.Count == 0) {
+        if (chestItems == null) {
             if(gold != 0) {
                 GameController.controller.AddMoney(gold);
-                gold = 0;
                 StartCoroutine(CreateGoldImage());
             }
             return;
@@ -128,16 +127,18 @@ public class Chest : MonoBehaviour, IInteractiveObjects
         var _obj = Instantiate(new GameObject("ImageItemChest"), chestCanvas.transform);
         var _text = _obj.AddComponent<TextMeshPro>();
 
-        _text.text = ("+" + gold + " GOLD");
+        _text.text = ("+" + gold + "$");
         _text.color = Color.yellow;
         _text.alignment = TextAlignmentOptions.Center;
-        _text.fontSize = 5;
+        _text.fontSize = 3;
 
         var anim = _obj.AddComponent<Animator>();
         anim.runtimeAnimatorController = animController;
 
-        yield return new WaitForSeconds(imageTimer);
+        yield return new WaitForSeconds(imageTimer * 2);
+
         Destroy(_obj);
+        gold = 0;
         PlayAndDestroy();
     }
 

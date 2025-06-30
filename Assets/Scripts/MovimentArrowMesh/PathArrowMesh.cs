@@ -15,7 +15,6 @@ public class PathArrowMesh : MonoBehaviour {
     public void DrawPath(List<GridPosition> path) {
 
         if (path == null || path.Count < 2) {
-            Debug.LogWarning("Caminho muito curto para desenhar.");
             return;
         }
 

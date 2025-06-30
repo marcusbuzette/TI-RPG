@@ -181,6 +181,8 @@ public class Unit : MonoBehaviour {
     }
 
     private void PerformAction(BaseAction action) {
+        if (!LevelGrid.Instance.IsInBattleMode()) return;
+
         switch (action.GetActionType()) {
             case ActionType.MOVE:
                 hasMoved = true;
