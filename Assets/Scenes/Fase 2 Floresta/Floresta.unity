@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.008947474, g: 0.013111375, b: 0.0204459, a: 1}
+  m_IndirectSpecularColor: {r: 0.008958812, g: 0.013101446, b: 0.02045097, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9081,6 +9081,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8722998597169172333, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: e5ea95dfa03b3a545954a064e149c15f, type: 2}
     m_RemovedComponents:
     - {fileID: 8160531672424211794, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
     m_RemovedGameObjects: []
@@ -22021,12 +22025,6 @@ MonoBehaviour:
   m_itemDictionary:
     keys: []
     values: []
-  inventory:
-  - id: 1
-    displayName: Potion
-    prefab: {fileID: 959054419738605824, guid: 3938934a894c14343b69e125355950d7, type: 3}
-    qtd: 2
-    scriptableObj: {fileID: 11400000, guid: 110230de560646841bb1f0097e70042a, type: 2}
 --- !u!1 &1985149338
 GameObject:
   m_ObjectHideFlags: 0
