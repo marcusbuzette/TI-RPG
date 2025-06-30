@@ -21,12 +21,15 @@ public class Chest : MonoBehaviour, IInteractiveObjects
 
     private InventoryItemData _item;
     [SerializeField] private float imageTimer;
+    [SerializeField] private string chestId = "chest";
     [SerializeField] private RuntimeAnimatorController animController;
 
-    [Header("Configurações do Efeito")]
+    [Header("Configuraï¿½ï¿½es do Efeito")]
     [SerializeField] private float scaleUpTime = 0.1f;
     [SerializeField] private float scaleDownTime = 0.1f;
     [SerializeField] private float maxScaleMultiplier = 1.5f;
+
+    public static event Action<string> onChestOpened;
 
     bool used = false;
 
@@ -166,6 +169,9 @@ public class Chest : MonoBehaviour, IInteractiveObjects
         }
 
         // Destroi o objeto
+        onChestOpened?.Invoke(this.chestId);
         Destroy(gameObject);
     }
+
+    public void SetChestId(string chestId) {this.chestId = chestId;}
 }
