@@ -10,6 +10,8 @@ public class QuestInfoSO : ScriptableObject {
     [Header("General1")]
     public string displayName;
 
+    public int levelIndex;
+
 
     [Header("Requirements")]
     public int levelRequirement;

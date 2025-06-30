@@ -48,7 +48,7 @@ public class OpenMapHUB : MonoBehaviour, IChangeCamera {
     }
 
     IEnumerator enumerator() {
-        fadingScript.FadeIn("Tutorial");
+        fadingScript.FadeAndLoadScene("Tutorial");
         yield return new WaitForSeconds(2.5f);
         DoSomething();
     }
@@ -70,6 +70,7 @@ public class OpenMapHUB : MonoBehaviour, IChangeCamera {
     private void CreateLevelButtons() {
         foreach (LevelButton lb in levelButtons) {
             lb.gameObject.SetActive(lb.level <= GameController.controller.GetCurrentLevel());
+            lb.transform.parent.gameObject.SetActive(lb.level <= GameController.controller.GetCurrentLevel());
         }
     }
 }

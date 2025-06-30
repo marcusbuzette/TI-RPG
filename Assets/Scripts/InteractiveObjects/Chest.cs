@@ -13,15 +13,23 @@ public class Chest : MonoBehaviour, IInteractiveObjects
 
     InventorySystem inventory;
 
-    [Space, Header("Chest Items"),SerializeField] private List<InventoryItemData> chestItems;
+    [Space, Header("Chest Items"),SerializeField] private List<InventoryItemData> chestItems = new List<InventoryItemData>();
     [Space, Header("Chest Gold"), SerializeField] private int gold;
 
     [Space, Header("Chest Canvas"),SerializeField]
     private GameObject chestCanvas;
 
     private InventoryItemData _item;
-    public float imageTimer;
-    public RuntimeAnimatorController animController;
+    [SerializeField] private float imageTimer;
+    [SerializeField] private string chestId = "chest";
+    [SerializeField] private RuntimeAnimatorController animController;
+
+    [Header("Configura��es do Efeito")]
+    [SerializeField] private float scaleUpTime = 0.1f;
+    [SerializeField] private float scaleDownTime = 0.1f;
+    [SerializeField] private float maxScaleMultiplier = 1.5f;
+
+    public static event Action<string> onChestOpened;
 
     bool used = false;
 
@@ -84,10 +92,9 @@ public class Chest : MonoBehaviour, IInteractiveObjects
     }
 
     private void RecolherItens() {
-        if (chestItems.Count == 0) {
+        if (chestItems == null) {
             if(gold != 0) {
                 GameController.controller.AddMoney(gold);
-                gold = 0;
                 StartCoroutine(CreateGoldImage());
             }
             return;
@@ -120,15 +127,51 @@ public class Chest : MonoBehaviour, IInteractiveObjects
         var _obj = Instantiate(new GameObject("ImageItemChest"), chestCanvas.transform);
         var _text = _obj.AddComponent<TextMeshPro>();
 
-        _text.text = ("+" + gold + " GOLD");
+        _text.text = ("+" + gold + "$");
         _text.color = Color.yellow;
         _text.alignment = TextAlignmentOptions.Center;
-        _text.fontSize = 5;
+        _text.fontSize = 3;
 
         var anim = _obj.AddComponent<Animator>();
         anim.runtimeAnimatorController = animController;
 
-        yield return new WaitForSeconds(imageTimer);
+        yield return new WaitForSeconds(imageTimer * 2);
+
         Destroy(_obj);
+        gold = 0;
+        PlayAndDestroy();
     }
+
+    public void PlayAndDestroy() {
+        StartCoroutine(BubbleAndDestroy());
+    }
+
+    private IEnumerator BubbleAndDestroy() {
+        Vector3 originalScale = transform.localScale;
+        Vector3 maxScale = originalScale * maxScaleMultiplier;
+
+        // Aumenta
+        float elapsed = 0f;
+        while (elapsed < scaleUpTime) {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / scaleUpTime);
+            transform.localScale = Vector3.Lerp(originalScale, maxScale, t);
+            yield return null;
+        }
+
+        // Diminui
+        elapsed = 0f;
+        while (elapsed < scaleDownTime) {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / scaleDownTime);
+            transform.localScale = Vector3.Lerp(maxScale, Vector3.zero, t);
+            yield return null;
+        }
+
+        // Destroi o objeto
+        onChestOpened?.Invoke(this.chestId);
+        Destroy(gameObject);
+    }
+
+    public void SetChestId(string chestId) {this.chestId = chestId;}
 }

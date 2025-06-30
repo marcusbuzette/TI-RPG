@@ -27,7 +27,7 @@ public class LevelGrid : MonoBehaviour {
 
     public enum GameMode { BATTLE, EXPLORE }
 
-    [SerializeField] private GameMode gameMode = GameMode.BATTLE;
+    [SerializeField] private GameMode gameMode = GameMode.EXPLORE;
     [SerializeField] private List<AddSquaredZone> squaredZoneList = new List<AddSquaredZone>();
     [SerializeField] private List<GridPosition> zoneList = new List<GridPosition>();
     private Dictionary<int, List<GridPosition>> zoneStartPositions = new Dictionary<int, List<GridPosition>>();
@@ -77,13 +77,13 @@ public class LevelGrid : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.N)) {
-            this.ExploreMode();
-        }
+        // if (Input.GetKeyDown(KeyCode.N)) {
+        //     this.ExploreMode();
+        // }
 
-        if (Input.GetKeyDown(KeyCode.B)) {
-            this.BattleMode();
-        }
+        // if (Input.GetKeyDown(KeyCode.B)) {
+        //     this.BattleMode();
+        // }
     }
 
     public void AddUnitAtGridPosition(GridPosition gridPosition, Unit unit) {
@@ -141,6 +141,7 @@ public class LevelGrid : MonoBehaviour {
 
     public void ExploreMode() {
         this.gameMode = GameMode.EXPLORE;
+        UnitActionSystem.Instance.SetSelectedUnit(TurnSystem.Instance.GetPlayerUnitToExplore());
         OnGameModeChanged?.Invoke(this, EventArgs.Empty);
         GridSystemVisual.Instance.UpdateGridVisual();
     }
@@ -175,7 +176,10 @@ public class LevelGrid : MonoBehaviour {
     public void SetCurrentBattleZone(int zone) { this.currentBattleZone = zone; }
 
     public List<GridPosition> GetZoneSpawnList(int zone) {
-        return this.zoneStartPositions[zone];
+        if (!zoneStartPositions.ContainsKey(zone)) {
+            return null;
+        }
+        return zoneStartPositions[zone];
     }
 
     public void RemoveZoneFromGrid(int zone) {

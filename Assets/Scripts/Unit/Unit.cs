@@ -29,6 +29,7 @@ public class Unit : MonoBehaviour {
     [SerializeField] private XpSystem xpSystem;
     [SerializeField] public string unitId = "";
     [SerializeField] public string unitName = "";
+    [SerializeField] public Sprite unitImage;
     [SerializeField] private UnitStats baseUnitStats;
     private UnitStats unitStats;
     [SerializeField] private UnitStatsModifiers statsModifiers;
@@ -36,10 +37,12 @@ public class Unit : MonoBehaviour {
     [SerializeField] private bool hasMoved = false;
     [SerializeField] private bool hasPerformedAction = false;
     [SerializeField] private bool hasPerformedSkill = false;
+    [SerializeField] private bool hasUnlockedAnySkill = false;
     [SerializeField] private List<Unit> modifiedBy = new List<Unit>();
     public bool isUnitTurn = false;
     private bool hasUsedQuickAttack = false;
     private bool isStunned = false;
+    [SerializeField] private string chestId;
 
     private Dictionary<string, bool> animationTriggersStack = new Dictionary<string, bool>();
     private Animator animator;
@@ -51,8 +54,6 @@ public class Unit : MonoBehaviour {
     [SerializeField] private Transform projectilePrefab;
     [SerializeField] private Transform projectilePoint;
 
-
-    private int intimidateCoolDown = 0;
     [SerializeField] private int enemyFocus = 0;
 
     private void Awake() {
@@ -64,33 +65,55 @@ public class Unit : MonoBehaviour {
     private void Start() {
         if (!isEnemy && GameController.controller.HasUnitRecords(unitId)) {
             UnitRecords unitRecords = GameController.controller.GetUnitRecords(unitId);
+
+            // Seta XP e stats básicos do Unit
             this.xpSystem.SetXp(unitRecords.xp);
             this.unitStats = unitRecords.unitStats;
-            foreach (BaseSkills skill in unitRecords.baseSkills) {
-                BaseSkills aux = possibleSkillsPrefabs.Find((s) => s.GetComponent<BaseSkills>().nome == skill.nome);
-                BaseSkills bs = gameObject.AddComponent(skill.GetType()) as BaseSkills;
-                bs.SetSkill();
-                if (aux != null) {
-                    bs.SetSkillImage(aux.GetActionImage());
-                }
-            }
-            OnAnyActionPerformed?.Invoke(this, EventArgs.Empty);
 
+            List<BaseSkills> instantiatedSkills = new List<BaseSkills>();
+
+            foreach (string skillId in unitRecords.GetUnitSKillsIDs()) {
+                // Carrega só o prefab da skill específica pelo nome no Resources/Skills_R
+                BaseSkills prefab = Resources.Load<BaseSkills>($"Skills_R/{skillId}");
+                if (prefab == null) {
+                    Debug.LogWarning($"Prefab da skill '{skillId}' não encontrado em Resources/Skills_R!");
+                    continue;
+                }
+
+                // Adiciona o componente da skill no GameObject da unidade usando o tipo do prefab
+                BaseSkills skillInstance = (BaseSkills)gameObject.AddComponent(prefab.GetType());
+                skillInstance.SetSkill();
+                skillInstance.CopyFrom(prefab);
+                skillInstance.SetSkillImage(prefab.GetActionImage());
+                this.hasUnlockedAnySkill = true;
+                instantiatedSkills.Add(skillInstance);
+            }
+
+            // (Opcional) atualiza a lista de skills atuais da unidade em runtime, se precisar
+            // Exemplo: unitRecords.SetUnitSkills(instantiatedSkills);
+
+            OnAnyActionPerformed?.Invoke(this, EventArgs.Empty);
         }
         else {
             this.unitStats = baseUnitStats;
         }
+
         actionsArray = GetComponents<BaseAction>();
         this.healthSystem.SetMaxHP(this.unitStats.GetMaxHP());
+
         gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
+
         TurnSystem.Instance.onTurnChange += TurnSystem_OnTurnChange;
 
         healthSystem.OnDead += HealthSystem_OnDie;
         healthSystem.OnRevive += HealthSystem_OnRevive;
+
         OnAnyUnitSpawn?.Invoke(this, EventArgs.Empty);
+
         statsModifiers = new UnitStatsModifiers();
     }
+
 
     private void Update() {
         if (transform.position != lastPosition) {
@@ -105,6 +128,14 @@ public class Unit : MonoBehaviour {
             }
         }
     }
+
+    public SerializableDictionary<int, int> GetChosenUpgrades() {
+    if (GameController.controller.HasUnitRecords(unitId)) {
+        return GameController.controller.GetUnitRecords(unitId).GetLevelUpgrades();
+    }
+    return new SerializableDictionary<int, int>();
+}
+
 
     public T GetAction<T>() where T : BaseAction {
         foreach (BaseAction baseAction in actionsArray) {
@@ -150,6 +181,8 @@ public class Unit : MonoBehaviour {
     }
 
     private void PerformAction(BaseAction action) {
+        if (!LevelGrid.Instance.IsInBattleMode()) return;
+
         switch (action.GetActionType()) {
             case ActionType.MOVE:
                 hasMoved = true;
@@ -185,8 +218,8 @@ public class Unit : MonoBehaviour {
         return isEnemy;
     }
 
-    public void Damage(int damage, bool haveProjectile = false, Unit attackedBy = null) {
-        healthSystem.TestDamage(damage, attackedBy, haveProjectile);
+    public void Damage(int damage, bool haveProjectile = false, Unit attackedBy = null, bool missChanece = true) {
+        healthSystem.TestDamage(damage, attackedBy, haveProjectile, missChanece);
     }
 
     public void AddXp(int xpAmount) {
@@ -223,13 +256,6 @@ public class Unit : MonoBehaviour {
             return;
         }
 
-        if (intimidateCoolDown != 0) {
-            hasMoved = true;
-            hasPerformedAction = true;
-            hasPerformedSkill = true;
-            intimidateCoolDown--;
-        }
-
         if (enemyFocus != 0) {
             enemyFocus--;
         }
@@ -256,10 +282,6 @@ public class Unit : MonoBehaviour {
         if (!isEnemy && GameController.controller.HasUnitRecords(unitId)) {
             GameController.controller.UpdateUnitRecords(this);
         }
-    }
-
-    public void BeIntimidate() {
-        intimidateCoolDown = 1;
     }
 
     public void FocusOnMe(int focusTime) {
@@ -325,6 +347,10 @@ public class Unit : MonoBehaviour {
         }
     }
 
+    public Animator GetAnimator() {
+        return animator;
+    }
+
     public UnitStatsModifiers GetModifiers() { return this.statsModifiers; }
     public void SubscribeToModifiedEvent(BaseSkills baseSkill) {
         baseSkill.onEndEffect += BaseSkill_onEndEffect;
@@ -339,7 +365,6 @@ public class Unit : MonoBehaviour {
 
     public void SpawnProjectile(HealthSystem enemy, int projectileDemage, bool miss = false) {
         if (projectilePoint == null) {
-            Debug.LogWarning(transform.name + " <- this unit do not have ProjectilePoint on Unit");
             projectilePoint = transform;
         }
 
@@ -349,7 +374,7 @@ public class Unit : MonoBehaviour {
         projectile.Setup(this, enemy.transform.position, enemy, projectileDemage, miss);
     }
 
-    public void SpawnProjectile(Vector3 target, Color color) {
+    public Projectile SpawnProjectile(Vector3 target, Color color, bool useParabola) {
         if (projectilePoint == null) {
             Debug.LogWarning(transform.name + " <- this unit do not have ProjectilePoint on Unit");
             projectilePoint = transform;
@@ -358,11 +383,14 @@ public class Unit : MonoBehaviour {
         Transform projectileTransform = Instantiate(projectilePrefab, projectilePoint.position, Quaternion.identity);
 
         Projectile projectile = projectileTransform.GetComponent<Projectile>();
-        projectile.Setup(target, color);
+        projectile.Setup(target, color, useParabola);
+
+        return projectile;
     }
 
     public bool CanFinishRound() {
-        if (hasMoved && hasPerformedAction && hasPerformedSkill) {
+        if (hasMoved && hasPerformedAction &&
+        (!hasUnlockedAnySkill || (hasUnlockedAnySkill && hasPerformedSkill )) ) {
             return true;
         }
 
@@ -400,4 +428,11 @@ public class Unit : MonoBehaviour {
         ClearStun();
         TurnSystem.Instance.NextTurn(); // Passa o turno
     }
+
+    public Sprite GetImage() {
+        return this.unitImage;
+    }
+
+    public string GetChestId() {return chestId;}
+    
 }

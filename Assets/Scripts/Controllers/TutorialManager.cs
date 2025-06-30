@@ -21,7 +21,7 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
     [SerializeField] private GameObject treeInfoStep;
     [SerializeField] private bool hasShowCamping = false;
     [SerializeField] private bool hasFinishedTutorialLevel = false;
-     [SerializeField]private bool hasShownSkillTree = false;
+    [SerializeField] private bool hasShownSkillTree = false;
     [SerializeField] private bool isWaitingStep = false;
 
     void Awake() {
@@ -35,6 +35,9 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
     }
 
     void Start() {
+        if (DataPersistenseManager.instance != null && DataPersistenseManager.instance.GetGameData() != null) {
+            LoadData(DataPersistenseManager.instance.GetGameData()); // <- chama manualmente!
+        }
         this.tutorialQuest.GenerateStepList();
         if (SceneManager.GetActiveScene().name == "HUB") {
             StartCoroutine(this.StartFromHUB());
@@ -56,6 +59,7 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
     public void FinishTutorial() {
         this.isTutorialFinished = true;
         this.onTutorialStateChanged?.Invoke(this, EventArgs.Empty);
+        DataPersistenseManager.instance.SaveGame();
     }
 
     public void AdvanceTutorial() {
@@ -63,7 +67,7 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
         tutorialQuest.MoveToNextStep();
         if (tutorialQuest.CurrentQuestStepExists() &&
             (
-                (tutorialQuest.GetCurrentStepIndex() < tutorialQuest.questStepPrefabs.Count) 
+                (tutorialQuest.GetCurrentStepIndex() < tutorialQuest.questStepPrefabs.Count)
                 &&
                 (!hasShowCamping || !hasShownSkillTree || !hasFinishedTutorialLevel)
              )
@@ -78,7 +82,7 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
 
     private void dataLoaded() {
         if (isTutorialFinished) {
-            Destroy(this);
+            Destroy(gameObject);
         }
         else {
             StartTutorial();
@@ -92,7 +96,6 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
     public void PauseTutorial() {
         this.isWaitingStep = true;
         if (this.hasShowComboInfo && this.hasShownSkillTree) {
-            Debug.Log("Ultimo pause step");
             AdvanceTutorial();
         }
     }
@@ -121,14 +124,14 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
         data.tutorialIndex = tutorialQuest.GetCurrentStepIndex();
     }
 
-    public void LoadData(GameData data) {
-        // isTutorialFinished = data.finishedTutorial;
+    public void LoadData(GameData data) {;
+        isTutorialFinished = data.finishedTutorial;
         // if (data.tutorialIndex > 0) {
         //     int skipStepsNumber = data.tutorialIndex;
         //     if (hasShowComboInfo) skipStepsNumber -= 2;
         //     tutorialQuest.SkipQuestsStepToIndex(data.tutorialIndex);
         // }
-        // dataLoaded();
+        dataLoaded();
     }
 
     public void ResumeTutorial() {
@@ -176,9 +179,16 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
         yield return new WaitForSeconds(.5f);
         this.hasFinishedTutorialLevel = true;
         this.hasShowCamping = true;
-        this.ChangeLevelQuestState(QuestState.IN_PROGRESS);
-        this.tutorialQuest.InstantiateCurrentQuestStep(this.transform);
-        this.onTutorialStarted?.Invoke(this, EventArgs.Empty);
+
+        if (!this.isTutorialFinished) {
+            this.ChangeLevelQuestState(QuestState.IN_PROGRESS);
+            this.tutorialQuest.InstantiateCurrentQuestStep(this.transform);
+            this.onTutorialStarted?.Invoke(this, EventArgs.Empty);
+        }
+        else {
+            FinishTutorial();
+        }
+
     }
 
 

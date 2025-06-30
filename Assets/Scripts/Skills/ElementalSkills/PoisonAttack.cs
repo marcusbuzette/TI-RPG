@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class PoisonAttack : BaseSkills 
 {
-    [SerializeField] private LayerMask obstaclesLayerMask;
+
+    private LayerMask obstaclesLayerMask;
     [SerializeField] private int maxShootDistance = 1;
-    [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private int damage = 100;
     [SerializeField] private GameObject PoisonFbx;
 
@@ -15,10 +15,12 @@ public class PoisonAttack : BaseSkills
     private Unit targetUnit;
     private bool canShoot;
 
+    Projectile projectile;
 
     private void Start() {
         GameObject PoisonFbx = GameObject.Find("Poison Arrow Cast");
         // Garantir que o VFX comece desativado
+        sfxName = "FlechaVeneno";
         if (PoisonFbx != null) {
             PoisonFbx.SetActive(false);
         }
@@ -101,20 +103,15 @@ public class PoisonAttack : BaseSkills
             PoisonFbx.SetActive(true);
         }
 
-        if (!string.IsNullOrEmpty(poisonArrowSFX)) {
-            AudioManager.instance?.PlaySFX(poisonArrowSFX);
-        }
+        PlaySkillSFX();
         ActionStart(onActionComplete);
     }
 
     private void Shoot() {
-        unit.SpawnProjectile(targetUnit.transform.position, Color.green);
+        projectile = unit.SpawnProjectile(targetUnit.transform.position, Color.green, false);
 
-        if (targetUnit.gameObject.GetComponent<PoisonEffect>() != null) {
-            targetUnit.gameObject.GetComponent<PoisonEffect>().CurePoison();
-            targetUnit.gameObject.AddComponent<PoisonEffect>().SetPoisonEffect(targetUnit, damage, coolDown);
-        }
-        else targetUnit.gameObject.AddComponent<PoisonEffect>().SetPoisonEffect(targetUnit, damage, coolDown);
+        projectile.onDestory += ProjectileDestroyed;
+        
         // animator?.SetTrigger("Attack");
         unit.PlayAnimation("Attack");
         //AudioManager.instance?.PlaySFX("Arrows");
@@ -122,6 +119,17 @@ public class PoisonAttack : BaseSkills
         if (PoisonFbx != null) {
             PoisonFbx.SetActive(false);
         }
+    }
+
+    public void ProjectileDestroyed(object sender, EventArgs e) {
+        if (targetUnit.gameObject.GetComponent<PoisonEffect>() != null) {
+            targetUnit.gameObject.GetComponent<PoisonEffect>().CurePoison();
+            targetUnit.gameObject.AddComponent<PoisonEffect>().SetPoisonEffect(targetUnit, damage, coolDown);
+        }
+        else targetUnit.gameObject.AddComponent<PoisonEffect>().SetPoisonEffect(targetUnit, damage, coolDown);
+
+        projectile.onDestory -= ProjectileDestroyed;
+
         ActionFinish();
     }
 
@@ -152,8 +160,18 @@ public class PoisonAttack : BaseSkills
     public int GetMaxShootDistance() {
         return maxShootDistance;
     }
+    public int GetDamage() {
+        return damage;
+    }
 
     public override bool GetOnCooldown() { return false; }
 
     public override void IsAnotherRound() { }
+
+    public override void CopyFrom(BaseSkills other) {
+        base.CopyFrom(other);
+
+        maxShootDistance = (other as PoisonAttack).GetMaxShootDistance();
+        damage = (other as PoisonAttack).GetDamage();
+    }
 }

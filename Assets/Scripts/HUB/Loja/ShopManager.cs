@@ -63,7 +63,6 @@ public class ShopManager : MonoBehaviour {
     public void BuyItem() {
         if (selectedItemindex == -1) return;
 
-        Debug.Log(itemQuantity);
         for (int i = 0; i < itemQuantity; i++) {
             InventorySystem.inventorySystem.Add(ItemOnSale[selectedItemindex], true);
         }
@@ -73,6 +72,7 @@ public class ShopManager : MonoBehaviour {
 
         itemQuantity = 0;
         buyItemQuantity.text = itemQuantity.ToString();
+        DataPersistenseManager.instance.SaveGame();
         DeselectItem();
     }
 
@@ -118,7 +118,6 @@ public class ShopManager : MonoBehaviour {
     }
 
     public void OpenInventory() {
-        inventoryTab.gameObject.SetActive(true);
 
         foreach (var item in inventoryItems) {
             item.InactiveItemSale();
@@ -128,9 +127,12 @@ public class ShopManager : MonoBehaviour {
 
         foreach (InventoryItemData item in InventorySystem.inventorySystem.GetInventoryItems()) {
             inventoryItems[index].ActiveItemSale();
-            inventoryItems[index].SetItem(item.image, item.displayName, -1, InventorySystem.inventorySystem.GetItemCount(item));
+            Debug.Log(InventorySystem.inventorySystem.GetItemAmountByIndex(index));
+            inventoryItems[index].SetItem(item.image, item.displayName, -1, InventorySystem.inventorySystem.GetItemAmountByIndex(index));
             index++;
         }
+
+        inventoryTab.gameObject.SetActive(true);
     }
 
     public void CloseInventory() {

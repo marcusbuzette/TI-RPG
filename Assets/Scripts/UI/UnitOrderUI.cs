@@ -7,6 +7,7 @@ using TMPro;
 
 public class UnitOrderUI : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI name;
+    [SerializeField] private TextMeshProUGUI turnText;
     [SerializeField] private Image image;
     [SerializeField] private Image healthBar;
     [SerializeField] private Color NORMAL_COLOR;
@@ -14,17 +15,20 @@ public class UnitOrderUI : MonoBehaviour {
     [SerializeField] private HealthSystem unitHealthSystem;
 
 
-    public void SetUnitOrderUI(Unit unit, bool currentTurn) {
+    public void SetUnitOrderUI(Unit unit, bool currentTurn, int turn) {
         this.name.text = unit.GetUnitName();
         this.unitHealthSystem = unit.GetComponent<HealthSystem>();
+        this.turnText.text = "Batalha em " + turn + (turn == 1 ? " turno" : " turnos");
         this.healthBar.fillAmount = unitHealthSystem.GetHealthPointsNormalized();
+        if (unit.GetImage() != null) {
+            this.image.sprite = unit.GetImage();
+        }
         unitHealthSystem.OnDamage += HealthSystem_OnDamage;
         unitHealthSystem.OnDead += HealthSystem_OnDead;
         GetComponent<Image>().color = currentTurn ? TURN_COLOR : NORMAL_COLOR;
     }
 
     private void HealthSystem_OnDamage(object sender, EventArgs e) {
-        // Debug.Log(this.healthBar);
         if (unitHealthSystem != null) {
             this.healthBar.fillAmount = unitHealthSystem.GetHealthPointsNormalized();
         }

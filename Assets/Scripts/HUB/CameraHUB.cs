@@ -10,12 +10,14 @@ public class CameraHUB : MonoBehaviour
     [SerializeField] private OpenCharacterSkillTreeHUB[] charactersSkillTrees;
     [SerializeField] private BoxCollider[] colliders;
     [SerializeField] private GameObject[] texts;
+    public static bool isMenuOpen = false;
 
     private void Start() {
         mainCamera = Camera.main;
     }
 
     private void Update() {
+        if (isMenuOpen) return;
         if (Input.GetKeyDown(KeyCode.Mouse0)) {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -24,6 +26,7 @@ public class CameraHUB : MonoBehaviour
                 switch (hit.transform.tag) {
                     case "HUB_Character":
                         hit.transform.gameObject.GetComponent<OpenCharacterSkillTreeHUB>().EnterOnThisCamera(this);
+                        hit.transform.gameObject.GetComponent<OpenCharacterSkillTreeHUB>().SkillTreeOpen();
                         break;
                     case "HUB_Map":
                         hit.transform.gameObject.GetComponent<OpenMapHUB>().EnterOnThisCamera(this);

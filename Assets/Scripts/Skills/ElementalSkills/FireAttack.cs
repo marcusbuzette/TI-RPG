@@ -6,9 +6,9 @@ using static GridSystemVisual;
 
 
 public class FireAttack : BaseSkills {
+
     [SerializeField] private LayerMask obstaclesLayerMask;
     private GameObject fireAttackObject;
-    [SerializeField] private GameObject particleFire;
     [SerializeField] private int maxShootDistance = 1;
     [SerializeField] private int shootDamage = 100;
     [SerializeField] private int areaDamage = 3;
@@ -19,15 +19,16 @@ public class FireAttack : BaseSkills {
     public Vector3 selectedGrid;
     public bool isAiming = false;
 
-    public string fireArrowSFX;
-
     GridPosition mouseGridPosition;
+    Projectile projectile;
 
     private void Awake() 
     {
         base.Awake();
         VfxController = GetComponent<ArcherVFXController>();
         VfxController?.CastEnd();
+
+        sfxName = "FlechaFogo";
     }
 
     private void Start() {
@@ -110,18 +111,24 @@ public class FireAttack : BaseSkills {
         // Ativa o VFX quando começa a ação
         VfxController.FireCast();
 
-        if (!string.IsNullOrEmpty(fireArrowSFX)) {
-            AudioManager.instance?.PlaySFX(fireArrowSFX);
-        }
+        PlaySkillSFX();
+
         ActionStart(onActionComplete);
     }
 
     private void Shoot() {
-        unit.SpawnProjectile(selectedGrid, Color.red);
+        projectile = unit.SpawnProjectile(selectedGrid, Color.red, true);
 
+        projectile.onDestory += ProjectileDestroyed;
+    }
+
+    public void ProjectileDestroyed(object sender, EventArgs e) {
         VfxController.CastEnd();
         fireAttackObject = Instantiate(new GameObject(), selectedGrid, Quaternion.identity);
-        fireAttackObject.AddComponent<FireAttackObject>().SetFireAttackObject(this, particleFire, damage, areaDamage, coolDown);
+        fireAttackObject.AddComponent<FireAttackObject>().SetFireAttackObject(this, damage, areaDamage, coolDown);
+
+        projectile.onDestory -= ProjectileDestroyed;
+
         ActionFinish();
     }
 
@@ -141,13 +148,12 @@ public class FireAttack : BaseSkills {
         }
     }
 
-    public int GetTargetCountAtPosition(GridPosition gridPosition) {
-        return GetValidGridPositionList(gridPosition).Count;
-    }
+    public int GetTargetCountAtPosition(GridPosition gridPosition) { return GetValidGridPositionList(gridPosition).Count; }
 
-    public int GetMaxShootDistance() {
-        return maxShootDistance;
-    }
+    public int GetMaxShootDistance() { return maxShootDistance; }
+    public int GetShootDamage() { return shootDamage; }
+    public int GetAreaDamage() { return areaDamage; }
+    public int GetFireDamage() { return damage; }
 
     public override bool GetOnCooldown() { return false; }
 
@@ -201,4 +207,12 @@ public class FireAttack : BaseSkills {
         GridSystemVisual.Instance.ShowGridPositionList(attackGridPositionList, GridVisualType.Red);
     }
 
+    public override void CopyFrom(BaseSkills other) {
+        base.CopyFrom(other);
+
+        maxShootDistance = (other as FireAttack).GetMaxShootDistance();
+        shootDamage = (other as FireAttack).GetShootDamage();
+        areaDamage = (other as FireAttack).GetAreaDamage();
+        damage = (other as FireAttack).GetFireDamage();
+    }
 }

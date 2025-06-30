@@ -41,7 +41,6 @@ public class UnitActionSystem : MonoBehaviour {
         }
 
         if (Input.GetMouseButtonDown(0)) {
-            if (TryHandleUnitSelection()) return;
             HandleSelectedAction();
         }
     }
@@ -133,7 +132,7 @@ public class UnitActionSystem : MonoBehaviour {
         }
     }
 
-    private void SetSelectedUnit(Unit unit) {
+    public void SetSelectedUnit(Unit unit) {
         if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE) {
             selectedUnit = unit;
             selectedAction = null;
@@ -149,11 +148,12 @@ public class UnitActionSystem : MonoBehaviour {
                 break;
         }
         selectedAction = action;
-        if (action.GetActionType() != ActionType.INVENTORY) {
+        if (action == null || action.GetActionType() != ActionType.INVENTORY) {
             OnSelectedActionChanged?.Invoke(this, EventArgs.Empty);
         }
         else {
             OnInventoryClicked.Invoke(action, EventArgs.Empty);
+            Debug.Log("Inventário");
         }
     }
 

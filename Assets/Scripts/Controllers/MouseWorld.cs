@@ -8,7 +8,6 @@ public class MouseWorld : MonoBehaviour {
     static private MouseWorld instancce;
 
     [SerializeField] private LayerMask mousePlaneLayer;
-    [SerializeField] private LayerMask unitLayer;
 
     bool isHide;
 
@@ -19,7 +18,7 @@ public class MouseWorld : MonoBehaviour {
     }
 
     private void Update() {
-        transform.position = MouseWorld.GetPosition() == null? Vector3.zero : MouseWorld.GetPosition();
+        transform.position = MouseWorld.GetPosition() == null ? Vector3.zero : MouseWorld.GetPosition();
 
         if (transform.position != Vector3.zero) {
             //Se o mouse est� em cima da UI ele esconde o Visual do Mouse
@@ -41,9 +40,6 @@ public class MouseWorld : MonoBehaviour {
 
     public static Vector3 GetPosition() {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out RaycastHit hitOnUnit, float.MaxValue, instancce.unitLayer)) {
-            return hitOnUnit.transform.position;
-        }
         Physics.Raycast(ray, out RaycastHit hit, float.MaxValue,instancce. mousePlaneLayer );
         
         return hit.point;

@@ -7,7 +7,7 @@ using UnityEngine;
 public class ReviveItemAction : BaseAction {
     [SerializeField] public int healAmount = 20;
     private HealthSystem healthSystem;
-    private string itemName = "Revive";
+    [SerializeField] private string itemName;
 
     Unit targetUnit;
 

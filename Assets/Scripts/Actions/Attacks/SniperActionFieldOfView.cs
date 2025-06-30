@@ -8,17 +8,17 @@ public class SniperActionFieldOfView : MonoBehaviour
 {
     private SniperAction sniperAction;
 
-    private List<GridPosition> gridObjects;
+    [SerializeField] private List<GridPosition> gridObjects;
     private Material viewMaterial;
     private int damage;
     private GameObject grid;
 
-    private void Start() {
+    public void SetSniperFieldOfView(SniperAction sniperAction, List<GridPosition> gridObjects, int damage) {
         LevelGrid.Instance.OnAnyUnitMovedGridPosition += CheckHasEnemyOnFieldOfView;
         LevelGrid.Instance.OnGameModeChanged += StopSniper;
-    }
 
-    public void SetSniperFieldOfView(SniperAction sniperAction, List<GridPosition> gridObjects, int damage) {
+        Debug.Log("SET");
+
         this.sniperAction = sniperAction;
         this.gridObjects = gridObjects;
         this.damage = damage;
@@ -29,11 +29,16 @@ public class SniperActionFieldOfView : MonoBehaviour
     }
 
     private void CheckHasEnemyOnFieldOfView(object sender, EventArgs e) {
+
         if ((e as LevelGridEventArgs).unit.IsEnemy() && 
-            (e as LevelGridEventArgs).unit.isUnitTurn &&
-           gridObjects.Exists((gridPos => gridPos == (e as LevelGridEventArgs).currentGridPos)) ) {
-            (e as LevelGridEventArgs).unit.Damage(damage, true, this.GetComponent<Unit>());
-                StopSniper();
+            (e as LevelGridEventArgs).unit.isUnitTurn) {
+            foreach (GridPosition grid in gridObjects) {
+                if ((e as LevelGridEventArgs).currentGridPos.Equals(grid)) {
+                    (e as LevelGridEventArgs).unit.Damage(damage, true, this.transform.parent.GetComponent<Unit>(), false);
+                    sniperAction.AttackAnimation();
+                    StopSniper();
+                }
+            }
         }
     }
     private void DrawFieldOFView() {

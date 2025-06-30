@@ -18,12 +18,12 @@ public class FireAttackObject : MonoBehaviour
 
     public string fireDamageSFX;
 
-    public void SetFireAttackObject(FireAttack fireAttack, GameObject particleFire, int damage, int areaDamage, int coolDown) {
+    public void SetFireAttackObject(FireAttack fireAttack, int damage, int areaDamage, int coolDown = 3) {
         this.fireAttack = fireAttack;
         this.coolDown = coolDown;
         this.damage = damage;
         this.areaDamage = areaDamage;
-        this.particleFire = particleFire;
+        particleFire = Resources.Load<GameObject>("Particles_R/SkillParticles/FireGridVFX");
 
         obstaclesLayerMask = LayerMask.GetMask("Obstacles");
         TurnSystem.Instance.onTurnChange += TurnSystem_onTurnChange;

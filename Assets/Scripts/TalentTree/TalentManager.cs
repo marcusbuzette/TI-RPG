@@ -5,10 +5,12 @@ using System;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using UnityEngine.EventSystems;
-
+using Cinemachine;
+using UnityEditor.Rendering;
 
 public class TalentManager : MonoBehaviour {
     public static TalentManager Instance;
+    private SkillCache skillCache;
     [SerializeField] private Transform charactersContainer;
     [SerializeField] private Transform skillTreeContainer;
     [SerializeField] private Transform upgradesTreeContainer;
@@ -19,6 +21,9 @@ public class TalentManager : MonoBehaviour {
 
     [SerializeField] private List<GameObject> playerUnitList = new List<GameObject>();
 
+    [SerializeField] private CameraHUB cameraHUB;
+    [SerializeField] private GameObject updateAvailable;
+
     public EventHandler onSkillUpdate;
 
     private List<BaseSkills> skills;
@@ -27,7 +32,7 @@ public class TalentManager : MonoBehaviour {
     private int pontosDisponiveis = 0;
     public Text pontos;
 
-
+    private int unitId;
     private String SelectedUnit;
     private Button selectedButton;
 
@@ -38,9 +43,11 @@ public class TalentManager : MonoBehaviour {
         else {
             Destroy(this);
         }
+        skillCache = new SkillCache();
     }
 
     private void OnEnable() {
+        skillCache.Initialize();
         foreach (GameObject playerObj in playerUnitList) {
             Unit playerUnit = playerObj.GetComponent<Unit>();
             string unitId = playerUnit.GetUnitId();
@@ -57,11 +64,18 @@ public class TalentManager : MonoBehaviour {
 
 
             Button unitButton = Instantiate(unitButtonPrefab, charactersContainer);
-            unitButton.gameObject.AddComponent<SkillTreeUnitButtonUI>();
+            SkillTreeUnitButtonUI skillUI = unitButton.gameObject.GetComponent<SkillTreeUnitButtonUI>();
             unitButton.gameObject.GetComponent<SkillTreeUnitButtonUI>().SetUnitData(unitId, playerUnit.GetUnitName());
-            unitButton.onClick.AddListener(() => OnSelectedUnitChanged(unitId));
+            unitButton.onClick.AddListener(() => {
+                OnSelectedUnitChanged(unitId);
+                ChangeCharacterCamera(unitButton.transform.GetSiblingIndex());
+                SetSelectedButton(unitButton.GetComponent<SkillTreeUnitButtonUI>());
+            });
 
-            if (!selectedButton) selectedButton = unitButton;
+
+            if (selectedButton == null) {
+                SetSelectedButton(unitButton.GetComponent<SkillTreeUnitButtonUI>());
+            }
 
         }
         this.OnSelectedUnitChanged(this.SelectedUnit);
@@ -138,7 +152,6 @@ public class TalentManager : MonoBehaviour {
         this.pontosDisponiveis = unitAux.GetUnitXpSystem().getXpAmount();
         this.UpdateLevelBar();
         this.UpdatedSkillTree(unitAux);
-
     }
 
     public int GetXPPoints() { return this.pontosDisponiveis; }
@@ -153,17 +166,33 @@ public class TalentManager : MonoBehaviour {
             Destroy(item.gameObject);
         }
         UnitRecords unitRecordsAux = GameController.controller.GetUnitRecords(this.SelectedUnit);
-        skills = unitAux.GetPossibleSkills();
         upgrades = unitAux.GetPossibelUpgrades();
-
+        skills = new List<BaseSkills>();
+        foreach (BaseSkills skill in unitAux.GetPossibleSkills()) {
+            string skillId = skill.GetType().Name;
+            BaseSkills prefab = skillCache.GetSkillPrefab(skillId);
+            if (prefab != null) {
+                skills.Add(prefab);
+            }
+            else {
+                Debug.LogWarning($"Prefab de skill '{skillId}' não encontrado no SkillCache.");
+            }
+        }
         this.selectedLevelSkill.Clear();
-        foreach (BaseSkills unitSkills in unitRecordsAux.GetUnitSKills()) {
-            this.selectedLevelSkill.Add(unitSkills.custo, unitSkills);
+
+        foreach (string skillId in unitRecordsAux.GetUnitSKillsIDs()) {
+            BaseSkills skillPrefab = skillCache.GetSkillPrefab(skillId);
+            if (skillPrefab != null) {
+                this.selectedLevelSkill.Add(skillPrefab.custo, skillPrefab);
+            }
+            else {
+                Debug.LogWarning($"Prefab da skill '{skillId}' não encontrado em Resources/Skills/");
+            }
         }
 
-        foreach(BaseSkills bs in skills) {
+        foreach (BaseSkills bs in skills) {
             Button skillButton = Instantiate(skillButtonPrefab, skillTreeContainer);
-            skillButton.GetComponent<SkillUi>().SetBaseSkill(bs);
+            skillButton.GetComponent<SkillUi>().SetBaseSkill(bs, indexSkill);
             skillButton.gameObject.name += indexSkill;
             skillButton.GetComponent<SkillUi>().SetSkillToolTipPos(TooltipPosition.RIGHT);
             skillButton.onClick.AddListener(() => { TentarDesbloquearskills(bs); });
@@ -182,8 +211,8 @@ public class TalentManager : MonoBehaviour {
     }
 
     private bool IsSkillUnlocked(BaseSkills skill) {
-        List<BaseSkills> unitSkills = GameController.controller.GetUnitRecords(this.SelectedUnit).GetUnitSKills();
-        return unitSkills.Contains(skill);
+        List<string> unitSkills = GameController.controller.GetUnitRecords(this.SelectedUnit).GetUnitSKillsIDs();
+        return unitSkills.Contains(skill.GetType().Name);
     }
 
     private bool IsUpgradeLevelSelected(PossibleUpgrade upgrade) {
@@ -218,7 +247,11 @@ public class TalentManager : MonoBehaviour {
     }
 
     public bool AlreadySelected(BaseSkills skill) {
-        return GameController.controller.GetUnitRecords(this.SelectedUnit).baseSkills.Contains(skill);
+        string skillId = skill.GetType().Name; // ou skill.skillId, se você estiver usando uma propriedade dedicada
+        return GameController.controller
+            .GetUnitRecords(this.SelectedUnit)
+            .GetUnitSKillsIDs()
+            .Contains(skillId);
     }
 
     public bool AlreadyUpgraded(PossibleUpgrade upgrade, int index) {
@@ -251,7 +284,103 @@ public class TalentManager : MonoBehaviour {
     }
 
     public void UpdateSelectedCharButton() {
-        EventSystem.current.SetSelectedGameObject(selectedButton.gameObject);
+        if (selectedButton != null) {
+            EventSystem.current.SetSelectedGameObject(selectedButton.gameObject);
+        }
+        else {
+            Debug.LogWarning("selectedButton está nulo ao tentar definir como selecionado.");
+        }
     }
 
+
+    public void SetSelectedButton(SkillTreeUnitButtonUI newSelected) {
+        if (selectedButton != null) {
+            selectedButton.GetComponent<SkillTreeUnitButtonUI>().ResetSelected();
+        }
+
+        selectedButton = newSelected.GetComponent<Button>();
+        newSelected.SetSelected();
+    }
+
+    public bool HasAvailableUpgradesOrSkills(string unitId) {
+        Unit unit = playerUnitList
+            .Find(u => u.GetComponent<Unit>().GetUnitId() == unitId)
+            ?.GetComponent<Unit>();
+
+        if (unit == null) return false;
+
+        int xp = unit.GetUnitXpSystem().getXpAmount();
+        var possibleSkills = unit.GetPossibleSkills();
+        var upgrades = unit.GetPossibelUpgrades();
+        UnitRecords records = GameController.controller.GetUnitRecords(unitId);
+        List<string> selectedSkillIds = records.GetUnitSKillsIDs();
+
+        foreach (var skill in possibleSkills) {
+            string skillId = skill.GetType().Name;
+            bool alreadySelected = selectedSkillIds.Contains(skillId);
+            bool hasPoints = xp >= skill.custo;
+            bool hasRequirements = !SkillHasRequirements(skill) || skill.preRequisitos.Any(p => selectedSkillIds.Contains(p.GetType().Name));
+            bool alreadyChoseOnThisLevel = selectedSkillIds.Any(id => {
+                BaseSkills other = skillCache.GetSkillPrefab(id);
+                return other != null && other.custo == skill.custo;
+            });
+
+            if (!alreadySelected && hasPoints && hasRequirements && !alreadyChoseOnThisLevel) {
+                return true;
+            }
+        }
+
+        foreach (var upgrade in upgrades) {
+            bool alreadyChoseUpgrade = records.GetLevelUpgrades().ContainsKey(upgrade.level);
+            bool hasPoints = xp >= upgrade.level;
+
+            bool previousLevelsMet = true;
+            foreach (var u in upgrades.Where(u => u.level < upgrade.level)) {
+                if (!records.GetLevelUpgrades().ContainsKey(u.level)) {
+                    previousLevelsMet = false;
+                    break;
+                }
+            }
+
+            if (!alreadyChoseUpgrade && hasPoints && previousLevelsMet) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    public CameraHUB GetCameraHUB() { return cameraHUB; }
+
+    public List<GameObject> GetUnitList() { return this.playerUnitList; }
+
+    public void ChangeCharacterCamera(int unitId) {
+        cameraHUB.GetSkillTreeCharacter(this.unitId).CloseCamera();
+        cameraHUB.GetSkillTreeCharacter(unitId).EnterOnThisCamera(cameraHUB);
+
+        this.unitId = unitId;
+    }
+}
+
+
+public class SkillCache {
+    public Dictionary<string, BaseSkills> skillPrefabs;
+
+    public void Initialize() {
+        if (skillPrefabs == null) {
+            skillPrefabs = new Dictionary<string, BaseSkills>();
+            BaseSkills[] loadedSkills = Resources.LoadAll<BaseSkills>("Skills_R");
+            foreach (var skill in loadedSkills) {
+                skillPrefabs[skill.GetType().Name] = skill;
+            }
+        }
+    }
+
+    public BaseSkills GetSkillPrefab(string skillName) {
+        if (skillPrefabs == null) Initialize();
+
+        skillPrefabs.TryGetValue(skillName, out BaseSkills skill);
+        return skill;
+    }
 }

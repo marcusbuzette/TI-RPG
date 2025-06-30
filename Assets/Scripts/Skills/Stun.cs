@@ -6,14 +6,15 @@ using System;
 public class Stun : BaseSkills {
     public string quickAttackSFX;
 
-    public int Attack = 1;
+    [HideInInspector] public int Attack = 1;
     private Unit targetUnit;
-    [SerializeField] private int hitDamage = 15;
-    [SerializeField] private LayerMask obstaclesLayerMask;
     [SerializeField] private int maxHitDistance = 1;
+    [SerializeField] private int hitDamage = 15;
+    private LayerMask obstaclesLayerMask;
 
     private void Start() {
         obstaclesLayerMask = LayerMask.GetMask("Obstacles");
+        sfxName = "Stun";
     }
 
     public override void Action() {
@@ -109,9 +110,7 @@ public class Stun : BaseSkills {
 
     public override void TriggerAction(GridPosition mouseGridPosition, Action onActionComplete) {
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
-        if (!string.IsNullOrEmpty(quickAttackSFX)) {
-            AudioManager.instance?.PlaySFX(quickAttackSFX);  // vai tocar o sfx q ta no inspector da skill favor n mudar nada sem avisar
-        }
+        PlaySkillSFX();
         ActionStart(onActionComplete);
 
     }
@@ -136,5 +135,15 @@ public class Stun : BaseSkills {
 
     public int GetMaxHitDistance() {
         return maxHitDistance;
+    }
+    public int GetHitDamage() {
+        return hitDamage;
+    }
+
+    public override void CopyFrom(BaseSkills other) {
+        base.CopyFrom(other);
+
+        maxHitDistance = (other as Stun).GetMaxHitDistance();
+        hitDamage = (other as Stun).GetHitDamage();
     }
 }

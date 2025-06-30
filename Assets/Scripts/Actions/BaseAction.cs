@@ -13,6 +13,7 @@ public abstract class BaseAction : MonoBehaviour {
 
     protected Unit unit;
     protected bool isActive;
+    public string descricao;
     protected Action onActionComplete;
     protected ActionType actionType;
     [SerializeField] protected Sprite actionImage;
@@ -20,6 +21,7 @@ public abstract class BaseAction : MonoBehaviour {
     public Animator animator;
     public float speed;
     [SerializeField] private float rotSpeed = 180f;
+
 
 
     protected virtual void Awake() {
@@ -71,7 +73,6 @@ public abstract class BaseAction : MonoBehaviour {
     protected void ActionFinish() {
         isActive = false;
         onActionComplete();
-
         OnAnyActionCompleted?.Invoke(this, EventArgs.Empty);
     }
 
@@ -135,4 +136,8 @@ public abstract class BaseAction : MonoBehaviour {
     public abstract bool GetOnCooldown();
 
     public abstract void IsAnotherRound();
+
+    private void OnDestroy() {
+        ActionFinish();
+    }
 }

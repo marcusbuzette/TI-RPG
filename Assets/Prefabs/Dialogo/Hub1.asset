@@ -16,7 +16,8 @@ MonoBehaviour:
   - sentences: Ha 27 anos o Rei teve dois filhos gemeos
     name: Fofoqueiro
     image: {fileID: 0}
-  - sentences: Um deles herdou suas capacidades magicas, o outro pouco se sabe sobre.
+  - sentences: "Um deles herdou suas capacidades m\xE1gicas, o outro pouco se sabe
+      sobre."
     name: Fofoqueiro
     image: {fileID: 0}
   - sentences: Uns dizem que nao sobreviveu, outros dizem que foi abandodado....
@@ -26,3 +27,7 @@ MonoBehaviour:
       reino
     name: Fofoqueiro
     image: {fileID: 0}
+  - sentences: "Isso n\xE3o passam de hist\xF3rias... Vamos dormir, amanh\xE3 temos
+      uma ca\xE7ada dif\xEDcil para fazer."
+    name: Lucian
+    image: {fileID: 21300000, guid: 12541066e3ccf064bb6b499c1479c950, type: 3}

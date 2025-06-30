@@ -7,7 +7,7 @@ using UnityEngine;
 public class HealthPotionAction : BaseAction {
     [SerializeField] public int potionHealAmount = 20;
     private HealthSystem healthSystem;
-    private string itemName = "Potion";
+    [SerializeField] private string itemName;
 
     public override void Action() {
         if (InventorySystem.inventorySystem != null &&
@@ -20,7 +20,6 @@ public class HealthPotionAction : BaseAction {
             Debug.LogWarning("HealthSystem or InventorySystem missing!");
         }
         ActionFinish();
-
     }
 
     public override string GetActionName() {
