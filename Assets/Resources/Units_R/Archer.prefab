@@ -378,6 +378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4c588a935c0a4f56b855794c3e7145d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: Atira uma flecha a distancia emum inimigo
   actionImage: {fileID: 21300000, guid: 58212db7a0f1b7f4792d842b8e196a5a, type: 3}
   actionImageBlocked: {fileID: 21300000, guid: 8d1522a2c2f961c449b965bed859982d, type: 3}
   animator: {fileID: 0}
@@ -401,6 +402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 272359c525b7a47b382f31920349d06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: "Vigia uma \xE1rea e atira em algum inimigo que passar por ela."
   actionImage: {fileID: 21300000, guid: 352e31fdc4707aa429f286093d6c7bc6, type: 3}
   actionImageBlocked: {fileID: 21300000, guid: 613b72297464e534ead19c1dd800f55e, type: 3}
   animator: {fileID: 0}
@@ -427,6 +429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d080ed6cd128408b82a8d741eeacab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 0}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
