@@ -573,4 +573,8 @@ public class TurnSystem : MonoBehaviour
 
     
     public void NotifyOrderChange(){ onOrderChange?.Invoke(this, EventArgs.Empty); }
+
+    public void ReorderUnitList() {
+        this.unitiesOrderList.Sort((x, y) => (y.GetUnitSpeed() + y.GetModifiers().GetSpeed()).CompareTo(x.GetUnitSpeed() + x.GetModifiers().GetSpeed()));
+    }
 }
