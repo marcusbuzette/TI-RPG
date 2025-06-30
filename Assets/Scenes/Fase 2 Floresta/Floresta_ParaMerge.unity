@@ -24172,9 +24172,9 @@ MonoBehaviour:
   maxSummonsPerUse: 2
   summonableEnemyPrefab: {fileID: 7551674043583017495, guid: 34b819125fbc845b6830c5aa7b0e501b, type: 3}
   summonCooldownTurns: 4
-  baseAIValue: 120
-  allyBonusValue: 30
-  enemyPenaltyValue: -20
+  baseAIValue: 4000
+  allyBonusValue: -100
+  enemyPenaltyValue: -100
   Attack: 1
 --- !u!1001 &2020098649
 PrefabInstance:

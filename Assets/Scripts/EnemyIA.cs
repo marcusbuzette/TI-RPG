@@ -107,7 +107,7 @@ public class EnemyIA : MonoBehaviour {
         }
 
         if (bestBaseAction != null && bestEnemyAIAction != null) {
-            //Verifica se a acao escolhida foi um movimento e se for verifica se o valor é 0
+            //Verifica se a acao escolhida foi um movimento e se for verifica se o valor ï¿½ 0
             if (bestBaseAction.GetActionType() == ActionType.MOVE && bestEnemyAIAction.actionValue == 0) {
                 int closeDistance = int.MaxValue;
                 GridPosition closestPlayer = enemyUnit.GetGridPosition();
@@ -139,7 +139,7 @@ public class EnemyIA : MonoBehaviour {
 
                 closeDistance = int.MaxValue;
 
-                //Calcula qual a posição mais próxima do jogador e vai para essa posição
+                //Calcula qual a posiï¿½ï¿½o mais prï¿½xima do jogador e vai para essa posiï¿½ï¿½o
                 foreach (GridPosition grid in gridList) {
                     var dist = PathFinding.Instance.CalculateDistance(
                         grid, closestPlayer);

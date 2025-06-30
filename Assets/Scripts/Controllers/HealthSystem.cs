@@ -59,7 +59,6 @@ public class HealthSystem : MonoBehaviour {
     }
 
     public void Damage(int damage, Unit attackedBy) {
-        Debug.Log("Damage");
         this.attackedBy = attackedBy;
         int calculatedDamage = 0;
 
@@ -67,15 +66,10 @@ public class HealthSystem : MonoBehaviour {
             int unitDefence = GetComponent<Unit>().GetUnitStats().GetDefence() + GetComponent<Unit>().GetModifiers().GetDefence();
             int attackerAttck = attackedBy.GetUnitStats().GetAttack() + attackedBy.GetModifiers().GetAttack();
 
-            Debug.Log(unitDefence);
-            Debug.Log(attackerAttck);
 
             if (unitDefence < attackerAttck) {
-                Debug.Log("Calcular");
                 float rate = 1 - ((float)unitDefence / (float)attackerAttck);
-                Debug.Log(rate);
                 calculatedDamage = (int)Mathf.Round(damage * rate);
-                Debug.Log(calculatedDamage);
             }
             else {
                 calculatedDamage = 0;

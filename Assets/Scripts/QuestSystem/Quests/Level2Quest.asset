@@ -18,6 +18,7 @@ MonoBehaviour:
   levelRequirement: 0
   questPrerequisites: []
   questStepPrefabs:
-  - {fileID: 3066800744534698933, guid: 15580ee63bcc74e7c94041b8d7864a36, type: 3}
+  - {fileID: 3066800744534698933, guid: 4f5b7e045602c4944b9cd3236fa896b1, type: 3}
+  - {fileID: 3066800744534698933, guid: 9e947678ab03b4c4cbb1893e5382c301, type: 3}
   moneyRewards: 10
   playerXp: 4

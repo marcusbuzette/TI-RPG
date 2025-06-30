@@ -107,6 +107,7 @@ public class HitAction : BaseAction {
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition) {
+        Debug.Log("HIT ACTION - " + 100 + Mathf.RoundToInt((GetTargetCountAtPosition(gridPosition)) * 100f));
         return new EnemyAIAction {
             gridPosition = gridPosition,
             actionValue = 100 + Mathf.RoundToInt((GetTargetCountAtPosition(gridPosition)) * 100f),
