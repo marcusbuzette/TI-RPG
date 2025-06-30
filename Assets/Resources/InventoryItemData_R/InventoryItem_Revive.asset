@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 4
   displayName: "Orbe da Ressurrei\xE7\xE3o"
   prefab: {fileID: 959054419738605824, guid: e8b2810737e06574f992bd36205d0c8a, type: 3}
-  image: {fileID: 21300000, guid: 476318e8ba151b8468262104bc28a524, type: 3}
+  image: {fileID: 21300000, guid: a2eaa83fd4ca1ea49844f25444407298, type: 3}
   price: 75
   description: "Um orbe misterioso que pulsa ao toque.\r\n\r\nEfeito: Revive um aliado
     com +50 de vida.\r\nUso: S\xF3 pode ser usada fora de combate em aliados ca\xEDdos.\r\nDescri\xE7\xE3o:

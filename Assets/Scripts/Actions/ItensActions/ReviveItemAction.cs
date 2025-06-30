@@ -16,7 +16,7 @@ public class ReviveItemAction : BaseAction {
     }
 
     public override string GetActionName() {
-        return "Revive";
+        return itemName;
     }
 
     private void Use() {

@@ -44,13 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74574b38a45b34d149883ae569f858ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: Aumenta ataque dos aliados ao redor
   actionImage: {fileID: 21300000, guid: 3f37fb75d456f91418bdc7947568b224, type: 3}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
   rotSpeed: 180
   nome: Inspirar
-  descricao: Aumenta ataque dos aliados ao redor
   custo: 20
   preRequisitos:
   - {fileID: -5082339525479280377, guid: 2ef816fd4c3644127bdcf3005f3a4f25, type: 3}
@@ -58,8 +58,7 @@ MonoBehaviour:
   onCoolDown: 0
   coolDown: 2
   currentCoolDown: 0
-  targetsList: []
+  sfxName: 
   maxInspireDistance: 1
-  buffAttackAmount: 2
-  buffType: 0
+  buffAttackAmount: 5
   inspireSFX: Inspirar

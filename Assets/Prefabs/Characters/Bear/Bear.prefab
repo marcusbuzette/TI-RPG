@@ -233,14 +233,15 @@ MonoBehaviour:
   unitName: Urso
   unitImage: {fileID: 21300000, guid: 54c23180ee71ffe488525c46ac82c50e, type: 3}
   baseUnitStats:
-    speed: 4
-    attack: 50
-    defence: 50
-    accuracy: 50
-    maxHealthPoints: 200
-    maxMove: 3
-    xpSpoil: 3
-    range: 0
+    speed: 1
+    attack: 30
+    defence: 15
+    accuracy: 2
+    maxHealthPoints: 400
+    maxMove: 2
+    xpSpoil: 8
+    goldSpoil: 50
+    range: 3
   statsModifiers:
     attack: 0
     deffence: 0
@@ -254,6 +255,7 @@ MonoBehaviour:
   hasUnlockedAnySkill: 0
   modifiedBy: []
   isUnitTurn: 0
+  chestId: 
   projectilePrefab: {fileID: 0}
   projectilePoint: {fileID: 0}
   enemyFocus: 0

@@ -23,7 +23,7 @@ public class HealthPotionAction : BaseAction {
     }
 
     public override string GetActionName() {
-        return "Po��o";
+        return itemName;
     }
 
     public override List<GridPosition> GetValidGridPositionList() {

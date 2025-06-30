@@ -172,6 +172,9 @@ MonoBehaviour:
   NORMAL_COLOR: {r: 0, g: 0, b: 0, a: 0}
   SELECTED_COLOR: {r: 1, g: 0.019607844, b: 0, a: 0}
   actionType: 2
+  coolDownUI: {fileID: 0}
+  scaleMultiplier: 1.2
+  speed: 10
   quantityText: {fileID: 7072617413515426619}
 --- !u!1 &6637264233899349075
 GameObject:
@@ -266,7 +269,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8960534571146792118
 RectTransform:
   m_ObjectHideFlags: 0
