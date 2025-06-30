@@ -2188,6 +2188,7 @@ MonoBehaviour:
   xpSystem: {fileID: 1913271140186555034}
   unitId: monkey
   unitName: Macapoera
+  unitImage: {fileID: 0}
   baseUnitStats:
     speed: 6
     attack: 3
@@ -2196,6 +2197,7 @@ MonoBehaviour:
     maxHealthPoints: 75
     maxMove: 4
     xpSpoil: 0
+    goldSpoil: 0
     range: 3
   statsModifiers:
     attack: 0
@@ -2209,8 +2211,10 @@ MonoBehaviour:
   hasMoved: 0
   hasPerformedAction: 0
   hasPerformedSkill: 0
+  hasUnlockedAnySkill: 0
   modifiedBy: []
   isUnitTurn: 0
+  chestId: 
   projectilePrefab: {fileID: 0}
   projectilePoint: {fileID: 0}
   enemyFocus: 0
@@ -2226,6 +2230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a98aa284f9b23428a071063490ad6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 21300000, guid: d24172bb5601f90449d5233c70318796, type: 3}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 8495947539863050223}
@@ -2304,6 +2309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8a40b60fda1ef4f8c9d0f466e29e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: Aplica um poderoso golpe de capoeira
   actionImage: {fileID: 21300000, guid: 39195be798b6f544b952277c45599e40, type: 3}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 8495947539863050223}
@@ -2328,6 +2334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b257115c592644b78ac47c320d9a80d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: Cura todos os aliados a sua volta
   actionImage: {fileID: 21300000, guid: 2c26a45bf5cd6d141806fb703779d405, type: 3}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
@@ -2349,6 +2356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d080ed6cd128408b82a8d741eeacab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 0}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 8495947539863050223}

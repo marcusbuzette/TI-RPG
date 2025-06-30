@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571337, b: 0.3069219, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8300,11 +8300,14 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Gerente:\nMarcus Buzette\n\nProgramadores:\nMarcus Buzette\nPedro Alex\nIgor
-    Wakabayashi\nRafael Lopes\n\nModelagem Cen\xE1rio:\nMaria Eduarda\nArthur Barbosa\nFelipe
-    de Morais\n\nModelagem Personagens:\nMaria Eduarda\nFelipe de Morais\nMarcus
-    Buzette\nPedro Alex\n\nUser Interface:\nFelipe de Morais\nLuana Viana\n\nAudio:\nFelipe
-    de Morais\n"
+  m_Text: "Gerente:\nMarcus Buzette\n\nGame Design:\nMarcus Buzette\n\nGerente de
+    Programa\xE7\xE3o\nPedro Alex\n\nProgramadores:\nMarcus Buzette\nPedro Alex\nIgor
+    Wakabayashi\nRafael Lopes\n\nLevel Deseign:\nRafael Lopes\nArthur Barbosa\n\n\nModelagem
+    Cen\xE1rio:\nMaria Eduarda\nArthur Barbosa\nFelipe de Morais\n\nModelagem Personagens:\nMaria
+    Eduarda\nFelipe de Morais\nMarcus Buzette\nPedro Alex\nCau\xE3 Giuseppe\n\nAnima\xE7\xE3o
+    de Personagens:\nCau\xE3 Giuseppe\nMaria Eduarda\n\nInterface Design:\nFelipe
+    de Morais\nLuana Viana\n\nAudio Design:\nFelipe de Morais\n\nOrienta\xE7\xE3o\nDaniel
+    Pinheiro\nLuis Felipe Garrocho\nDaniel Lelis\n\n"
 --- !u!222 &1964844458
 CanvasRenderer:
   m_ObjectHideFlags: 0
