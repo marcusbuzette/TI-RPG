@@ -59,20 +59,30 @@ public class HealthSystem : MonoBehaviour {
     }
 
     public void Damage(int damage, Unit attackedBy) {
-
+        Debug.Log("Damage");
         this.attackedBy = attackedBy;
-
-
         int calculatedDamage = 0;
-        int unitDefence = GetComponent<Unit>().GetUnitStats().GetDefence() + GetComponent<Unit>().GetModifiers().GetDefence();
-        int attackerAttck = attackedBy.GetUnitStats().GetAttack() + attackedBy.GetModifiers().GetAttack();
 
-        if (unitDefence < attackerAttck) {
-            calculatedDamage = damage * (int)Mathf.Round((unitDefence/attackerAttck));
+        if (this.attackedBy != null) {
+            int unitDefence = GetComponent<Unit>().GetUnitStats().GetDefence() + GetComponent<Unit>().GetModifiers().GetDefence();
+            int attackerAttck = attackedBy.GetUnitStats().GetAttack() + attackedBy.GetModifiers().GetAttack();
+
+            Debug.Log(unitDefence);
+            Debug.Log(attackerAttck);
+
+            if (unitDefence < attackerAttck) {
+                Debug.Log("Calcular");
+                float rate = 1 - ((float)unitDefence / (float)attackerAttck);
+                Debug.Log(rate);
+                calculatedDamage = (int)Mathf.Round(damage * rate);
+                Debug.Log(calculatedDamage);
+            }
+            else {
+                calculatedDamage = 0;
+            }
         } else {
-           calculatedDamage = 0; 
+            calculatedDamage = damage;
         }
-
 
 
         if (isDefending || calculatedDamage <= 0) {
@@ -80,7 +90,7 @@ public class HealthSystem : MonoBehaviour {
             return;
         }
 
-        
+
 
 
 
@@ -89,14 +99,14 @@ public class HealthSystem : MonoBehaviour {
             this.damagedBy.Add(attackedBy);
         }
 
-        if(!GetComponent<Unit>().IsEnemy())TurnSystem.Instance.GetCameraController().Shake();
+        if (!GetComponent<Unit>().IsEnemy()) TurnSystem.Instance.GetCameraController().Shake();
 
         // animator?.SetTrigger("TookDamage");
         GetComponent<Unit>().PlayAnimation("TookDamage");
 
-        healthPoints -= damage;
+        healthPoints -= calculatedDamage;
 
-        worldUI.ShowUIValue(damage, "Damage");
+        worldUI.ShowUIValue(calculatedDamage, "Damage");
 
         if (!string.IsNullOrEmpty(damageSFX)) {
             AudioManager.instance?.PlaySFX(damageSFX);  // vai tocar o sfx q ta no inspector do healthSystem do cada boneco
@@ -126,7 +136,7 @@ public class HealthSystem : MonoBehaviour {
     }
 
     public bool Revive(int amount = 20) {
-        if(LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE) { return false; }
+        if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE) { return false; }
 
         healthState = HealthState.ALIVE;
         healthPoints += amount;
@@ -171,7 +181,7 @@ public class HealthSystem : MonoBehaviour {
     public UnitWorldUI GetUnitWorldUI() { return worldUI; }
     public HealthState GetHealthState() { return healthState; }
 
-    public List<Unit> GetDamagedByList() {return this.damagedBy;}
+    public List<Unit> GetDamagedByList() { return this.damagedBy; }
 
-    public Unit GetAttackedBy() { return this.attackedBy;}
+    public Unit GetAttackedBy() { return this.attackedBy; }
 }

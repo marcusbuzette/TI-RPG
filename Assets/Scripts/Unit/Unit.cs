@@ -42,6 +42,7 @@ public class Unit : MonoBehaviour {
     public bool isUnitTurn = false;
     private bool hasUsedQuickAttack = false;
     private bool isStunned = false;
+    [SerializeField] private string chestId;
 
     private Dictionary<string, bool> animationTriggersStack = new Dictionary<string, bool>();
     private Animator animator;
@@ -429,5 +430,7 @@ public class Unit : MonoBehaviour {
     public Sprite GetImage() {
         return this.unitImage;
     }
+
+    public string GetChestId() {return chestId;}
     
 }

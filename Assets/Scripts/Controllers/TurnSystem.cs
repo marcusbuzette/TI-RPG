@@ -222,6 +222,7 @@ public class TurnSystem : MonoBehaviour
         else if (!CheckEnemiesLeft()) {
             Debug.Log("Todos os inimigos mortos em todas as zonas, fim de batalha");
             LevelGrid.Instance.RemoveZoneFromGrid(LevelGrid.Instance.GetCurrentBattleZone()); // <-- ADICIONE ISTO
+            InstantiateRewardChest(unitDead.transform, unitDead.GetChestId());
             ResetTurnSpeed();
             LevelGrid.Instance.ExploreMode();
         }
@@ -360,9 +361,13 @@ public class TurnSystem : MonoBehaviour
         return null;
     }
 
-    private void InstantiateRewardChest(Transform chestTransform)
+    private void InstantiateRewardChest(Transform chestTransform, string chestId = null)
     {
         var chest = Instantiate(Resources.Load<GameObject>("Prefabs_R/Chest"), chestTransform.position, chestTransform.rotation);
+
+        if (chestId != null ) {
+            chest.GetComponent<Chest>().SetChestId(chestId);
+        }
 
         var rewardItems = GetRewardChestItems();
         Debug.Log($"Itens gerados: {rewardItems.Count}");
