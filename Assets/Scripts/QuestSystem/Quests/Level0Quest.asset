@@ -23,4 +23,4 @@ MonoBehaviour:
   - {fileID: 3066800744534698933, guid: 51e4b6e9136f54a338ac8a296c9b115c, type: 3}
   - {fileID: 3066800744534698933, guid: ce2d00942b55c47b8bd46078f95af5a2, type: 3}
   moneyRewards: 0
-  playerXp: 2
+  playerXp: 5
