@@ -41,7 +41,7 @@ public class HealthSystem : MonoBehaviour {
     public void TestDamage(int damage, Unit attackedBy, bool haveProjectile, bool missChance = true) {
         //Verifica se alguma unidade o atacou, se n�o, foi algum efeito que n�o tem chance de errar
         if (missChance && attackedBy != null) {
-            int dice = Random.Range(0, 10);
+            int dice = Random.Range(0, (10) + GetComponent<Unit>().GetUnitStats().GetAccuracy());
 
             if (dice <= 1) {
                 attackedBy.GetHealthSystem().GetUnitWorldUI().ShowUIValue(0, "Miss");
@@ -62,10 +62,28 @@ public class HealthSystem : MonoBehaviour {
 
         this.attackedBy = attackedBy;
 
-        if (isDefending) {
+
+        int calculatedDamage = 0;
+        int unitDefence = GetComponent<Unit>().GetUnitStats().GetDefence() + GetComponent<Unit>().GetModifiers().GetDefence();
+        int attackerAttck = attackedBy.GetUnitStats().GetAttack() + attackedBy.GetModifiers().GetAttack();
+
+        if (unitDefence < attackerAttck) {
+            calculatedDamage = damage * (int)Mathf.Round((unitDefence/attackerAttck));
+        } else {
+           calculatedDamage = 0; 
+        }
+
+
+
+        if (isDefending || calculatedDamage <= 0) {
             worldUI.ShowUIValue(0, "Defending");
             return;
         }
+
+        
+
+
+
 
         if (attackedBy != null && GetComponent<Unit>().IsEnemy() && !this.damagedBy.Find((u) => u.unitId == attackedBy.unitId)) {
             this.damagedBy.Add(attackedBy);
