@@ -1,88 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &919132149155446097
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: -8679921383154817045}
-  - component: {fileID: -5754084199372789682}
-  - component: {fileID: -7511558181221131132}
-  m_Layer: 0
-  m_Name: lobisomem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &-8679921383154817045
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132149155446097}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 0.0004971931, y: 1.11, z: 0.000000082293006}
-  m_LocalScale: {x: 13, y: 8, z: 9}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8156640269489831220}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &-5754084199372789682
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132149155446097}
-  m_Mesh: {fileID: 3643071171446221762, guid: b765c23bc31422640b267581600d3228, type: 3}
---- !u!23 &-7511558181221131132
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132149155446097}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1922785258518234633
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,6 +320,7 @@ GameObject:
   - component: {fileID: 4908714323277675324}
   - component: {fileID: 8428029982322859060}
   - component: {fileID: 8160531672424211794}
+  - component: {fileID: 8722998597169172333}
   m_Layer: 7
   m_Name: WereWolf
   m_TagString: Player
@@ -425,7 +343,7 @@ Transform:
   m_Children:
   - {fileID: 3602933394801148015}
   - {fileID: 8286349437712001676}
-  - {fileID: -8679921383154817045}
+  - {fileID: 4041500270713821340}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2672855175812891822
@@ -442,10 +360,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemy: 1
   possibleSkills: []
+  possibleSkillsPrefabs: []
   possibleUpgrades: []
   xpSystem: {fileID: 0}
   unitId: 
   unitName: Lobisomem
+  unitImage: {fileID: 0}
   baseUnitStats:
     speed: 2
     attack: 30
@@ -465,8 +385,11 @@ MonoBehaviour:
   hasMoved: 0
   hasPerformedAction: 0
   hasPerformedSkill: 0
+  hasUnlockedAnySkill: 0
   modifiedBy: []
   isUnitTurn: 0
+  projectilePrefab: {fileID: 0}
+  projectilePoint: {fileID: 0}
   enemyFocus: 0
 --- !u!114 &8096173683310641798
 MonoBehaviour:
@@ -480,14 +403,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a98aa284f9b23428a071063490ad6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 0}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  rotSpeed: 180
+  currentArrow: {fileID: 0}
   moveSpeed: 4
-  rotateSpeed: 4
   stopDistance: 0.1
   maxMoveDistance: 4
+  exploreSpeed: 5.5
 --- !u!65 &2667406634700221940
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -521,10 +447,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5f1e064203584e4781e4f11b8511645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthState: 0
   healthPoints: 500
   maxHealthPoints: 500
   animator: {fileID: 0}
+  faintText: {fileID: 0}
   damageSFX: 
+  deathSFX: 
+  missSFX: 
+  damagedBy: []
 --- !u!114 &8428029982322859060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,16 +468,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8a40b60fda1ef4f8c9d0f466e29e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 0}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  rotSpeed: 180
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 2304
   maxHitDistance: 1
   hitDamage: 50
-  rotateSpeed: 10
   meleeSFX: 
   Attack: 1
 --- !u!114 &8160531672424211794
@@ -561,14 +493,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca8109a6c61647b98b7a6017a3ded5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 0}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
+  rotSpeed: 180
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 2304
   maxShootDistance: 1
+--- !u!95 &8722998597169172333
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5248424051689086498}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: c7a09a9675ac1b54e8b3cf13edb2214d, type: 3}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5620274420724757863
 GameObject:
   m_ObjectHideFlags: 0
@@ -697,3 +652,81 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 0.05, y: 0.05}
   m_UseGraphicAlpha: 1
+--- !u!1001 &4583805049871253367
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8156640269489831220}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: c7a09a9675ac1b54e8b3cf13edb2214d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c7a09a9675ac1b54e8b3cf13edb2214d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c7a09a9675ac1b54e8b3cf13edb2214d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c7a09a9675ac1b54e8b3cf13edb2214d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c7a09a9675ac1b54e8b3cf13edb2214d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c7a09a9675ac1b54e8b3cf13edb2214d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.16801167
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c7a09a9675ac1b54e8b3cf13edb2214d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c7a09a9675ac1b54e8b3cf13edb2214d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c7a09a9675ac1b54e8b3cf13edb2214d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c7a09a9675ac1b54e8b3cf13edb2214d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c7a09a9675ac1b54e8b3cf13edb2214d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c7a09a9675ac1b54e8b3cf13edb2214d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c7a09a9675ac1b54e8b3cf13edb2214d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c7a09a9675ac1b54e8b3cf13edb2214d, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c7a09a9675ac1b54e8b3cf13edb2214d, type: 3}
+      propertyPath: m_Name
+      value: Werewolf
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c7a09a9675ac1b54e8b3cf13edb2214d, type: 3}
+--- !u!4 &4041500270713821340 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c7a09a9675ac1b54e8b3cf13edb2214d, type: 3}
+  m_PrefabInstance: {fileID: 4583805049871253367}
+  m_PrefabAsset: {fileID: 0}
