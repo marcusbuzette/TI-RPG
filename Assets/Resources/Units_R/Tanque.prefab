@@ -291,6 +291,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8930314314492603969, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: actionImage
+      value: 
+      objectReference: {fileID: 21300000, guid: d24172bb5601f90449d5233c70318796, type: 3}
+    - target: {fileID: 8930314314492603969, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: maxMoveDistance
       value: 2
       objectReference: {fileID: 0}
@@ -338,7 +342,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8a40b60fda1ef4f8c9d0f466e29e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionImage: {fileID: 0}
+  descricao: Performa um poderoso ataque com espada
+  actionImage: {fileID: 21300000, guid: 39195be798b6f544b952277c45599e40, type: 3}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
@@ -362,6 +367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b6385d0c60b4827aaab7b864fdef3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: "Usa de sua for\xE7a e armadura para defender ataques poderosos"
   actionImage: {fileID: 21300000, guid: a8713a01c9a8cc14e8509f0517cfb674, type: 3}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
@@ -381,6 +387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d080ed6cd128408b82a8d741eeacab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 0}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
