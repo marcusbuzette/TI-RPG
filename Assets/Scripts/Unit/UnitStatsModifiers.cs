@@ -39,6 +39,7 @@ public class UnitStatsModifiers {
                 break;
             case BuffType.SPEED:
                 this.speed += buff;
+                TurnSystem.Instance.ReorderUnitList();
                 break;
             case BuffType.MOVE:
                 this.move += buff;
@@ -60,6 +61,7 @@ public class UnitStatsModifiers {
                 break;
             case BuffType.SPEED:
                 this.speed -= buff;
+                TurnSystem.Instance.ReorderUnitList();
                 break;
             case BuffType.MOVE:
                 this.move -= buff;
