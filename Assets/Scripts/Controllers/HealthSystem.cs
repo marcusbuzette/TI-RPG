@@ -20,6 +20,7 @@ public class HealthSystem : MonoBehaviour {
     public int maxHealthPoints = 100;
     public Animator animator;
     private bool isDefending = false;
+    private Unit attackedBy;
 
     public Transform faintText; //TEMPORARIO <----- (ATEN��O)
 
@@ -37,10 +38,10 @@ public class HealthSystem : MonoBehaviour {
         OnDamage?.Invoke(this, EventArgs.Empty);
     }
 
-    public void TestDamage(int damage, Unit attackedBy, bool haveProjectile) {
+    public void TestDamage(int damage, Unit attackedBy, bool haveProjectile, bool missChance = true) {
         //Verifica se alguma unidade o atacou, se n�o, foi algum efeito que n�o tem chance de errar
-        if (attackedBy != null) {
-            int dice = Random.Range(0, 10);
+        if (missChance && attackedBy != null) {
+            int dice = Random.Range(0, (10) + GetComponent<Unit>().GetUnitStats().GetAccuracy());
 
             if (dice <= 1) {
                 attackedBy.GetHealthSystem().GetUnitWorldUI().ShowUIValue(0, "Miss");
@@ -53,15 +54,36 @@ public class HealthSystem : MonoBehaviour {
             }
         }
 
-        if (haveProjectile) attackedBy.SpawnProjectile(this, damage);
+        if (haveProjectile && attackedBy != null) attackedBy.SpawnProjectile(this, damage);
         else Damage(damage, attackedBy);
     }
 
     public void Damage(int damage, Unit attackedBy) {
-        if (isDefending) {
+
+        this.attackedBy = attackedBy;
+
+
+        int calculatedDamage = 0;
+        int unitDefence = GetComponent<Unit>().GetUnitStats().GetDefence() + GetComponent<Unit>().GetModifiers().GetDefence();
+        int attackerAttck = attackedBy.GetUnitStats().GetAttack() + attackedBy.GetModifiers().GetAttack();
+
+        if (unitDefence < attackerAttck) {
+            calculatedDamage = damage * (int)Mathf.Round((unitDefence/attackerAttck));
+        } else {
+           calculatedDamage = 0; 
+        }
+
+
+
+        if (isDefending || calculatedDamage <= 0) {
             worldUI.ShowUIValue(0, "Defending");
             return;
         }
+
+        
+
+
+
 
         if (attackedBy != null && GetComponent<Unit>().IsEnemy() && !this.damagedBy.Find((u) => u.unitId == attackedBy.unitId)) {
             this.damagedBy.Add(attackedBy);
@@ -150,4 +172,6 @@ public class HealthSystem : MonoBehaviour {
     public HealthState GetHealthState() { return healthState; }
 
     public List<Unit> GetDamagedByList() {return this.damagedBy;}
+
+    public Unit GetAttackedBy() { return this.attackedBy;}
 }

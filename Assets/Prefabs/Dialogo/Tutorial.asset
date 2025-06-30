@@ -15,8 +15,8 @@ MonoBehaviour:
   dialogue:
   - sentences: "Boa ca\xE7ada pessoal!"
     name: Lyra
-    image: {fileID: 0}
+    image: {fileID: 21300000, guid: 65646911570743a478b74cafbffb30b1, type: 3}
   - sentences: "Ouvi dizer que h\xE1 um Urso Raivoso aqui por perto... Sua recompesa
       deve valer muito no mercado!"
     name: Lyra
-    image: {fileID: 0}
+    image: {fileID: 21300000, guid: 65646911570743a478b74cafbffb30b1, type: 3}

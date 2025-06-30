@@ -35,6 +35,9 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
     }
 
     void Start() {
+        if (DataPersistenseManager.instance != null && DataPersistenseManager.instance.GetGameData() != null) {
+            LoadData(DataPersistenseManager.instance.GetGameData()); // <- chama manualmente!
+        }
         this.tutorialQuest.GenerateStepList();
         if (SceneManager.GetActiveScene().name == "HUB") {
             StartCoroutine(this.StartFromHUB());
@@ -79,7 +82,7 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
 
     private void dataLoaded() {
         if (isTutorialFinished) {
-            Destroy(this);
+            Destroy(gameObject);
         }
         else {
             StartTutorial();
@@ -121,7 +124,7 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
         data.tutorialIndex = tutorialQuest.GetCurrentStepIndex();
     }
 
-    public void LoadData(GameData data) {
+    public void LoadData(GameData data) {;
         isTutorialFinished = data.finishedTutorial;
         // if (data.tutorialIndex > 0) {
         //     int skipStepsNumber = data.tutorialIndex;
@@ -181,7 +184,8 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
             this.ChangeLevelQuestState(QuestState.IN_PROGRESS);
             this.tutorialQuest.InstantiateCurrentQuestStep(this.transform);
             this.onTutorialStarted?.Invoke(this, EventArgs.Empty);
-        } else {
+        }
+        else {
             FinishTutorial();
         }
 

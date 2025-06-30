@@ -2188,7 +2188,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: d834c0a093d5840ba9f5c0a06bea1324, type: 2}
   xpSystem: {fileID: 1913271140186555034}
   unitId: monkey
-  unitName: Macapoera
+  unitName: Gibbon
+  unitImage: {fileID: 21300000, guid: a6c0908ccdcce43bdb08340d202e9e0a, type: 3}
   baseUnitStats:
     speed: 6
     attack: 3
@@ -2210,6 +2211,7 @@ MonoBehaviour:
   hasMoved: 0
   hasPerformedAction: 0
   hasPerformedSkill: 0
+  hasUnlockedAnySkill: 0
   modifiedBy: []
   isUnitTurn: 0
   projectilePrefab: {fileID: 0}
@@ -2227,6 +2229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a98aa284f9b23428a071063490ad6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 21300000, guid: d24172bb5601f90449d5233c70318796, type: 3}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 9113792291304497894}
@@ -2305,6 +2308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8a40b60fda1ef4f8c9d0f466e29e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 21300000, guid: 39195be798b6f544b952277c45599e40, type: 3}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 9113792291304497894}
@@ -2329,6 +2333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b257115c592644b78ac47c320d9a80d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 21300000, guid: 2c26a45bf5cd6d141806fb703779d405, type: 3}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 9113792291304497894}
@@ -2350,8 +2355,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d080ed6cd128408b82a8d741eeacab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionImage: {fileID: 0}
-  actionImageBlocked: {fileID: 0}
+  descricao: 
+  actionImage: {fileID: 21300000, guid: f08c21dcd837f87469fa565c6bbeb156, type: 3}
+  actionImageBlocked: {fileID: 21300000, guid: f08c21dcd837f87469fa565c6bbeb156, type: 3}
   animator: {fileID: 9113792291304497894}
   speed: 0
   rotSpeed: 180

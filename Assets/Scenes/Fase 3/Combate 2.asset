@@ -20,14 +20,14 @@ MonoBehaviour:
   endZ: 34
   spawnPoints:
   - x: 3
-    z: 20
+    z: 25
     floor: 1
   - x: 4
-    z: 20
+    z: 25
     floor: 1
   - x: 5
-    z: 20
+    z: 25
     floor: 1
   - x: 6
-    z: 20
+    z: 25
     floor: 1

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Combate 3
   m_EditorClassIdentifier: 
   zoneNumber: 3
-  startX: 23
-  startZ: 12
+  startX: 21
+  startZ: 10
   floor: 1
   endX: 35
   endZ: 18

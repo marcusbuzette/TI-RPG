@@ -179,7 +179,7 @@ public class CameraController : MonoBehaviour
     public void GoToPositionUnitPos(object sender, EventArgs e) {
         lockMoviment = true;
         stopMove = false;
-        playerUnit = UnitActionSystem.Instance.GetSelectedUnit().transform;
+        playerUnit = UnitActionSystem.Instance.GetSelectedUnit()?.transform;
         BaseAction.OnAnyActionCompleted += UnitStopMove;
     }
 

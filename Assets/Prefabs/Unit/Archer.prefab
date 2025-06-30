@@ -309,6 +309,14 @@ PrefabInstance:
       value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: unitName
+      value: Lyra
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: unitImage
+      value: 
+      objectReference: {fileID: 21300000, guid: 65646911570743a478b74cafbffb30b1, type: 3}
+    - target: {fileID: 3360346141191727209, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: projectilePoint
       value: 
       objectReference: {fileID: 4078329359069670974}
@@ -347,6 +355,10 @@ PrefabInstance:
     - target: {fileID: 4855899929353745125, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5065005123134118304, guid: 35802ef038968144e82bb11a407e1793, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5740676890434492411, guid: 35802ef038968144e82bb11a407e1793, type: 3}
       propertyPath: missSFX
@@ -468,6 +480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4c588a935c0a4f56b855794c3e7145d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 21300000, guid: 58212db7a0f1b7f4792d842b8e196a5a, type: 3}
   actionImageBlocked: {fileID: 21300000, guid: 8d1522a2c2f961c449b965bed859982d, type: 3}
   animator: {fileID: 0}
@@ -491,6 +504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 272359c525b7a47b382f31920349d06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: 
   actionImage: {fileID: 21300000, guid: 352e31fdc4707aa429f286093d6c7bc6, type: 3}
   actionImageBlocked: {fileID: 21300000, guid: 613b72297464e534ead19c1dd800f55e, type: 3}
   animator: {fileID: 0}
@@ -517,8 +531,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d080ed6cd128408b82a8d741eeacab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionImage: {fileID: 0}
-  actionImageBlocked: {fileID: 0}
+  descricao: 
+  actionImage: {fileID: 21300000, guid: f08c21dcd837f87469fa565c6bbeb156, type: 3}
+  actionImageBlocked: {fileID: 21300000, guid: f08c21dcd837f87469fa565c6bbeb156, type: 3}
   animator: {fileID: 0}
   speed: 0
   rotSpeed: 180

@@ -17,7 +17,7 @@ MonoBehaviour:
   startZ: 18
   floor: 1
   endX: 19
-  endZ: 22
+  endZ: 24
   spawnPoints:
   - x: 14
     z: 18

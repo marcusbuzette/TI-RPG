@@ -20,6 +20,9 @@ public class UnitOrderUI : MonoBehaviour {
         this.unitHealthSystem = unit.GetComponent<HealthSystem>();
         this.turnText.text = "Batalha em " + turn + (turn == 1 ? " turno" : " turnos");
         this.healthBar.fillAmount = unitHealthSystem.GetHealthPointsNormalized();
+        if (unit.GetImage() != null) {
+            this.image.sprite = unit.GetImage();
+        }
         unitHealthSystem.OnDamage += HealthSystem_OnDamage;
         unitHealthSystem.OnDead += HealthSystem_OnDead;
         GetComponent<Image>().color = currentTurn ? TURN_COLOR : NORMAL_COLOR;

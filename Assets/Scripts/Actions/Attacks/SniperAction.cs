@@ -25,6 +25,7 @@ public class SniperAction : BaseAction {
     public int Attack = 1;
 
     private SniperActionFieldOfView sniperActionFieldOfView;
+    private GameObject sniperActionFieldOfViewObj;
 
     private void Start() {
         obstaclesLayerMask = LayerMask.GetMask("Obstacles"); //add layer mask to don't shoot through obstacles
@@ -45,9 +46,17 @@ public class SniperAction : BaseAction {
     }
 
     public override void Action() {
+        StartCoroutine(RotateTowardsAndExecute(sniperActionFieldOfViewObj.transform, () => {
+            SniperAiming();
+        }));
+    }
+
+    public void SniperAiming() {
+        sniperActionFieldOfViewObj.transform.SetParent(transform);
+
         if (Attack == 1) {
             // animator?.SetTrigger("Attack");
-            unit.PlayAnimation("Attack");
+            unit.PlayAnimation("IsAiming", true);
             AudioManager.instance?.PlaySFX("Melee");
             Attack = 0;
         }
@@ -111,7 +120,8 @@ public class SniperAction : BaseAction {
 
         List<GridPosition> fieldOfView = GetFieldOfView(mouseGridPosition, LevelGrid.Instance.GetGridPosition(transform.position));
 
-        sniperActionFieldOfView = Instantiate(new GameObject("FieldOfView"), transform).AddComponent<SniperActionFieldOfView>();
+        sniperActionFieldOfViewObj = Instantiate(new GameObject("FieldOfView"));
+        sniperActionFieldOfView = sniperActionFieldOfViewObj.AddComponent<SniperActionFieldOfView>();
         sniperActionFieldOfView.SetSniperFieldOfView(this, fieldOfView, hitDamage);
 
         ActionStart(onActionComplete);
@@ -304,6 +314,11 @@ public class SniperAction : BaseAction {
     }
 
     public void SetFiewdOfViewNull() {
+        unit.EndAnimation("IsAiming", true);
         sniperActionFieldOfView = null;
+    }
+
+    public void AttackAnimation() {
+        unit.PlayAnimation("Attack");
     }
 }
