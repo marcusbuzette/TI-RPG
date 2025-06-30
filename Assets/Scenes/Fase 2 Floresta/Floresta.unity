@@ -11256,7 +11256,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 426227394}
         m_TargetAssemblyTypeName: UIController, Assembly-CSharp
         m_MethodName: ChangeScene
         m_Mode: 5
@@ -23535,11 +23535,11 @@ SceneRoots:
   - {fileID: 1785743743}
   - {fileID: 1612883862}
   - {fileID: 463600243}
+  - {fileID: 426227395}
   - {fileID: 835172791}
   - {fileID: 799909377}
   - {fileID: 703274492}
   - {fileID: 1783308048}
-  - {fileID: 426227395}
   - {fileID: 95635344}
   - {fileID: 1344720057}
   - {fileID: 191313173}

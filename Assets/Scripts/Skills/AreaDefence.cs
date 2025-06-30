@@ -174,7 +174,8 @@ public class AreaDefence : BaseSkills {
     private void RemoveWall() {
         foreach (GameObject wall in wallList) {
             PathFinding.Instance.SetNodeIsWalkable(wall.transform.position, false);
-            Destroy(wall);
+            wall.SetActive(false);
+            // Destroy(wall);
         }
     }
 

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <id>k__BackingField: Level2Quest
   displayName: Castelo
-  levelIndex: 0
+  levelIndex: 2
   levelRequirement: 0
   questPrerequisites: []
   questStepPrefabs:

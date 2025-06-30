@@ -213,7 +213,7 @@ public class TurnSystem : MonoBehaviour
                 unit.UpdateGridPositionZone(0);
             }
 
-            InstantiateRewardChest(unitDead.transform);
+            InstantiateRewardChest(unitDead.transform, unitDead.GetChestId());
             roundGold = 0;
             ResetTurnSpeed();
             LevelGrid.Instance.ExploreMode();
@@ -253,7 +253,7 @@ public class TurnSystem : MonoBehaviour
 
     public Unit GetTurnUnit()
     {
-        return unitiesOrderList[turnNumber];
+        return  turnNumber < unitiesOrderList.Count ? unitiesOrderList[turnNumber] : null;
     }
 
     private bool CheckEnemiesLeft()

@@ -2648,6 +2648,7 @@ MonoBehaviour:
   levelButtons:
   - {fileID: 85901847}
   - {fileID: 122671066}
+  - {fileID: 1238024571}
   sceneToLoad: Tutorial
   fadingScript: {fileID: 1489543376}
 --- !u!4 &394943458 stripped
@@ -8637,7 +8638,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 2
-  sceneToLoad: Thanks
+  sceneToLoad: CutScene
   levelName: Castelo
   scaleMultiplier: 1.2
   speed: 10

@@ -365,7 +365,7 @@ MonoBehaviour:
   xpSystem: {fileID: 0}
   unitId: 
   unitName: Lobisomem
-  unitImage: {fileID: 0}
+  unitImage: {fileID: 21300000, guid: 34f92d971bf85e84f9bbeab6ecfa9517, type: 3}
   baseUnitStats:
     speed: 2
     attack: 30
@@ -374,6 +374,7 @@ MonoBehaviour:
     maxHealthPoints: 300
     maxMove: 5
     xpSpoil: 3
+    goldSpoil: 0
     range: 0
   statsModifiers:
     attack: 0
@@ -388,6 +389,7 @@ MonoBehaviour:
   hasUnlockedAnySkill: 0
   modifiedBy: []
   isUnitTurn: 0
+  chestId: 
   projectilePrefab: {fileID: 0}
   projectilePoint: {fileID: 0}
   enemyFocus: 0

@@ -8,15 +8,14 @@ using static UnityEngine.EventSystems.EventTrigger;
 using TMPro;
 using Unity.Mathematics;
 
-public class CameraController : MonoBehaviour
-{
+public class CameraController : MonoBehaviour {
 
     private const float MAX_FOLLOW_Y_OFFSET = 12F;
     private const float MIN_FOLLOW_Y_OFFSET = 2F;
 
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
 
-    private float 
+    private float
         normalSpeed = 6,
         sprintSpeed = 12;
 
@@ -54,8 +53,7 @@ public class CameraController : MonoBehaviour
 
     Vector3 unitTurnPos;
 
-    void Start()
-    {
+    void Start() {
         LevelGrid.Instance.OnGameModeChanged += ChangeMovimentMode;
         SetGameMode();
 
@@ -73,8 +71,7 @@ public class CameraController : MonoBehaviour
         targetFollowOffset = cinemachineTransposer.m_FollowOffset;
         TurnSystem.Instance.SetCameraController(this);
     }
-    void Update()
-    {
+    void Update() {
         if (TurnSystem.Instance.IsPlayerTurn() && lockMoviment) {
             lockMoviment = MoveTo(playerUnit.position);
         }
@@ -91,15 +88,16 @@ public class CameraController : MonoBehaviour
             lockMoviment = MoveTo(unitTurnPos);
         }
         else if (!TurnSystem.Instance.IsPlayerTurn() && !lockMoviment) {
-            transform.position = TurnSystem.Instance.GetTurnUnit().GetWorldPosition();
+            if (TurnSystem.Instance.GetTurnUnit() != null) {
+                transform.position = TurnSystem.Instance.GetTurnUnit().GetWorldPosition();
+            }
         }
 
         Zoom();
         Rotation();
     }
 
-    void Movement()
-    {
+    void Movement() {
         Vector3 InputMoveDir = new Vector3(0, 0, 0);
 
         if (transform.position.z <= topLimit.position.z) {
@@ -138,31 +136,25 @@ public class CameraController : MonoBehaviour
         transform.position += moveVector * speed * Time.deltaTime;
     }
 
-    void Rotation()
-    {
+    void Rotation() {
         Vector3 rotationVector = new Vector3(0, 0, 0);
 
-        if (Input.GetKey(KeyCode.Q))
-        {
+        if (Input.GetKey(KeyCode.Q)) {
             rotationVector.y = +1f;
         }
-        if (Input.GetKey(KeyCode.E))
-        {
+        if (Input.GetKey(KeyCode.E)) {
             rotationVector.y = -1f;
         }
 
         transform.eulerAngles += rotationVector * RotationSpeed * Time.deltaTime;
     }
 
-    void Zoom()
-    {
+    void Zoom() {
         float zoomAmount = 1f;
-        if (Input.mouseScrollDelta.y > 0)
-        {
+        if (Input.mouseScrollDelta.y > 0) {
             targetFollowOffset.y -= zoomAmount;
         }
-        if (Input.mouseScrollDelta.y < 0)
-        {
+        if (Input.mouseScrollDelta.y < 0) {
             targetFollowOffset.y += zoomAmount;
         }
         targetFollowOffset.y = Mathf.Clamp(targetFollowOffset.y, MIN_FOLLOW_Y_OFFSET, MAX_FOLLOW_Y_OFFSET);
@@ -199,7 +191,7 @@ public class CameraController : MonoBehaviour
 
         topLimit.position = new Vector3(
             LevelGrid.Instance.GetWorldPosition(startGrid).x,
-            0 ,
+            0,
             LevelGrid.Instance.GetWorldPosition(endGrid).z);
 
         bottomLimit.position = new Vector3(
@@ -275,7 +267,7 @@ public class CameraController : MonoBehaviour
             stopMove = true;
         }
     }
-    
+
     public void CheckIsPlayerTurn(object sender, EventArgs e) {
         if (!TurnSystem.Instance.IsPlayerTurn() && LevelGrid.Instance.IsInBattleMode()) {
             FOV(50);
@@ -327,7 +319,7 @@ public class CameraController : MonoBehaviour
         noise.m_AmplitudeGain = 0;
         noise.m_FrequencyGain = 0;
     }
-     private void OnDestroy() {
+    private void OnDestroy() {
         TurnSystem.Instance.onTurnChange -= CheckIsPlayerTurn;
         UnitActionSystem.Instance.OnUnitMovedInExploreMode -= GoToPositionUnitPos;
         UnitActionSystem.Instance.OnSelectedUnitChanged -= SetSelectedUnit;
@@ -335,5 +327,5 @@ public class CameraController : MonoBehaviour
         BaseAction.OnAnyActionCompleted -= PlayerStopAction;
         BaseAction.OnAnyActionCompleted -= UnitStopMove;
         LevelGrid.Instance.OnGameModeChanged -= ChangeMovimentMode;
-     }
+    }
 }

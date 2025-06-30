@@ -191,5 +191,10 @@ public class TutorialManager : MonoBehaviour, IDataPersistence {
 
     }
 
+    void OnDestroy() {
+        SceneManager.activeSceneChanged -= SceneManager_activeSceneChanged;
+        Unit.OnAnyUnitDead -= Unit_OnAnyUnityDead;
+    }
+
 
 }
