@@ -13,15 +13,17 @@ public class UnitStats {
     [SerializeField] private int maxHealthPoints;
     [SerializeField] private int maxMove;
     [SerializeField] private int xpSpoil;
+    [SerializeField] private int goldSpoil;
     [SerializeField] private int range;
 
     public UnitStats(int speed, int attack, int defence, int accuracy,
-    int xpSpoil, int maxHealthPoints, int maxMove, int range, BaseUnitStats baseUnitStats) {
+    int xpSpoil, int goldSpoil, int maxHealthPoints, int maxMove, int range, BaseUnitStats baseUnitStats) {
         this.speed = speed;
         this.attack = attack;
         this.defence = defence;
         this.accuracy = accuracy;
         this.xpSpoil = xpSpoil;
+        this.goldSpoil = goldSpoil;
         this.maxHealthPoints = maxHealthPoints;
         this.maxMove = maxMove;
         this.range = range;
@@ -38,6 +40,7 @@ public class UnitStats {
         return (unit.GetModifiers().GetMove() +  this.maxMove) > 0 ? 
         (unit.GetModifiers().GetMove() +  this.maxMove) : 0; }
     public int GetXpSpoil() { return this.xpSpoil; }
+    public int GetGoldSpoil() { return this.goldSpoil; }
     public int GetRange() { return this.range; }
     public int GetAccuracy() { return this.accuracy; }
     public BaseUnitStats GetBaseUnitStats() {return this.baseUnitStats;}
