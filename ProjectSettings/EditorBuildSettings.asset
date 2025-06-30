@@ -20,13 +20,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameOver.unity
     guid: f7497661c92254eafb0d1b1747c781ec
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Fase 1 Tutorial/Tutorial_Old.unity
     guid: 683246cdb75ac4cb7b22ebe16f86994b
   - enabled: 1
     path: Assets/Scenes/Fase 2 Floresta/Floresta_ParaMerge.unity
     guid: 613d72e15e523403e81260bd5d79dcab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Fase 3/Fase 3 - Castelo Para Merge.unity
     guid: 6281b7f75fddb4387a118b1fe3da3eb7
   - enabled: 0

@@ -61,15 +61,16 @@ MonoBehaviour:
   xpSystem: {fileID: 0}
   unitId: Lobo
   unitName: Wolf
-  unitImage: {fileID: 0}
+  unitImage: {fileID: 21300000, guid: 729458ca13776af4393b428271edd1f1, type: 3}
   baseUnitStats:
     speed: 4
-    attack: 10
-    defence: 10
-    accuracy: 10
-    maxHealthPoints: 150
+    attack: 20
+    defence: 6
+    accuracy: 5
+    maxHealthPoints: 100
     maxMove: 5
     xpSpoil: 1
+    goldSpoil: 0
     range: 0
   statsModifiers:
     attack: 0
@@ -86,6 +87,7 @@ MonoBehaviour:
   hasUnlockedAnySkill: 0
   modifiedBy: []
   isUnitTurn: 0
+  chestId: 
   projectilePrefab: {fileID: 0}
   projectilePoint: {fileID: 0}
   enemyFocus: 0
@@ -680,6 +682,14 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 334963db0c2c9ca45bea8b23c2ec628d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2985374647327280367, guid: 334963db0c2c9ca45bea8b23c2ec628d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2985374647327280367, guid: 334963db0c2c9ca45bea8b23c2ec628d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.979965
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 334963db0c2c9ca45bea8b23c2ec628d, type: 3}
       propertyPath: m_Name

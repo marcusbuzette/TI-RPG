@@ -44,13 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9014cf97bae6f414da57656fd3ec3610, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: Flecha que causa dano a cada turno ao inimigo atingido
   actionImage: {fileID: 21300000, guid: 3e44a0f6bd0c36041894ce0a9a52533a, type: 3}
   actionImageBlocked: {fileID: 21300000, guid: 6203b26d52a55e742a497f7c9ca6634d, type: 3}
   animator: {fileID: 0}
   speed: 0
   rotSpeed: 180
   nome: Flecha Venenosa
-  descricao: Flecha que causa dano a cada turno ao inimigo atingido
   custo: 20
   preRequisitos:
   - {fileID: -3443926730875403986, guid: 975259ed73f6b40d5b4f6d3628155e02, type: 3}
@@ -58,7 +58,8 @@ MonoBehaviour:
   onCoolDown: 0
   coolDown: 2
   currentCoolDown: 0
+  sfxName: 
   maxShootDistance: 5
-  damage: 20
+  damage: 7
   PoisonFbx: {fileID: 0}
   poisonArrowSFX: FlechaVeneno

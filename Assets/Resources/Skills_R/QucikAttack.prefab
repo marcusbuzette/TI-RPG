@@ -44,22 +44,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b2c316aac064bf8959289238a3782d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: "Um ataque que t\xE3o r\xE1pido que possibilita atacar novamente"
   actionImage: {fileID: 21300000, guid: 42fae052e748f304faf6d9daf5e38299, type: 3}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
   rotSpeed: 180
   nome: Ataque rapido
-  descricao: "Um ataque que t\xE3o r\xE1pido que possibilita atacar novamente"
   custo: 10
   preRequisitos: []
   onCoolDown: 0
   coolDown: 2
   currentCoolDown: 0
+  sfxName: 
   quickAttackSFX: AtaqueRapido
   Attack: 1
-  hitDamage: 50
-  obstaclesLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
+  hitDamage: 35
   maxHitDistance: 1

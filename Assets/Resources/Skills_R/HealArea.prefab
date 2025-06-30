@@ -44,13 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c719e63af947e4a79aa9af6829e4b54f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: Cria uma zona de cura ao redor do local atingido
   actionImage: {fileID: 21300000, guid: 2bfe953e8b194c04f9b2310519b1071b, type: 3}
   actionImageBlocked: {fileID: 21300000, guid: d8b8f0b1254e34646a8504f4fb01003b, type: 3}
   animator: {fileID: 0}
   speed: 0
   rotSpeed: 180
   nome: Flecha de cura
-  descricao: Cria uma zona de cura ao redor do local atingido
   custo: 20
   preRequisitos:
   - {fileID: -3443926730875403986, guid: 975259ed73f6b40d5b4f6d3628155e02, type: 3}
@@ -58,13 +58,13 @@ MonoBehaviour:
   onCoolDown: 0
   coolDown: 2
   currentCoolDown: 0
+  sfxName: 
   obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 0
   maxShootDistance: 5
-  rotateSpeed: 10
   areaHeal: 3
-  healPoints: 3
+  healPoints: 15
   selectedGrid: {x: 0, y: 0, z: 0}
   isAiming: 0
   healArrowSFX: Cura

@@ -18,7 +18,6 @@ public class BuffDefArea : BaseSkills {
     }
 
     public override void Action() {
-        
         foreach (Unit target in targetsList) {
             target.GetModifiers().Buff(buffType, buffAmount, target, this);
         }

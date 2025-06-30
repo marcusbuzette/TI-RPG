@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   descricao: 
-  actionImage: {fileID: 0}
+  actionImage: {fileID: 21300000, guid: ddb85ba45fe5cde4385ab6eba0063072, type: 3}
   actionImageBlocked: {fileID: 0}
   animator: {fileID: 0}
   speed: 0
