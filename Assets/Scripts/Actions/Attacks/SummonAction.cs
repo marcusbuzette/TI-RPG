@@ -13,7 +13,7 @@ public class SummonAction : BaseAction
     [SerializeField] private int summonCooldownTurns = 4;
 
     [Header("AI Parameters")]
-    [SerializeField] private int baseAIValue = 120;
+    [SerializeField] private int baseAIValue = 10000;
     [SerializeField] private int allyBonusValue = 30;
     [SerializeField] private int enemyPenaltyValue = -20;
 
