@@ -51,7 +51,7 @@ MonoBehaviour:
   speed: 0
   rotSpeed: 180
   nome: Ataque rapido
-  custo: 10
+  custo: 30
   preRequisitos: []
   onCoolDown: 0
   coolDown: 2

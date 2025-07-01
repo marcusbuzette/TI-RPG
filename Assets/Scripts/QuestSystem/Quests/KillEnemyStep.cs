@@ -33,6 +33,7 @@ public class KillEnemyStep : QuestStep {
 
         if (enemiesKilled >= enemiesToComplete) {
             this.onFinishQuestStep?.Invoke(this, EventArgs.Empty);
+            TurnSystem.Instance.onEnemyKilled -= TurnSystem_OnEnemyKilled;
             this.FinishQuestStep();
         }
     }

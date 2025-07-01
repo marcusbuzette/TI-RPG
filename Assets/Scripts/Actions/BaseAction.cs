@@ -36,16 +36,15 @@ public abstract class BaseAction : MonoBehaviour {
         Action();
     }
 
-    public void SetAnimationSpeed()
-    {
+    public void SetAnimationSpeed() {
         speed = 1f;
         animator.SetFloat("SpeedMultiplier", speed);
     }
 
     public abstract void Action();
     public abstract string GetActionName();
-    public Sprite GetActionImage() {return this.actionImage;}
-    public Sprite GetActionBlockedImage() {return this.actionImageBlocked;}
+    public Sprite GetActionImage() { return this.actionImage; }
+    public Sprite GetActionBlockedImage() { return this.actionImageBlocked; }
 
     public virtual bool IsValidActionGridPosition(GridPosition gridPosition) {
         List<GridPosition> validGridPositionList = GetValidGridPositionList();
@@ -63,7 +62,7 @@ public abstract class BaseAction : MonoBehaviour {
     protected void ActionStart(Action onActionComplete) {
         isActive = true;
         this.onActionComplete += onActionComplete;
-        if(LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE) {
+        if (LevelGrid.Instance.GetGameMode() == LevelGrid.GameMode.BATTLE) {
             GridSystemVisual.Instance.HideAllGridPosition();
         }
 
@@ -72,9 +71,10 @@ public abstract class BaseAction : MonoBehaviour {
 
     protected void ActionFinish() {
         isActive = false;
-        onActionComplete();
+        onActionComplete?.Invoke();
         OnAnyActionCompleted?.Invoke(this, EventArgs.Empty);
     }
+
 
     public EnemyAIAction GetBestEnemyAIAction() {
         List<EnemyAIAction> enemyAIActionList = new List<EnemyAIAction>();
@@ -138,6 +138,8 @@ public abstract class BaseAction : MonoBehaviour {
     public abstract void IsAnotherRound();
 
     private void OnDestroy() {
-        ActionFinish();
+        if (isActive) {
+            ActionFinish();
+        }
     }
 }

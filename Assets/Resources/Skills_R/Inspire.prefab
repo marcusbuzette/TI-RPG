@@ -51,7 +51,7 @@ MonoBehaviour:
   speed: 0
   rotSpeed: 180
   nome: Inspirar
-  custo: 20
+  custo: 60
   preRequisitos:
   - {fileID: -5082339525479280377, guid: 2ef816fd4c3644127bdcf3005f3a4f25, type: 3}
   - {fileID: -1049602389130312739, guid: c9e233f267fdd4a0abe93a6bd02b3a5a, type: 3}

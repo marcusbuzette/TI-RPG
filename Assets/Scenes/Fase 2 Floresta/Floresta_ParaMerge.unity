@@ -522,6 +522,7 @@ Transform:
   - {fileID: 63192606}
   - {fileID: 781745973}
   - {fileID: 1377126171}
+  - {fileID: 1198426553}
   - {fileID: 155856727}
   - {fileID: 2103982033}
   - {fileID: 334560457}
@@ -10893,6 +10894,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8428029982322859060, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
+      propertyPath: hitDamage
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8428029982322859060, guid: 46c9ea6b0e5004c40ab0abfaa60d08a0, type: 3}
       propertyPath: obstaclesLayerMask.m_Bits
       value: 0
       objectReference: {fileID: 0}
@@ -14161,6 +14166,72 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1192643227}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &1198426552
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 29528320}
+    m_Modifications:
+    - target: {fileID: 4096442209837572, guid: 34b819125fbc845b6830c5aa7b0e501b, type: 3}
+      propertyPath: m_Name
+      value: Lobo (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7551674043583017495, guid: 34b819125fbc845b6830c5aa7b0e501b, type: 3}
+      propertyPath: baseUnitStats.goldSpoil
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8280494465233947303, guid: 34b819125fbc845b6830c5aa7b0e501b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -62.14052
+      objectReference: {fileID: 0}
+    - target: {fileID: 8280494465233947303, guid: 34b819125fbc845b6830c5aa7b0e501b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 26.20178
+      objectReference: {fileID: 0}
+    - target: {fileID: 8280494465233947303, guid: 34b819125fbc845b6830c5aa7b0e501b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 24.99961
+      objectReference: {fileID: 0}
+    - target: {fileID: 8280494465233947303, guid: 34b819125fbc845b6830c5aa7b0e501b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8280494465233947303, guid: 34b819125fbc845b6830c5aa7b0e501b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8280494465233947303, guid: 34b819125fbc845b6830c5aa7b0e501b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8280494465233947303, guid: 34b819125fbc845b6830c5aa7b0e501b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8280494465233947303, guid: 34b819125fbc845b6830c5aa7b0e501b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8280494465233947303, guid: 34b819125fbc845b6830c5aa7b0e501b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8280494465233947303, guid: 34b819125fbc845b6830c5aa7b0e501b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 34b819125fbc845b6830c5aa7b0e501b, type: 3}
+--- !u!4 &1198426553 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8280494465233947303, guid: 34b819125fbc845b6830c5aa7b0e501b, type: 3}
+  m_PrefabInstance: {fileID: 1198426552}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1200684365
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21534,10 +21605,6 @@ PrefabInstance:
     - target: {fileID: 9085143614739214128, guid: 82047d41f197848bb9bc6b85604fbe01, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9134479801138775507, guid: 82047d41f197848bb9bc6b85604fbe01, type: 3}
-      propertyPath: healPoints
-      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 9134479801138775507, guid: 82047d41f197848bb9bc6b85604fbe01, type: 3}
       propertyPath: actionImage

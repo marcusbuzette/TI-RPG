@@ -44,17 +44,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2b6579a4d907704984d04508297debd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: Provoca os inimigos a te atacarem
   actionImage: {fileID: 21300000, guid: fa64111411c02eb408adb1a76318a154, type: 3}
   actionImageBlocked: {fileID: 21300000, guid: 3665badaaf21c684fbee0e73f8421bf0, type: 3}
   animator: {fileID: 0}
   speed: 0
   rotSpeed: 180
   nome: Provocar
-  descricao: Provoca os inimigos a te atacarem
-  custo: 10
+  custo: 30
   preRequisitos: []
   onCoolDown: 0
   coolDown: 2
   currentCoolDown: 0
+  sfxName: 
   skillRounds: 0
   provokeSFX: Provocar

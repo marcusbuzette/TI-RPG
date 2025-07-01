@@ -51,7 +51,7 @@ MonoBehaviour:
   speed: 0
   rotSpeed: 180
   nome: Flecha de cura
-  custo: 20
+  custo: 60
   preRequisitos:
   - {fileID: -3443926730875403986, guid: 975259ed73f6b40d5b4f6d3628155e02, type: 3}
   - {fileID: -1958982141253679294, guid: 226ef7562a74f45dc92234806d8b64b2, type: 3}

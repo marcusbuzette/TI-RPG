@@ -44,17 +44,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1e00a9e77e8492f80e62b03c12ff16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descricao: Expande o escudo aumentando a area defesa
   actionImage: {fileID: 21300000, guid: f57a219c1b1295c4da8d07fb184ae3b5, type: 3}
   actionImageBlocked: {fileID: 21300000, guid: df6e3dfe60322114bb4855bf2091808c, type: 3}
   animator: {fileID: 0}
   speed: 0
   rotSpeed: 180
   nome: Bastiao Irredutivel
-  descricao: Expande o escudo aumentando a area defesa
-  custo: 10
+  custo: 30
   preRequisitos: []
   onCoolDown: 0
   coolDown: 3
   currentCoolDown: 0
+  sfxName: 
   shieldSFX: Defesa
   obstaclePrefab: {fileID: 6603462031243581493, guid: ab5a424c8945f4da786f76831d637f52, type: 3}

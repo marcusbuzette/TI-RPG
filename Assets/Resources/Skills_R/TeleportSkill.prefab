@@ -51,7 +51,7 @@ MonoBehaviour:
   speed: 0
   rotSpeed: 180
   nome: Saida de emergencia
-  custo: 20
+  custo: 60
   preRequisitos:
   - {fileID: -4179945356743944876, guid: e5baae5809e144d23b75698cf492a4f7, type: 3}
   - {fileID: 6584539317323027048, guid: b732d4b268287492c996e3cfdf4c881b, type: 3}
